@@ -9,3 +9,6 @@ $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
 
 rm -rf ~/.yarn/
 curl -sL install-node.now.sh/lts | /bin/bash
+
+
+$(ln -nfs ~/dotfiles/zsh/rc/zshrc ~/.zshrc)
