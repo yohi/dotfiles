@@ -5,3 +5,6 @@ $(ln -nfs ~/dotfiles/vim/rc/gvimrc ~/.gvimrc)
 
 $(mkdir -p ~/.config/nvim)
 $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
+
+rm -rf ~/.yarn/
+curl -sL install-node.now.sh/lts | /bin/bash
