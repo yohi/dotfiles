@@ -1,0 +1,374 @@
+"highlight CursorIM guibg=Red
+"highlight CursorIM guibg=Red guifg=NONE
+set iminsert=0 imsearch=0
+"
+"set noimdisable
+
+
+" BASIC.VIM ================================================
+
+" VIとの互換性をとらない
+set nocompatible
+
+" VIMが通常使う文字エンコーディング
+set encoding=utf8
+
+" 自動認識する文字エンコーディングの優先順一覧
+set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,utf-16,utf-16le
+
+" VIMが通常使用する改行コード
+set fileformat=unix
+
+" 自動認識する改行コードの優先順一覧
+set fileformats=unix,dos,mac
+
+" バックアップファイルを作成しない
+set nobackup
+
+" スワップファイルを作成しない
+set noswapfile
+
+" undoファイルを作成しない
+set noundofile
+
+" ファイルが外部で変更された時は読みなおす
+set autoread
+
+" バッファの編集を保持したまま、別バッファの展開を可能にする
+set hidden
+
+" コマンドと検索パターンの履歴数
+set history=1000
+
+" コマンド確定時間
+set timeout
+set timeoutlen=500
+
+" Windowsのパスをスラッシュ区切りに
+set shellslash
+
+" クリップボード共有
+set clipboard+=unnamed
+
+" バックスペース有効
+set backspace=indent,eol,start
+
+" [%]で移動する対応括弧
+set matchpairs=(:),{:},[:],<:>
+
+" カーソルを行頭末で停止させない
+set whichwrap=b,s,h,l,<,>,[,]
+
+" タブの代わりに半角スペースを使用
+set expandtab
+
+" オートインデント有効
+set autoindent
+
+" 高度なオートインデント有効
+set smartindent
+
+" 行頭では[shiftwidth]、それ以外では[tabstop]の数を適用
+set smarttab
+
+" インデントが対応する半角スペースの数
+set shiftwidth=2
+
+" タブが対応する半角スペースの数
+set tabstop=2
+
+" 連続した空白に対してタブやバックスペースでカーソルが動く幅
+set softtabstop=2
+
+
+augroup MyVariousAutoCommand
+    autocmd!
+    " 自動改行しない
+    autocmd FileType * setl textwidth=0
+    " 改行時にコメントアウト記号を自動挿入しない
+    autocmd FileType * setl formatoptions-=ro
+    " ファイルのディレクトリに移動
+    autocmd BufNewFile,BufRead,BufEnter * execute ':lcd ' . expand('%:p:h')
+augroup END
+
+
+
+" UI.VIM ================================================
+
+
+" SYNTAX
+syntax on
+
+" 不可視文字の可視化
+set list
+set listchars=tab:>-,trail:_,nbsp:%,extends:<
+
+" 全角文字を半角倍幅で表示する
+set ambiwidth=double
+
+" 行番号表示
+set number
+
+" コマンドライン表示行数
+set cmdheight=2
+
+" 起動時の広告非表示
+set shortmess+=I
+
+" コマンドを表示
+set showcmd
+
+" モードを非表示
+set noshowmode
+
+" 対応括弧を表示
+set showmatch
+
+" カーソル行強調表示
+set cursorline
+
+" カーソル列強調非表示
+set nocursorcolumn
+
+" カーソル位置表示を行う
+set ruler
+
+" 上下5行の視野を確保
+set scrolloff=5
+
+" 表示を省略しない
+set display=lastline
+
+" コマンドライン補完有効
+set wildmenu
+
+" コマンドライン補完起動キー
+set wildchar=<tab>
+
+" 補完の挙動
+set wildmode=longest:full,list
+
+"コマンドモードに戻る時IMEをOFFにする
+set imdisable
+
+
+
+" SEARCH.VIM ================================================
+
+" 大小文字を区別しない
+set ignorecase
+
+" 小文字で検索した時のみ大小文字を区別しない
+set smartcase
+
+" インクリメンタルサーチ有効
+set incsearch
+
+" 検索結果ハイライト有効
+set hlsearch
+
+" 検索を循環させない
+set nowrapscan
+
+
+" PLUGGED.VIM =================================================
+
+if has('vim_starting')
+  set rtp+=~/.vim/plugged/vim-plug
+  if !isdirectory(expand('~/.vim/plugged/vim-plug'))
+    echo 'install vim-plug...'
+    call system('mkdir -p ~/.vim/plugged/vim-plug')
+    call system('git clone https://github.com/junegunn/vim-plug.git ~/.vim/plugged/vim-plug/autoload')
+  end
+endif
+
+call plug#begin('~/.config/nvim/plugged')
+  Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
+
+  " UI系 ------------------------
+
+  " カラースキーマ
+  Plug 'tomasiser/vim-code-dark'
+
+  " 全角スペースをホワイトに表示
+  Plug 'thinca/vim-zenspace'
+  let g:zenspace#default_mode = 'on'
+  augroup vimrc-highlight
+    autocmd!
+    autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
+  augroup END
+
+  " ステータスバー
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline_theme='deus'
+
+  Plug 'Yggdroot/indentLine'
+  let g:indentLine_char = '¦'
+
+  " GIT系 ----------------------
+
+  Plug 'tpope/vim-fugitive'
+
+  Plug 'airblade/vim-gitgutter'
+
+  " ---------------------------
+
+  " LSP
+"""""""""""""""""""  Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh', }
+"""""""""""""""""""  Plug 'junegunn/fzf'
+"""""""""""""""""""  let g:LanguageClient_diagnosticsEnable = 0
+"""""""""""""""""""
+"""""""""""""""""""  Plug 'roxma/LanguageServer-php-neovim',  {'do': 'composer install && composer run-script parse-stubs'}
+"""""""""""""""""""  " assuming you're using vim-plug: https://github.com/junegunn/vim-plug
+"""""""""""""""""""  Plug 'ncm2/ncm2'
+"""""""""""""""""""  Plug 'roxma/nvim-yarp'
+"""""""""""""""""""
+"""""""""""""""""""  " enable ncm2 for all buffers
+"""""""""""""""""""  autocmd BufEnter * call ncm2#enable_for_buffer()
+"""""""""""""""""""
+"""""""""""""""""""  " IMPORTANT: :help Ncm2PopupOpen for more information
+"""""""""""""""""""  set completeopt=noinsert,menuone,noselect
+"""""""""""""""""""
+"""""""""""""""""""  " NOTE: you need to install completion sources to get completions. Check
+"""""""""""""""""""  " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
+"""""""""""""""""""  Plug 'ncm2/ncm2-bufword'
+"""""""""""""""""""  Plug 'ncm2/ncm2-path'
+  "Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+  Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+
+
+  " LINT
+  Plug 'w0rp/ale'
+  let g:ale_sign_column_always = 1
+
+  Plug 'kamykn/spelunker.vim'
+  set nospell
+
+"  " 補完
+"  if has('nvim')
+"    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"  else
+"    Plug 'Shougo/deoplete.nvim'
+"    Plug 'roxma/nvim-yarp'
+"    Plug 'roxma/vim-hug-neovim-rpc'
+"  endif
+"  let g:deoplete#enable_at_startup = 1
+"
+"  Plug 'Shougo/neosnippet.vim'
+"  Plug 'Shougo/neosnippet-snippets'
+
+  if has('nvim')
+    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/defx.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+
+  Plug 'rickhowe/diffchar.vim'
+
+"macのみ
+"  Plug 'callmekohei/switcher.nvim', { 'do': 'UpdateRemotePlugins' }
+
+  Plug 'cohama/lexima.vim'
+
+  Plug 'rhysd/git-messenger.vim'
+
+call plug#end()
+
+" PLUGIN依存
+"autocmd InsertLeave * :call SwitchEnglish('')
+"autocmd FileType php LanguageClientStart
+colorscheme codedark
+
+
+
+
+
+" KEYMAP.VIM
+
+" Normal Mode ------------------------------------------------------------------
+" [;]を[:]に変換
+nnoremap ; :
+
+" 分割画面移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" 検索結果ハイライトを消去
+nnoremap <ESC><ESC> :nohlsearch<CR>
+
+" 縦分割
+nnoremap <LEADER>v :vsp<CR>:ls<CR>:buf
+
+" 横分割
+nnoremap <LEADER>s :split<CR>:ls<CR>buf
+
+" ファイラ表示切替
+nnoremap <LEADER>f :<C-u>NERDTreeToggle<CR>
+
+" すべて選択
+nnoremap <C-a> ggVG
+
+" カーソルを先頭に移動
+"nnoremap
+
+" Normal ModeでもEnterで改行
+nnoremap <CR> o<ESC>
+
+"nnoremap <C-p> :<C-u>execute
+"      \ 'Unite'
+"      \ '-start-insert'
+"      \ 'buffer file_mru'
+"      \ 'file:'.fnameescape(expand('%:p:h'))
+"      \ 'file_rec:!:'.fnameescape(expand('%:p:h'))
+"      \ <CR>
+
+" F5 : バッファ一覧表示と移動先番号入力待ち
+nnoremap <F5> :ls<CR>:buf
+" F6 : バッファを削除
+nnoremap <F6> :bw<CR>
+" F7 : 前のバッファに移動
+nnoremap <F7> :bp<CR>
+" F8 : 次のバッファに移動
+nnoremap <F8> :bn<CR>
+" F9 : gvimrcの変更を適用
+nnoremap <F9> :source ~/_gvimrc<CR>
+" F10 : デスクトップに保存（ファイル名入力待ち）
+nnoremap <F10> :w ~/
+" F11 :
+" F12 :
+
+
+" Insert Mode ------------------------------------------------------------------
+" 基本操作
+inoremap <C-a> <HOME>
+inoremap <C-e> <END>
+inoremap <C-d> <DEL>
+inoremap <C-b> <BS>
+inoremap <C-?> <BS>
+inoremap <C-q> <C-^>
+inoremap <C-h> <LEFT>
+inoremap <C-j> <DOWN>
+inoremap <C-k> <UP>
+inoremap <C-l> <RIGHT>
+
+" Command Mode -----------------------------------------------------------------
+" 基本操作
+cnoremap <C-a> <HOME>
+cnoremap <C-e> <END>
+cnoremap <C-d> <DEL>
+cnoremap <C-b> <BS>
+cnoremap <C-q> <C-^>
+cnoremap <C-h> <LEFT>
+cnoremap <C-j> <DOWN>
+cnoremap <C-k> <UP>
+cnoremap <C-l> <RIGHT>
+
+" 貼り付け
+cnoremap <C-p> <C-r>+
