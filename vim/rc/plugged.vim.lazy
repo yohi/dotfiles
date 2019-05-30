@@ -1,0 +1,5 @@
+" PLUGIN依存
+"autocmd InsertLeave * :call SwitchEnglish('')
+"autocmd FileType php LanguageClientStart
+colorscheme codedark
+
