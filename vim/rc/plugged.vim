@@ -63,7 +63,9 @@ call plug#begin('~/.config/nvim/plugged')
 """""""""""""""""""  Plug 'ncm2/ncm2-bufword'
 """""""""""""""""""  Plug 'ncm2/ncm2-path'
   Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
-  "Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
 
 
 
