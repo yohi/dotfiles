@@ -106,5 +106,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'rhysd/git-messenger.vim'
 
+  Plug 'vim-scripts/dbext.vim'
+
 call plug#end()
 
