@@ -62,10 +62,12 @@ call plug#begin('~/.config/nvim/plugged')
 """""""""""""""""""  " our wiki page for a list of sources: https://github.com/ncm2/ncm2/wiki
 """""""""""""""""""  Plug 'ncm2/ncm2-bufword'
 """""""""""""""""""  Plug 'ncm2/ncm2-path'
-  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': '/bin/sh ./install.sh'}
 
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '/bin/sh ./install --all' }
   Plug 'junegunn/fzf.vim'
+
+  Plug 'airblade/vim-rooter'
 
 
 
