@@ -22,3 +22,6 @@ function fish_prompt --description 'Write out the prompt'
     echo -n '> '
     set_color normal
 end
+
+set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
