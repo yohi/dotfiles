@@ -111,5 +111,16 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'vim-scripts/dbext.vim'
 
+
+  Plug 'vim-python/python-syntax'
+  let g:python_highlight_all = 1
+
+  Plug 'lambdalisue/vim-django-support'
+
+
+  Plug 'klen/python-mode'
+  let g:pymode_python = 'python3'
+
+
 call plug#end()
 
