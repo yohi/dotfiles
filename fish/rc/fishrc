@@ -23,5 +23,12 @@ function fish_prompt --description 'Write out the prompt'
     set_color normal
 end
 
+# HOMEBREW
 set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
+
+# ROOTLESS DOCKER
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+
+# DOCKER BUILDKIT
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1

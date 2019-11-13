@@ -41,7 +41,7 @@ set timeoutlen=500
 set shellslash
 
 " クリップボード共有
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 " バックスペース有効
 set backspace=indent,eol,start
