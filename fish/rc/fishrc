@@ -23,6 +23,9 @@ function fish_prompt --description 'Write out the prompt'
     set_color normal
 end
 
+# ALIAS
+alias lg='lazygit'
+
 # HOMEBREW
 set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
 
