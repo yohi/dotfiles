@@ -1,29 +1,58 @@
-" PLUGIN依存
-"autocmd InsertLeave * :call SwitchEnglish('')
-"autocmd FileType php LanguageClientStart
+" tomasiser/vim-code-dark
 colorscheme codedark
 
-"" [Replace of ctrlp.vim] ========================================
-"nnoremap <C-p> :FZFFileList<CR>
-"command! FZFFileList call fzf#run({
-"            \ 'source': 'find . -type d -name .git -prune -o ! -name .DS_Store',
-"            \ 'sink': 'e'})
-"
-"nnoremap <C-f> :Ag<CR>
-"command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
-"
-"" プロジェクトルートをカレントディレクトリにする設定
-"let g:rooter_change_directory_for_non_project_files = 'current'
-"
-"" `:Rg` でカレントディレクトリ以下のgrep (ripgrep)、プレビュー付き
-"if executable('rg')
-"    command! -bang -nargs=* Rg
-"        \ call fzf#vim#grep(
-"        \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
-"        \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'up:50%:wrap'))
-"endif
-"
-"
-"let g:dbext_default_profile_pvs_hpf = 'type=MYSQL:host=127.0.0.1:port=3307:user=root:passwd=password:dbname=preview_hpf'
-"let g:dbext_default_profile = 'pvs_hpf'
-"
+" thinca/vim-zenspace
+let g:zenspace#default_mode = 'on'
+augroup vimrc-highlight
+  autocmd!
+  autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
+augroup END
+
+"vim-airline/vim-airline
+"vim-airline/vim-airline-themes
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='deus'
+
+" Yggdroot/indentLine
+let g:indentLine_char = '¦'
+
+" airblade/vim-gitgutter
+set signcolumn=yes
+let g:gitgutter_async = 1
+let g:gitgutter_sign_modified = 'rw'
+highlight GitGutterAdd ctermfg=green
+highlight GitGutterChange ctermfg=yellow
+highlight GitGutterDelete ctermfg=red
+highlight GitGutterChangeDelete ctermfg=yellow
+
+" neoclide/coc.nvim
+let g:coc_global_extensions = [
+      \ 'coc-python',
+      \ 'coc-json',
+      \ 'coc-html',
+      \ 'coc-css',
+      \ 'coc-python',
+      \ 'coc-pyright',
+      \ 'coc-pyls',
+      \ 'coc-explorer',
+      \ 'coc-yank',
+      \ 'coc-snippets'
+      \ ]
+
+" junegunn/fzf
+" junegunn/fzf.vim
+command! -bang -nargs=* Rg
+   \ call fzf#vim#grep(
+   \ 'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+   \ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+   \ : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+   \ <bang>0)
+nnoremap <C-g> :Rg<Space>
+nnoremap <C-p> :GFiles<CR>
+"nnoremap <C-h> :History<CR>
+
+" w0rp/ale
+let g:ale_sign_column_always = 1
+
+" kamykn/spelunker.vim
+set nospell

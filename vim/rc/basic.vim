@@ -74,8 +74,8 @@ set tabstop=2
 set softtabstop=2
 
 " xで削除した時はヤンクしない
-vnoremap x "_x
-nnoremap x "_x
+"vnoremap x "_x
+"nnoremap x "_x
 
 
 augroup MyVariousAutoCommand
