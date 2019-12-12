@@ -73,6 +73,10 @@ set tabstop=2
 " 連続した空白に対してタブやバックスペースでカーソルが動く幅
 set softtabstop=2
 
+" xで削除した時はヤンクしない
+vnoremap x "_x
+nnoremap x "_x
+
 
 augroup MyVariousAutoCommand
     autocmd!
@@ -83,7 +87,3 @@ augroup MyVariousAutoCommand
     " ファイルのディレクトリに移動
     autocmd BufNewFile,BufRead,BufEnter * execute ':lcd ' . expand('%:p:h')
 augroup END
-
-
-
-

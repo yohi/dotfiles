@@ -39,6 +39,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'tpope/vim-fugitive'
 
   Plug 'airblade/vim-gitgutter'
+  set signcolumn=yes
+  let g:gitgutter_async = 1
+  let g:gitgutter_sign_modified = 'rw'
+  highlight GitGutterAdd ctermfg=green
+  highlight GitGutterChange ctermfg=yellow
+  highlight GitGutterDelete ctermfg=red
+  highlight GitGutterChangeDelete ctermfg=yellow
 
   " ---------------------------
 
@@ -64,13 +71,32 @@ call plug#begin('~/.config/nvim/plugged')
 """""""""""""""""""  Plug 'ncm2/ncm2-path'
   "Plug 'neoclide/coc.nvim', {'tag': '*', 'do': '/bin/sh ./install.sh'}
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"  let g:coc_global_extensions = [
+"    'coc-python',
+"        \, 'coc-json'
+"        \, 'coc-html'
+"        \, 'coc-css'
+"        \, 'coc-python'
+"        \, 'coc-pytright'
+"        \, 'coc-pyls'
+"        \, 'coc-explorer'
+"        \, 'coc-yank'
+"        \, 'coc-snippets'
+"  ]
 
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '/bin/sh ./install --all' }
   Plug 'junegunn/fzf.vim'
+  command! -bang -nargs=* Rg
+     \ call fzf#vim#grep(
+     \ 'rg --column --line-number --hidden --ignore-case --no-heading --color=always '.shellescape(<q-args>), 1,
+     \ <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+     \ : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+     \ <bang>0)
+  nnoremap <C-g> :Rg<Space>
+  nnoremap <C-p> :GFiles<CR>
+  nnoremap <C-h> :History<CR>
 
   Plug 'airblade/vim-rooter'
-
-
 
   " LINT
   Plug 'w0rp/ale'
@@ -112,14 +138,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'vim-scripts/dbext.vim'
 
 
-  Plug 'vim-python/python-syntax'
-  let g:python_highlight_all = 1
-
-  Plug 'lambdalisue/vim-django-support'
-
-
-  Plug 'klen/python-mode'
-  let g:pymode_python = 'python3'
+"  Plug 'vim-python/python-syntax'
+"  let g:python_highlight_all = 1
+"
+"  Plug 'lambdalisue/vim-django-support'
+"
+"  Plug 'klen/python-mode'
+"  let g:pymode_python = 'python3'
 
 
 call plug#end()

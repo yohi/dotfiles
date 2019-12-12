@@ -3,27 +3,27 @@
 "autocmd FileType php LanguageClientStart
 colorscheme codedark
 
-" [Replace of ctrlp.vim] ========================================
-nnoremap <C-p> :FZFFileList<CR>
-command! FZFFileList call fzf#run({
-            \ 'source': 'find . -type d -name .git -prune -o ! -name .DS_Store',
-            \ 'sink': 'e'})
-
-nnoremap <C-f> :Ag<CR>
-command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
-
-" プロジェクトルートをカレントディレクトリにする設定
-let g:rooter_change_directory_for_non_project_files = 'current'
-
-" `:Rg` でカレントディレクトリ以下のgrep (ripgrep)、プレビュー付き
-if executable('rg')
-    command! -bang -nargs=* Rg
-        \ call fzf#vim#grep(
-        \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
-        \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'up:50%:wrap'))
-endif
-
-
-let g:dbext_default_profile_pvs_hpf = 'type=MYSQL:host=127.0.0.1:port=3307:user=root:passwd=password:dbname=preview_hpf'
-let g:dbext_default_profile = 'pvs_hpf'
-
+"" [Replace of ctrlp.vim] ========================================
+"nnoremap <C-p> :FZFFileList<CR>
+"command! FZFFileList call fzf#run({
+"            \ 'source': 'find . -type d -name .git -prune -o ! -name .DS_Store',
+"            \ 'sink': 'e'})
+"
+"nnoremap <C-f> :Ag<CR>
+"command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+"
+"" プロジェクトルートをカレントディレクトリにする設定
+"let g:rooter_change_directory_for_non_project_files = 'current'
+"
+"" `:Rg` でカレントディレクトリ以下のgrep (ripgrep)、プレビュー付き
+"if executable('rg')
+"    command! -bang -nargs=* Rg
+"        \ call fzf#vim#grep(
+"        \   'rg --line-number --no-heading '.shellescape(<q-args>), 0,
+"        \   fzf#vim#with_preview({'options': '--exact --reverse --delimiter : --nth 3..'}, 'up:50%:wrap'))
+"endif
+"
+"
+"let g:dbext_default_profile_pvs_hpf = 'type=MYSQL:host=127.0.0.1:port=3307:user=root:passwd=password:dbname=preview_hpf'
+"let g:dbext_default_profile = 'pvs_hpf'
+"
