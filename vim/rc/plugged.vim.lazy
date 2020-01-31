@@ -1,3 +1,5 @@
+" vim: set ft=vim :
+
 " tomasiser/vim-code-dark
 colorscheme codedark
 
@@ -56,3 +58,9 @@ let g:ale_sign_column_always = 1
 
 " kamykn/spelunker.vim
 set nospell
+
+" Shougo/deoplete.nvim
+let g:deoplete#enable_at_startup = 1
+
+" vim-lsp-settings
+let g:lsp_settings_python = 'pyls-ms'

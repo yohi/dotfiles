@@ -65,13 +65,13 @@ set smartindent
 set smarttab
 
 " インデントが対応する半角スペースの数
-set shiftwidth=2
+set shiftwidth=4
 
 " タブが対応する半角スペースの数
-set tabstop=2
+set tabstop=4
 
 " 連続した空白に対してタブやバックスペースでカーソルが動く幅
-set softtabstop=2
+set softtabstop=4
 
 " xで削除した時はヤンクしない
 "vnoremap x "_x
@@ -87,3 +87,15 @@ augroup MyVariousAutoCommand
     " ファイルのディレクトリに移動
     autocmd BufNewFile,BufRead,BufEnter * execute ':lcd ' . expand('%:p:h')
 augroup END
+
+
+
+"" Load python3
+"if isdirectory(expand($PYENV_PATH))
+"    let g:python_host_prog = $PYENV_PATH . '/versions/neovim2/bin/python'
+"    let g:python3_host_prog = $PYENV_PATH . '/versions/neovim3/bin/python'
+"endif
+"if isdirectory(expand($ANYENV_PATH))
+"    let g:python_host_prog = $ANYENV_PATH . '/envs/pyenv/versions/neovim2/bin/python'
+"    let g:python3_host_prog = $ANYENV_PATH . '/envs/pyenv/versions/neovim3/bin/python'
+"endif

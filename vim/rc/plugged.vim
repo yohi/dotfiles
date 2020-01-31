@@ -1,5 +1,4 @@
 " PLUGGED.VIM =================================================
-
 if has('vim_starting')
   set rtp+=~/.vim/plugged/vim-plug
   if !isdirectory(expand('~/.vim/plugged/vim-plug'))
@@ -33,10 +32,22 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'airblade/vim-gitgutter'
 
   " ---------------------------
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  "Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  Plug 'prabirshrestha/async.vim'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'mattn/vim-lsp-settings'
+  Plug 'hrsh7th/vim-vsnip'
+  Plug 'hrsh7th/vim-vsnip-integ'
 
+  " FZF -----------------------
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '/bin/sh ./install --all' }
   Plug 'junegunn/fzf.vim'
+  "Plug 'yuki-ycino/fzf-preview.vim''
+
+  Plug 'wellle/context.vim'
+  "Plug '/tyru/caw.vim'
 
   Plug 'airblade/vim-rooter'
 
@@ -52,6 +63,14 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'rhysd/git-messenger.vim'
 
   Plug 'vim-scripts/dbext.vim'
+
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
 
 
 "Plug 'vim-python/python-syntax'

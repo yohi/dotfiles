@@ -25,6 +25,8 @@ end
 
 # ALIAS
 alias lg='lazygit'
+alias ld='lazydocker'
+alias python='python3'
 
 # HOMEBREW
 set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
@@ -35,3 +37,7 @@ export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 # DOCKER BUILDKIT
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
+
+# PYENV
+#set PATH $HOME/.pyenv/shims $PATH
+#eval (pyenv init - | source)
