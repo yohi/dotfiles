@@ -38,6 +38,5 @@ export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 
-# PYENV
-#set PATH $HOME/.pyenv/shims $PATH
-#eval (pyenv init - | source)
+# PIPENV
+eval (pipenv --completion)
