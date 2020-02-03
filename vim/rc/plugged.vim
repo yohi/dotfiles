@@ -38,8 +38,9 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'prabirshrestha/vim-lsp'
   Plug 'mattn/vim-lsp-settings'
-  Plug 'hrsh7th/vim-vsnip'
-  Plug 'hrsh7th/vim-vsnip-integ'
+"  Plug 'mattn/vim-lsp-icons'
+"  Plug 'hrsh7th/vim-vsnip'
+"  Plug 'hrsh7th/vim-vsnip-integ'
 
   " FZF -----------------------
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '/bin/sh ./install --all' }
