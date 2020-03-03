@@ -34,14 +34,21 @@ call plug#begin('~/.config/nvim/plugged')
   " ---------------------------
   "Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
   Plug 'prabirshrestha/vim-lsp'
   Plug 'mattn/vim-lsp-settings'
 "  Plug 'mattn/vim-lsp-icons'
 "  Plug 'hrsh7th/vim-vsnip'
 "  Plug 'hrsh7th/vim-vsnip-integ'
-
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+  Plug 'lighttiger2505/deoplete-vim-lsp'
+  "Plug 'prabirshrestha/asyncomplete.vim'
+  "Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " FZF -----------------------
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '/bin/sh ./install --all' }
   Plug 'junegunn/fzf.vim'
@@ -65,14 +72,25 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'vim-scripts/dbext.vim'
 
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
 
+  Plug 'lambdalisue/vim-django-support'
+  Plug 'jmcantrell/vim-virtualenv'
+  Plug 'Vimjas/vim-python-pep8-indent'
+
+  Plug 'APZelos/blamer.nvim'
+
+""""""""""""" 
+"""""""""""""[[plugins]]
+"""""""""""""repo = 'lambdalisue/vim-django-support'
+"""""""""""""on_ft = ['python', 'djangohtml']
+"""""""""""""
+"""""""""""""[[plugins]]
+"""""""""""""repo = 'jmcantrell/vim-virtualenv'
+"""""""""""""on_ft = ['python']
+"""""""""""""
+"""""""""""""[[plugins]]
+"""""""""""""repo = 'Vimjas/vim-python-pep8-indent'
+"""""""""""""on_ft = ['python']
 
 "Plug 'vim-python/python-syntax'
 "let g:python_highlight_all = 1
