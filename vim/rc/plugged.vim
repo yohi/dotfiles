@@ -54,7 +54,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/fzf.vim'
   "Plug 'yuki-ycino/fzf-preview.vim''
 
-  Plug 'wellle/context.vim'
+"  Plug 'wellle/context.vim'
   "Plug '/tyru/caw.vim'
 
   Plug 'airblade/vim-rooter'
