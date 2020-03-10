@@ -50,9 +50,13 @@ call plug#begin('~/.config/nvim/plugged')
   "Plug 'prabirshrestha/asyncomplete.vim'
   "Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " FZF -----------------------
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': '/bin/sh ./install --all' }
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
   Plug 'junegunn/fzf.vim'
-  "Plug 'yuki-ycino/fzf-preview.vim''
+  if has('nvim')
+    Plug 'yuki-ycino/fzf-preview.vim'
+  endif
+
+
 
 "  Plug 'wellle/context.vim'
   "Plug '/tyru/caw.vim'
@@ -74,8 +78,8 @@ call plug#begin('~/.config/nvim/plugged')
 
 
   Plug 'lambdalisue/vim-django-support'
-  Plug 'jmcantrell/vim-virtualenv'
-  Plug 'Vimjas/vim-python-pep8-indent'
+  " Plug 'jmcantrell/vim-virtualenv'
+  " Plug 'Vimjas/vim-python-pep8-indent'
 
   Plug 'APZelos/blamer.nvim'
 
