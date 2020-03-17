@@ -77,7 +77,7 @@ let g:lsp_text_edit_enabled = 0
 "let g:asyncomplete_popup_delay = 200
 
 " vim-lsp-settings
-let g:lsp_settings_python = 'pyls-ms'
+let g:lsp_settings_filetype_python = 'pyls-ms'
 
 " blamer
 let g:blamer_enabled = 1
