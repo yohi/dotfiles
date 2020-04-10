@@ -83,6 +83,8 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'APZelos/blamer.nvim'
 
+  Plug 'pechorin/any-jump.vim'
+
 """"""""""""" 
 """""""""""""[[plugins]]
 """""""""""""repo = 'lambdalisue/vim-django-support'

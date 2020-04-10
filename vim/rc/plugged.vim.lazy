@@ -75,6 +75,7 @@ let g:lsp_text_edit_enabled = 0
 "let g:asyncomplete_auto_popup = 1
 "let g:asyncomplete_auto_completeopt = 0
 "let g:asyncomplete_popup_delay = 200
+set completeopt-=preview
 
 " vim-lsp-settings
 let g:lsp_settings_filetype_python = 'pyls-ms'
@@ -83,3 +84,15 @@ let g:lsp_settings_filetype_python = 'pyls-ms'
 let g:blamer_enabled = 1
 let g:blamer_date_format = '%Y/%m/%d %H:%M'
 let g:blamer_template = '<committer>, <committer-time>  * <summary>'
+
+" pechorin/any-jump.vim
+let g:any_jump_disable_default_keybindings = 1
+" Normal mode: Jump to definition under cursore
+nnoremap <C-j> :AnyJump<CR>
+" Visual mode: jump to selected text in visual mode
+xnoremap <C-j> :AnyJumpVisual<CR>
+" Normal mode: open previous opened file (after jump)
+nnoremap <C-ab> :AnyJumpBack<CR>
+" Normal mode: open last closed search window again
+nnoremap <C-al> :AnyJumpLastResults<CR>
+
