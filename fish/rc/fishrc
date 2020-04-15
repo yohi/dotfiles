@@ -27,6 +27,11 @@ end
 alias lg='lazygit'
 alias ld='lazydocker'
 alias python='python3'
+#alias grep='rg'
+#alias find='fd'
+#alias cat='bat'
+alias ll='exa -al --icons'
+alias ls='exa'
 
 # HOMEBREW
 set -x PATH /home/linuxbrew/.linuxbrew/bin $PATH
