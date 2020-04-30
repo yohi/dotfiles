@@ -73,6 +73,15 @@ set tabstop=4
 " 連続した空白に対してタブやバックスペースでカーソルが動く幅
 set softtabstop=4
 
+augroup fileTypeIndent
+    autocmd!
+    autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+    autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
+augroup END
+
+" IMDISABLE
+set imdisable
+
 " xで削除した時はヤンクしない
 "vnoremap x "_x
 "nnoremap x "_x
