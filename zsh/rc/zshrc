@@ -1,122 +1,130 @@
 export LANG=ja_JP.UTF-8
-
-autoload -Uz colors
-colors
-
+###########################3 
+###########################3 autoload -Uz colors
+###########################3 colors
+###########################3 
 # コマンドのスペルミスを指摘
 setopt correct
-
-#bindkey -v
-#bindkey -a
-
-case ${OSTYPE} in
-  darwin*)
-    # MAC
-    PROMPT='%F{red}[%n@%m]%f %~
-%% '
-    export PATH="/usr/local/sbin:$PATH"
-    #export PATH=$PATH:/Applications/MAMP/Library/bin
-    ;;
-  linux*)
-    # LINUX
-    PROMPT='%F{blue}[%n@%m]%f %~
-%% '
-    ;;
-esac
-
-
-fpath=(/usr/local/share/zsh-completions $fpath)
-
+###########################3 
+###########################3 #bindkey -v
+###########################3 #bindkey -a
+###########################3 
+###########################3 case ${OSTYPE} in
+###########################3   darwin*)
+###########################3     # MAC
+###########################3     PROMPT='%F{red}[%n@%m]%f %~
+###########################3 %% '
+###########################3     export PATH="/usr/local/sbin:$PATH"
+###########################3     #export PATH=$PATH:/Applications/MAMP/Library/bin
+###########################3     ;;
+###########################3   linux*)
+###########################3     # LINUX
+###########################3     PROMPT='%F{blue}[%n@%m]%f %~
+###########################3 %% '
+###########################3     ;;
+###########################3 esac
+###########################3 
+###########################3 
+###########################3 fpath=(/usr/local/share/zsh-completions $fpath)
+###########################3 
 alias la="ls -a"
 alias ll="ls -l"
 alias du="du -h"
 alias df="df -h"
-
+alias ld="lazydocker"
+alias lg="lazygit"
+###########################3 
 # ls で ディレクトリに色を付ける
 autoload -U compinit
 compinit -u
-
-export LSCOLORS=exfxcxdxbxegedabagacad
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-
-alias ls="ls -GF"
-alias gls="gls --color"
-
-zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-
+###########################3 
+###########################3 export LSCOLORS=exfxcxdxbxegedabagacad
+###########################3 export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+###########################3 
+###########################3 alias ls="ls -GF"
+###########################3 alias gls="gls --color"
+###########################3 
+###########################3 zstyle ':completion:*' list-colors 'di=34' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+###########################3 
 # DELETE KEY 有効化
 bindkey "^[[3~" delete-char
-
-# powerline-shell
-#function powerline_precmd() {
-#    PS1="$(~/powerline-shell.py $? --shell zsh 2> /dev/null)"
-#}
+###########################3 
+###########################3 # powerline-shell
+###########################3 #function powerline_precmd() {
+###########################3 #    PS1="$(~/powerline-shell.py $? --shell zsh 2> /dev/null)"
+###########################3 #}
+###########################3 #
+###########################3 #function install_powerline_precmd() {
+###########################3 #  for s in "${precmd_functions[@]}"; do
+###########################3 #    if [ "$s" = "powerline_precmd" ]; then
+###########################3 #      return
+###########################3 #    fi
+###########################3 #  done
+###########################3 #  precmd_functions+=(powerline_precmd)
+###########################3 #}
+###########################3 #
+###########################3 #if [ "$TERM" != "linux" ]; then
+###########################3 #    install_powerline_precmd
+###########################3 #fi
+###########################3 
+###########################3 # HOMEBREW
+###########################3 PATH=$PATH:$HOME/bin
+###########################3 export PATH="$HOME/.linuxbrew/bin:$PATH"
+###########################3 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+###########################3 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+###########################3 export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
+###########################3 export PATH="$HOME/.linuxbrew/bin:$PATH"
+###########################3 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+###########################3 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+###########################3 export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
+###########################3 
+###########################3 # ssh-agent
+###########################3 #echo -n "ssh-agent: "
+###########################3 #if [ -e ~/.ssh-agent-info ]; then
+###########################3 #    source ~/.ssh-agent-info
+###########################3 #fi
+###########################3 #
+###########################3 #ssh-add -l >&/dev/null
+###########################3 #if [ $? = 2 ] ; then
+###########################3 ##    echo -n "ssh-agent: restart...."
+###########################3 #    ssh-agent >~/.ssh-agent-info
+###########################3 #    source ~/.ssh-agent-info
+###########################3 #fi
+###########################3 #if ssh-add -l >&/dev/null ; then
+###########################3 ##    echo "ssh-agent: Identity is already stored."
+###########################3 #else
+###########################3 #    ssh-add
+###########################3 #fi
+###########################3 
+###########################3 # GIT
+###########################3 export GIT_MERGE_AUTOEDIT=no
+###########################3 export PATH="/usr/local/sbin:$PATH"
+###########################3 
+###########################3 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+###########################3 
+###########################3 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+###########################3 
+###########################3 ### Added by Zinit's installer
+###########################3 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+###########################3     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
+###########################3     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+###########################3     command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+###########################3         print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
+###########################3         print -P "%F{160}▓▒░ The clone has failed.%f"
+###########################3 fi
+###########################3 source "$HOME/.zinit/bin/zinit.zsh"
+###########################3 autoload -Uz _zinit
+###########################3 (( ${+_comps} )) && _comps[zinit]=_zinit
+###########################3 ### End of Zinit installer's chunk
 #
-#function install_powerline_precmd() {
-#  for s in "${precmd_functions[@]}"; do
-#    if [ "$s" = "powerline_precmd" ]; then
-#      return
-#    fi
-#  done
-#  precmd_functions+=(powerline_precmd)
-#}
 #
-#if [ "$TERM" != "linux" ]; then
-#    install_powerline_precmd
-#fi
-
-# HOMEBREW
-PATH=$PATH:$HOME/bin
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
-export PATH="$HOME/.linuxbrew/bin:$PATH"
-export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
-
-# ssh-agent
-#echo -n "ssh-agent: "
-#if [ -e ~/.ssh-agent-info ]; then
-#    source ~/.ssh-agent-info
-#fi
 #
-#ssh-add -l >&/dev/null
-#if [ $? = 2 ] ; then
-##    echo -n "ssh-agent: restart...."
-#    ssh-agent >~/.ssh-agent-info
-#    source ~/.ssh-agent-info
-#fi
-#if ssh-add -l >&/dev/null ; then
-##    echo "ssh-agent: Identity is already stored."
-#else
-#    ssh-add
-#fi
-
-# GIT
-export GIT_MERGE_AUTOEDIT=no
-export PATH="/usr/local/sbin:$PATH"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f"
-fi
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-### End of Zinit installer's chunk
-
-
-plugin ice depth=1; zplugin light romkatv/powerlevel10k
+#
+source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+
+
+source /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
