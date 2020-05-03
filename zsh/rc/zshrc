@@ -67,16 +67,20 @@ bindkey "^[[3~" delete-char
 ###########################3 #    install_powerline_precmd
 ###########################3 #fi
 ###########################3 
-###########################3 # HOMEBREW
-###########################3 PATH=$PATH:$HOME/bin
-###########################3 export PATH="$HOME/.linuxbrew/bin:$PATH"
-###########################3 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-###########################3 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-###########################3 export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
-###########################3 export PATH="$HOME/.linuxbrew/bin:$PATH"
-###########################3 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-###########################3 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-###########################3 export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
+#
+# HOMEBREW
+# PATH=$PATH:$HOME/bin
+# export PATH="$HOME/.linuxbrew/bin:$PATH"
+# export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+# export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+# export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
+# export PATH="$HOME/.linuxbrew/bin:$PATH"
+# export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+# export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+# export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
+export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
+
 ###########################3 
 ###########################3 # ssh-agent
 ###########################3 #echo -n "ssh-agent: "
@@ -128,3 +132,27 @@ source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 
 source /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+
+# ROOTLESS DOCKER
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+
+# DOCKER BUILDKIT
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+### End of Zinit's installer chunk
+
+
+# ZINIT
+source $HOME/.zinit/bin/zinit.zsh
+
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+zinit light zsh-users/zsh-autosuggestions
+zinit light zdharma/fast-syntax-highlighting
+zinit load zdharma/history-search-multi-word
+
+zinit ice from"gh-r" as"program"
+zinit load junegunn/fzf-bin
+
+zinit wait lucid atload"zicompinit; zicdreplay" blockf for zsh-users/zsh-completions
