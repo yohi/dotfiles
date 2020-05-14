@@ -47,6 +47,7 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
   Plug 'lighttiger2505/deoplete-vim-lsp'
+  Plug 'deoplete-plugins/deoplete-jedi'
   "Plug 'prabirshrestha/asyncomplete.vim'
   "Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " FZF -----------------------
