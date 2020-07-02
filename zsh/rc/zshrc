@@ -68,6 +68,18 @@ bindkey "^[[3~" delete-char
 ###########################3 #fi
 ###########################3 
 #
+# 履歴ファイルの保存先
+export HISTFILE=${HOME}/.zsh_history
+
+# メモリに保存される履歴の件数
+export HISTSIZE=1000
+
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=100000
+
+# 重複を記録しない
+setopt hist_ignore_dups
+
 # HOMEBREW
 # PATH=$PATH:$HOME/bin
 # export PATH="$HOME/.linuxbrew/bin:$PATH"

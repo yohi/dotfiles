@@ -86,6 +86,8 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'pechorin/any-jump.vim'
 
+  Plug 'RRethy/vim-illuminate'
+
 """"""""""""" 
 """""""""""""[[plugins]]
 """""""""""""repo = 'lambdalisue/vim-django-support'
