@@ -54,7 +54,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
   Plug 'junegunn/fzf.vim'
   if has('nvim')
-    Plug 'yuki-ycino/fzf-preview.vim'
+    Plug 'yuki-ycino/fzf-preview.vim', { 'do': ':FzfPreviewInstall' }
   endif
 
 
