@@ -51,11 +51,15 @@ call plug#begin('~/.config/nvim/plugged')
   "Plug 'prabirshrestha/asyncomplete.vim'
   "Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " FZF -----------------------
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
-  Plug 'junegunn/fzf.vim'
-  if has('nvim')
-    Plug 'yuki-ycino/fzf-preview.vim', { 'do': ':FzfPreviewInstall', 'commit': '404f5a7897cdb46ce7398d8aa3087818fe5b78bf' }
-  endif
+  "
+  "
+  " Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
+  " Plug 'junegunn/fzf.vim'
+  " if has('nvim')
+  "   Plug 'yuki-ycino/fzf-preview.vim', { 'do': ':FzfPreviewInstall', 'commit': '404f5a7897cdb46ce7398d8aa3087818fe5b78bf' }
+  " endif
+  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' }
 
 
 
