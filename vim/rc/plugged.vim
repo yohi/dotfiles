@@ -92,7 +92,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'RRethy/vim-illuminate'
 
-  Plug 'gelguy/wilder.nvim'
+  Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
 """"""""""""" 
 """""""""""""[[plugins]]

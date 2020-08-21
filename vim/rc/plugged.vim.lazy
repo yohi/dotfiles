@@ -96,10 +96,7 @@ nnoremap <C-ab> :AnyJumpBack<CR>
 " Normal mode: open last closed search window again
 nnoremap <C-al> :AnyJumpLastResults<CR>
 
-
-
-
-
+" Wilder ============================
 call wilder#enable_cmdline_enter()
 
 set wildcharm=<Tab>
