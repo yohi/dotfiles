@@ -97,6 +97,15 @@ augroup MyVariousAutoCommand
     autocmd BufNewFile,BufRead,BufEnter * execute ':lcd ' . expand('%:p:h')
 augroup END
 
+" 特定を
+set synmaxcol=200
+
+" 
+augroup vimrc-highlight
+  au!
+  au Syntax json if 1000 < col('$') | syntax off | endif
+augroup END
+
 
 
 "" Load python3
