@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export LANG=ja_JP.UTF-8
 ###########################3 
 ###########################3 autoload -Uz colors
@@ -155,23 +162,24 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 ### End of Zinit's installer chunk
 
 
-# ZINIT
+# zinit settings
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
 source $HOME/.zinit/bin/zinit.zsh
 
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma/fast-syntax-highlighting
-zinit load zdharma/history-search-multi-word
+zinit light zdharma/history-search-multi-word
 
 zinit ice from"gh-r" as"program"
 zinit load junegunn/fzf-bin
 
 zinit wait lucid atload"zicompinit; zicdreplay" blockf for zsh-users/zsh-completions
 
-
-
 # peco settings
+# brew install peco
+
 # 過去に実行したコマンドを選択。ctrl-rにバインド
 function peco-select-history() {
   BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
@@ -188,7 +196,6 @@ function peco-get-destination-from-cdr() {
   peco --query "$LBUFFER"
 }
 
-
 ### 過去に移動したことのあるディレクトリを選択。ctrl-uにバインド
 function peco-cdr() {
   local destination="$(peco-get-destination-from-cdr)"
@@ -202,10 +209,11 @@ function peco-cdr() {
 zle -N peco-cdr
 bindkey '^u' peco-cdr
 
-
 # ブランチを簡単切り替え。git checkout lbで実行できる
 alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
 
-
 # dockerコンテナに入る。deで実行できる
 alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
+
+# エクスプローラオープン
+alias open='xdg-open .'
