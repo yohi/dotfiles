@@ -107,6 +107,8 @@ augroup vimrc-highlight
 augroup END
 
 
+let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
+
 
 "" Load python3
 "if isdirectory(expand($PYENV_PATH))
