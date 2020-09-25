@@ -40,7 +40,6 @@ call plug#begin('~/.config/nvim/plugged')
 "  Plug 'hrsh7th/vim-vsnip'
 "  Plug 'hrsh7th/vim-vsnip-integ'
   if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugins' }
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   else
     Plug 'Shougo/deoplete.nvim'
@@ -60,6 +59,7 @@ call plug#begin('~/.config/nvim/plugged')
   "   Plug 'yuki-ycino/fzf-preview.vim', { 'do': ':FzfPreviewInstall', 'commit': '404f5a7897cdb46ce7398d8aa3087818fe5b78bf' }
   " endif
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' }
 
 
@@ -93,7 +93,6 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'RRethy/vim-illuminate'
 
-  Plug 'gelguy/wilder.nvim', { 'do': 'UpdateRemotePlugins' }
   Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
   Plug 'nvim-treesitter/nvim-treesitter'
