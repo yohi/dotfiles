@@ -47,9 +47,9 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
   Plug 'lighttiger2505/deoplete-vim-lsp'
-  Plug 'deoplete-plugins/deoplete-jedi'
-  "Plug 'prabirshrestha/asyncomplete.vim'
-  "Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  " Plug 'deoplete-plugins/deoplete-jedi'
+  " Plug 'prabirshrestha/asyncomplete.vim'
+  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " FZF -----------------------
   "
   "
@@ -58,9 +58,10 @@ call plug#begin('~/.config/nvim/plugged')
   " if has('nvim')
   "   Plug 'yuki-ycino/fzf-preview.vim', { 'do': ':FzfPreviewInstall', 'commit': '404f5a7897cdb46ce7398d8aa3087818fe5b78bf' }
   " endif
+
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
   Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' }
+
 
 
 
