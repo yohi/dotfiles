@@ -88,80 +88,23 @@ export SAVEHIST=100000
 setopt hist_ignore_dups
 
 # HOMEBREW
-# PATH=$PATH:$HOME/bin
-# export PATH="$HOME/.linuxbrew/bin:$PATH"
-# export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-# export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-# export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
-# export PATH="$HOME/.linuxbrew/bin:$PATH"
-# export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
-# export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
-# export LD_LIBRARY_PATH="$HOME/.linuxbrew/lib:$LD_LIBRARY_PATH"
-# export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-# export PATH="/home/linuxbrew/.linuxbrew/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
-###########################3 
-###########################3 # ssh-agent
-###########################3 #echo -n "ssh-agent: "
-###########################3 #if [ -e ~/.ssh-agent-info ]; then
-###########################3 #    source ~/.ssh-agent-info
-###########################3 #fi
-###########################3 #
-###########################3 #ssh-add -l >&/dev/null
-###########################3 #if [ $? = 2 ] ; then
-###########################3 ##    echo -n "ssh-agent: restart...."
-###########################3 #    ssh-agent >~/.ssh-agent-info
-###########################3 #    source ~/.ssh-agent-info
-###########################3 #fi
-###########################3 #if ssh-add -l >&/dev/null ; then
-###########################3 ##    echo "ssh-agent: Identity is already stored."
-###########################3 #else
-###########################3 #    ssh-add
-###########################3 #fi
-###########################3 
-###########################3 # GIT
-###########################3 export GIT_MERGE_AUTOEDIT=no
-###########################3 export PATH="/usr/local/sbin:$PATH"
-###########################3 
-###########################3 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-###########################3 
-###########################3 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-###########################3 
-###########################3 ### Added by Zinit's installer
-###########################3 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-###########################3     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma/zinit)…%f"
-###########################3     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-###########################3     command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-###########################3         print -P "%F{33}▓▒░ %F{34}Installation successful.%f" || \
-###########################3         print -P "%F{160}▓▒░ The clone has failed.%f"
-###########################3 fi
-###########################3 source "$HOME/.zinit/bin/zinit.zsh"
-###########################3 autoload -Uz _zinit
-###########################3 (( ${+_comps} )) && _comps[zinit]=_zinit
-###########################3 ### End of Zinit installer's chunk
-#
-#
-#
-#
+# SSH AGENT TODO
 source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme 
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-
 source /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 # ROOTLESS DOCKER
-# export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
+export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
 # DOCKER BUILDKIT
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
-### End of Zinit's installer chunk
-
 
 # zinit settings
 # sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
@@ -179,8 +122,6 @@ zinit load junegunn/fzf-bin
 zinit wait lucid atload"zicompinit; zicdreplay" blockf for zsh-users/zsh-completions
 
 # peco settings
-# brew install peco
-
 # 過去に実行したコマンドを選択。ctrl-rにバインド
 function peco-select-history() {
   BUFFER=$(\history -n -r 1 | peco --query "$LBUFFER")
@@ -218,3 +159,11 @@ alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
 
 # エクスプローラオープン
 alias open='xdg-open .'
+
+
+
+
+export PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/bin:$PATH"   
+export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib"
+export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/mysql@5.7/include"
+export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib/pkgconfig"

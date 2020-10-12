@@ -98,6 +98,11 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'nvim-treesitter/nvim-treesitter'
 
+  Plug 'lambdalisue/fern.vim'
+  Plug 'lambdalisue/fern-hijack.vim'
+
+  Plug 'lambdalisue/reword.vim'
+
 """"""""""""" 
 """""""""""""[[plugins]]
 """""""""""""repo = 'lambdalisue/vim-django-support'
