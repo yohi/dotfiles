@@ -40,6 +40,16 @@ alias du="du -h"
 alias df="df -h"
 alias ld="lazydocker"
 alias lg="lazygit"
+alias mkdirdate="mkdir $(date +"%Y%m%d")"
+alias mkdirdatetime="mkdir $(date +"%Y%m%d%I%M%S")"
+
+# 作業ディレクトリの作成
+WORKDIR="/tmp/${DATETIME}_$$"
+mkdir ${WORKDIR}
+
+
+
+
 ###########################3 
 # ls で ディレクトリに色を付ける
 autoload -U compinit

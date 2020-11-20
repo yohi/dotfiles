@@ -107,7 +107,8 @@ augroup vimrc-highlight
 augroup END
 
 
-let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3.8'
+" let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3.9'
+let g:python3_host_prog = '/usr/bin/python3'
 
 
 "" Load python3
