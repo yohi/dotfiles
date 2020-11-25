@@ -16,7 +16,11 @@ set fileformat=unix
 set fileformats=unix,dos,mac
 
 " バックアップファイルを作成しない
-set nobackup
+" set nobackup
+" バックアップ先の設定
+set backup
+set backupdir=/tmp/vim_bk/
+set backupext=.bk
 
 " スワップファイルを作成しない
 set noswapfile
