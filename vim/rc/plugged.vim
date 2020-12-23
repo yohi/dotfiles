@@ -102,13 +102,26 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
-  " Plug 'nvim-treesitter/nvim-treesitter'
-  Plug 'nvim-treesitter/nvim-treesitter', { 'commit': '33ffdce6906b0946a6503c73b7fc71250cc938aa' }
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Plug 'nvim-treesitter/nvim-treesitter', { 'commit': '33ffdce6906b0946a6503c73b7fc71250cc938aa', 'do': ':TSUpdate' }
 
   Plug 'lambdalisue/fern.vim'
   Plug 'lambdalisue/fern-hijack.vim'
 
   Plug 'lambdalisue/reword.vim'
+
+  Plug 'thinca/vim-quickrun'
+  Plug 'lambdalisue/vim-quickrun-neovim-job'
+
+  let g:quickrun_config = {'_': {}}
+
+  if has('nvim')
+    " Use 'neovim_job' in Neovim
+    let g:quickrun_config._.runner = 'neovim_job'
+  elseif exists('*ch_close_in')
+    " Use 'job' in Vim which support job feature
+    let g:quickrun_config._.runner = 'job'
+  endif
 
 """"""""""""" 
 """""""""""""[[plugins]]
