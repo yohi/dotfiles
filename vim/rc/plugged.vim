@@ -64,12 +64,7 @@ call plug#begin('~/.config/nvim/plugged')
   " Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins', 'commit': '7ce61e856e32b950e32fdb04fabb7d9f36aa33ba' }
 
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  " Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins', 'commit': 'dd1552404959588d3edec9b618a13d3a916cb7ca' }
-  Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release', 'do': ':UpdateRemotePlugins' }
-
-
-
-
+  Plug 'yuki-ycino/fzf-preview.vim', { 'branch': 'release/rpc' }
 
 "  Plug 'wellle/context.vim'
   "Plug '/tyru/caw.vim'

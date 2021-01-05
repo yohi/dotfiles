@@ -78,6 +78,10 @@ let g:lsp_text_edit_enabled = 0
 "let g:asyncomplete_auto_completeopt = 0
 "let g:asyncomplete_popup_delay = 200
 let g:asyncomplete_matchfuzzy = 1
+let g:lsp_diagnostics_virtual_text_enabled = 0 " Lintエラーの横に仮想テキスト表示
+ " 定義ジャンプ
+nnoremap <F12> :LspDefinition<CR>
+nnoremap <C-j> :LspDefinition<CR>
 set completeopt-=preview
 
 " vim-lsp-settings
@@ -162,7 +166,7 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
   },
   indent = {
-    enable = true,
+    enable = false,
   },
 }
 EOF
