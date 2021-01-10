@@ -98,7 +98,7 @@ export SAVEHIST=100000
 setopt hist_ignore_dups
 
 # HOMEBREW
-export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # SSH AGENT TODO

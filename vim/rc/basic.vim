@@ -19,7 +19,7 @@ set fileformats=unix,dos,mac
 " set nobackup
 " バックアップ先の設定
 set backup
-set backupdir=/tmp/vim_bk/
+set backupdir=~/dotfiles/vim/backup
 set backupext=.bk
 
 " スワップファイルを作成しない
