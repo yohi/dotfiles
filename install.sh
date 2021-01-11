@@ -32,6 +32,8 @@ $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
 # ZSH
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
 $(ln -nfs ~/dotfiles/zsh/rc/zshrc ~/.zshrc)
+sudo sh -c "echo $(which zsh) >> /etc/shells"
+chsh -s $(which zsh)
 
 # FISH
 curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
@@ -59,3 +61,32 @@ sudo loginctl enable-linger y_ohi   # TODO USERNAME
 
 git config --global user.name 'Yusuke Ohi'
 git config --global user.email 'yohi@diamondhead.tech'
+
+sudo apt install -y chrome-gnome-shell
+sudo apt install -y gnome-tweaks
+
+# for system monitor
+sudo apt install gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0
+
+sudo apt install terminator
+
+sudo snap install chromium
+sudo snap install postman
+
+
+# Add TablePlus gpg key
+wget -O - -q http://deb.tableplus.com/apt.tableplus.com.gpg.key | sudo apt-key add - 
+
+# Add TablePlus repo
+sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian tableplus main"
+
+# Install
+sudo apt update
+sudo apt install tableplus
+
+sudo add-apt-repository ppa:boltgolt/howdy
+sudo apt update
+sudo apt install howdy
+sudo howdy add
+
+# https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1

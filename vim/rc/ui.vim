@@ -2,7 +2,7 @@
 
 
 " SYNTAX
-syntax on
+set syntax=on
 
 " 不可視文字の可視化
 set list
