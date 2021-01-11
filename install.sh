@@ -90,3 +90,5 @@ sudo apt install howdy
 sudo howdy add
 
 # https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1
+
+cargo install alacritty
