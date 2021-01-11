@@ -91,4 +91,5 @@ sudo howdy add
 
 # https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1
 
-cargo install alacritty
+sudo add-apt-repository ppa:aslatter/ppa
+sudo apt install alacritty
