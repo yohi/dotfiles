@@ -174,10 +174,10 @@ alias open='xdg-open .'
 
 
 
-export PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/bin:$PATH"
-export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib"
-export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/mysql@5.7/include"
-export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib/pkgconfig"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/bin:$PATH"
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib"
+# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/mysql@5.7/include"
+# export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib/pkgconfig"
 
 export VISUAL=nvim
 export EDITOR=nvim

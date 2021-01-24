@@ -43,10 +43,11 @@ highlight GitGutterChangeDelete ctermfg=yellow
 
 " junegunn/fzf
 " junegunn/fzf.vim
-nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
-nnoremap <C-p> :FzfPreviewProjectFile<CR>
+" nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
+" nnoremap <C-p> :FzfPreviewProjectFile<CR>
 " nnoremap <C-g> :CocCommand fzf-preview.ProjectGrep .<CR>
 " nnoremap <C-p> :CocCommand fzf-preview.ProjectFiles<CR>
+
 
 " w0rp/ale
 let g:ale_sign_column_always = 1
@@ -113,7 +114,45 @@ cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
 " only / and ? is enabled by default
 call wilder#set_option('modes', ['/', '?', ':'])
 
-
+""""""""""""""""""""""""""""""""""""""""""""""" Define mappings
+""""""""""""""""""""""""""""""""""""""""""""""autocmd FileType denite call s:denite_my_settings()
+""""""""""""""""""""""""""""""""""""""""""""""function! s:denite_my_settings() abort
+""""""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> <CR>
+""""""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action')
+""""""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> d
+""""""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action', 'delete')
+""""""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> p
+""""""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action', 'preview')
+""""""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> q
+""""""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('quit')
+""""""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> i
+""""""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('open_filter_buffer')
+""""""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> <Space>
+""""""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('toggle_select').'j'
+""""""""""""""""""""""""""""""""""""""""""""""endfunction
+""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""let s:denite_win_width_percent = 0.85
+""""""""""""""""""""""""""""""""""""""""""""""let s:denite_win_height_percent = 0.7
+""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""" " Change denite default options
+""""""""""""""""""""""""""""""""""""""""""""""" call denite#custom#option('default', {
+"""""""""""""""""""""""""""""""""""""""""""""""     \ 'split': 'floating',
+"""""""""""""""""""""""""""""""""""""""""""""""     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+"""""""""""""""""""""""""""""""""""""""""""""""     \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+"""""""""""""""""""""""""""""""""""""""""""""""     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+"""""""""""""""""""""""""""""""""""""""""""""""     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+"""""""""""""""""""""""""""""""""""""""""""""""     \ })
+""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""" call denite#custom#var('file/rec', 'command',
+""""""""""""""""""""""""""""""""""""""""""""""" \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+""""""""""""""""""""""""""""""""""""""""""""""" customize ignore globs
+""""""""""""""""""""""""""""""""""""""""""""""call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
+""""""""""""""""""""""""""""""""""""""""""""""call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+""""""""""""""""""""""""""""""""""""""""""""""      \ [
+""""""""""""""""""""""""""""""""""""""""""""""      \ '.git/', 'build/', '__pycache__/',
+""""""""""""""""""""""""""""""""""""""""""""""      \ 'images/', '*.o', '*.make',
+""""""""""""""""""""""""""""""""""""""""""""""      \ '*.min.*',
+""""""""""""""""""""""""""""""""""""""""""""""      \ 'img/', 'fonts/'])
 
 " nvim-treesitter
 " lua <<EOF
@@ -170,3 +209,62 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  call deoplete#custom#buffer_option('auto_complete', v:false)
+
+  " エンターキー: 垂直分割でファイルを開く
+  nnoremap <silent><buffer><expr> <CR>
+  \ denite#do_map('do_action', 'vsplit')
+  " スペースキー: 水平分割でファイルを開く
+  nnoremap <silent><buffer><expr> <Space>
+  \ denite#do_map('do_action', 'split')
+  " エスケープキー: 終了
+  nnoremap <silent><buffer><expr> <Esc>
+  \ denite#do_map('quit')
+  " Qキー: 終了
+  nnoremap <silent><buffer><expr> q
+  \ denite#do_map('quit')
+  " Iキー: フィルター入力の開始
+  nnoremap <silent><buffer><expr> i
+  \ denite#do_map('open_filter_buffer')
+  " Aキー: フィルター入力の開始
+  nnoremap <silent><buffer><expr> a
+  \ denite#do_map('open_filter_buffer')
+endfunction
+
+let s:denite_win_width_percent = 0.85
+let s:denite_win_height_percent = 0.7
+
+" Change denite default options
+call denite#custom#option('default', {
+    \ 'split': 'floating',
+    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+    \ })
+
+" Change file/rec command 
+call denite#custom#var('file/rec', 'command',
+\ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+
+" Ripgrep command on grep source
+call denite#custom#var('grep', {
+           \ 'command': ['rg'],
+           \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
+           \ 'recursive_opts': [],
+           \ 'pattern_opt': ['--regexp'],
+           \ 'separator': ['--'],
+           \ 'final_opts': [],
+           \ })
+
+nmap <silent> ;f  :<C-u>Denite -start-filter file/rec<CR>
+nmap <silent> ;F  :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
+nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
+nmap <silent> ;;g :<C-u>Denite grep<CR>
+nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
+nnoremap <C-p> :DeniteProjectDir -start-filter file/rec -split="floating"<CR>

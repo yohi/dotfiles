@@ -68,6 +68,8 @@ sudo apt install -y gnome-tweaks
 # for system monitor
 sudo apt install gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0
 
+sudo add-apt-repository ppa:mattrose/terminator
+sudo apt update
 sudo apt install terminator
 
 sudo snap install chromium

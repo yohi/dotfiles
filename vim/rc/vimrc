@@ -4,8 +4,8 @@ set iminsert=0 imsearch=0
 "
 "set noimdisable
 
-let $VIMRUNTIME="/usr/share/nvim/runtime"
-set runtimepath+=/usr/share/nvim/runtime
+"let $VIMRUNTIME="/usr/share/nvim/runtime"
+"set runtimepath+=/usr/share/nvim/runtime
 
 runtime! rc/*.vim
 runtime! rc/*.vim.lazy
