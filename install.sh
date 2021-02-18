@@ -9,18 +9,18 @@ sudo apt -y upgrade
 sudo apt -y install language-pack-ja
 sudo update-locale LANG=ja_JP.UTF8
 
-sudo apt install build-essential curl file git
+sudo apt -y install build-essential curl file git
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/y_ohi/.profile
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle
 
-sudo apt install chrome-gnome-shell
+sudo apt -y install chrome-gnome-shell
 
 $(mkdir -p ~/.config)
 
 # VIM
-pip3 install pynvim
+pip3 install -y pynvim
 $(ln -nfs ~/dotfiles/vim ~/.vim)
 $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.vimrc)
 $(ln -nfs ~/dotfiles/vim/rc/gvimrc ~/.gvimrc)
@@ -66,32 +66,32 @@ sudo apt install -y chrome-gnome-shell
 sudo apt install -y gnome-tweaks
 
 # for system monitor
-sudo apt install gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0
+sudo apt install -y gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0
 
-sudo add-apt-repository ppa:mattrose/terminator
+sudo add-apt-repository -y ppa:mattrose/terminator
 sudo apt update
-sudo apt install terminator
+sudo apt install -y terminator
 
-sudo snap install chromium
-sudo snap install postman
+sudo snap install -y chromium
+sudo snap install -y postman
 
 
 # Add TablePlus gpg key
 wget -O - -q http://deb.tableplus.com/apt.tableplus.com.gpg.key | sudo apt-key add - 
 
 # Add TablePlus repo
-sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian tableplus main"
+sudo add-apt-repository -y "deb [arch=amd64] https://deb.tableplus.com/debian tableplus main"
 
 # Install
 sudo apt update
-sudo apt install tableplus
+sudo apt install -y tableplus
 
-sudo add-apt-repository ppa:boltgolt/howdy
+sudo add-apt-repository -y ppa:boltgolt/howdy
 sudo apt update
-sudo apt install howdy
+sudo apt install -y howdy
 sudo howdy add
 
 # https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1
 
-sudo add-apt-repository ppa:aslatter/ppa
-sudo apt install alacritty
+# sudo add-apt-repository ppa:aslatter/ppa
+# sudo apt install alacritty
