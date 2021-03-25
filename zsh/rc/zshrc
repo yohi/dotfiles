@@ -45,8 +45,8 @@ alias mkdirdate="mkdir $(date +"%Y%m%d") && cd $(date +"%Y%m%d")"
 alias mkdirdatetime="mkdir $(date +"%Y%m%d%I%M%S")"
 
 # 作業ディレクトリの作成
-WORKDIR="/tmp/${DATETIME}_$$"
-mkdir ${WORKDIR}
+#WORKDIR="/tmp/${DATETIME}_$$"
+#mkdir ${WORKDIR}
 
 
 
@@ -113,7 +113,7 @@ source /home/linuxbrew/.linuxbrew/share/zsh-autosuggestions/zsh-autosuggestions.
 # # ROOTLESS DOCKER
 export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
 
-# DOCKER BUILDKIT
+# # DOCKER BUILDKIT
 export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 

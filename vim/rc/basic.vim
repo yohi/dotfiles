@@ -126,3 +126,7 @@ let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
 "    let g:python_host_prog = $ANYENV_PATH . '/envs/pyenv/versions/neovim2/bin/python'
 "    let g:python3_host_prog = $ANYENV_PATH . '/envs/pyenv/versions/neovim3/bin/python'
 "endif
+"
+"
+"
+inoremap <C-[> <C-[>:w<CR>

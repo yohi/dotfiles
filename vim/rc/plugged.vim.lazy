@@ -44,7 +44,7 @@ highlight GitGutterChangeDelete ctermfg=yellow
 " junegunn/fzf
 " junegunn/fzf.vim
 " nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
-" nnoremap <C-p> :FzfPreviewProjectFile<CR>
+ nnoremap <C-p> :FzfPreviewProjectFile<CR>
 " nnoremap <C-g> :CocCommand fzf-preview.ProjectGrep .<CR>
 " nnoremap <C-p> :CocCommand fzf-preview.ProjectFiles<CR>
 
@@ -199,16 +199,16 @@ call wilder#set_option('modes', ['/', '?', ':'])
 " EOF
 
 " treesitter
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
-  indent = {
-    enable = false,
-  },
-}
-EOF
+" lua <<EOF
+" require'nvim-treesitter.configs'.setup {
+"   highlight = {
+"     enable = true,
+"   },
+"   indent = {
+"     enable = false,
+"   },
+" }
+" EOF
 
 
 autocmd FileType denite call s:denite_my_settings()
@@ -267,4 +267,4 @@ nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
 nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
 nmap <silent> ;;g :<C-u>Denite grep<CR>
 nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
-nnoremap <C-p> :DeniteProjectDir -start-filter file/rec -split="floating"<CR>
+" nnoremap <C-p> :DeniteProjectDir -start-filter file/rec -split="floating"<CR>

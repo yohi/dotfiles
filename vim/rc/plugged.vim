@@ -97,7 +97,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'gelguy/wilder.nvim', { 'do': ':UpdateRemotePlugins' }
 
-  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  " Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   " Plug 'nvim-treesitter/nvim-treesitter', { 'commit': '33ffdce6906b0946a6503c73b7fc71250cc938aa', 'do': ':TSUpdate' }
 
   Plug 'lambdalisue/fern.vim'
