@@ -128,6 +128,10 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'roxma/vim-hug-neovim-rpc'
   endif
 
+  Plug 'kdheepak/lazygit.nvim'
+
+  Plug 'lambdalisue/pastefix.vim'
+
 """"""""""""" 
 """""""""""""[[plugins]]
 """""""""""""repo = 'lambdalisue/vim-django-support'
