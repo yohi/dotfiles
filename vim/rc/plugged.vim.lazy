@@ -280,3 +280,11 @@ let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not inst
 
 " setup mapping to call :LazyGit
 nnoremap <silent> lg :LazyGit<CR>
+
+" nvim-dap
+lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+lua require('dap-python').test_runner = 'pytest'
+
+nnoremap <silent> dn :lua require('dap-python').test_method()<CR>
+nnoremap <silent> df :lua require('dap-python').test_class()<CR>
+vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
