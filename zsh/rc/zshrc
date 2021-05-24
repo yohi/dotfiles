@@ -215,8 +215,26 @@ bindkey '^u' peco-cdr
 # ブランチを簡単切り替え。git checkout lbで実行できる
 alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
 
-
-
-
 export DENO_INSTALL="~/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+# dockerコンテナに入る。deで実行できる
+alias de='docker exec -it $(docker ps | peco | cut -d " " -f 1) /bin/bash'
+
+# エクスプローラオープン
+alias open='xdg-open .'
+
+
+
+
+# export PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/bin:$PATH"
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib"
+# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/mysql@5.7/include"
+# export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/mysql@5.7/lib/pkgconfig"
+
+export VISUAL=nvim
+export EDITOR=nvim
+unset LESSEDIT
+
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOPATH/bin
