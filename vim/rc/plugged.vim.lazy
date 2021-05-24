@@ -44,7 +44,7 @@ highlight GitGutterChangeDelete ctermfg=yellow
 " junegunn/fzf
 " junegunn/fzf.vim
 " nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
- nnoremap <C-p> :FzfPreviewProjectFile<CR>
+nnoremap <C-p> :FzfPreviewProjectFile<CR>
 " nnoremap <C-g> :CocCommand fzf-preview.ProjectGrep .<CR>
 " nnoremap <C-p> :CocCommand fzf-preview.ProjectFiles<CR>
 
@@ -268,3 +268,23 @@ nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
 nmap <silent> ;;g :<C-u>Denite grep<CR>
 nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
 " nnoremap <C-p> :DeniteProjectDir -start-filter file/rec -split="floating"<CR>
+
+
+
+
+
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
+
+" setup mapping to call :LazyGit
+nnoremap <silent> lg :LazyGit<CR>
+
+" nvim-dap
+lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+lua require('dap-python').test_runner = 'pytest'
+
+nnoremap <silent> dn :lua require('dap-python').test_method()<CR>
+nnoremap <silent> df :lua require('dap-python').test_class()<CR>
+vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
