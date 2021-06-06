@@ -235,17 +235,13 @@ function! s:denite_my_settings() abort
   \ denite#do_map('open_filter_buffer')
 endfunction
 
-let s:denite_win_width_percent = 0.85
-let s:denite_win_height_percent = 0.7
 
-" Change denite default options
-call denite#custom#option('default', {
-    \ 'split': 'floating',
-    \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-    \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-    \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-    \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
-    \ })
+" ref. https://github.com/Shougo/denite.nvim/issues/657
+autocmd FileType denite-filter call s:denite_filter_my_settings()
+function! s:denite_filter_my_settings() abort
+  call deoplete#custom#buffer_option('auto_complete', v:false)
+endfunction
+
 
 " Change file/rec command 
 call denite#custom#var('file/rec', 'command',
@@ -261,13 +257,55 @@ call denite#custom#var('grep', {
            \ 'final_opts': [],
            \ })
 
+
+if 1
+    let s:floating_window_width_ratio = 0.85
+    let s:floating_window_height_ratio = 0.7
+
+    call denite#custom#option('default', {
+    \ 'auto_action': 'preview',
+    \ 'floating_preview': v:true,
+    \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
+    \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
+    \ 'prompt': '> ',
+    \ 'split': 'floating',
+    \ 'vertical_preview': v:true,
+    \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
+    \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
+    \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
+    \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio / 2),
+    \ 'floating-border': '|'
+    \ })
+else
+    let s:floating_window_width_ratio = 0.85
+    let s:floating_window_height_ratio = 0.7
+
+    " Change denite default options
+    call denite#custom#option('default', {
+        \ 'auto_action': 'preview',
+        \ 'floating_preview': v:true,
+        \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
+        \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
+        \ 'prompt': '> ',
+        \ 'split': 'floating',
+        \ 'vertical_preview': v:true,
+        \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio),
+        \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
+        \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
+        \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
+        \ })
+endif
+
+
+
 nmap <silent> ;f  :<C-u>Denite -start-filter file/rec<CR>
 nmap <silent> ;F  :<C-u>DeniteProjectDir -start-filter file/rec<CR>
 nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
 nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
 nmap <silent> ;;g :<C-u>Denite grep<CR>
 nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
-" nnoremap <C-p> :DeniteProjectDir -start-filter file/rec -split="floating"<CR>
+nnoremap <C-p> :DeniteProjectDir -start-filter file/rec<CR>
+nnoremap <C-r> :DeniteProjectDir -start-filter grep<CR>
 
 
 
