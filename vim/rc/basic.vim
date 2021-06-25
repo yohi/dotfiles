@@ -115,6 +115,8 @@ let g:loaded_python_provider = 0
 " let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3.9'
 " let g:python3_host_prog = '/usr/bin/python3'
 let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
+let g:pip_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
+" let g:pip3_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
 
 
 "" Load python3
