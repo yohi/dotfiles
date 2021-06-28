@@ -215,7 +215,7 @@ bindkey '^u' peco-cdr
 # ブランチを簡単切り替え。git checkout lbで実行できる
 alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
 
-export DENO_INSTALL="~/.deno"
+export DENO_INSTALL=$HOME/.deno
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # dockerコンテナに入る。deで実行できる
