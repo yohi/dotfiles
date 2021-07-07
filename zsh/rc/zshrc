@@ -238,3 +238,22 @@ unset LESSEDIT
 
 export GOPATH=$HOME/.go
 export PATH=$PATH:$GOPATH/bin
+eval export PATH="/home/y_ohi/.nodenv/shims:${PATH}"
+export NODENV_SHELL=zsh
+source '/home/linuxbrew/.linuxbrew/Cellar/nodenv/1.4.0/libexec/../completions/nodenv.zsh'
+command nodenv rehash 2>/dev/null
+nodenv() {
+  local command
+  command="${1:-}"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  rehash|shell)
+    eval "$(nodenv "sh-$command" "$@")";;
+  *)
+    command nodenv "$command" "$@";;
+  esac
+}
+PATH=/home/y_ohi/.nodenv/shims:/home/y_ohi/.deno/bin:/usr/local/opt/mysql@5.7/bin:/usr/local/bin:/usr/local/sbin:/home/y_ohi/.deno/bin:/home/y_ohi/.zinit/plugins/junegunn---fzf-bin:/home/y_ohi/.zinit/polaris/bin:/usr/local/opt/mysql@5.7/bin:/usr/local/bin:/usr/local/sbin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/home/y_ohi/.local/bin:/home/y_ohi/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/y_ohi/.go/bin:/home/y_ohi/.go/bin:./node_modules/.bin
