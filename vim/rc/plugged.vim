@@ -133,11 +133,17 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'lambdalisue/pastefix.vim'
 
   Plug 'vim-denops/denops.vim'
+
   Plug 'skanehira/command.vim'
 
+  Plug 'Shougo/ddc.vim'
+  Plug 'Shougo/ddc-nvim-lsp'
+  Plug 'Shougo/ddc-zsh'
 
   Plug 'mfussenegger/nvim-dap'
   Plug 'mfussenegger/nvim-dap-python'
+
+
 
 """"""""""""" 
 """""""""""""[[plugins]]
