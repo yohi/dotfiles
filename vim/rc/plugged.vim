@@ -31,25 +31,6 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'airblade/vim-gitgutter'
 
-  " ---------------------------
-  "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'prabirshrestha/async.vim'
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'mattn/vim-lsp-settings'
-"  Plug 'mattn/vim-lsp-icons'
-"  Plug 'hrsh7th/vim-vsnip'
-"  Plug 'hrsh7th/vim-vsnip-integ'
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-  Plug 'lighttiger2505/deoplete-vim-lsp'
-  " Plug 'deoplete-plugins/deoplete-jedi'
-  " Plug 'prabirshrestha/asyncomplete.vim'
-  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
   " FZF -----------------------
   "
   "
@@ -137,11 +118,44 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'skanehira/command.vim'
 
   Plug 'Shougo/ddc.vim'
+
+  " LSP
+  " if false
+  "   Plug 'prabirshrestha/async.vim'
+  "   Plug 'prabirshrestha/vim-lsp'
+  "   Plug 'mattn/vim-lsp-settings'
+  "   Plug 'shun/ddc-vim-lsp'
+  " else
   Plug 'Shougo/ddc-nvim-lsp'
+  Plug 'neovim/nvim-lspconfig'
+  Plug 'williamboman/nvim-lsp-installer'
+  " endif
+
   Plug 'Shougo/ddc-zsh'
 
   Plug 'mfussenegger/nvim-dap'
   Plug 'mfussenegger/nvim-dap-python'
+
+
+
+
+
+  " ---------------------------
+  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " Plug 'mattn/vim-lsp-icons'
+  " Plug 'hrsh7th/vim-vsnip'
+  " Plug 'hrsh7th/vim-vsnip-integ'
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+  Plug 'lighttiger2505/deoplete-vim-lsp'
+  Plug 'deoplete-plugins/deoplete-jedi'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 
 
