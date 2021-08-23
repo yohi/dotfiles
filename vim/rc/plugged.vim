@@ -118,6 +118,9 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'skanehira/command.vim'
 
   Plug 'Shougo/ddc.vim'
+  Plug 'Shougo/ddc-around'
+  Plug 'Shougo/ddc-matcher_head'
+  Plug 'Shougo/ddc-sorter_rank'
 
   " LSP
   " if false
@@ -140,22 +143,22 @@ call plug#begin('~/.config/nvim/plugged')
 
 
 
-  " ---------------------------
-  " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " Plug 'mattn/vim-lsp-icons'
-  " Plug 'hrsh7th/vim-vsnip'
-  " Plug 'hrsh7th/vim-vsnip-integ'
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-  Plug 'lighttiger2505/deoplete-vim-lsp'
-  Plug 'deoplete-plugins/deoplete-jedi'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
+  " " ---------------------------
+  " " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " " Plug 'mattn/vim-lsp-icons'
+  " " Plug 'hrsh7th/vim-vsnip'
+  " " Plug 'hrsh7th/vim-vsnip-integ'
+  " if has('nvim')
+  "   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " else
+  "   Plug 'Shougo/deoplete.nvim'
+  "   Plug 'roxma/nvim-yarp'
+  "   Plug 'roxma/vim-hug-neovim-rpc'
+  " endif
+  " Plug 'lighttiger2505/deoplete-vim-lsp'
+  " Plug 'deoplete-plugins/deoplete-jedi'
+  " Plug 'prabirshrestha/asyncomplete.vim'
+  " Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 
 
