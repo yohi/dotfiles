@@ -8,6 +8,9 @@ if has('vim_starting')
   end
 endif
 
+let g:nvim_lsp = v:false
+let g:deoplete = v:false
+
 call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
 
@@ -117,31 +120,31 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'skanehira/command.vim'
 
-  if v:true
-    Plug 'Shougo/ddc.vim'
-    Plug 'Shougo/ddc-around'
-    Plug 'Shougo/ddc-matcher_head'
-    Plug 'Shougo/ddc-sorter_rank'
-    Plug 'matsui54/ddc-buffer'
+  Plug 'mfussenegger/nvim-dap'
+  Plug 'mfussenegger/nvim-dap-python'
 
-    " LSP
-    if v:false
-        Plug 'prabirshrestha/async.vim'
-        Plug 'prabirshrestha/vim-lsp'
-        Plug 'mattn/vim-lsp-settings'
-        Plug 'shun/ddc-vim-lsp'
-    else
-        Plug 'Shougo/ddc-nvim-lsp'
-        Plug 'neovim/nvim-lspconfig'
-        Plug 'williamboman/nvim-lsp-installer'
-    endif
-    Plug 'Shougo/ddc-zsh'
+  Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
+
+  Plug 'Shougo/ddc.vim'
+  Plug 'Shougo/ddc-around'
+  Plug 'Shougo/ddc-matcher_head'
+  Plug 'Shougo/ddc-sorter_rank'
+  Plug 'matsui54/ddc-buffer'
+  Plug 'Shougo/ddc-zsh'
+
+  " LSP
+  if g:nvim_lsp
+      Plug 'Shougo/ddc-nvim-lsp'
+      Plug 'neovim/nvim-lspconfig'
+      Plug 'williamboman/nvim-lsp-installer'
   else
-    " ---------------------------
-    " Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    " Plug 'mattn/vim-lsp-icons'
-    " Plug 'hrsh7th/vim-vsnip'
-    " Plug 'hrsh7th/vim-vsnip-integ'
+      Plug 'prabirshrestha/async.vim'
+      Plug 'prabirshrestha/vim-lsp'
+      Plug 'mattn/vim-lsp-settings'
+      Plug 'shun/ddc-vim-lsp'
+  endif
+
+  if g:deoplete
     if has('nvim')
       Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
     else
@@ -149,34 +152,11 @@ call plug#begin('~/.config/nvim/plugged')
       Plug 'roxma/nvim-yarp'
       Plug 'roxma/vim-hug-neovim-rpc'
     endif
-    Plug 'lighttiger2505/deoplete-vim-lsp'
-    Plug 'deoplete-plugins/deoplete-jedi'
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'lighttiger2505/deoplete-vim-lsp'
+    " Plug 'deoplete-plugins/deoplete-jedi'
   endif
-
-  if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
-  Plug 'lighttiger2505/deoplete-vim-lsp'
-  Plug 'deoplete-plugins/deoplete-jedi'
-  Plug 'prabirshrestha/asyncomplete.vim'
-  Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-
-
-
-
-  Plug 'mfussenegger/nvim-dap'
-  Plug 'mfussenegger/nvim-dap-python'
-
-
-
-
 
 """"""""""""" 
 """""""""""""[[plugins]]
