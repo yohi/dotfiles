@@ -58,9 +58,6 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 " kamykn/spelunker.vim
 set nospell
 
-" Shougo/deoplete.nvim
-let g:deoplete#enable_at_startup = 1
-
 " vim-lsp
 let g:lsp_diagnostics_enabled = 1 " Lintの有効or無効
 let g:lsp_signs_enabled = 1         " enable signs
@@ -211,37 +208,12 @@ call wilder#set_option('modes', ['/', '?', ':'])
 " EOF
 
 
-autocmd FileType denite call s:denite_my_settings()
-function! s:denite_my_settings() abort
-  call deoplete#custom#buffer_option('auto_complete', v:false)
-
-  " エンターキー: 垂直分割でファイルを開く
-  nnoremap <silent><buffer><expr> <CR>
-  \ denite#do_map('do_action', 'vsplit')
-  " スペースキー: 水平分割でファイルを開く
-  nnoremap <silent><buffer><expr> <Space>
-  \ denite#do_map('do_action', 'split')
-  " エスケープキー: 終了
-  nnoremap <silent><buffer><expr> <Esc>
-  \ denite#do_map('quit')
-  " Qキー: 終了
-  nnoremap <silent><buffer><expr> q
-  \ denite#do_map('quit')
-  " Iキー: フィルター入力の開始
-  nnoremap <silent><buffer><expr> i
-  \ denite#do_map('open_filter_buffer')
-  " Aキー: フィルター入力の開始
-  nnoremap <silent><buffer><expr> a
-  \ denite#do_map('open_filter_buffer')
-endfunction
-
 
 " ref. https://github.com/Shougo/denite.nvim/issues/657
 autocmd FileType denite-filter call s:denite_filter_my_settings()
 function! s:denite_filter_my_settings() abort
   call deoplete#custom#buffer_option('auto_complete', v:false)
 endfunction
-
 
 " Change file/rec command 
 call denite#custom#var('file/rec', 'command',
@@ -330,65 +302,213 @@ vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<C
 
 
 " ddc =====================================================
+"
 
 " Customize global settings
 " Use around source.
 " https://github.com/Shougo/ddc-around
-call ddc#custom#patch_global('sources', ['around'])
-
-" Use matcher_head and sorter_rank.
 " https://github.com/Shougo/ddc-matcher_head
 " https://github.com/Shougo/ddc-sorter_rank
-call ddc#custom#patch_global('sourceOptions', {
-      \ '_': {
-      \   'matchers': ['matcher_head'],
-      \   'sorters': ['sorter_rank']},
-      \ })
+if v:false
+    call ddc#custom#patch_global('sources', [
+        \       'around',
+        \       'nextword',
+        \       'ddc-vim-lsp',
+        \       'zsh',
+        \       'buffer',
+        \   ])
+    
+    " Use matcher_head and sorter_rank.
+    call ddc#custom#patch_global('sourceOptions', {
+        \       '_': {
+        \         'matchers': ['matcher_head'],
+        \         'sorters': ['sorter_rank'],
+        \         'converters': ['converter_remove_overlap']
+        \       },
+        \       'around': {
+        \           'mark': 'A'
+        \       },
+        \       'ddc-vim-lsp': {
+        \           'mark': 'lsp',
+        \           'forceCompletionPattern': '\\.|:|->',
+        \           'useIcon': v:true
+        \       },
+        \       'zsh': {
+        \           'mark': 'Z'
+        \       },
+        \       'buffer': {
+        \           'mark': 'B'
+        \       },
+        \       'deoppet': {
+        \           'mark': 'dp'
+        \       },
+        \       'necovim': {
+        \           'mark': 'vim'
+        \       },
+        \       'nextword': {
+        \           'mark': 'nextword',
+        \           'isVolatile': v:true
+        \       },
+        \   })
+    call ddc#custom#patch_global('sourceParams', {
+        \        'around': {
+        \            'maxSize': 500
+        \        },
+        \        'ddc-vim-lsp': {
+        \            'kindLabels': {
+        \                'Class': 'c'
+        \            },
+        \            'useIcon': v:true
+        \        }
+        \    })
+    call ddc#custom#patch_global('filterParams', {
+        \        'buffer': {
+        \            'requireSameFiletype': v:false
+        \        },
+        \    })
+    call ddc#enable()
 
-" Change source options
-call ddc#custom#patch_global('sourceOptions', {
-      \ 'around': {'mark': 'A'},
-      \ })
-call ddc#custom#patch_global('sourceParams', {
-      \ 'around': {'maxSize': 500},
-      \ })
+    " <TAB>: completion.
+    inoremap <silent><expr> <TAB>
+    \ pumvisible() ? "\<C-n>" :
+    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    \ "\<TAB>" : ddc#manual_complete()
 
-" Customize settings on a filetype
-call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
-call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
-      \ 'clangd': {'mark': 'C'},
-      \ })
-call ddc#custom#patch_filetype('markdown', 'sourceParams', {
-      \ 'around': {'maxSize': 100},
-      \ })
+    " <S-TAB>: completion back.
+    inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Mappings
+    """"""""""""""""""" ddc-nvim-lsp
+    """"""""""""""""""call ddc#custom#patch_global('sources', ['nvimlsp'])
+    """"""""""""""""""call ddc#custom#patch_global('sourceOptions', {
+    """"""""""""""""""      \ '_': { 'matchers': ['matcher_head'] },
+    """"""""""""""""""      \ 'nvimlsp': { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->' },
+    """"""""""""""""""      \ })
+    """"""""""""""""""call ddc#custom#patch_global('sourceParams', {
+    """"""""""""""""""      \ 'nvimlsp': { 'kindLabels': { 'Class': 'c' } },
+    """"""""""""""""""      \ })
+    """"""""""""""""""
+    """"""""""""""""""" ddc-zsh
+    """"""""""""""""""call ddc#custom#patch_global('sources', ['zsh'])
+    """"""""""""""""""call ddc#custom#patch_global('sourceOptions', {
+    """"""""""""""""""      \ '_': {'matchers': ['matcher_head']},
+    """"""""""""""""""      \ 'zsh': {'mark': 'Z'},
+    """"""""""""""""""      \ })
+    """"""""""""""""""
+    """"""""""""""""""" Use ddc.
+    """"""""""""""""""call ddc#enable()
+    """"""""""""""""""
+    """"""""""""""""""" NO1
+    """"""""""""""""""" call ddc#custom#patch_global('sources', ['nvimlsp', 'around', 'deoppet', 'zsh'])
+    """"""""""""""""""" call ddc#custom#patch_global('keywordPattern', '[a-zA-Z_@]\k*')
+    """"""""""""""""""" call ddc#custom#patch_global('sourceOptions', {
+    """""""""""""""""""       \   '_': {
+    """""""""""""""""""       \     'matchers': ['matcher_head'],
+    """""""""""""""""""       \     'sorters': ['sorter_rank']
+    """""""""""""""""""       \   },
+    """""""""""""""""""       \   'around': { 'mark': 'A' },
+    """""""""""""""""""       \   'nvimlsp': {'mark': 'lsp', 'forceCompletionPattern': '\.|:|->'},
+    """""""""""""""""""       \   'buffer': { 'mark': 'B' },
+    """""""""""""""""""       \   'deoppet': { 'mark': 'dp' },
+    """""""""""""""""""       \   'zsh': { 'mark': 'Z' },
+    """""""""""""""""""       \ })
+    """"""""""""""""""" call ddc#custom#patch_global('sourceParams', {
+    """""""""""""""""""       \ 'nvimlsp': {'useIcon': v:true},
+    """""""""""""""""""       \ })
+    """"""""""""""""""" call ddc#custom#patch_global('filterParams', {
+    """""""""""""""""""     \ 'buffer': {'requireSameFiletype': v:false},
+    """""""""""""""""""     \ })
+    """"""""""""""""""" call ddc#enable()
+    """"""""""""""""""
+    """"""""""""""""""
+    """"""""""""""""""" NO2
+    """"""""""""""""""" inoremap <silent><expr> <C-f> ddc#complete_common_string()
+    """"""""""""""""""" inoremap <silent><expr> <TAB>
+    """""""""""""""""""             \ pumvisible() ? "\<C-n>" :
+    """""""""""""""""""             \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    """""""""""""""""""             \ "\<TAB>" : ddc#manual_complete()
+    """"""""""""""""""" 
+    """"""""""""""""""" if has('nvim')
+    """""""""""""""""""   call ddc#custom#patch_global('sourceOptions', {
+    """""""""""""""""""         \ '_': {
+    """""""""""""""""""         \   'matchers': ['matcher_head'],
+    """""""""""""""""""         \   'sorters': ['sorter_rank'],
+    """""""""""""""""""         \   'converters': ['converter_remove_overlap'],
+    """""""""""""""""""         \ },
+    """""""""""""""""""         \ })
+    """"""""""""""""""" else
+    """""""""""""""""""   call ddc#custom#patch_global('sourceOptions', {
+    """""""""""""""""""         \ '_': {
+    """""""""""""""""""         \   'matchers': ['matcher_head'],
+    """""""""""""""""""         \   'sorters': ['sorter_rank'],
+    """""""""""""""""""         \ },
+    """""""""""""""""""         \ })
+    """"""""""""""""""" endif
+    """"""""""""""""""" 
+    """"""""""""""""""" call ddc#custom#patch_global('sourceOptions', {
+    """""""""""""""""""             \ 'around': {'mark': 'A'},
+    """""""""""""""""""             \ 'necovim': {'mark': 'vim'},
+    """""""""""""""""""             \ 'deoppet': {'mark': 'dp'},
+    """""""""""""""""""             \ 'nextword': {
+    """""""""""""""""""             \   'mark': 'nextword',
+    """""""""""""""""""             \   'isVolatile': v:true,
+    """""""""""""""""""             \ },
+    """""""""""""""""""             \ })
+    """"""""""""""""""" 
+    """""""""""""""""""     call ddc#custom#patch_global({
+    """""""""""""""""""                 \ 'sources': ['around', 'nextword', 'nvimlsp'],
+    """""""""""""""""""                 \ })
+    """""""""""""""""""     call ddc#custom#patch_global('sourceOptions', {
+    """""""""""""""""""                 \ 'nvimlsp': {'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->'},
+    """""""""""""""""""                 \ })
+    """"""""""""""""""" 
+    """"""""""""""""""" call ddc#enable()
+    """"""""""""""""""
+    """"""""""""""""""
+    """"""""""""""""""" NO3
+    """"""""""""""""""call ddc#custom#patch_global(
+    """"""""""""""""""    \ 'sources', ['buffer', 'ddc-vim-lsp']
+    """"""""""""""""""    \ )
+    """"""""""""""""""call ddc#custom#patch_global('sourceOptions', {
+    """"""""""""""""""    \ '_': {
+    """"""""""""""""""    \   'matchers': ['matcher_head'],
+    """"""""""""""""""    \   'sorters': ['sorter_rank'],
+    """"""""""""""""""    \ },
+    """"""""""""""""""    \ 'buffer': {'mark': 'B'},
+    """"""""""""""""""    \ 'necovim': {'mark': 'vim'},
+    """"""""""""""""""    \ 'ddc-vim-lsp': {'mark': 'lsp'},
+    """"""""""""""""""    \ })
+    """"""""""""""""""call ddc#custom#patch_filetype(
+    """"""""""""""""""    \ ['vim', 'toml'], 'sources', ['necovim', 'buffer'])
+    """"""""""""""""""call ddc#custom#patch_filetype(
+    """"""""""""""""""    \ ['autohotkey', 'cfg', 'git', 'javascript', 'markdown', 'plantuml', 'rst', 'snippet', 'vb', 'xsl'], 'sources', ['buffer'])
+    """"""""""""""""""call ddc#custom#patch_filetype(
+    """"""""""""""""""    \ ['go', 'python'], 'sources', ['ddc-vim-lsp', 'buffer'])
+    """"""""""""""""""call ddc#enable()
+else
+    " Shougo/deoplete.nvim
+    let g:deoplete#enable_at_startup = 1
 
-" <TAB>: completion.
-inoremap <silent><expr> <TAB>
-\ pumvisible() ? "\<C-n>" :
-\ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-\ "\<TAB>" : ddc#manual_complete()
+    autocmd FileType denite call s:denite_my_settings()
+    function! s:denite_my_settings() abort
+      call deoplete#custom#buffer_option('auto_complete', v:false)
 
-" <S-TAB>: completion back.
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" Use ddc.
-call ddc#enable()
-
-" ddc-nvim-lsp
-call ddc#custom#patch_global('sources', ['nvimlsp'])
-call ddc#custom#patch_global('sourceOptions', {
-      \ '_': { 'matchers': ['matcher_head'] },
-      \ 'nvimlsp': { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->' },
-      \ })
-call ddc#custom#patch_global('sourceParams', {
-      \ 'nvimlsp': { 'kindLabels': { 'Class': 'c' } },
-      \ })
-
-" ddc-zsh
-call ddc#custom#patch_global('sources', ['zsh'])
-call ddc#custom#patch_global('sourceOptions', {
-      \ '_': {'matchers': ['matcher_head']},
-      \ 'zsh': {'mark': 'Z'},
-      \ })
+      " エンターキー: 垂直分割でファイルを開く
+      nnoremap <silent><buffer><expr> <CR>
+      \ denite#do_map('do_action', 'vsplit')
+      " スペースキー: 水平分割でファイルを開く
+      nnoremap <silent><buffer><expr> <Space>
+      \ denite#do_map('do_action', 'split')
+      " エスケープキー: 終了
+      nnoremap <silent><buffer><expr> <Esc>
+      \ denite#do_map('quit')
+      " Qキー: 終了
+      nnoremap <silent><buffer><expr> q
+      \ denite#do_map('quit')
+      " Iキー: フィルター入力の開始
+      nnoremap <silent><buffer><expr> i
+      \ denite#do_map('open_filter_buffer')
+      " Aキー: フィルター入力の開始
+      nnoremap <silent><buffer><expr> a
+      \ denite#do_map('open_filter_buffer')
+    endfunction
+endif
