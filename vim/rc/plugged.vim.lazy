@@ -309,11 +309,12 @@ vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<C
 " https://github.com/Shougo/ddc-around
 " https://github.com/Shougo/ddc-matcher_head
 " https://github.com/Shougo/ddc-sorter_rank
-if v:false
+" nvimlsp <-> ddc-vim-lsp
+if v:true
     call ddc#custom#patch_global('sources', [
         \       'around',
         \       'nextword',
-        \       'ddc-vim-lsp',
+        \       'nvimlsp',
         \       'zsh',
         \       'buffer',
         \   ])
@@ -328,7 +329,7 @@ if v:false
         \       'around': {
         \           'mark': 'A'
         \       },
-        \       'ddc-vim-lsp': {
+        \       'nvimlsp': {
         \           'mark': 'lsp',
         \           'forceCompletionPattern': '\\.|:|->',
         \           'useIcon': v:true
@@ -354,7 +355,7 @@ if v:false
         \        'around': {
         \            'maxSize': 500
         \        },
-        \        'ddc-vim-lsp': {
+        \        'nvimlsp': {
         \            'kindLabels': {
         \                'Class': 'c'
         \            },

@@ -117,11 +117,12 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'skanehira/command.vim'
 
-  if v:false
+  if v:true
     Plug 'Shougo/ddc.vim'
     Plug 'Shougo/ddc-around'
     Plug 'Shougo/ddc-matcher_head'
     Plug 'Shougo/ddc-sorter_rank'
+    Plug 'matsui54/ddc-buffer'
 
     " LSP
     if v:false
@@ -153,6 +154,18 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'prabirshrestha/asyncomplete.vim'
     Plug 'prabirshrestha/asyncomplete-lsp.vim'
   endif
+
+  if has('nvim')
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  else
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
+  endif
+  Plug 'lighttiger2505/deoplete-vim-lsp'
+  Plug 'deoplete-plugins/deoplete-jedi'
+  Plug 'prabirshrestha/asyncomplete.vim'
+  Plug 'prabirshrestha/asyncomplete-lsp.vim'
 
 
 
