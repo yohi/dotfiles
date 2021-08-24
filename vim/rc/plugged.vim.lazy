@@ -1,8 +1,4 @@
 " vim: set ft=vim :
-
-let g:nvim_lsp = v:false
-let g:deoplete = v:false
-
 " tomasiser/vim-code-dark
 colorscheme codedark
 
@@ -311,93 +307,70 @@ smap <C-b>  <Plug>(deoppet_jump_backward)
 
 
 " ddc =====================================================
-"
+let g:nvim_lsp = v:false
+let g:deoplete = v:false
 
-" Customize global settings
-" Use around source.
-" https://github.com/Shougo/ddc-around
-" https://github.com/Shougo/ddc-matcher_head
-" https://github.com/Shougo/ddc-sorter_rank
-" nvimlsp <-> ddc-vim-lsp
-call ddc#custom#patch_global('sources', [
-    \       'around',
-    \       'nextword',
-    \       'nvimlsp',
-    \       'zsh',
-    \       'buffer',
-    \   ])
+function DdcSource()
+    let l:sources = ['around', 'nextword', 'zsh', 'buffer']
+    if g:nvim_lsp
+        let l:lsp_source = ['nvimlsp']
+    else
+        let l:lsp_source = ['ddc-vim-lsp']
+    endif
+    return l:sources + lsp_source
+endfunction
+
+function DdcSourceOptions()
+    let l:source_options = {
+    \           '_': {
+    \             'matchers': ['matcher_head'],
+    \             'sorters': ['sorter_rank'],
+    \             'converters': ['converter_remove_overlap']
+    \           },
+    \           'around': {
+    \               'mark': 'A'
+    \           },
+    \           'zsh': {
+    \               'mark': 'Z'
+    \           },
+    \           'buffer': {
+    \               'mark': 'B'
+    \           },
+    \           'deoppet': {
+    \               'mark': 'dp'
+    \           },
+    \           'necovim': {
+    \               'mark': 'vim'
+    \           },
+    \           'nextword': {
+    \               'mark': 'nextword',
+    \               'isVolatile': v:true
+    \           },
+    \    }
+    if g:nvim_lsp
+        let l:source_options['nvimlsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
+    else
+        let l:source_options['ddc-vim-lsp'] = { 'mark': 'lsp' }
+    endif
+    return l:source_options
+endfunction
+
+function DdcSourceParams()
+    let l:source_params = {'around': { 'maxSize': 500 }}
+    if g:nvim_lsp
+        let l:source_params['nvimlsp'] = { 'kindLabels': {'Class': 'c'}, 'useIcon': v:true }
+   endif
+   return l:source_params
+endfunction
 
 " Use matcher_head and sorter_rank.
-call ddc#custom#patch_global('sourceOptions', {
-    \       '_': {
-    \         'matchers': ['matcher_head'],
-    \         'sorters': ['sorter_rank'],
-    \         'converters': ['converter_remove_overlap']
-    \       },
-    \       'around': {
-    \           'mark': 'A'
-    \       },
-    \       'nvimlsp': {
-    \           'mark': 'lsp',
-    \           'forceCompletionPattern': '\\.|:|->',
-    \           'useIcon': v:true
-    \       },
-    \       'zsh': {
-    \           'mark': 'Z'
-    \       },
-    \       'buffer': {
-    \           'mark': 'B'
-    \       },
-    \       'deoppet': {
-    \           'mark': 'dp'
-    \       },
-    \       'necovim': {
-    \           'mark': 'vim'
-    \       },
-    \       'nextword': {
-    \           'mark': 'nextword',
-    \           'isVolatile': v:true
-    \       },
-    \   })
-call ddc#custom#patch_global('sourceParams', {
-    \        'around': {
-    \            'maxSize': 500
-    \        },
-    \        'nvimlsp': {
-    \            'kindLabels': {
-    \                'Class': 'c'
-    \            },
-    \            'useIcon': v:true
-    \        }
-    \    })
-call ddc#custom#patch_global('filterParams', {
-    \        'buffer': {
-    \            'requireSameFiletype': v:false
-    \        },
-    \    })
-
-if g:nvim_lsp
-    call ddc#custom#patch_global('sources', ['nvimlsp'])
-    call ddc#custom#patch_global('sourceOptions', {
-    \       'nvimlsp': {
-    \           'mark': 'lsp',
-    \           'forceCompletionPattern': '\\.|:|->',
-    \           'useIcon': v:true
-    \       },
-    \   })
-    call ddc#custom#patch_global('sourceParams', {
-    \        'nvimlsp': {
-    \            'kindLabels': {
-    \                'Class': 'c'
-    \            },
-    \            'useIcon': v:true
-    \        }
-    \    })
-else
-    call ddc#custom#patch_global('sources', ['ddc-vim-lsp'])
-    call ddc#custom#patch_global('sourceOptions', {'ddc-vim-lsp': {'mark': 'lsp'}})
-endif
-
+let s:sources = DdcSource()
+call ddc#custom#patch_global('sources', s:sources)
+let s:source_options = DdcSourceOptions()
+call ddc#custom#patch_global('sourceOptions', s:source_options)
+let s:source_params = DdcSourceParams()
+call ddc#custom#patch_global('sourceParams', s:source_params)
+call ddc#custom#patch_global('filterParams', { 'buffer': { 'requireSameFiletype': v:false }})
 call ddc#enable()
 
 " <TAB>: completion.
