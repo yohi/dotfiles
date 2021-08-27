@@ -131,6 +131,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'Shougo/ddc-sorter_rank'
   Plug 'matsui54/ddc-buffer'
   Plug 'Shougo/ddc-zsh'
+  " Plug 'Shougo/ddc-nextword'
 
   " LSP
   if g:nvim_lsp

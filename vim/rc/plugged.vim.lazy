@@ -307,9 +307,6 @@ smap <C-b>  <Plug>(deoppet_jump_backward)
 
 
 " ddc =====================================================
-let g:nvim_lsp = v:false
-let g:deoplete = v:false
-
 function DdcSource()
     let l:sources = ['around', 'nextword', 'zsh', 'buffer']
     if g:nvim_lsp
