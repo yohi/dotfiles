@@ -308,13 +308,13 @@ smap <C-b>  <Plug>(deoppet_jump_backward)
 
 " ddc =====================================================
 function DdcSource()
-    let l:sources = ['around', 'nextword', 'zsh', 'buffer']
+    let l:sources = ['around', 'buffer', 'zsh']
     if g:nvim_lsp
         let l:lsp_source = ['nvimlsp']
     else
         let l:lsp_source = ['ddc-vim-lsp']
     endif
-    return l:sources + lsp_source
+    return l:lsp_source + l:sources
 endfunction
 
 function DdcSourceOptions()
@@ -338,10 +338,6 @@ function DdcSourceOptions()
     \           },
     \           'necovim': {
     \               'mark': 'vim'
-    \           },
-    \           'nextword': {
-    \               'mark': 'nextword',
-    \               'isVolatile': v:true
     \           },
     \    }
     if g:nvim_lsp
@@ -368,16 +364,24 @@ call ddc#custom#patch_global('sourceOptions', s:source_options)
 let s:source_params = DdcSourceParams()
 call ddc#custom#patch_global('sourceParams', s:source_params)
 call ddc#custom#patch_global('filterParams', { 'buffer': { 'requireSameFiletype': v:false }})
-call ddc#enable()
+
+" Mappings
 
 " <TAB>: completion.
 inoremap <silent><expr> <TAB>
-\ pumvisible() ? "\<C-n>" :
+\ pumvisible() ? '<C-n>' :
 \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-\ "\<TAB>" : ddc#manual_complete()
+\ '<TAB>' : ddc#manual_complete()
 
 " <S-TAB>: completion back.
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+" Use ddc.
+call ddc#enable()
+
+
+
+
 
 
 if g:deoplete

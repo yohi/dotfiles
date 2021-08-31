@@ -256,3 +256,7 @@ export PATH=$PATH:$GOPATH/bin
 #     command nodenv "$command" "$@";;
 #   esac
 # }
+#
+
+alias python=$(which python3)
+alias pip=$(which pip3)
