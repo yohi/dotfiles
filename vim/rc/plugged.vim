@@ -129,9 +129,11 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'Shougo/ddc-around'
   Plug 'Shougo/ddc-matcher_head'
   Plug 'Shougo/ddc-sorter_rank'
+  Plug 'Shougo/ddc-converter_remove_overlap'
   Plug 'matsui54/ddc-buffer'
-  Plug 'Shougo/ddc-zsh'
+  " Plug 'Shougo/ddc-zsh'
   " Plug 'Shougo/ddc-nextword'
+  Plug 'Shougo/neco-vim'
 
   " LSP
   if g:nvim_lsp

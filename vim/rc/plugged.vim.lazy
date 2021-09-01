@@ -308,7 +308,8 @@ smap <C-b>  <Plug>(deoppet_jump_backward)
 
 " ddc =====================================================
 function DdcSource()
-    let l:sources = ['around', 'buffer', 'zsh']
+    " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'zsh']
+    let l:sources = ['around', 'buffer', 'deoppet', 'necovim']
     if g:nvim_lsp
         let l:lsp_source = ['nvimlsp']
     else
@@ -326,9 +327,6 @@ function DdcSourceOptions()
     \           },
     \           'around': {
     \               'mark': 'A'
-    \           },
-    \           'zsh': {
-    \               'mark': 'Z'
     \           },
     \           'buffer': {
     \               'mark': 'B'
@@ -378,11 +376,6 @@ inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
 " Use ddc.
 call ddc#enable()
-
-
-
-
-
 
 if g:deoplete
     " Shougo/deoplete.nvim
