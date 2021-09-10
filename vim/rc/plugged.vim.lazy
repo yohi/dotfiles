@@ -309,7 +309,7 @@ smap <C-b>  <Plug>(deoppet_jump_backward)
 " ddc =====================================================
 function DdcSource()
     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'zsh']
-    let l:sources = ['around', 'buffer', 'deoppet', 'necovim']
+    let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'tabnine']
     if g:nvim_lsp
         let l:lsp_source = ['nvimlsp']
     else
@@ -336,6 +336,11 @@ function DdcSourceOptions()
     \           },
     \           'necovim': {
     \               'mark': 'vim'
+    \           },
+    \           'tabnine': {
+    \               'mark': 'TN',
+    \               'isVolatile': v:true,
+    \               'maxSize': 200,
     \           },
     \    }
     if g:nvim_lsp

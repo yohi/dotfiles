@@ -134,6 +134,7 @@ call plug#begin('~/.config/nvim/plugged')
   " Plug 'Shougo/ddc-zsh'
   " Plug 'Shougo/ddc-nextword'
   Plug 'Shougo/neco-vim'
+  Plug 'LumaKernel/ddc-tabnine'
 
   " LSP
   if g:nvim_lsp

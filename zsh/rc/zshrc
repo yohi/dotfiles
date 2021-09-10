@@ -259,4 +259,3 @@ export PATH=$PATH:$GOPATH/bin
 #
 
 alias python=$(which python3)
-alias pip=$(which pip3)
