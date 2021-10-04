@@ -313,7 +313,7 @@ function DdcSource()
     if g:nvim_lsp
         let l:lsp_source = ['nvimlsp']
     else
-        let l:lsp_source = ['ddc-vim-lsp']
+        let l:lsp_source = ['vim-lsp']
     endif
     return l:lsp_source + l:sources
 endfunction
@@ -346,7 +346,7 @@ function DdcSourceOptions()
     if g:nvim_lsp
         let l:source_options['nvimlsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
     else
-        let l:source_options['ddc-vim-lsp'] = { 'mark': 'lsp' }
+        let l:source_options['vim-lsp'] = { 'mark': 'lsp' }
     endif
     return l:source_options
 endfunction
