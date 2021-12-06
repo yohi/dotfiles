@@ -70,7 +70,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 
   Plug 'lambdalisue/vim-django-support'
-  " Plug 'jmcantrell/vim-virtualenv'
+  Plug 'jmcantrell/vim-virtualenv'
   " Plug 'Vimjas/vim-python-pep8-indent'
 
   Plug 'APZelos/blamer.nvim'
@@ -124,6 +124,8 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'mfussenegger/nvim-dap-python'
 
   Plug 'Shougo/deoppet.nvim', { 'do': ':UpdateRemotePlugins' }
+
+  Plug 'Shougo/pum.vim'
 
   Plug 'Shougo/ddc.vim'
   Plug 'Shougo/ddc-around'
