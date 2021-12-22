@@ -259,6 +259,3 @@ export PATH=$PATH:$GOPATH/bin
 #
 
 alias python=$(which python3)
-
-export EDITOR=nvim
-eval "$(direnv hook zsh)"
