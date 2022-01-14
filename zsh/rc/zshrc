@@ -263,3 +263,4 @@ alias python=$(which python3)
 export EDITOR=nvim
 eval "$(direnv hook zsh)"
 export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/bin:$PATH"
+export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"
