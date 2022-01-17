@@ -33,6 +33,7 @@ brew "lua"
 brew "luajit", args: ["HEAD"]
 brew "luarocks"
 brew "mysql-client"
+brew "tree-sitter"
 brew "neovim", args: ["HEAD"]
 brew "node"
 brew "openssl@3"
