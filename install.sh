@@ -41,14 +41,14 @@ $(ln -nfs ~/dotfiles/fish/rc/fishrc ~/.config/fish/config.fish)
 
 # MAINLINE
 sudo add-apt-repository -y ppa:cappelikan/ppa
-sudo apt update
-sudo apt install -y mainline
-
+sudo apt update && sudo apt install -y mainline
 sudo mainline --install-latest
 
-sudo apt install refind
+# refind
+sudo apt install -y refind
 sudo refind-mkdefault
 
+# ROOTLESS DOCKER
 curl -fsSL https://get.docker.com/rootless | sh
 export PATH=/home/testuser/bin:$PATH
 export PATH=$PATH:/sbin
@@ -59,37 +59,47 @@ EOF
 systemctl --user start docker.service
 sudo loginctl enable-linger y_ohi   # TODO USERNAME
 
+# git config
 git config --global user.name 'Yusuke Ohi'
 git config --global user.email 'yohi@diamondhead.tech'
 
+# gnome shell
 sudo apt install -y chrome-gnome-shell
 sudo apt install -y gnome-tweaks
 
 # for system monitor
 sudo apt install -y gir1.2-gtop-2.0 gir1.2-nm-1.0 gir1.2-clutter-1.0
 
+# terminator
 sudo add-apt-repository -y ppa:mattrose/terminator
-sudo apt update
-sudo apt install -y terminator
+sudo apt update && sudo apt install -y terminator
 
-sudo snap install -y chromium
+# postman
 sudo snap install -y postman
 
-
-# Add TablePlus gpg key
+# TablePlus
 wget -O - -q http://deb.tableplus.com/apt.tableplus.com.gpg.key | sudo apt-key add - 
-
-# Add TablePlus repo
 sudo add-apt-repository -y "deb [arch=amd64] https://deb.tableplus.com/debian tableplus main"
+sudo apt update && sudo apt install -y tableplus
 
-# Install
-sudo apt update
-sudo apt install -y tableplus
-
+# howdy
 sudo add-apt-repository -y ppa:boltgolt/howdy
 sudo apt update
 sudo apt install -y howdy
 sudo howdy add
+
+# Ubuntu Japanese
+wget -q https://www.ubuntulinux.jp/ubuntu-ja-archive-keyring.gpg -O- | sudo apt-key add -
+wget -q https://www.ubuntulinux.jp/ubuntu-jp-ppa-keyring.gpg -O- | sudo apt-key add -
+# sudo wget https://www.ubuntulinux.jp/sources.list.d/focal.list -O /etc/apt/sources.list.d/ubuntu-ja.list # 20.04
+sudo wget https://www.ubuntulinux.jp/sources.list.d/impish.list -O /etc/apt/sources.list.d/ubuntu-ja.list # 21.10
+sudo apt update && sudo apt upgrade -y && sudo apt install -y ubuntu-defaults-ja
+
+# CapsLock -> Ctrl
+setxkbmap -option "ctrl:nocaps"
+sudo update-initramfs -u
+
+
 
 # https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1
 
