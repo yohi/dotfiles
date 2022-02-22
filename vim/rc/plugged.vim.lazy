@@ -43,7 +43,7 @@ highlight GitGutterChangeDelete ctermfg=yellow
 " junegunn/fzf
 " junegunn/fzf.vim
 " nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
-nnoremap <C-p> :FzfPreviewProjectFile<CR>
+" nnoremap <C-p> :FzfPreviewProjectFile<CR>
 " nnoremap <C-g> :CocCommand fzf-preview.ProjectGrep .<CR>
 " nnoremap <C-p> :CocCommand fzf-preview.ProjectFiles<CR>
 
@@ -210,68 +210,68 @@ call wilder#set_option('modes', ['/', '?', ':'])
 
 
 " Change file/rec command 
-call denite#custom#var('file/rec', 'command',
-\ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
-
-" Ripgrep command on grep source
-call denite#custom#var('grep', {
-           \ 'command': ['rg'],
-           \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
-           \ 'recursive_opts': [],
-           \ 'pattern_opt': ['--regexp'],
-           \ 'separator': ['--'],
-           \ 'final_opts': [],
-           \ })
-
-
-if 1
-    let s:floating_window_width_ratio = 0.85
-    let s:floating_window_height_ratio = 0.7
-
-    call denite#custom#option('default', {
-    \ 'auto_action': 'preview',
-    \ 'floating_preview': v:true,
-    \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
-    \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
-    \ 'prompt': '> ',
-    \ 'split': 'floating',
-    \ 'vertical_preview': v:true,
-    \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
-    \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
-    \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
-    \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio / 2),
-    \ 'floating-border': '|'
-    \ })
-else
-    let s:floating_window_width_ratio = 0.85
-    let s:floating_window_height_ratio = 0.7
-
-    " Change denite default options
-    call denite#custom#option('default', {
-        \ 'auto_action': 'preview',
-        \ 'floating_preview': v:true,
-        \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
-        \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
-        \ 'prompt': '> ',
-        \ 'split': 'floating',
-        \ 'vertical_preview': v:true,
-        \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio),
-        \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
-        \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
-        \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
-        \ })
-endif
-
-
-
-nmap <silent> ;f  :<C-u>Denite -start-filter file/rec<CR>
-nmap <silent> ;F  :<C-u>DeniteProjectDir -start-filter file/rec<CR>
-nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
-nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
-nmap <silent> ;;g :<C-u>Denite grep<CR>
-nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
-" nnoremap <C-p> :DeniteProjectDir -start-filter file/rec<CR>
-nnoremap <C-g> :DeniteProjectDir -start-filter grep<CR>
+" call denite#custom#var('file/rec', 'command',
+" \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+" 
+" " Ripgrep command on grep source
+" call denite#custom#var('grep', {
+"            \ 'command': ['rg'],
+"            \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
+"            \ 'recursive_opts': [],
+"            \ 'pattern_opt': ['--regexp'],
+"            \ 'separator': ['--'],
+"            \ 'final_opts': [],
+"            \ })
+" 
+" 
+" if 1
+"     let s:floating_window_width_ratio = 0.85
+"     let s:floating_window_height_ratio = 0.7
+" 
+"     call denite#custom#option('default', {
+"     \ 'auto_action': 'preview',
+"     \ 'floating_preview': v:true,
+"     \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
+"     \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
+"     \ 'prompt': '> ',
+"     \ 'split': 'floating',
+"     \ 'vertical_preview': v:true,
+"     \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
+"     \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
+"     \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
+"     \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio / 2),
+"     \ 'floating-border': '|'
+"     \ })
+" else
+"     let s:floating_window_width_ratio = 0.85
+"     let s:floating_window_height_ratio = 0.7
+" 
+"     " Change denite default options
+"     call denite#custom#option('default', {
+"         \ 'auto_action': 'preview',
+"         \ 'floating_preview': v:true,
+"         \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
+"         \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
+"         \ 'prompt': '> ',
+"         \ 'split': 'floating',
+"         \ 'vertical_preview': v:true,
+"         \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio),
+"         \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
+"         \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
+"         \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
+"         \ })
+" endif
+" 
+" 
+" 
+" nmap <silent> ;f  :<C-u>Denite -start-filter file/rec<CR>
+" nmap <silent> ;F  :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+" nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
+" nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
+" nmap <silent> ;;g :<C-u>Denite grep<CR>
+" nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
+" " nnoremap <C-p> :DeniteProjectDir -start-filter file/rec<CR>
+" nnoremap <C-g> :DeniteProjectDir -start-filter grep<CR>
 
 
 
@@ -312,7 +312,7 @@ function DdcSource()
     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'zsh']
     let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'tabnine']
     if g:nvim_lsp
-        let l:lsp_source = ['nvimlsp']
+        let l:lsp_source = ['nvim-lsp']
     else
         let l:lsp_source = ['vim-lsp']
     endif
@@ -345,7 +345,8 @@ function DdcSourceOptions()
     \           },
     \    }
     if g:nvim_lsp
-        let l:source_options['nvimlsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
+        let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
+        " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*', 'useIcon': v:true }
     else
         let l:source_options['vim-lsp'] = {'mark': 'lsp', 'matchers': ['matcher_head'], 'forceCompletionPattern': '\.|:|->|"\w+/*'}
     endif
@@ -418,3 +419,60 @@ if g:deoplete
       \ denite#do_map('open_filter_buffer')
     endfunction
 endif
+
+" ddu ======================
+call ddu#custom#patch_global({
+    \   'ui': 'ff',
+    \   'sources': [{'name': 'file_rec', 'params': {}}],
+    \   'sourceOptions': {
+    \     '_': {
+    \       'matchers': ['matcher_substring'],
+    \     },
+    \   },
+    \   'kindOptions': {
+    \     'file': {
+    \       'defaultAction': 'open',
+    \     },
+    \   },
+    \   'uiParams': {
+    \     'ff': {
+    \        'autoResize': v:true,
+    \        'split': 'floating',
+    \        'startFilter': v:true,
+    \        'filterSplitDirection': 'floating',
+    \        'filterFloatingPosition': 'top',
+    \        'previewFloting': v:true,
+    \        'previewHeight': 100,
+    \        'previewWidth': 400,
+    \     }
+    \   },
+    \})
+
+autocmd FileType ddu-ff call s:ddu_my_settings()
+function! s:ddu_my_settings() abort
+  nnoremap <buffer><silent> <CR>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> <Space>
+        \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+  nnoremap <buffer><silent> i
+        \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+  nnoremap <buffer><silent> q
+        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+endfunction
+
+autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+function! s:ddu_filter_my_settings() abort
+  inoremap <buffer><silent> <CR>
+  \ <Esc><Cmd>close<CR>
+  nnoremap <buffer><silent> <CR>
+  \ <Cmd>close<CR>
+  nnoremap <buffer><silent> q
+  \ <Cmd>close<CR>
+  nnoremap <buffer><silent> ^[
+  \ <Cmd>close<CR>
+endfunction
+
+
+" nnoremap <C-p> :call ddu#start({})<CR>
+nnoremap <C-p> :FzfPreviewProjectFile<CR>
+

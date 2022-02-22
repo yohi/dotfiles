@@ -104,13 +104,13 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'mechatroner/rainbow_csv'
 
-  if has('nvim')
-    Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-  else
-    Plug 'Shougo/denite.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-  endif
+  # if has('nvim')
+  #   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+  # else
+  #   Plug 'Shougo/denite.nvim'
+  #   Plug 'roxma/nvim-yarp'
+  #   Plug 'roxma/vim-hug-neovim-rpc'
+  # endif
 
   Plug 'kdheepak/lazygit.nvim'
 
@@ -161,6 +161,12 @@ call plug#begin('~/.config/nvim/plugged')
     Plug 'lighttiger2505/deoplete-vim-lsp'
     " Plug 'deoplete-plugins/deoplete-jedi'
   endif
+
+  Plug 'Shougo/ddu.vim'
+  Plug 'Shougo/ddu-ui-ff'
+  Plug 'Shougo/ddu-source-file_rec'
+  Plug 'Shougo/ddu-filter-matcher_substring'
+  Plug 'Shougo/ddu-kind-file'
 
 """"""""""""" 
 """""""""""""[[plugins]]
