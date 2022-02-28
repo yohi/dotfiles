@@ -104,13 +104,13 @@ call plug#begin('~/.config/nvim/plugged')
 
   Plug 'mechatroner/rainbow_csv'
 
-  # if has('nvim')
-  #   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
-  # else
-  #   Plug 'Shougo/denite.nvim'
-  #   Plug 'roxma/nvim-yarp'
-  #   Plug 'roxma/vim-hug-neovim-rpc'
-  # endif
+  " if has('nvim')
+  "   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+  " else
+  "   Plug 'Shougo/denite.nvim'
+  "   Plug 'roxma/nvim-yarp'
+  "   Plug 'roxma/vim-hug-neovim-rpc'
+  " endif
 
   Plug 'kdheepak/lazygit.nvim'
 
