@@ -423,7 +423,6 @@ endif
 " ddu ======================
 call ddu#custom#patch_global({
     \   'ui': 'ff',
-    \   'sources': [{'name': 'file_rec', 'params': {}}],
     \   'sourceOptions': {
     \     '_': {
     \       'matchers': ['matcher_substring'],
@@ -441,9 +440,11 @@ call ddu#custom#patch_global({
     \        'startFilter': v:true,
     \        'filterSplitDirection': 'floating',
     \        'filterFloatingPosition': 'top',
-    \        'previewFloting': v:true,
+    \        'highlights': {'floating': 'NormalFloat', 'prompt': 'Special'},
+    \        'previewFloating': v:true,
     \        'previewHeight': 100,
     \        'previewWidth': 400,
+    \        'prompt': '> ',
     \     }
     \   },
     \})
@@ -462,17 +463,27 @@ endfunction
 
 autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
 function! s:ddu_filter_my_settings() abort
+  inoremap <buffer> <C-j>
+  \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)")<CR>
+  inoremap <buffer> <C-k>
+  \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)")<CR>
   inoremap <buffer><silent> <CR>
-  \ <Esc><Cmd>close<CR>
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  inoremap <buffer><silent> q
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  inoremap <buffer><silent> ^[
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
   nnoremap <buffer><silent> <CR>
-  \ <Cmd>close<CR>
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
   nnoremap <buffer><silent> q
-  \ <Cmd>close<CR>
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
   nnoremap <buffer><silent> ^[
-  \ <Cmd>close<CR>
+  \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  inoremap <buffer> <CR>
+  \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 endfunction
 
 
-" nnoremap <C-p> :call ddu#start({})<CR>
+" nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
 nnoremap <C-p> :FzfPreviewProjectFile<CR>
 

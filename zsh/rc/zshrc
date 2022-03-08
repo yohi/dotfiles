@@ -34,7 +34,6 @@ setopt correct
 ###########################3 
 ###########################3 fpath=(/usr/local/share/zsh-completions $fpath)
 ###########################3 
-alias pip3='/home/linuxbrew/.linuxbrew/bin/pip3'    # TODO
 alias la="ls -a"
 alias ll="ls -l"
 alias du="du -h"
@@ -258,9 +257,19 @@ export PATH=$PATH:$GOPATH/bin
 # }
 #
 
-alias python=$(which python3)
 
 export EDITOR=nvim
 eval "$(direnv hook zsh)"
+
+
+
+
+# export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"
+#
+# export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/bin:$PATH"
+# export LDFLAGS="-L/home/linuxbrew/.linuxbrew/opt/python@3.10/lib"
+# export CPPFLAGS="-I/home/linuxbrew/.linuxbrew/opt/python@3.10/include"
+# export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/lib/pkgconfig"
+alias pip='pip3'
+alias python='python3'
 export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/bin:$PATH"
-export PATH="/home/linuxbrew/.linuxbrew/opt/openssl@3/bin:$PATH"
