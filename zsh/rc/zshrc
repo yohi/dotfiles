@@ -87,7 +87,11 @@ export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # SSH AGENT TODO
-source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme 
+# eval $(ssh-agent)
+
+
+#
+source /home/linuxbrew/.linuxbrew/opt/powerlevel10k/powerlevel10k.zsh-theme
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -209,6 +213,23 @@ function peco-cdr() {
 }
 zle -N peco-cdr
 bindkey '^u' peco-cdr
+
+###
+function ec2-ssm() {
+    local profile=$(aws configure list-profiles | peco )
+    local instance_id=$(aws --profile ${profile} ec2 describe-instances --filter "Name=instance-state-name,Values=running" "Name=dns-name,Values=" | \
+        jq -r '.Reservations[].Instances[] | .InstanceId + " " +  (.Tags[] | select(.Key=="Name").Value)' | \
+        peco | awk '{print $1}')
+    aws --profile ${profile} ssm start-session --target ${instance_id}
+}
+zle -N ec2-ssm
+
+function awslogs() {
+    local profile=$(aws configure list-profiles | peco )
+    local log_group_name=$(aws --profile ${profile} logs describe-log-groups | jq -r '.logGroups[].logGroupName' | peco)
+    aws --profile ${profile} logs tail ${log_group_name} --follow
+}
+zle -N awslogs
 
 # ブランチを簡単切り替え。git checkout lbで実行できる
 alias -g lb='`git branch | peco --prompt "GIT BRANCH>" | head -n 1 | sed -e "s/^\*\s*//g"`'
