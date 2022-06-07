@@ -156,9 +156,9 @@ call plug#begin('~/.config/nvim/plugged')
       Plug 'roxma/nvim-yarp'
       Plug 'roxma/vim-hug-neovim-rpc'
     endif
-    Plug 'prabirshrestha/asyncomplete.vim'
-    Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    Plug 'lighttiger2505/deoplete-vim-lsp'
+      Plug 'prabirshrestha/asyncomplete.vim'
+      Plug 'prabirshrestha/asyncomplete-lsp.vim'
+      Plug 'lighttiger2505/deoplete-vim-lsp'
     " Plug 'deoplete-plugins/deoplete-jedi'
   endif
 

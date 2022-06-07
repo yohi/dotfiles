@@ -104,37 +104,36 @@ augroup END
 " 特定を
 set synmaxcol=200
 
-" 
+"
 augroup vimrc-highlight
   au!
   au Syntax json if 1000 < col('$') | syntax off | endif
 augroup END
 
 
+
+
+
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
-" let g:python3_host_prog = '/usr/bin/python3'
-" let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3.9'
-"
-"
-"
-"
-let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
-let g:pip_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
-let g:pip3_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
 
 
-"" Load python3
-"if isdirectory(expand($PYENV_PATH))
-"    let g:python_host_prog = $PYENV_PATH . '/versions/neovim2/bin/python'
-"    let g:python3_host_prog = $PYENV_PATH . '/versions/neovim3/bin/python'
-"endif
-"if isdirectory(expand($ANYENV_PATH))
-"    let g:python_host_prog = $ANYENV_PATH . '/envs/pyenv/versions/neovim2/bin/python'
-"    let g:python3_host_prog = $ANYENV_PATH . '/envs/pyenv/versions/neovim3/bin/python'
-"endif
-"
-"
-"
+let g:python_dir = '~/.vim/python'
+let g:python_venv_dir = g:python_dir . '/.venv'
+if has('vim_starting')
+  if !isdirectory(expand(g:python_venv_dir))
+    echo 'create venv ...'
+    call system('python3 -m venv ' . g:python_venv_dir)
+    echo 'pip install -r requirements.txt'
+    " call system('source ' . g:python_venv_dir . '/bin/active' && g:python_venv_dir . '/bin/python -m pip install -r ' . s:python_dir . 'requirements.txt' )
+    call system(g:python_venv_dir . '/bin/python -m pip install -r ' . g:python_dir . '/requirements.txt')
+  endif
+endif
+
+let g:python3_host_prog = g:python_venv_dir . '/bin/python'
+"let g:pip_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
+"let g:pip3_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
+
+
 inoremap <C-[> <C-[>:w<CR>
