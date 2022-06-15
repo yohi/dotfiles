@@ -153,6 +153,9 @@ if has('nvim') && !filereadable(expand('~/.vim'))
   endif
 endif
 
+let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'
+let $PATH = '/home/linuxbrew/.linuxbrew/bin:' . $PATH
+
 
 " let g:pip_host_prog = g:python_host_prog . ' -m pip'
 " let g:pip3_host_prog = g:pip_host_prog

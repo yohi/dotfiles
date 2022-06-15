@@ -8,7 +8,7 @@ if has('vim_starting')
   end
 endif
 
-let g:nvim_lsp = v:false
+let g:nvim_lsp = v:true
 let g:deoplete = v:false
 
 call plug#begin('~/.config/nvim/plugged')
@@ -135,6 +135,7 @@ call plug#begin('~/.config/nvim/plugged')
   " Plug 'Shougo/ddc-nextword'
   Plug 'Shougo/neco-vim'
   Plug 'LumaKernel/ddc-tabnine'
+  Plug 'Shougo/pum.vim'
 
   " LSP
   if g:nvim_lsp
@@ -167,6 +168,13 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'Shougo/ddu-source-file_rec'
   Plug 'Shougo/ddu-filter-matcher_substring'
   Plug 'Shougo/ddu-kind-file'
+
+
+
+
+
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'jose-elias-alvarez/null-ls.nvim'
 
 """"""""""""" 
 """""""""""""[[plugins]]

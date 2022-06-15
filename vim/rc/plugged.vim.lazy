@@ -83,33 +83,42 @@ nnoremap <C-j> :LspDefinition<CR>
 set completeopt-=preview
 
 " vim-lsp-settings
-let g:lsp_settings_filetype_python = 'pyright-langserver'
-let g:lsp_settings = {
-\  'pyright-langserver': {
-\    'workspace_config': {
-\      'pyright-langserver': {
-\        'configurationSources': ['flake8'],
-\        'plugins': {
-\          'flake8': {
-\            'enabled': 1
-\          },
-\          'mccabe': {
-\            'enabled': 0
-\          },
-\          'pycodestyle': {
-\            'enabled': 0
-\          },
-\          'pyflakes': {
-\            'enabled': 0
-\          },
-\          'pylsp_mypy': {
-\            'enabled': 1
-\          }
-\        }
-\      }
-\    }
-\  }
-\}
+let g:lsp_settings_filetype_python = ['pyright-langserver', 'pylsp']
+" let g:lsp_settings = {
+" \       'pyright-langserver': {
+" \           'alllowlist': [
+" \               'python',
+" \           ],
+" \           'workspace_config': {
+" \               'python': {
+" \                   'analysis': {
+" \                       'useLibraryCodeForTypes': v:true,
+" \                       'typeCheckingMode': 'off',
+" \                   }
+" \               },
+" \               'pylsp': {
+" \                   'configurationSources': ['flake8'],
+" \                   'plugins': {
+" \                       'flake8': {
+" \                           'enabled': 1
+" \                       },
+" \                       'mccabe': {
+" \                           'enabled': 0
+" \                       },
+" \                       'pycodestyle': {
+" \                           'enabled': 0
+" \                       },
+" \                       'pyflakes': {
+" \                           'enabled': 0
+" \                       },
+" \                       'pylsp_mypy': {
+" \                           'enabled': 0
+" \                       }
+" \                   }
+" \               }
+" \           }
+" \       }
+" \   }
 
 " blamer
 let g:blamer_enabled = 1
@@ -336,7 +345,8 @@ smap <C-b>  <Plug>(deoppet_jump_backward)
 " ddc =====================================================
 function DdcSource()
     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'zsh']
-    let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'tabnine']
+    " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'tabnine']
+    let l:sources = ['around', 'buffer', 'deoppet', 'necovim']
     if g:nvim_lsp
         let l:lsp_source = ['nvim-lsp']
     else
@@ -371,7 +381,12 @@ function DdcSourceOptions()
     \           },
     \    }
     if g:nvim_lsp
-        let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
+        " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
+        let l:source_options['nvim-lsp'] = { 
+        \     'mark': 'lsp',
+        \     'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+        \     'useIcon': v:true 
+        \ }
         " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*', 'useIcon': v:true }
     else
         let l:source_options['vim-lsp'] = {
@@ -386,7 +401,7 @@ endfunction
 function DdcSourceParams()
     let l:source_params = {'around': { 'maxSize': 500 }}
     if g:nvim_lsp
-        let l:source_params['nvimlsp'] = { 'kindLabels': {'Class': 'c'}, 'useIcon': v:true }
+        let l:source_params['nvim-lsp'] = { 'kindLabels': {'Class': 'c'}, 'useIcon': v:true }
    endif
    return l:source_params
 endfunction
@@ -400,6 +415,54 @@ let s:source_params = DdcSourceParams()
 call ddc#custom#patch_global('sourceParams', s:source_params)
 call ddc#custom#patch_global('filterParams', { 'buffer': { 'requireSameFiletype': v:false }})
 
+
+"" " https://zenn.dev/shougo/articles/ddc-vim-pum-vim
+"" call ddc#custom#patch_global('completionMenu', 'pum.vim')
+"" call ddc#custom#patch_global('autoCompleteEvents', [
+""     \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
+""     \ 'CmdlineEnter', 'CmdlineChanged',
+""     \ ])
+"" 
+"" nnoremap :       <Cmd>call CommandlinePre()<CR>:
+"" 
+"" function! CommandlinePre() abort
+""   " Note: It disables default command line completion!
+""   cnoremap <expr> <Tab>
+""   \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+""   \ ddc#manual_complete()
+""   cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+""   cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+""   cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+"" 
+""   " Overwrite sources
+""   if !exists('b:prev_buffer_config')
+""     let b:prev_buffer_config = ddc#custom#get_buffer()
+""   endif
+""   call ddc#custom#patch_buffer('sources',
+""           \ ['cmdline', 'cmdline-history', 'around'])
+"" 
+""   autocmd User DDCCmdlineLeave ++once call CommandlinePost()
+""   autocmd InsertEnter <buffer> ++once call CommandlinePost()
+"" 
+""   " Enable command line completion
+""   call ddc#enable_cmdline_completion()
+"" endfunction
+"" 
+"" function! CommandlinePost() abort
+""   cunmap <Tab>
+""   cunmap <S-Tab>
+""   cunmap <C-y>
+""   cunmap <C-e>
+"" 
+""   " Restore sources
+""   if exists('b:prev_buffer_config')
+""     call ddc#custom#set_buffer(b:prev_buffer_config)
+""     unlet b:prev_buffer_config
+""   else
+""     call ddc#custom#set_buffer({})
+""   endif
+"" endfunction
+
 " Mappings
 
 " <TAB>: completion.
@@ -410,6 +473,17 @@ inoremap <silent><expr> <TAB>
 
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+" ddc.vim - pum.vim
+" inoremap <silent><expr> <TAB>
+"     \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+"     \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+"     \ '<TAB>' : ddc#manual_complete()
+" inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+" inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+" inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+" inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+" inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
 
 " Use ddc.
 call ddc#enable()
@@ -517,3 +591,69 @@ endfunction
 " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
 nnoremap <C-p> :FzfPreviewProjectFile<CR>
 
+
+
+lua <<EOF
+    -- require("null-ls").setup({
+    --     sources = {
+    --         debug = true,
+    --         -- require("null-ls").builtins.formatting.djlint,
+    --         require("null-ls").builtins.diagnostics.djlint,
+    --         -- require("null-ls").builtins.diagnostics.cspell,
+    --         require("null-ls").builtins.diagnostics.mypy,
+    --         require("null-ls").builtins.diagnostics.flake8,
+    --     },
+    -- })
+
+
+
+    -- require("null-ls").setup({
+    --     sources = {
+    --         require("null-ls").builtins.formatting.djlint.with({
+    --             command = "djlint",
+    --             args = { "--reformat", "-"},
+    --         }),
+    --     },
+    -- })
+
+    -- require("null-ls").setup({
+    --     debug = true,
+    --     sources = { require("null-ls").builtins.diagnostics.djlint },
+    -- })
+
+    -- local builtins = require("null-ls.builtins")
+    -- local formatting = builtins.formatting
+
+    -- local sources = {}
+    -- local ld = false
+
+    -- -- Django ("htmldjango")
+    -- if vim.fn.executable("djlint") == 1 then
+    --     ld = true
+    --     sources[#sources+1] = formatting.djlint.with({
+    --         command = "djlint",
+    --         args = { "--reformat", "-"},
+    --     })
+    -- end
+
+    -- if ld then
+    --     require("null-ls").setup({sources = sources})
+    -- end
+
+-- require("null-ls").setup({
+--     sources = {
+--         require("null-ls").builtins.formatting.stylua,
+--         require("null-ls").builtins.diagnostics.eslint,
+--         require("null-ls").builtins.completion.spell,
+--     },
+-- })
+-- 
+-- -- Django ("htmldjango")
+-- if vim.fn.executable("djlint") == 1 then
+--     ld = true
+--     sources[#sources+1] = formatting.djlint.with({
+--         command = "djlint",
+--         args = { "--reformat", "-"},
+--     })
+-- end
+EOF
