@@ -119,19 +119,43 @@ let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
 
 
-let g:python_dir = '~/.vim/python'
-let g:python_venv_dir = g:python_dir . '/.venv'
-if has('vim_starting')
-  if !isdirectory(expand(g:python_venv_dir))
-    echo 'create venv ...'
-    call system('python3 -m venv ' . g:python_venv_dir)
-    echo 'pip install -r requirements.txt'
-    " call system('source ' . g:python_venv_dir . '/bin/active' && g:python_venv_dir . '/bin/python -m pip install -r ' . s:python_dir . 'requirements.txt' )
-    call system(g:python_venv_dir . '/bin/python -m pip install -r ' . g:python_dir . '/requirements.txt')
+
+
+" let g:python_dir = '~/.vim/python'
+" let g:python_venv_dir = g:python_dir . '/.venv'
+" if has('vim_starting')
+"   if !isdirectory(expand(g:python_venv_dir))
+"     echo 'create venv ...'
+"     call system('python3 -m venv ' . g:python_venv_dir)
+"     echo 'pip install -r requirements.txt'
+"     " call system('source ' . g:python_venv_dir . '/bin/active' && 'pip install -r ' . s:python_dir . '/requirements.txt' )
+"     call system(g:python_venv_dir . '/bin/python -m pip install -r ' . g:python_dir . '/requirements.txt')
+"     call system('echo "hello world!"')
+"   endif
+" endif
+" 
+" let g:python_host_prog = g:python_venv_dir . '/bin/python'
+" let g:python3_host_prog = g:python_host_prog
+" let $PATH = g:python_venv_dir . '/bin:' . $PATH
+
+if has('nvim') && !filereadable(expand('~/.vim'))
+  let s:python3 = system('which python3')
+  if strlen(s:python3) != 0
+    let s:python3_dir = $HOME . '/.vim/python3'
+    if ! isdirectory(s:python3_dir)
+      echo 'create venv ...'
+      call system('python3 -m venv ' . s:python3_dir)
+      echo 'pip install -r requirements.txt'
+      call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+    endif
+    let g:python3_host_prog = s:python3_dir . '/bin/python'
+    let $PATH = s:python3_dir . '/bin:' . $PATH
   endif
 endif
 
-let g:python3_host_prog = g:python_venv_dir . '/bin/python'
+
+" let g:pip_host_prog = g:python_host_prog . ' -m pip'
+" let g:pip3_host_prog = g:pip_host_prog
 "let g:pip_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
 "let g:pip3_host_prog = '/home/linuxbrew/.linuxbrew/bin/pip3'
 
