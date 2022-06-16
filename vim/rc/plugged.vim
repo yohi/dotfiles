@@ -69,9 +69,11 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'vim-scripts/dbext.vim'
 
 
-  Plug 'lambdalisue/vim-django-support'
-  " Plug 'jmcantrell/vim-virtualenv'
+  " Plug 'lambdalisue/vim-django-support'
+  Plug 'jmcantrell/vim-virtualenv'
+  Plug 'sansyrox/vim-python-virtualenv'
   " Plug 'Vimjas/vim-python-pep8-indent'
+
 
   Plug 'APZelos/blamer.nvim'
 

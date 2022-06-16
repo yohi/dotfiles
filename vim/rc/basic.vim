@@ -130,7 +130,6 @@ let g:loaded_perl_provider = 0
 "     echo 'pip install -r requirements.txt'
 "     " call system('source ' . g:python_venv_dir . '/bin/active' && 'pip install -r ' . s:python_dir . '/requirements.txt' )
 "     call system(g:python_venv_dir . '/bin/python -m pip install -r ' . g:python_dir . '/requirements.txt')
-"     call system('echo "hello world!"')
 "   endif
 " endif
 " 
@@ -138,23 +137,73 @@ let g:loaded_perl_provider = 0
 " let g:python3_host_prog = g:python_host_prog
 " let $PATH = g:python_venv_dir . '/bin:' . $PATH
 
-if has('nvim') && !filereadable(expand('~/.vim'))
-  let s:python3 = system('which python3')
-  if strlen(s:python3) != 0
-    let s:python3_dir = $HOME . '/.vim/python3'
-    if ! isdirectory(s:python3_dir)
-      echo 'create venv ...'
-      call system('python3 -m venv ' . s:python3_dir)
-      echo 'pip install -r requirements.txt'
-      call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+"VIRTUAL_ENV
+
+" let g:virtual_env = $VIRTUAL_ENV
+" 
+" echo 'virtual_env'
+" echo strlen(g:virtual_env)
+" 
+" if has('nvim') && !filereadable(expand('~/.vim'))
+"   let s:python3 = system('which python3')
+"   if strlen(s:python3) != 0
+"     let s:python3_dir = $HOME . '/.vim/python3'
+"     if ! isdirectory(s:python3_dir)
+"       echo 'create venv ...'
+"       call system('python3 -m venv ' . s:python3_dir)
+"       echo 'pip install -r requirements.txt'
+"       call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+"     endif
+"     let g:python3_host_prog = s:python3_dir . '/bin/python'
+"     let $PATH = s:python3_dir . '/bin:' . $PATH
+"   endif
+" endif
+
+
+let g:virtual_env = $VIRTUAL_ENV
+if strlen(g:virtual_env) == 0
+    " echo '$VIRTUAL_ENV not defined'
+    let s:python3 = system('which python3')
+    if strlen(s:python3) != 0
+        let s:python3_dir = $HOME . '/.vim/python'
+        if !isdirectory(s:python3_dir)
+            " echo 'create venv...'
+            call system('python3 -m venv ' . s:python3_dir)
+        endif
+
+        " echo 'source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt'
+        call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+        let g:python3_host_prog = s:python3_dir . '/bin/python'
+        let $PATH = s:python3_dir . '/bin:' . $PATH
     endif
-    let g:python3_host_prog = s:python3_dir . '/bin/python'
-    let $PATH = s:python3_dir . '/bin:' . $PATH
-  endif
+else
+    " echo '$VIRTUAL_ENV defined'
+    " echo 'install pip...'
+    call system('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+    let g:python3_host_prog = g:virtual_env . '/bin/python'
+    let $PATH = g:virtual_env . '/bin:' . $PATH
 endif
 
+let g:pythonpath = $PYTHONPATH
+if strlen(g:pythonpath) == 0
+    let $PYTHONPATH = getcwd()
+endif
+
+" echo 'which python3'
+" echo system('which python3')
+" echo 'pip list'
+" echo system('pip list')
+" echo '$PATH'
+" echo $PATH
+
+" echo getcwd()
+" 
+" sleep 60
+
+
+
+
 let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'
-let $PATH = '/home/linuxbrew/.linuxbrew/bin:' . $PATH
 
 
 " let g:pip_host_prog = g:python_host_prog . ' -m pip'
