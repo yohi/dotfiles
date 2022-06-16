@@ -139,9 +139,12 @@ call plug#begin('~/.config/nvim/plugged')
 
   " LSP
   if g:nvim_lsp
-      Plug 'Shougo/ddc-nvim-lsp'
       Plug 'neovim/nvim-lspconfig'
       Plug 'williamboman/nvim-lsp-installer'
+      Plug 'Shougo/ddc-nvim-lsp'
+      " Plug 'Shougo/ddc-nvim-lsp-doc'
+      Plug 'matsui54/denops-popup-preview.vim'
+      Plug 'matsui54/denops-signature_help'
   else
       Plug 'prabirshrestha/async.vim'
       Plug 'prabirshrestha/vim-lsp'
