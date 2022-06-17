@@ -1,0 +1,1007 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+# カラースキーマ
+[[plugins]]
+repo = 'tomasiser/vim-code-dark'
+hook_source = '''
+    " colorscheme codedark
+    " au MyAutoCmd VimEnter * nested colorscheme codedark
+    autocmd VimEnter * ++nested colorscheme codedark
+'''
+
+# 全角スペースをホワイトに表示
+[[plugins]]
+repo = 'thinca/vim-zenspace'
+hook_add = '''
+let g:zenspace#default_mode = 'on'
+augroup vimrc-highlight
+  autocmd!
+  autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
+augroup END
+'''
+
+# ステータスバー
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline_theme='deus'
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+# インデント
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hook_add = '''
+    let g:indentLine_char = '¦'
+'''
+
+# GIT系 ----------------------
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+    set signcolumn=yes
+    let g:gitgutter_async = 1
+    let g:gitgutter_sign_modified = 'rw'
+    highlight GitGutterAdd ctermfg=green
+    highlight GitGutterChange ctermfg=yellow
+    highlight GitGutterDelete ctermfg=red
+    highlight GitGutterChangeDelete ctermfg=yellow
+'''
+
+# fzf
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+[[plugins]]
+repo = 'yuki-yano/fzf-preview.vim'
+rev = 'release/rpc'
+hook_add = '''
+    nnoremap <C-p> :FzfPreviewProjectFile<CR>
+'''
+
+# vim rooter
+[[plugins]]
+repo = 'airblade/vim-rooter'
+
+# LINT
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+    let g:ale_sign_column_always = 1
+    let g:ale_disable_lsp = 0
+    let g:ale_linters = {'python': ['flake8']}
+    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+'''
+[[plugins]]
+repo = 'kamykn/spelunker.vim'
+hook_add = '''
+    set nospell
+'''
+[[plugins]]
+repo = 'rickhowe/diffchar.vim'
+[[plugins]]
+repo = 'cohama/lexima.vim'
+[[plugins]]
+repo = 'rhysd/git-messenger.vim'
+[[plugins]]
+repo = 'vim-scripts/dbext.vim'
+
+# for python developmen
+[[plugins]]
+repo = 'jmcantrell/vim-virtualenv'
+[[plugins]]
+repo = 'sansyrox/vim-python-virtualenv'
+# [[plugins]]
+# repo = 'Vimjas/vim-python-pep8-indent'
+# [[plugins]]
+# repo = 'lambdalisue/vim-django-support'
+
+
+[[plugins]]
+repo = 'APZelos/blamer.nvim'
+hook_add = '''
+    let g:blamer_enabled = 1
+    let g:blamer_date_format = '%Y/%m/%d %H:%M'
+    let g:blamer_template = '<committer>, <committer-time>  * <summary>'
+'''
+# [[plugins]]
+# repo = 'pechorin/any-jump.vim'
+[[plugins]]
+repo = 'RRethy/vim-illuminate'
+
+[[plugins]]
+repo = 'gelguy/wilder.nvim'
+hook_source = '''
+    call wilder#enable_cmdline_enter()
+    
+    set wildcharm=<Tab>
+    cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
+    cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
+    
+    " only / and ? is enabled by default
+    call wilder#set_option('modes', ['/', '?', ':'])
+'''
+
+# nvim-treesitter
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'
+hook_add = '''
+'''
+
+# fern.vim
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+[[plugins]]
+repo = 'lambdalisue/fern-hijack.vim'
+
+# reword
+[[plugins]]
+repo = 'lambdalisue/reword.vim'
+
+# # quickrun
+# [[plugins]]
+# repo = 'thinca/vim-quickrun'
+# [[plugins]]
+# repo = 'lambdalisue/vim-quickrun-neovim-job'
+# 
+# let g:quickrun_config = {'_': {}}
+# if has('nvim')
+#   # Use 'neovim_job' in Neovim
+#   let g:quickrun_config._.runner = 'neovim_job'
+# elseif exists('*ch_close_in')
+#   # Use 'job' in Vim which support job feature
+#   let g:quickrun_config._.runner = 'job'
+# endif
+
+# rainvow_csv
+[[plugins]]
+repo = 'mechatroner/rainbow_csv'
+
+# lazygit.vim
+[[plugins]]
+repo = 'kdheepak/lazygit.nvim'
+hook_add = '''
+    let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+    let g:lazygit_floating_window_scaling_factor = 0.9 " scaling factor for floating window
+    let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+    let g:lazygit_use_neovim_remote = 1 " fallback to 0 if neovim-remote is not installed
+
+    " setup mapping to call :LazyGit
+    nnoremap <silent> lg :LazyGit<CR>
+'''
+
+# pastefix
+[[plugins]]
+repo = 'lambdalisue/pastefix.vim'
+
+# denops
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
+# command
+[[plugins]]
+repo = 'skanehira/command.vim'
+
+# nvim-dap
+[[plugins]]
+repo = 'mfussenegger/nvim-dap'
+[[plugins]]
+repo = 'mfussenegger/nvim-dap-python'
+hook_source = '''
+    lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    lua require('dap-python').test_runner = 'pytest'
+
+    nnoremap <silent> dn :lua require('dap-python').test_method()<CR>
+    nnoremap <silent> df :lua require('dap-python').test_class()<CR>
+    vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+'''
+
+# deoppet
+[[plugins]]
+repo = 'Shougo/deoppet.nvim'
+hook_source = '''
+    call deoppet#initialize()
+    call deoppet#custom#option('snippets',
+    \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
+    \     { _, val -> { 'path': val } }))
+    imap <C-k>  <Plug>(deoppet_expand)
+    imap <C-f>  <Plug>(deoppet_jump_forward)
+    imap <C-b>  <Plug>(deoppet_jump_backward)
+    smap <C-f>  <Plug>(deoppet_jump_forward)
+    smap <C-b>  <Plug>(deoppet_jump_backward)
+'''
+
+# lsp
+# if g:nvim_lsp
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+hook_source = '''
+    lua <<EOF
+        require('nvim-lsp-installer').on_server_ready(function(server)
+            local opts = {}
+            opts.on_attach = function(client, buffer_number)
+            end
+            server:setup(opts)
+        end)
+EOF
+    nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <C-j> :LspDefinition<CR>
+    set completeopt-=preview
+
+'''
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+hook_source = '''
+    call ddc_nvim_lsp_doc#enable()
+'''
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'
+hook_source = '''
+    call popup_preview#enable()
+    call signature_help#enable()
+
+'''
+[[plugins]]
+repo = 'matsui54/denops-signature_help'
+hook_add = '''
+'''
+# else
+#     [[plugins]]
+# repo = 'prabirshrestha/async.vim'
+#     [[plugins]]
+# repo = 'prabirshrestha/vim-lsp'
+#     [[plugins]]
+# repo = 'mattn/vim-lsp-settings'
+#     [[plugins]]
+# repo = 'shun/ddc-vim-lsp'
+# endif
+
+
+# if g:deoplete
+#   # deoplete
+#   if has('nvim')
+#     [[plugins]]
+# repo = 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+#   else
+#     [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+#     [[plugins]]
+# repo = 'roxma/nvim-yarp'
+#     [[plugins]]
+# repo = 'roxma/vim-hug-neovim-rpc'
+#   endif
+#     [[plugins]]
+# repo = 'prabirshrestha/asyncomplete.vim'
+#     [[plugins]]
+# repo = 'prabirshrestha/asyncomplete-lsp.vim'
+#     [[plugins]]
+# repo = 'lighttiger2505/deoplete-vim-lsp'
+#   # [[plugins]]
+# repo = 'deoplete-plugins/deoplete-jedi'
+# else
+  # ddc
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+hook_source = '''
+    let s:sources = DdcSource()
+    call ddc#custom#patch_global(
+        'sources',
+        [
+            'around',
+            'buffer',
+            'deoppet',
+            'necovim',
+            'tabnine',
+            'nvim-lsp',
+        ]
+    )
+    call ddc#custom#patch_global(
+        'sourceOptions',
+        {
+            '_': {
+                'matchers': ['matcher_head'],
+                'sorters': ['sorter_rank'],
+                'converters': ['converter_remove_overlap']
+            },
+            'around': {
+                'mark': 'A'
+            },
+            'buffer': {
+                'mark': 'B'
+            },
+            'deoppet': {
+                'mark': 'dp'
+            },
+            'necovim': {
+                'mark': 'vim'
+            },
+            'tabnine': {
+                'mark': 'TN',
+                'isVolatile': v:true,
+                'maxSize': 200,
+            },
+            'nvim-lsp': {
+                'mark': 'lsp',
+                'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+                'useIcon': v:true,
+            },
+        }
+
+    )
+    call ddc#custom#patch_global(
+        'sourceParams',
+        {
+            'around': {
+                'maxSize': 500,
+            },
+            'nvim-lsp': {
+                'kindLabels': {
+                    'Class': 'c'
+                },
+                'useIcon': v:true, 
+            }
+        }
+        s:source_params
+    )
+    call ddc#custom#patch_global(
+        'filterParams',
+        {
+            'buffer': {
+                'requireSameFiletype': v:false 
+            }
+        }
+    )
+
+    inoremap <silent><expr> <TAB>
+    \ pumvisible() ? '<C-n>' :
+    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    \ '<TAB>' : ddc#manual_complete()
+
+    " <S-TAB>: completion back.
+    inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+
+    " Use ddc.
+    call ddc#enable()
+
+'''
+[[plugins]]
+repo = 'Shougo/ddc-around'
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+[[plugins]]
+repo = 'Shougo/ddc-converter_remove_overlap'
+[[plugins]]
+repo = 'matsui54/ddc-buffer'
+# [[plugins]]
+# repo = 'Shougo/ddc-zsh'
+# [[plugins]]
+# repo = 'Shougo/ddc-nextword'
+[[plugins]]
+repo = 'Shougo/neco-vim'
+[[plugins]]
+repo = 'LumaKernel/ddc-tabnine'
+[[plugins]]
+repo = 'Shougo/pum.vim'
+# endif
+
+# ddu
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+hook_source = '''
+    call ddu#custom#patch_global({
+        \   'ui': 'ff',
+        \   'sourceOptions': {
+        \     '_': {
+        \       'matchers': ['matcher_substring'],
+        \     },
+        \   },
+        \   'kindOptions': {
+        \     'file': {
+        \       'defaultAction': 'open',
+        \     },
+        \   },
+        \   'uiParams': {
+        \     'ff': {
+        \        'autoResize': v:true,
+        \        'split': 'floating',
+        \        'startFilter': v:true,
+        \        'filterSplitDirection': 'floating',
+        \        'filterFloatingPosition': 'top',
+        \        'highlights': {'floating': 'NormalFloat', 'prompt': 'Special'},
+        \        'previewFloating': v:true,
+        \        'previewHeight': 100,
+        \        'previewWidth': 400,
+        \        'prompt': '> ',
+        \     }
+        \   },
+        \})
+
+    autocmd FileType ddu-ff call s:ddu_my_settings()
+    function! s:ddu_my_settings() abort
+      nnoremap <buffer><silent> <CR>
+            \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+      nnoremap <buffer><silent> <Space>
+            \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+      nnoremap <buffer><silent> i
+            \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+      nnoremap <buffer><silent> q
+            \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+    endfunction
+
+    autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+    function! s:ddu_filter_my_settings() abort
+      inoremap <buffer> <C-j>
+      \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)")<CR>
+      inoremap <buffer> <C-k>
+      \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)")<CR>
+      inoremap <buffer><silent> <CR>
+      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+      inoremap <buffer><silent> q
+      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+      inoremap <buffer><silent> ^[
+      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+      nnoremap <buffer><silent> <CR>
+      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+      nnoremap <buffer><silent> q
+      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+      nnoremap <buffer><silent> ^[
+      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+      inoremap <buffer> <CR>
+      \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+    endfunction
+'''
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+
+# plenary
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+
+# null-ls
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+hook_add = '''
+    lua <<EOF
+        require("null-ls").setup({
+            sources = {
+                debug = true,
+                -- require("null-ls").builtins.formatting.djlint,
+                -- require("null-ls").builtins.diagnostics.djlint,
+                -- require("null-ls").builtins.diagnostics.cspell,
+                -- require("null-ls").builtins.diagnostics.mypy,
+                -- require("null-ls").builtins.diagnostics.flake8,
+            },
+        })
+
+        -- require("null-ls").setup({
+        --     sources = {
+        --         require("null-ls").builtins.formatting.djlint.with({
+        --             command = "djlint",
+        --             args = { "--reformat", "-"},
+        --         }),
+        --     },
+        -- })
+
+        -- require("null-ls").setup({
+        --     debug = true,
+        --     sources = { require("null-ls").builtins.diagnostics.djlint },
+        -- })
+
+        -- local builtins = require("null-ls.builtins")
+        -- local formatting = builtins.formatting
+
+        -- local sources = {}
+        -- local ld = false
+
+        -- -- Django ("htmldjango")
+        -- if vim.fn.executable("djlint") == 1 then
+        --     ld = true
+        --     sources[#sources+1] = formatting.djlint.with({
+        --         command = "djlint",
+        --         args = { "--reformat", "-"},
+        --     })
+        -- end
+
+        -- if ld then
+        --     require("null-ls").setup({sources = sources})
+        -- end
+
+        -- require("null-ls").setup({
+        --     sources = {
+        --         require("null-ls").builtins.formatting.stylua,
+        --         require("null-ls").builtins.diagnostics.eslint,
+        --         require("null-ls").builtins.completion.spell,
+        --     },
+        -- })
+
+        -- -- Django ("htmldjango")
+        -- if vim.fn.executable("djlint") == 1 then
+        --     ld = true
+        --     sources[#sources+1] = formatting.djlint.with({
+        --         command = "djlint",
+        --         args = { "--reformat", "-"},
+        --     })
+        -- end
+EOF
+'''
+
+#[[plugins]]
+# repo = 'vim-python/python-syntax'
+#let g:python_highlight_all = 1
+
+#[[plugins]]
+# repo = 'lambdalisue/vim-django-support'
+
+#[[plugins]]
+# repo = 'klen/python-mode'
+#let g:pymode_python = 'python3'
+
+
+
+
+## " neoclide/coc.nvim
+## " let g:coc_global_extensions = [
+## "       \ 'coc-python',
+## "       \ 'coc-json',
+## "       \ 'coc-html',
+## "       \ 'coc-css',
+## "       \ 'coc-python',
+## "       \ 'coc-pyright',
+## "       \ 'coc-pyls',
+## "       \ 'coc-explorer',
+## "       \ 'coc-yank',
+## "       \ 'coc-snippets'
+## "       \ ]
+## 
+## " junegunn/fzf
+## " junegunn/fzf.vim
+## " nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
+## " nnoremap <C-p> :FzfPreviewProjectFile<CR>
+## " nnoremap <C-g> :CocCommand fzf-preview.ProjectGrep .<CR>
+## " nnoremap <C-p> :CocCommand fzf-preview.ProjectFiles<CR>
+## 
+## " vim-lsp
+## let g:lsp_signs_enabled = 1         " enable signs
+## let g:lsp_diagnostics_enabled = 1 " Lintの有効or無効
+## let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+## let g:lsp_diagnostics_float_cursor = 0
+## let g:lsp_diagnostics_virtual_text_insert_mode_enabled = 1
+## let g:lsp_diagnostics_virtual_text_enabled = 0 " Lintエラーの横に仮想テキスト表示
+## let g:lsp_signs_error = {'text': 'x'} " errorサインの変更
+## let g:lsp_signs_warning = {'text': '!'} " warningサインの変更
+## let g:lsp_signs_hint = {'text': '?'} " hintサインの変更
+## let g:lsp_highlights_enabled = 1
+## let g:lsp_highlight_references_enabled = 1
+## let g:lsp_textprop_enabled = 1
+## let g:lsp_virtual_text_enabled = 0
+## let g:lsp_insert_text_enabled = 0
+## let g:lsp_text_edit_enabled = 0
+## "let g:asyncomplete_auto_popup = 1
+## "let g:asyncomplete_auto_completeopt = 0
+## "let g:asyncomplete_popup_delay = 200
+## let g:asyncomplete_matchfuzzy = 1
+## 
+## 
+## if g:nvim_lsp
+## else
+##     " vim-lsp-settings
+##     let g:lsp_settings_filetype_python = ['pyright-langserver', 'pylsp']
+##     " let g:lsp_settings = {
+##     " \       'pyright-langserver': {
+##     " \           'alllowlist': [
+##     " \               'python',
+##     " \           ],
+##     " \           'workspace_config': {
+##     " \               'python': {
+##     " \                   'analysis': {
+##     " \                       'useLibraryCodeForTypes': v:true,
+##     " \                       'typeCheckingMode': 'off',
+##     " \                   }
+##     " \               },
+##     " \               'pylsp': {
+##     " \                   'configurationSources': ['flake8'],
+##     " \                   'plugins': {
+##     " \                       'flake8': {
+##     " \                           'enabled': 1
+##     " \                       },
+##     " \                       'mccabe': {
+##     " \                           'enabled': 0
+##     " \                       },
+##     " \                       'pycodestyle': {
+##     " \                           'enabled': 0
+##     " \                       },
+##     " \                       'pyflakes': {
+##     " \                           'enabled': 0
+##     " \                       },
+##     " \                       'pylsp_mypy': {
+##     " \                           'enabled': 0
+##     " \                       }
+##     " \                   }
+##     " \               }
+##     " \           }
+##     " \       }
+##     " \   }
+##     nnoremap <F12> :LspDefinition<CR>
+##     nnoremap <C-j> :LspDefinition<CR>
+## endif
+## 
+## 
+## " pechorin/any-jump.vim
+## " let g:any_jump_disable_default_keybindings = 1
+## " " Normal mode: Jump to definition under cursore
+## " nnoremap <C-j> :AnyJump<CR>
+## " " Visual mode: jump to selected text in visual mode
+## " xnoremap <C-j> :AnyJumpVisual<CR>
+## " " Normal mode: open previous opened file (after jump)
+## " nnoremap <C-ab> :AnyJumpBack<CR>
+## " " Normal mode: open last closed search window again
+## " nnoremap <C-al> :AnyJumpLastResults<CR>
+## 
+## 
+## """"""""""""""""""""""""""""""""""""""""""""""" Define mappings
+## """"""""""""""""""""""""""""""""""""""""""""""autocmd FileType denite call s:denite_my_settings()
+## """"""""""""""""""""""""""""""""""""""""""""""function! s:denite_my_settings() abort
+## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> <CR>
+## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action')
+## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> d
+## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action', 'delete')
+## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> p
+## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action', 'preview')
+## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> q
+## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('quit')
+## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> i
+## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('open_filter_buffer')
+## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> <Space>
+## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('toggle_select').'j'
+## """"""""""""""""""""""""""""""""""""""""""""""endfunction
+## """"""""""""""""""""""""""""""""""""""""""""""
+## """"""""""""""""""""""""""""""""""""""""""""""let s:denite_win_width_percent = 0.85
+## """"""""""""""""""""""""""""""""""""""""""""""let s:denite_win_height_percent = 0.7
+## """"""""""""""""""""""""""""""""""""""""""""""
+## """"""""""""""""""""""""""""""""""""""""""""""" " Change denite default options
+## """"""""""""""""""""""""""""""""""""""""""""""" call denite#custom#option('default', {
+## """""""""""""""""""""""""""""""""""""""""""""""     \ 'split': 'floating',
+## """""""""""""""""""""""""""""""""""""""""""""""     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+## """""""""""""""""""""""""""""""""""""""""""""""     \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+## """""""""""""""""""""""""""""""""""""""""""""""     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+## """""""""""""""""""""""""""""""""""""""""""""""     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+## """""""""""""""""""""""""""""""""""""""""""""""     \ })
+## """"""""""""""""""""""""""""""""""""""""""""""" 
+## """"""""""""""""""""""""""""""""""""""""""""""" call denite#custom#var('file/rec', 'command',
+## """"""""""""""""""""""""""""""""""""""""""""""" \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+## """"""""""""""""""""""""""""""""""""""""""""""" customize ignore globs
+## """"""""""""""""""""""""""""""""""""""""""""""call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
+## """"""""""""""""""""""""""""""""""""""""""""""call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
+## """"""""""""""""""""""""""""""""""""""""""""""      \ [
+## """"""""""""""""""""""""""""""""""""""""""""""      \ '.git/', 'build/', '__pycache__/',
+## """"""""""""""""""""""""""""""""""""""""""""""      \ 'images/', '*.o', '*.make',
+## """"""""""""""""""""""""""""""""""""""""""""""      \ '*.min.*',
+## """"""""""""""""""""""""""""""""""""""""""""""      \ 'img/', 'fonts/'])
+## 
+## " nvim-treesitter
+## " lua <<EOF
+## " require'nvim-treesitter.configs'.setup {
+## "   ensure_installed = 'all',
+## "   highlight = { enable = true, },
+## "   incremental_selection = { enable = true, },
+## "   refactor = {
+## "     highlight_definitions = { enable = true },
+## "     highlight_current_scope = { enable = true },
+## "       smart_rename = { enable = true, },
+## "       navigation = { enable = true, },
+## " 
+## "     textobjects = {
+## "       select = { enable = true, },
+## "       swap = { enable = true, },
+## "       move = { enable = true, },
+## "     }
+## " }
+## " EOF
+## 
+## " lua <<EOF
+## " require'nvim-treesitter.configs'.setup {
+## "   -- Modules and its options go here
+## "   highlight = { enable = true },
+## "   incremental_selection = { enable = true },
+## "   refactor = {
+## "     highlight_definitions = { enable = true },
+## "     smart_rename = { enable = true },
+## "     navigation = { enable = true },
+## "   },
+## "   textobjects = { enable = true },
+## " }
+## " EOF
+## " lua <<EOF
+## " require'nvim-treesitter.configs'.setup {
+## "   highlight = {
+## "     enable = true,
+## "   },
+## "   indent = {
+## "     enable = true,
+## "   }
+## " }
+## " EOF
+## 
+## " treesitter
+## " lua <<EOF
+## " require'nvim-treesitter.configs'.setup {
+## "   highlight = {
+## "     enable = true,
+## "   },
+## "   indent = {
+## "     enable = false,
+## "   },
+## " }
+## " EOF
+## 
+## 
+## 
+## " Change file/rec command 
+## " call denite#custom#var('file/rec', 'command',
+## " \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
+## " 
+## " " Ripgrep command on grep source
+## " call denite#custom#var('grep', {
+## "            \ 'command': ['rg'],
+## "            \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
+## "            \ 'recursive_opts': [],
+## "            \ 'pattern_opt': ['--regexp'],
+## "            \ 'separator': ['--'],
+## "            \ 'final_opts': [],
+## "            \ })
+## " 
+## " 
+## " if 1
+## "     let s:floating_window_width_ratio = 0.85
+## "     let s:floating_window_height_ratio = 0.7
+## " 
+## "     call denite#custom#option('default', {
+## "     \ 'auto_action': 'preview',
+## "     \ 'floating_preview': v:true,
+## "     \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
+## "     \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
+## "     \ 'prompt': '> ',
+## "     \ 'split': 'floating',
+## "     \ 'vertical_preview': v:true,
+## "     \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
+## "     \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
+## "     \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
+## "     \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio / 2),
+## "     \ 'floating-border': '|'
+## "     \ })
+## " else
+## "     let s:floating_window_width_ratio = 0.85
+## "     let s:floating_window_height_ratio = 0.7
+## " 
+## "     " Change denite default options
+## "     call denite#custom#option('default', {
+## "         \ 'auto_action': 'preview',
+## "         \ 'floating_preview': v:true,
+## "         \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
+## "         \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
+## "         \ 'prompt': '> ',
+## "         \ 'split': 'floating',
+## "         \ 'vertical_preview': v:true,
+## "         \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio),
+## "         \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
+## "         \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
+## "         \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
+## "         \ })
+## " endif
+## " 
+## " 
+## " 
+## " nmap <silent> ;f  :<C-u>Denite -start-filter file/rec<CR>
+## " nmap <silent> ;F  :<C-u>DeniteProjectDir -start-filter file/rec<CR>
+## " nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
+## " nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
+## " nmap <silent> ;;g :<C-u>Denite grep<CR>
+## " nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
+## " " nnoremap <C-p> :DeniteProjectDir -start-filter file/rec<CR>
+## " nnoremap <C-g> :DeniteProjectDir -start-filter grep<CR>
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## 
+## " ddc =====================================================
+## function DdcSource()
+##     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'zsh']
+##     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'tabnine']
+##     let l:sources = ['around', 'buffer', 'deoppet', 'necovim']
+##     if g:nvim_lsp
+##         let l:lsp_source = ['nvim-lsp']
+##     else
+##         let l:lsp_source = ['vim-lsp']
+##     endif
+##     return l:lsp_source + l:sources
+## endfunction
+## 
+## function DdcSourceOptions()
+##     let l:source_options = {
+##     \           '_': {
+##     \             'matchers': ['matcher_head'],
+##     \             'sorters': ['sorter_rank'],
+##     \             'converters': ['converter_remove_overlap']
+##     \           },
+##     \           'around': {
+##     \               'mark': 'A'
+##     \           },
+##     \           'buffer': {
+##     \               'mark': 'B'
+##     \           },
+##     \           'deoppet': {
+##     \               'mark': 'dp'
+##     \           },
+##     \           'necovim': {
+##     \               'mark': 'vim'
+##     \           },
+##     \           'tabnine': {
+##     \               'mark': 'TN',
+##     \               'isVolatile': v:true,
+##     \               'maxSize': 200,
+##     \           },
+##     \    }
+##     if g:nvim_lsp
+##         " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
+##         let l:source_options['nvim-lsp'] = { 
+##         \ }
+##         " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*', 'useIcon': v:true }
+##     else
+##         let l:source_options['vim-lsp'] = {
+##         \     'mark': 'lsp',
+##         \     'matchers': ['matcher_head'],
+##         \     'forceCompletionPattern': '\.|:|->|"\w+/*'
+##         \ }
+##     endif
+##     return l:source_options
+## endfunction
+## 
+## function DdcSourceParams()
+##     let l:source_params = {'around': { 'maxSize': 500 }}
+##     if g:nvim_lsp
+##         let l:source_params['nvim-lsp'] = { 'kindLabels': {'Class': 'c'}, 'useIcon': v:true }
+##    endif
+##    return l:source_params
+## endfunction
+## 
+## " Use matcher_head and sorter_rank.
+## let s:sources = DdcSource()
+## call ddc#custom#patch_global('sources', s:sources)
+## let s:source_options = DdcSourceOptions()
+## call ddc#custom#patch_global('sourceOptions', s:source_options)
+## let s:source_params = DdcSourceParams()
+## call ddc#custom#patch_global('sourceParams', s:source_params)
+## call ddc#custom#patch_global('filterParams', { 'buffer': { 'requireSameFiletype': v:false }})
+## 
+## 
+## "" " https://zenn.dev/shougo/articles/ddc-vim-pum-vim
+## "" call ddc#custom#patch_global('completionMenu', 'pum.vim')
+## "" call ddc#custom#patch_global('autoCompleteEvents', [
+## ""     \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
+## ""     \ 'CmdlineEnter', 'CmdlineChanged',
+## ""     \ ])
+## "" 
+## "" nnoremap :       <Cmd>call CommandlinePre()<CR>:
+## "" 
+## "" function! CommandlinePre() abort
+## ""   " Note: It disables default command line completion!
+## ""   cnoremap <expr> <Tab>
+## ""   \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+## ""   \ ddc#manual_complete()
+## ""   cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+## ""   cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+## ""   cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+## "" 
+## ""   " Overwrite sources
+## ""   if !exists('b:prev_buffer_config')
+## ""     let b:prev_buffer_config = ddc#custom#get_buffer()
+## ""   endif
+## ""   call ddc#custom#patch_buffer('sources',
+## ""           \ ['cmdline', 'cmdline-history', 'around'])
+## "" 
+## ""   autocmd User DDCCmdlineLeave ++once call CommandlinePost()
+## ""   autocmd InsertEnter <buffer> ++once call CommandlinePost()
+## "" 
+## ""   " Enable command line completion
+## ""   call ddc#enable_cmdline_completion()
+## "" endfunction
+## "" 
+## "" function! CommandlinePost() abort
+## ""   cunmap <Tab>
+## ""   cunmap <S-Tab>
+## ""   cunmap <C-y>
+## ""   cunmap <C-e>
+## "" 
+## ""   " Restore sources
+## ""   if exists('b:prev_buffer_config')
+## ""     call ddc#custom#set_buffer(b:prev_buffer_config)
+## ""     unlet b:prev_buffer_config
+## ""   else
+## ""     call ddc#custom#set_buffer({})
+## ""   endif
+## "" endfunction
+## 
+## " Mappings
+## 
+## " <TAB>: completion.
+## 
+## " ddc.vim - pum.vim
+## " inoremap <silent><expr> <TAB>
+## "     \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+## "     \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+## "     \ '<TAB>' : ddc#manual_complete()
+## " inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+## " inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+## " inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+## " inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+## " inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+## 
+## 
+## " if you use with vim-lsp, disable vim-lsp's signature help feature
+## " let g:lsp_signature_help_enabled = 0
+## 
+## 
+## if g:deoplete
+##     " Shougo/deoplete.nvim
+##     let g:deoplete#enable_at_startup = 1
+## 
+##     autocmd FileType denite call s:denite_my_settings()
+##     function! s:denite_my_settings() abort
+##       call deoplete#custom#buffer_option('auto_complete', v:false)
+## 
+##     " " ref. https://github.com/Shougo/denite.nvim/issues/657
+##     " autocmd FileType denite-filter call s:denite_filter_my_settings()
+##     " function! s:denite_filter_my_settings() abort
+##     "   call deoplete#custom#buffer_option('auto_complete', v:false)
+##     " endfunction
+## 
+## 
+##       " エンターキー: 垂直分割でファイルを開く
+##       nnoremap <silent><buffer><expr> <CR>
+##       \ denite#do_map('do_action', 'vsplit')
+##       " スペースキー: 水平分割でファイルを開く
+##       nnoremap <silent><buffer><expr> <Space>
+##       \ denite#do_map('do_action', 'split')
+##       " エスケープキー: 終了
+##       nnoremap <silent><buffer><expr> <Esc>
+##       \ denite#do_map('quit')
+##       " Qキー: 終了
+##       nnoremap <silent><buffer><expr> q
+##       \ denite#do_map('quit')
+##       " Iキー: フィルター入力の開始
+##       nnoremap <silent><buffer><expr> i
+##       \ denite#do_map('open_filter_buffer')
+##       " Aキー: フィルター入力の開始
+##       nnoremap <silent><buffer><expr> a
+##       \ denite#do_map('open_filter_buffer')
+##     endfunction
+## endif
+## 
+## " ddu ======================
+## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
