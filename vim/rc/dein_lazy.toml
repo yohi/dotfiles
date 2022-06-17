@@ -135,37 +135,50 @@ repo = 'neovim/nvim-lspconfig'
 on_event = 'BufEnter'
 hook_source = '''
     lua <<EOF
-        local nvim_lspconfig = require("lspconfig")
-        local on_attach = function(client, bufnr)
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-        local opts = { noremap=true, silent=true }
-            buf_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-        end
-
-        nvim_lspconfig.pyright.setup{
-            on_attach = on_attach,
-            filetypes = { "python" }
-        }
-
-        local nvim_lsp_installer = require("nvim-lsp-installer")
-        nvim_lsp_installer.on_server_ready(function(server)
+        require('nvim-lsp-installer').on_server_ready(function(server)
             local opts = {}
+            opts.on_attach = function(client, buffer_number)
+            end
             server:setup(opts)
         end)
-
-        nvim_lsp_installer.settings({
-          log_level = vim.log.levels.DEBUG,
-        })
-
-        vim.lsp.set_log_level("INFO")
 EOF
-    " nnoremap <F12> :LspDefinition
-    " nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
-    " nnoremap <C-j> :LspDefinition<CR>
-    set completeopt-=preview
+    nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
+    nnoremap <C-j> :LspDefinition<CR>
 '''
+# hook_source = '''
+#     lua <<EOF
+#         local nvim_lspconfig = require("lspconfig")
+#         local on_attach = function(client, bufnr)
+#         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+#         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+# 
+#         local opts = { noremap=true, silent=true }
+#             buf_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+#         end
+# 
+#         nvim_lspconfig.pyright.setup{
+#             on_attach = on_attach,
+#             filetypes = { "python" }
+#         }
+# 
+#         local nvim_lsp_installer = require("nvim-lsp-installer")
+#         nvim_lsp_installer.on_server_ready(function(server)
+#             local opts = {}
+#             server:setup(opts)
+#         end)
+# 
+#         nvim_lsp_installer.settings({
+#           log_level = vim.log.levels.DEBUG,
+#         })
+# 
+#         vim.lsp.set_log_level("INFO")
+# EOF
+#     " nnoremap <F12> :LspDefinition
+#     " nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
+#     " nnoremap <C-j> :LspDefinition<CR>
+#     set completeopt-=preview
+# '''
+
 [[plugins]]
 repo = 'williamboman/nvim-lsp-installer'
 on_source = 'nvim-lspconfig'

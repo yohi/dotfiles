@@ -35,8 +35,8 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 hook_add = '''
-    "let g:airline_theme='deus'
-    let g:airline_theme='murmur'
+    let g:airline_theme='deus'
+    "let g:airline_theme='murmur'
 '''
 
 # インデント
