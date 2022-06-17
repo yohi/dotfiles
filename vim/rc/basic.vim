@@ -174,14 +174,14 @@ if strlen(g:virtual_env) == 0
         " echo 'source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt'
         call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
         let g:python3_host_prog = s:python3_dir . '/bin/python'
-        let $PATH = s:python3_dir . '/bin:' . $PATH
+        " let $PATH = s:python3_dir . '/bin:' . $PATH
     endif
 else
     " echo '$VIRTUAL_ENV defined'
     " echo 'install pip...'
     call system('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
     let g:python3_host_prog = g:virtual_env . '/bin/python'
-    let $PATH = g:virtual_env . '/bin:' . $PATH
+    " let $PATH = g:virtual_env . '/bin:' . $PATH
 endif
 
 let g:pythonpath = $PYTHONPATH
