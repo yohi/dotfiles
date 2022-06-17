@@ -78,14 +78,14 @@ hook_add = '''
 repo = 'airblade/vim-rooter'
 
 # LINT
-[[plugins]]
-repo = 'w0rp/ale'
-hook_add = '''
-    let g:ale_sign_column_always = 1
-    let g:ale_disable_lsp = 0
-    let g:ale_linters = {'python': ['flake8']}
-    let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-'''
+# [[plugins]]
+# repo = 'w0rp/ale'
+# hook_add = '''
+#     let g:ale_sign_column_always = 1
+#     let g:ale_disable_lsp = 1
+#     "let g:ale_linters = {'python': ['flake8']}
+#     "let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+# '''
 [[plugins]]
 repo = 'kamykn/spelunker.vim'
 hook_add = '''
@@ -352,20 +352,22 @@ repo = 'nvim-lua/plenary.nvim'
 # null-ls
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
-# hook_add = '''
-#     lua <<EOF
-#         require("null-ls").setup({
-#             sources = {
-#                 debug = true,
-#                 -- require("null-ls").builtins.formatting.djlint,
-#                 require("null-ls").builtins.diagnostics.djlint,
-#                 require("null-ls").builtins.diagnostics.cspell,
-#                 require("null-ls").builtins.diagnostics.mypy,
-#                 require("null-ls").builtins.diagnostics.flake8,
-#             },
-#         })
-# EOF
-# '''
+hook_add = '''
+    lua <<EOF
+        require("null-ls").setup({
+            sources = {
+                debug = true,
+
+                -- require("null-ls").builtins.diagnostics.djlint,
+                require("null-ls").builtins.diagnostics.cspell,
+                -- require("null-ls").builtins.diagnostics.mypy,
+                -- require("null-ls").builtins.diagnostics.flake8,
+            },
+        })
+        vim.lsp.set_log_level("DEBUG")
+
+EOF
+'''
 
 #[[plugins]]
 # repo = 'vim-python/python-syntax'

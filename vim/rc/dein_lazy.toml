@@ -58,7 +58,7 @@ hook_source = '''
     \               'kindLabels': {
     \                   'Class': 'c'
     \               },
-    \               'useIcon': v:true, 
+    \               'useIcon': v:true,
     \           }
     \       }
     \   )
@@ -141,6 +141,19 @@ hook_source = '''
             end
             server:setup(opts)
         end)
+        require('lspconfig').pylsp.setup {}
+        -- require('lspconfig').pyright.setup {
+        --   settings = {
+        --     python = {
+        --       analysis = {
+        --         autoSearchPaths = true,
+        --         diagnosticMode = "workspace",
+        --         useLibraryCodeForTypes = true,
+        --         typeCheckingMode = 'off',
+        --       }
+        --     },
+        --   },
+        -- }
 EOF
     nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
     nnoremap <C-j> :LspDefinition<CR>

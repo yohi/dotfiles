@@ -307,3 +307,5 @@ function nvimvenv {
 }
 
 alias nvim=nvimvenv
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
