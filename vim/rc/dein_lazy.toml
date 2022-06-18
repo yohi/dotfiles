@@ -218,6 +218,39 @@ hook_source = '''
             server:setup(opts)
         end)
 
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+            vim.lsp.diagnostic.on_publish_diagnostics, {
+                sign = true,
+                underline = true,
+                -- virtual_text = false,
+                virtual_text = {
+                    spacing = 4,
+                },
+            }
+        )
+
+        local on_references = vim.lsp.handlers["textDocument/references"]
+        vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
+          on_references, {
+            -- Use location list instead of quickfix list
+            loclist = true,
+          }
+        )
+
+        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+          vim.lsp.handlers.hover, {
+            -- Use a sharp border with `FloatBorder` highlights
+            border = "single"
+          }
+        )
+
+        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+          vim.lsp.handlers.signature_help, {
+            -- Use a sharp border with `FloatBorder` highlights
+            border = "single"
+          }
+        )
+
         require('lspconfig').pylsp.setup {}
 
         -- require('lspconfig').pyright.setup {
