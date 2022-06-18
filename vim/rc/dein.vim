@@ -39,6 +39,7 @@ syntax enable
 
 " If you want to install not installed plugins on startup.
 if dein#check_install()
+  echo 'dein install...'
   call dein#install()
   call dein#remote_plugins()
 endif
