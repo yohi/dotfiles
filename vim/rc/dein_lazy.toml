@@ -1,356 +1,356 @@
-# ddc ---------------
-
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-on_event = ['InsertEnter', 'CursorHold']
-depends = ['denops.vim', 'pum.vim']
-hook_add = '''
-    nnoremap :       <Cmd>call CommandlinePre()<CR>:
-
-    function! CommandlinePre() abort
-      " Note: It disables default command line completion!
-      cnoremap <expr> <Tab>
-      \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-      \ ddc#manual_complete()
-      cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-      cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-      cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-
-      " Overwrite sources
-      if !exists('b:prev_buffer_config')
-        let b:prev_buffer_config = ddc#custom#get_buffer()
-      endif
-      call ddc#custom#patch_buffer('sources',
-              \ ['cmdline', 'cmdline-history', 'around'])
-
-      autocmd User DDCCmdlineLeave ++once call CommandlinePost()
-      autocmd InsertEnter <buffer> ++once call CommandlinePost()
-
-      " Enable command line completion
-      call ddc#enable_cmdline_completion()
-    endfunction
-
-    function! CommandlinePost() abort
-      cunmap <Tab>
-      cunmap <S-Tab>
-      cunmap <C-y>
-      cunmap <C-e>
-
-      " Restore sources
-      if exists('b:prev_buffer_config')
-        call ddc#custom#set_buffer(b:prev_buffer_config)
-        unlet b:prev_buffer_config
-      else
-        call ddc#custom#set_buffer({})
-      endif
-    endfunction
-
-
-    inoremap <silent><expr> <TAB>
-          \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-          \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-          \ '<TAB>' : ddc#manual_complete()
-    inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-    inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
-    inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
-    inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-    inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-
-
-'''
-hook_source = '''
-    call ddc#custom#patch_global(
-    \       'sources',
-    \       [
-    \           'around',
-    \           'buffer',
-    \           'deoppet',
-    \           'necovim',
-    \           'tabnine',
-    \           'nvim-lsp',
-    \       ]
-    \   )
-    call ddc#custom#patch_global(
-    \       'sourceOptions',
-    \       {
-    \           '_': {
-    \               'matchers': ['matcher_head'],
-    \               'sorters': ['sorter_rank'],
-    \               'converters': ['converter_remove_overlap']
-    \           },
-    \           'around': {
-    \               'mark': 'A'
-    \           },
-    \           'buffer': {
-    \               'mark': 'B'
-    \           },
-    \           'deoppet': {
-    \               'mark': 'dp'
-    \           },
-    \           'necovim': {
-    \               'mark': 'vim'
-    \           },
-    \           'tabnine': {
-    \               'mark': 'TN',
-    \               'isVolatile': v:true,
-    \               'maxSize': 200,
-    \           },
-    \           'nvim-lsp': {
-    \               'mark': 'lsp',
-    \               'forceCompletionPattern': '\.\w*|:\w*|->\w*',
-    \               'useIcon': v:true,
-    \           },
-    \       }
-    \   )
-    call ddc#custom#patch_global(
-    \       'sourceParams',
-    \       {
-    \           'around': {
-    \               'maxSize': 500,
-    \           },
-    \           'nvim-lsp': {
-    \               'kindLabels': {
-    \                   'Class': 'c'
-    \               },
-    \               'useIcon': v:true,
-    \           }
-    \       }
-    \   )
-    call ddc#custom#patch_global(
-    \       'filterParams',
-    \       {
-    \           'buffer': {
-    \               'requireSameFiletype': v:false
-    \           }
-    \       }
-    \   )
-    call ddc#custom#patch_global(
-    \       'autoCompleteEvents',
-    \       [
-    \           'InsertEnter',
-    \           'TextChangedI',
-    \           'TextChangedP',
-    \           'CmdlineEnter',
-    \           'CmdlineChanged',
-    \       ]
-    \   )
-    call ddc#custom#patch_global('completionMenu', 'pum.vim')
-
-    " inoremap <silent><expr> <TAB>
-    " \ pumvisible() ? '<C-n>' :
-    " \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-    " \ '<TAB>' : ddc#manual_complete()
-
-    " <S-TAB>: completion back.
-    " inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
-
-    " inoremap <silent><expr> <TAB>
-    " \   ddc#map#pum_visible() ? '<C-n>' :
-    " \   (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-    " \   '<TAB>' : ddc#map#manual_complete()
-    " inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
-
-    call ddc#enable()
-'''
-
-[[plugins]]
-repo = 'Shougo/pum.vim'
-hook_source = '''
-    call pum#set_option('max_width', 80)
-'''
-
-[[plugins]]
-repo = 'Shougo/ddc-around'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-matcher_head'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-converter_remove_overlap'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'matsui54/ddc-buffer'
-on_source = 'ddc.vim'
-
+# # ddc ---------------
+# 
 # [[plugins]]
-# repo = 'Shougo/ddc-zsh'
-# on_source = 'ddc.vim'
-
+# repo = 'Shougo/ddc.vim'
+# on_event = ['InsertEnter', 'CursorHold']
+# depends = ['denops.vim', 'pum.vim']
+# hook_add = '''
+#     nnoremap :       <Cmd>call CommandlinePre()<CR>:
+# 
+#     function! CommandlinePre() abort
+#       " Note: It disables default command line completion!
+#       cnoremap <expr> <Tab>
+#       \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+#       \ ddc#manual_complete()
+#       cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+#       cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+#       cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+# 
+#       " Overwrite sources
+#       if !exists('b:prev_buffer_config')
+#         let b:prev_buffer_config = ddc#custom#get_buffer()
+#       endif
+#       call ddc#custom#patch_buffer('sources',
+#               \ ['cmdline', 'cmdline-history', 'around'])
+# 
+#       autocmd User DDCCmdlineLeave ++once call CommandlinePost()
+#       autocmd InsertEnter <buffer> ++once call CommandlinePost()
+# 
+#       " Enable command line completion
+#       call ddc#enable_cmdline_completion()
+#     endfunction
+# 
+#     function! CommandlinePost() abort
+#       cunmap <Tab>
+#       cunmap <S-Tab>
+#       cunmap <C-y>
+#       cunmap <C-e>
+# 
+#       " Restore sources
+#       if exists('b:prev_buffer_config')
+#         call ddc#custom#set_buffer(b:prev_buffer_config)
+#         unlet b:prev_buffer_config
+#       else
+#         call ddc#custom#set_buffer({})
+#       endif
+#     endfunction
+# 
+# 
+#     inoremap <silent><expr> <TAB>
+#           \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+#           \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+#           \ '<TAB>' : ddc#manual_complete()
+#     inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+#     inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
+#     inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
+#     inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+#     inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
+# 
+# 
+# '''
+# hook_source = '''
+#     call ddc#custom#patch_global(
+#     \       'sources',
+#     \       [
+#     \           'around',
+#     \           'buffer',
+#     \           'deoppet',
+#     \           'necovim',
+#     \           'tabnine',
+#     \           'nvim-lsp',
+#     \       ]
+#     \   )
+#     call ddc#custom#patch_global(
+#     \       'sourceOptions',
+#     \       {
+#     \           '_': {
+#     \               'matchers': ['matcher_head'],
+#     \               'sorters': ['sorter_rank'],
+#     \               'converters': ['converter_remove_overlap']
+#     \           },
+#     \           'around': {
+#     \               'mark': 'A'
+#     \           },
+#     \           'buffer': {
+#     \               'mark': 'B'
+#     \           },
+#     \           'deoppet': {
+#     \               'mark': 'dp'
+#     \           },
+#     \           'necovim': {
+#     \               'mark': 'vim'
+#     \           },
+#     \           'tabnine': {
+#     \               'mark': 'TN',
+#     \               'isVolatile': v:true,
+#     \               'maxSize': 200,
+#     \           },
+#     \           'nvim-lsp': {
+#     \               'mark': 'lsp',
+#     \               'forceCompletionPattern': '\.\w*|:\w*|->\w*',
+#     \               'useIcon': v:true,
+#     \           },
+#     \       }
+#     \   )
+#     call ddc#custom#patch_global(
+#     \       'sourceParams',
+#     \       {
+#     \           'around': {
+#     \               'maxSize': 500,
+#     \           },
+#     \           'nvim-lsp': {
+#     \               'kindLabels': {
+#     \                   'Class': 'c'
+#     \               },
+#     \               'useIcon': v:true,
+#     \           }
+#     \       }
+#     \   )
+#     call ddc#custom#patch_global(
+#     \       'filterParams',
+#     \       {
+#     \           'buffer': {
+#     \               'requireSameFiletype': v:false
+#     \           }
+#     \       }
+#     \   )
+#     call ddc#custom#patch_global(
+#     \       'autoCompleteEvents',
+#     \       [
+#     \           'InsertEnter',
+#     \           'TextChangedI',
+#     \           'TextChangedP',
+#     \           'CmdlineEnter',
+#     \           'CmdlineChanged',
+#     \       ]
+#     \   )
+#     call ddc#custom#patch_global('completionMenu', 'pum.vim')
+# 
+#     " inoremap <silent><expr> <TAB>
+#     " \ pumvisible() ? '<C-n>' :
+#     " \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+#     " \ '<TAB>' : ddc#manual_complete()
+# 
+#     " <S-TAB>: completion back.
+#     " inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
+# 
+#     " inoremap <silent><expr> <TAB>
+#     " \   ddc#map#pum_visible() ? '<C-n>' :
+#     " \   (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+#     " \   '<TAB>' : ddc#map#manual_complete()
+#     " inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
+# 
+#     call ddc#enable()
+# '''
+# 
 # [[plugins]]
-# repo = 'Shougo/ddc-nextword'
+# repo = 'Shougo/pum.vim'
+# hook_source = '''
+#     call pum#set_option('max_width', 80)
+# '''
+# 
+# [[plugins]]
+# repo = 'Shougo/ddc-around'
 # on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/neco-vim'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'LumaKernel/ddc-tabnine'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-cmdline'
-on_source = 'ddc.vim'
-
-
-# nvim-lspconfig ----------
-
-[[plugins]]
-repo = 'neovim/nvim-lspconfig'
-on_event = 'BufEnter'
-hook_source = '''
-    lua <<EOF
-        require('nvim-lsp-installer').on_server_ready(function(server)
-            local opts = {}
-            opts.on_attach = function(client, buffer_number)
-            end
-            server:setup(opts)
-        end)
-
-        vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-            vim.lsp.diagnostic.on_publish_diagnostics, {
-                sign = true,
-                underline = true,
-                -- virtual_text = false,
-                virtual_text = {
-                    spacing = 4,
-                },
-            }
-        )
-
-        local on_references = vim.lsp.handlers["textDocument/references"]
-        vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
-          on_references, {
-            -- Use location list instead of quickfix list
-            loclist = true,
-          }
-        )
-
-        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-          vim.lsp.handlers.hover, {
-            -- Use a sharp border with `FloatBorder` highlights
-            border = "single"
-          }
-        )
-
-        vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-          vim.lsp.handlers.signature_help, {
-            -- Use a sharp border with `FloatBorder` highlights
-            border = "single"
-          }
-        )
-
-        require('lspconfig').pylsp.setup {}
-
-        -- require('lspconfig').pyright.setup {
-        --   settings = {
-        --     python = {
-        --       analysis = {
-        --         autoSearchPaths = true,
-        --         diagnosticMode = "workspace",
-        --         useLibraryCodeForTypes = true,
-        --         typeCheckingMode = 'off',
-        --       }
-        --     },
-        --   },
-        -- }
-EOF
-    nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
-    nnoremap <C-j> :LspDefinition<CR>
-'''
+# 
+# [[plugins]]
+# repo = 'Shougo/ddc-matcher_head'
+# on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/ddc-sorter_rank'
+# on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/ddc-converter_remove_overlap'
+# on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'matsui54/ddc-buffer'
+# on_source = 'ddc.vim'
+# 
+# # [[plugins]]
+# # repo = 'Shougo/ddc-zsh'
+# # on_source = 'ddc.vim'
+# 
+# # [[plugins]]
+# # repo = 'Shougo/ddc-nextword'
+# # on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/neco-vim'
+# on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'LumaKernel/ddc-tabnine'
+# on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/ddc-nvim-lsp'
+# on_source = 'ddc.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/ddc-cmdline'
+# on_source = 'ddc.vim'
+# 
+# 
+# # nvim-lspconfig ----------
+# 
+# [[plugins]]
+# repo = 'neovim/nvim-lspconfig'
+# on_event = 'BufEnter'
 # hook_source = '''
 #     lua <<EOF
-#         local nvim_lspconfig = require("lspconfig")
-#         local on_attach = function(client, bufnr)
-#         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-#         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-# 
-#         local opts = { noremap=true, silent=true }
-#             buf_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-#         end
-# 
-#         nvim_lspconfig.pyright.setup{
-#             on_attach = on_attach,
-#             filetypes = { "python" }
-#         }
-# 
-#         local nvim_lsp_installer = require("nvim-lsp-installer")
-#         nvim_lsp_installer.on_server_ready(function(server)
+#         require('nvim-lsp-installer').on_server_ready(function(server)
 #             local opts = {}
+#             opts.on_attach = function(client, buffer_number)
+#             end
 #             server:setup(opts)
 #         end)
 # 
-#         nvim_lsp_installer.settings({
-#           log_level = vim.log.levels.DEBUG,
-#         })
+#         vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+#             vim.lsp.diagnostic.on_publish_diagnostics, {
+#                 sign = true,
+#                 underline = true,
+#                 -- virtual_text = false,
+#                 virtual_text = {
+#                     spacing = 4,
+#                 },
+#             }
+#         )
 # 
-#         vim.lsp.set_log_level("INFO")
+#         local on_references = vim.lsp.handlers["textDocument/references"]
+#         vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
+#           on_references, {
+#             -- Use location list instead of quickfix list
+#             loclist = true,
+#           }
+#         )
+# 
+#         vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+#           vim.lsp.handlers.hover, {
+#             -- Use a sharp border with `FloatBorder` highlights
+#             border = "single"
+#           }
+#         )
+# 
+#         vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+#           vim.lsp.handlers.signature_help, {
+#             -- Use a sharp border with `FloatBorder` highlights
+#             border = "single"
+#           }
+#         )
+# 
+#         require('lspconfig').pylsp.setup {}
+# 
+#         -- require('lspconfig').pyright.setup {
+#         --   settings = {
+#         --     python = {
+#         --       analysis = {
+#         --         autoSearchPaths = true,
+#         --         diagnosticMode = "workspace",
+#         --         useLibraryCodeForTypes = true,
+#         --         typeCheckingMode = 'off',
+#         --       }
+#         --     },
+#         --   },
+#         -- }
 # EOF
-#     " nnoremap <F12> :LspDefinition
-#     " nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
-#     " nnoremap <C-j> :LspDefinition<CR>
-#     set completeopt-=preview
+#     nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
+#     nnoremap <C-j> :LspDefinition<CR>
 # '''
-
-[[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
-on_source = 'nvim-lspconfig'
-
-[[plugins]]
-repo = 'matsui54/denops-popup-preview.vim'
-hook_source = '''
-    call popup_preview#enable()
-'''
-
-[[plugins]]
-repo = 'matsui54/denops-signature_help'
-hook_add = '''
-    call signature_help#enable()
-'''
-
-
+# # hook_source = '''
+# #     lua <<EOF
+# #         local nvim_lspconfig = require("lspconfig")
+# #         local on_attach = function(client, bufnr)
+# #         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+# #         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+# # 
+# #         local opts = { noremap=true, silent=true }
+# #             buf_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+# #         end
+# # 
+# #         nvim_lspconfig.pyright.setup{
+# #             on_attach = on_attach,
+# #             filetypes = { "python" }
+# #         }
+# # 
+# #         local nvim_lsp_installer = require("nvim-lsp-installer")
+# #         nvim_lsp_installer.on_server_ready(function(server)
+# #             local opts = {}
+# #             server:setup(opts)
+# #         end)
+# # 
+# #         nvim_lsp_installer.settings({
+# #           log_level = vim.log.levels.DEBUG,
+# #         })
+# # 
+# #         vim.lsp.set_log_level("INFO")
+# # EOF
+# #     " nnoremap <F12> :LspDefinition
+# #     " nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
+# #     " nnoremap <C-j> :LspDefinition<CR>
+# #     set completeopt-=preview
+# # '''
+# 
 # [[plugins]]
-# repo = 'hrsh7th/nvim-cmp'
+# repo = 'williamboman/nvim-lsp-installer'
+# on_source = 'nvim-lspconfig'
+# 
 # [[plugins]]
-# repo = 'hrsh7th/cmp-nvim-lsp'
-# on_source = 'nvim-cmp'
+# repo = 'matsui54/denops-popup-preview.vim'
+# hook_source = '''
+#     call popup_preview#enable()
+# '''
+# 
 # [[plugins]]
-# repo = 'hrsh7th/cmp-buffer'
-# on_source = 'nvim-cmp'
+# repo = 'matsui54/denops-signature_help'
+# hook_add = '''
+#     call signature_help#enable()
+# '''
+# 
+# 
+# # [[plugins]]
+# # repo = 'hrsh7th/nvim-cmp'
+# # [[plugins]]
+# # repo = 'hrsh7th/cmp-nvim-lsp'
+# # on_source = 'nvim-cmp'
+# # [[plugins]]
+# # repo = 'hrsh7th/cmp-buffer'
+# # on_source = 'nvim-cmp'
+# # [[plugins]]
+# # repo = 'hrsh7th/cmp-path'
+# # on_source = 'nvim-cmp'
+# # [[plugins]]
+# # repo = 'hrsh7th/cmp-cmdline'
+# # on_source = 'nvim-cmp'
+# # [[plugins]]
+# # repo = 'onsails/lspkind-nvim'
+# # on_source = 'nvim-cmp'
+# 
+# 
+# # nvim-treesitter ----------
 # [[plugins]]
-# repo = 'hrsh7th/cmp-path'
-# on_source = 'nvim-cmp'
-# [[plugins]]
-# repo = 'hrsh7th/cmp-cmdline'
-# on_source = 'nvim-cmp'
-# [[plugins]]
-# repo = 'onsails/lspkind-nvim'
-# on_source = 'nvim-cmp'
-
-
-# nvim-treesitter ----------
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-on_event = 'BufRead'
-hook_post_update = 'TSUpdate'
-hook_source = '''
-    require'nvim-treesitter.configs'.setup {
-        ensure_installed = 'all',
-        additional_vim_regex_highlighting = false,
-        highlight = {
-            enable = true,
-            disable = {'c', 'help'},
-        },
-    }
-'''
+# repo = 'nvim-treesitter/nvim-treesitter'
+# on_event = 'BufRead'
+# hook_post_update = 'TSUpdate'
+# hook_source = '''
+#     require'nvim-treesitter.configs'.setup {
+#         ensure_installed = 'all',
+#         additional_vim_regex_highlighting = false,
+#         highlight = {
+#             enable = true,
+#             disable = {'c', 'help'},
+#         },
+#     }
+# '''
