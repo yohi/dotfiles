@@ -28,12 +28,12 @@ augroup END
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 hook_add = '''
-"      let g:airline#extensions#tabline#enabled = 1
-"     let g:airline#extensions#nvimlsp#enabled = 1
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#nvimlsp#enabled = 1
 "     " let g:airline#extensions#ale#enabled = 1
 "     " let g:airline#extensions#tabline#fnamemod = ':t'
 "     " let g:airline#extensions#tabline#buffer_nr_show = 1
-      let g:airline_powerline_fonts = 1
+    let g:airline_powerline_fonts = 1
 
 "     " nmap <C-n> <Plug>AirlineSelectNextTab
 "     " nmap <C-p> <Plug>AirlineSelectPrevTab
@@ -90,39 +90,39 @@ hook_add = '''
 
     nnoremap <C-p> :FzfPreviewProjectFile<CR>
 
-    if executable('fish')
-        " use fish for embedded terminals
-        set shell=fish
-        " use bash for else
-        let $SHELL = 'bash'
-    endif
-    let mapleader = "\<Space>"
+    " if executable('fish')
+    "     " use fish for embedded terminals
+    "     set shell=fish
+    "     " use bash for else
+    "     let $SHELL = 'bash'
+    " endif
+    " let mapleader = "\<Space>"
 
-    " nnoremap <silent> <Leader>f     :<C-u>FzfPreviewFromResourcesRpc project_mru git<CR>
-    " nnoremap <silent> <Leader>s    :<C-u>FzfPreviewGitStatusRpc<CR>
-    " nnoremap <silent> <Leader>A    :<C-u>FzfPreviewGitActionsRpc<CR>
-    " nnoremap <silent> <Leader>b     :<C-u>FzfPreviewBuffersRpc<CR>
-    " nnoremap <silent> <Leader>B     :<C-u>FzfPreviewAllBuffersRpc<CR>
-    " nnoremap <silent> <Leader>h     :<C-u>FzfPreviewFromResourcesRpc buffer project_mru<CR>
-    " nnoremap <silent> <Leader><C-o> :<C-u>FzfPreviewJumpsRpc<CR>
-    " nnoremap <silent> <Leader>c    :<C-u>FzfPreviewChangesRpc<CR>
-    " nnoremap <silent> <Leader>/     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
-    " nnoremap <silent> <Leader>*     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-    " nnoremap          <Leader>g    :<C-u>FzfPreviewProjectGrepRpc<Space>
-    " xnoremap          <Leader>g    "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-    " nnoremap <silent> <Leader>t     :<C-u>FzfPreviewBufferTagsRpc<CR>
-    " nnoremap <silent> <Leader>;     :<C-u>FzfPreviewQuickFixRpc<CR>
-    " nnoremap <silent> <Leader>l     :<C-u>FzfPreviewLocationListRpc<CR>
+    " " nnoremap <silent> <Leader>f     :<C-u>FzfPreviewFromResourcesRpc project_mru git<CR>
+    " " nnoremap <silent> <Leader>s    :<C-u>FzfPreviewGitStatusRpc<CR>
+    " " nnoremap <silent> <Leader>A    :<C-u>FzfPreviewGitActionsRpc<CR>
+    " " nnoremap <silent> <Leader>b     :<C-u>FzfPreviewBuffersRpc<CR>
+    " " nnoremap <silent> <Leader>B     :<C-u>FzfPreviewAllBuffersRpc<CR>
+    " " nnoremap <silent> <Leader>h     :<C-u>FzfPreviewFromResourcesRpc buffer project_mru<CR>
+    " " nnoremap <silent> <Leader><C-o> :<C-u>FzfPreviewJumpsRpc<CR>
+    " " nnoremap <silent> <Leader>c    :<C-u>FzfPreviewChangesRpc<CR>
+    " " nnoremap <silent> <Leader>/     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+    " " nnoremap <silent> <Leader>*     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+    " " nnoremap          <Leader>g    :<C-u>FzfPreviewProjectGrepRpc<Space>
+    " " xnoremap          <Leader>g    "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+    " " nnoremap <silent> <Leader>t     :<C-u>FzfPreviewBufferTagsRpc<CR>
+    " " nnoremap <silent> <Leader>;     :<C-u>FzfPreviewQuickFixRpc<CR>
+    " " nnoremap <silent> <Leader>l     :<C-u>FzfPreviewLocationListRpc<CR>
 
-    augroup fzf_preview
-      autocmd!
-      autocmd User fzf_preview#rpc#initialized call s:fzf_preview_settings() " fzf_preview#remote#initialized or fzf_preview#coc#initialized
-    augroup END
+    " augroup fzf_preview
+    "   autocmd!
+    "   autocmd User fzf_preview#rpc#initialized call s:fzf_preview_settings() " fzf_preview#remote#initialized or fzf_preview#coc#initialized
+    " augroup END
 
-    function! s:fzf_preview_settings() abort
-      let g:fzf_preview_command = 'COLORTERM=truecolor ' . g:fzf_preview_command
-      let g:fzf_preview_grep_preview_cmd = 'COLORTERM=truecolor ' . g:fzf_preview_grep_preview_cmd
-    endfunction
+    " function! s:fzf_preview_settings() abort
+    "   let g:fzf_preview_command = 'COLORTERM=truecolor ' . g:fzf_preview_command
+    "   let g:fzf_preview_grep_preview_cmd = 'COLORTERM=truecolor ' . g:fzf_preview_grep_preview_cmd
+    " endfunction
 '''
 
 # vim rooter
@@ -426,61 +426,60 @@ lua <<EOF
   local null_ls = require("null-ls")
   local prettier = require("prettier")
 
-  prettier.setup({
-    bin = 'prettier', -- or `prettierd`
-    filetypes = {
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact",
-    }
-  })
+  -- prettier.setup({
+  --   bin = 'prettier', -- or `prettierd`
+  --   filetypes = {
+  --     "javascript",
+  --     "javascriptreact",
+  --     "typescript",
+  --     "typescriptreact",
+  --   }
+  -- })
 
     -- register any number of sources simultaneously
-  local sources = {
-    null_ls.builtins.formatting.prettier.with({
-      prefer_local = "node_modules/.bin"
-    }),
-      -- null_ls.builtins.diagnostics.eslint.with({
-      --   prefer_local = "node_modules/.bin"
-      -- }),
-    -- null_ls.builtins.diagnostics.djlint,
-    -- null_ls.builtins.diagnostics.cspell,
-    -- null_ls.builtins.diagnostics.mypy,
-    -- null_ls.builtins.diagnostics.flake8,
-
-  }
-
+  -- local sources = {
+  --   -- null_ls.builtins.formatting.prettier.with({
+  --   --   prefer_local = "node_modules/.bin"
+  --   -- }),
+  --     -- null_ls.builtins.diagnostics.eslint.with({
+  --     --   prefer_local = "node_modules/.bin"
+  --     -- }),
+  --   null_ls.builtins.diagnostics.djlint,
+  --   null_ls.builtins.diagnostics.cspell,
+  --   null_ls.builtins.diagnostics.mypy,
+  --   null_ls.builtins.diagnostics.flake8,
+  -- }
 
 
-  local lsp_formatting = function(client, bufnr)
-    vim.lsp.buf.formatting({
-        filter = function(client)
-            -- apply whatever logic you want (in this example, we'll only use null-ls)
-            return client.name == "null-ls"
-        end,
-        bufnr = bufnr,
-    })
-  end
+
+  -- local lsp_formatting = function(client, bufnr)
+  --   vim.lsp.buf.formatting({
+  --       filter = function(client)
+  --           -- apply whatever logic you want (in this example, we'll only use null-ls)
+  --           return client.name == "null-ls"
+  --       end,
+  --       bufnr = bufnr,
+  --   })
+  -- end
   --
   -- -- if you want to set up formatting on save, you can use this as a callback
-  local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+  -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
   -- -- add to your shared on_attach callback
-  local on_attach = function(client, bufnr)
-    if client.name == "tsserver" then
-        client.server_capabilities.document_formatting = false -- 0.7 and earlier
-    end
-    if client.supports_method("textDocument/formatting") then
-        vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-        vim.api.nvim_create_autocmd("BufWritePre", {
-            group = augroup,
-            buffer = bufnr,
-            callback = function()
-                lsp_formatting(client, bufnr)
-            end,
-        })
-    end
-  end
+  -- local on_attach = function(client, bufnr)
+  --   if client.name == "tsserver" then
+  --       client.server_capabilities.document_formatting = false -- 0.7 and earlier
+  --   end
+  --   if client.supports_method("textDocument/formatting") then
+  --       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  --       vim.api.nvim_create_autocmd("BufWritePre", {
+  --           group = augroup,
+  --           buffer = bufnr,
+  --           callback = function()
+  --               lsp_formatting(client, bufnr)
+  --           end,
+  --       })
+  --   end
+  -- end
 
   -- local on_attach = function(client, bufnr)
   --   if client.name == "null_ls" then
@@ -497,11 +496,12 @@ lua <<EOF
         null_ls.builtins.diagnostics.mypy,
         null_ls.builtins.diagnostics.flake8,
     },
-    on_attach = on_attach
+    -- on_attach = on_attach
   })
 
 EOF
-#'''
+'''
+
 # hook_add = '''
 #     lua <<EOF
 #         require("null-ls").setup({
@@ -781,130 +781,139 @@ repo = 'neovim/nvim-lspconfig'
 on_event = 'BufEnter'
 hook_add = '''
 lua << EOF
-  -- Mappings.
-  -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap=true, silent=true }
-
-  vim.api.nvim_set_keymap('n', '<space>p', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-
-
-
-
-  -- Use an on_attach function to only map the following keys
-  -- after the language server attaches to the current buffer
-  local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  end
-
-  -- require('lspconfig').pyright.setup {
-  --   settings = {
-  --     python = {
-  --       analysis = {
-  --         autoSearchPaths = true,
-  --         diagnosticMode = "workspace",
-  --         useLibraryCodeForTypes = true,
-  --         typeCheckingMode = 'off',
-  --       }
-  --     },
-  --   },
-  -- }
-
-  require('lspconfig').pyright.setup {
-    settings = {
-      python = {
-        analysis = {
-          autoImportCompletions = true,
-          autoSearchPaths = true,
-          diagnosticMode = "workspace",
-          diagnosticSeverityOverrides = "none",
-          -- extraPaths = '',
-          logLevel = 'Information',
-          -- stubPath = '',
-          typeCheckingMode = 'off',
-          -- typeshedPaths = '',
-          useLibraryCodeForType = true,
-        }
-      },
-    },
-  }
-
-  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics, {
-          sign = true,
-          underline = true,
-          virtual_text = false,
-          -- virtual_text = {
-          --     spacing = 4,
-          -- },
+require('lspconfig').pyright.setup {
+  settings = {
+    python = {
+      analysis = {
+        autoImportCompletions = true,
+        autoSearchPaths = true,
+        diagnosticMode = "workspace",
+        diagnosticSeverityOverrides = "none",
+        -- extraPaths = '',
+        logLevel = 'Information',
+        -- stubPath = '',
+        typeCheckingMode = 'off',
+        -- typeshedPaths = '',
+        useLibraryCodeForType = true,
       }
-  )
-
-  local on_references = vim.lsp.handlers["textDocument/references"]
-  vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
-    on_references, {
-      -- Use location list instead of quickfix list
-      loclist = true,
-    }
-  )
-
-  vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-    vim.lsp.handlers.hover, {
-      -- Use a sharp border with `FloatBorder` highlights
-      border = "single"
-    }
-  )
-
-  vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-    vim.lsp.handlers.signature_help, {
-      -- Use a sharp border with `FloatBorder` highlights
-      border = "single"
-    }
-  )
-
-
-  -- Use a loop to conveniently call 'setup' on multiple servers and
-  -- map buffer local keybindings when the language server attaches
-  -- local servers = { 'pyright', 'rust_analyzer', 'tsserver'  }
-  -- local lsp_installer = require "nvim-lsp-installer"
-  -- local lspconfig = require "lspconfig"
-  -- lsp_installer.setup()
-  -- for _, lsp in pairs(servers) do
-  -- for _, server in pairs(lsp_installer.get_installed_servers()) do
-  --   lspconfig[server.name].setup {
-  --     on_attach = on_attach,
-  --     flags = {
-  --       -- This will be the default in neovim 0.7+
-  --       debounce_text_changes = 150,
-  --     }
-  --   }
-  -- end
-
+    },
+  },
+}
 EOF
-
-highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
-highlight LspDiagnosticsSignHint ctermbg=142 ctermfg=15
 '''
+# hook_add = '''
+# lua << EOF
+#   -- Mappings.
+#   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+#   local opts = { noremap=true, silent=true }
+# 
+#   vim.api.nvim_set_keymap('n', '<space>p', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+#   vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+#   vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+#   vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+#   vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+# 
+# 
+# 
+# 
+#   -- Use an on_attach function to only map the following keys
+#   -- after the language server attaches to the current buffer
+#   local on_attach = function(client, bufnr)
+#     -- Enable completion triggered by <c-x><c-o>
+#     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+# 
+#     -- Mappings.
+#     -- See `:help vim.lsp.*` for documentation on any of the below functions
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+#   end
+# 
+#   require('lspconfig').pyright.setup {
+#     settings = {
+#       python = {
+#         analysis = {
+#           autoImportCompletions = true,
+#           autoSearchPaths = true,
+#           diagnosticMode = "workspace",
+#           diagnosticSeverityOverrides = "none",
+#           -- extraPaths = '',
+#           logLevel = 'Information',
+#           -- stubPath = '',
+#           typeCheckingMode = 'off',
+#           -- typeshedPaths = '',
+#           useLibraryCodeForType = true,
+#         }
+#       },
+#     },
+#   }
+# 
+#   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+#       vim.lsp.diagnostic.on_publish_diagnostics, {
+#           sign = true,
+#           underline = true,
+#           virtual_text = false,
+#           -- virtual_text = {
+#           --     spacing = 4,
+#           -- },
+#       }
+#   )
+# 
+#   -- local on_references = vim.lsp.handlers["textDocument/references"]
+#   -- vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
+#   --   on_references, {
+#   --     -- Use location list instead of quickfix list
+#   --     loclist = true,
+#   --   }
+#   -- )
+# 
+#   -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+#   --   vim.lsp.handlers.hover, {
+#   --     -- Use a sharp border with `FloatBorder` highlights
+#   --     border = "single"
+#   --   }
+#   -- )
+# 
+#   -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+#   --   vim.lsp.handlers.signature_help, {
+#   --     -- Use a sharp border with `FloatBorder` highlights
+#   --     border = "single"
+#   --   }
+#   -- )
+# 
+# 
+#   -- Use a loop to conveniently call 'setup' on multiple servers and
+#   -- map buffer local keybindings when the language server attaches
+#   -- local servers = { 'pyright', 'rust_analyzer', 'tsserver'  }
+#   -- local lsp_installer = require "nvim-lsp-installer"
+#   -- local lspconfig = require "lspconfig"
+#   -- lsp_installer.setup()
+#   -- for _, lsp in pairs(servers) do
+#   -- for _, server in pairs(lsp_installer.get_installed_servers()) do
+#   --   lspconfig[server.name].setup {
+#   --     on_attach = on_attach,
+#   --     flags = {
+#   --       -- This will be the default in neovim 0.7+
+#   --       debounce_text_changes = 150,
+#   --     }
+#   --   }
+#   -- end
+# 
+# EOF
+# 
+# highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
+# highlight LspDiagnosticsSignHint ctermbg=142 ctermfg=15
+# '''
 # hook_source = '''
 #     lua <<EOF
 #         require('nvim-lsp-installer').on_server_ready(function(server)
