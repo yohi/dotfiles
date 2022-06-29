@@ -42,8 +42,8 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 hook_add = '''
-    let g:airline_theme='oceanicnext'
-    " let g:airline_theme='deus'
+    " let g:airline_theme='oceanicnext'
+    let g:airline_theme='deus'
 '''
 
 # インデント
@@ -488,7 +488,10 @@ lua <<EOF
   --   -- rest of the initialization
   -- end
 
-  null_ls.setup({
+    null_ls.setup({
+    -- diagnostics_format = '#{m} [#{c}]',
+    -- diagnostics_format = '#{m} (#{s})',
+    diagnostics_format = '#{s}: #{m}',
     sources = {
         debug = true,
         null_ls.builtins.diagnostics.djlint,
