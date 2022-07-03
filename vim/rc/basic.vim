@@ -77,6 +77,9 @@ set tabstop=4
 " 連続した空白に対してタブやバックスペースでカーソルが動く幅
 set softtabstop=4
 
+" 
+set ambiwidth=double
+
 augroup fileTypeIndent
     autocmd!
     autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2

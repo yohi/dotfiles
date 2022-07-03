@@ -4,6 +4,9 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
+[[plugins]]
+repo = 'powerline/powerline'
+
 # カラースキーマ
 [[plugins]]
 repo = 'tomasiser/vim-code-dark'
@@ -12,6 +15,12 @@ hook_source = '''
     " au MyAutoCmd VimEnter * nested colorscheme codedark
     autocmd VimEnter * ++nested colorscheme codedark
 '''
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'folke/trouble.nvim'
+on_source = 'kyazdani42/nvim-web-devicons'
 
 # 全角スペースをホワイトに表示
 [[plugins]]
@@ -42,6 +51,7 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 hook_add = '''
+let g:airline_powerline_fonts = 1
     " let g:airline_theme='oceanicnext'
     let g:airline_theme='deus'
 '''
@@ -138,11 +148,13 @@ repo = 'airblade/vim-rooter'
 #     "let g:ale_linters = {'python': ['flake8']}
 #     "let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 # '''
-[[plugins]]
-repo = 'kamykn/spelunker.vim'
-hook_add = '''
-    set nospell
-'''
+
+# [[plugins]]
+# repo = 'kamykn/spelunker.vim'
+# hook_add = '''
+#     set nospell
+# '''
+
 [[plugins]]
 repo = 'rickhowe/diffchar.vim'
 [[plugins]]
@@ -174,6 +186,7 @@ hook_add = '''
 # repo = 'pechorin/any-jump.vim'
 [[plugins]]
 repo = 'RRethy/vim-illuminate'
+
 
 [[plugins]]
 repo = 'gelguy/wilder.nvim'
@@ -418,109 +431,6 @@ EOF
 [[plugins]]
 repo = 'MunifTanjim/prettier.nvim'
 
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-hook_add = '''
-lua <<EOF
-
-  local null_ls = require("null-ls")
-  local prettier = require("prettier")
-
-  -- prettier.setup({
-  --   bin = 'prettier', -- or `prettierd`
-  --   filetypes = {
-  --     "javascript",
-  --     "javascriptreact",
-  --     "typescript",
-  --     "typescriptreact",
-  --   }
-  -- })
-
-    -- register any number of sources simultaneously
-  -- local sources = {
-  --   -- null_ls.builtins.formatting.prettier.with({
-  --   --   prefer_local = "node_modules/.bin"
-  --   -- }),
-  --     -- null_ls.builtins.diagnostics.eslint.with({
-  --     --   prefer_local = "node_modules/.bin"
-  --     -- }),
-  --   null_ls.builtins.diagnostics.djlint,
-  --   null_ls.builtins.diagnostics.cspell,
-  --   null_ls.builtins.diagnostics.mypy,
-  --   null_ls.builtins.diagnostics.flake8,
-  -- }
-
-
-
-  -- local lsp_formatting = function(client, bufnr)
-  --   vim.lsp.buf.formatting({
-  --       filter = function(client)
-  --           -- apply whatever logic you want (in this example, we'll only use null-ls)
-  --           return client.name == "null-ls"
-  --       end,
-  --       bufnr = bufnr,
-  --   })
-  -- end
-  --
-  -- -- if you want to set up formatting on save, you can use this as a callback
-  -- local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-  -- -- add to your shared on_attach callback
-  -- local on_attach = function(client, bufnr)
-  --   if client.name == "tsserver" then
-  --       client.server_capabilities.document_formatting = false -- 0.7 and earlier
-  --   end
-  --   if client.supports_method("textDocument/formatting") then
-  --       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-  --       vim.api.nvim_create_autocmd("BufWritePre", {
-  --           group = augroup,
-  --           buffer = bufnr,
-  --           callback = function()
-  --               lsp_formatting(client, bufnr)
-  --           end,
-  --       })
-  --   end
-  -- end
-
-  -- local on_attach = function(client, bufnr)
-  --   if client.name == "null_ls" then
-  --       client.server_capabilities.document_formatting = true -- 0.7 and earlier
-  --   end
-  --   -- rest of the initialization
-  -- end
-
-    null_ls.setup({
-    -- diagnostics_format = '#{m} [#{c}]',
-    -- diagnostics_format = '#{m} (#{s})',
-    diagnostics_format = '#{s}: #{m}',
-    sources = {
-        debug = true,
-        null_ls.builtins.diagnostics.djlint,
-        null_ls.builtins.diagnostics.cspell,
-        null_ls.builtins.diagnostics.mypy,
-        null_ls.builtins.diagnostics.flake8,
-    },
-    -- on_attach = on_attach
-  })
-
-EOF
-'''
-
-# hook_add = '''
-#     lua <<EOF
-#         require("null-ls").setup({
-#             sources = {
-#                 debug = true,
-# 
-#                 -- require("null-ls").builtins.diagnostics.djlint,
-#                 require("null-ls").builtins.diagnostics.cspell,
-#                 -- require("null-ls").builtins.diagnostics.mypy,
-#                 -- require("null-ls").builtins.diagnostics.flake8,
-#             },
-#         })
-#         vim.lsp.set_log_level("DEBUG")
-# 
-# EOF
-# '''
 
 #[[plugins]]
 # repo = 'vim-python/python-syntax'
@@ -776,34 +686,74 @@ on_source = 'ddc.vim'
 repo = 'Shougo/ddc-cmdline'
 on_source = 'ddc.vim'
 
+[[plugins]]
+repo = 'williamboman/nvim-lsp-installer'
+on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+on_source = 'nvim-lspconfig'
+##### hook_add = '''
+##### lua <<EOF
+##### 
+#####     local null_ls = require("null-ls")
+##### 
+#####     local sources = {
+#####         null_ls.builtins.diagnostics.djlint,
+#####         null_ls.builtins.diagnostics.cspell,
+#####         null_ls.builtins.diagnostics.mypy,
+#####         null_ls.builtins.diagnostics.flake8,
+#####     }
+##### 
+#####     null_ls.setup({
+#####     -- diagnostics_format = '#{m} [#{c}]',
+#####     -- diagnostics_format = '#{m} (#{s})',
+#####     diagnostics_format = '#{s}: #{m}',
+#####     sources = sources,
+#####     -- on_attach = on_attach
+#####   })
+##### 
+##### EOF
+##### '''
+##### 
+##### # hook_add = '''
+##### #     lua <<EOF
+##### #         require("null-ls").setup({
+##### #             sources = {
+##### #                 debug = true,
+##### # 
+##### #                 -- require("null-ls").builtins.diagnostics.djlint,
+##### #                 require("null-ls").builtins.diagnostics.cspell,
+##### #                 -- require("null-ls").builtins.diagnostics.mypy,
+##### #                 -- require("null-ls").builtins.diagnostics.flake8,
+##### #             },
+##### #         })
+##### #         vim.lsp.set_log_level("DEBUG")
+##### # 
+##### # EOF
+##### # '''
+
+
+
+
+
 
 # nvim-lspconfig ----------
 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
+on_source = 'RRethy/vim-illuminate'
 on_event = 'BufEnter'
 hook_add = '''
 lua << EOF
-require('lspconfig').pyright.setup {
-  settings = {
-    python = {
-      analysis = {
-        autoImportCompletions = true,
-        autoSearchPaths = true,
-        diagnosticMode = "workspace",
-        diagnosticSeverityOverrides = "none",
-        -- extraPaths = '',
-        logLevel = 'Information',
-        -- stubPath = '',
-        typeCheckingMode = 'off',
-        -- typeshedPaths = '',
-        useLibraryCodeForType = true,
-      }
-    },
-  },
-}
+    require('lua.lsp')
 EOF
+" ctermfg: 前面
+" ctermbg: 背景
+" underline: 下線
 '''
+# highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
+# highlight LspDiagnosticsSignHint ctermbg=142 ctermfg=15
 # hook_add = '''
 # lua << EOF
 #   -- Mappings.
@@ -1010,40 +960,6 @@ EOF
 #     " nnoremap <C-j> :LspDefinition<CR>
 #     set completeopt-=preview
 # '''
-
-[[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
-# on_source = 'nvim-lspconfig'
-hook_add = '''
-lua << EOF
-  local lsp_installer = require("nvim-lsp-installer")
-
--- installしているserverの起動準備をします。
--- `server` に格納しているのはServer classで、
--- server nameやsetup functionを含んでいます。
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
-
-  -- `sumneko_lua` をinstallしているなら `hello world` を表示します。
-  if server.name == 'sumneko_lua' then
-    -- print('hello world')
-  end
-
-  -- serverに対応しているfiletypeのbufferを開いたら、
-  -- 実行するfunctionを設定します。
-  -- sumneko_luaはluaのLSP serverなので、
-  -- luaのbufferを開いたら、実行するfunctionです。
-  opts.on_attach = function(client,buffer_number)
-    -- print(vim.inspect(client))
-    -- print(buffer_number)
-  end
-
-  -- LSPのsetupをします。
-  -- setupをしないとserverは動作しません。
-  server:setup(opts)
-end)
-EOF
-'''
 
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
@@ -1774,3 +1690,4 @@ repo = 'markonm/traces.vim'
 ## 
 ## " ddu ======================
 ## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
+

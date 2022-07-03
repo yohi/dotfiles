@@ -48,3 +48,7 @@ endif
 
 " TODO
 colorscheme codedark
+highlight LspDiagnosticsSignError ctermbg=None cterm=underline ctermfg=Red
+highlight LspDiagnosticsSignWarn  ctermbg=None cterm=underline ctermfg=Yellow
+highlight LspDiagnosticsSignHint  ctermbg=None cterm=underline ctermfg=LightBlue
+highlight LspDiagnosticsSignInfo  ctermbg=None cterm=underline ctermfg=White
