@@ -163,36 +163,6 @@ let g:loaded_perl_provider = 0
 "   endif
 " endif
 
-let g:virtual_env = $VIRTUAL_ENV
-if strlen(g:virtual_env) == 0
-    " echo '$VIRTUAL_ENV not defined'
-    let s:python3 = system('which python3')
-    if strlen(s:python3) != 0
-        let s:python3_dir = $HOME . '/.vim/python'
-        if !isdirectory(s:python3_dir)
-            " echo 'create venv...'
-            call system('python3 -m venv ' . s:python3_dir)
-        endif
-
-        " echo 'source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt'
-        call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
-        let g:python3_host_prog = s:python3_dir . '/bin/python'
-        let $PATH = s:python3_dir . '/bin:' . $PATH
-    endif
-else
-    " echo '$VIRTUAL_ENV defined'
-    " echo 'install pip...'
-    call system('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
-    let g:python3_host_prog = g:virtual_env . '/bin/python'
-    let $PATH = g:virtual_env . '/bin:' . $PATH
-endif
-
-let g:pythonpath = $PYTHONPATH
-if strlen(g:pythonpath) == 0
-    let $PYTHONPATH = getcwd()
-endif
-
-
 let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'
 
 

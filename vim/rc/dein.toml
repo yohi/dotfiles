@@ -138,6 +138,9 @@ hook_add = '''
 # vim rooter
 [[plugins]]
 repo = 'airblade/vim-rooter'
+hook_add = '''
+let g:rooter_patterns = ['.git', 'Makefile', '*.sln', 'build/env.sh', '.venv']
+'''
 
 # LINT
 # [[plugins]]
