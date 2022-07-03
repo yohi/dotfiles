@@ -163,10 +163,6 @@ let g:loaded_perl_provider = 0
 "   endif
 " endif
 
-
-echom 'basic.vim'
-pwd
-
 let g:virtual_env = $VIRTUAL_ENV
 if strlen(g:virtual_env) == 0
     " echo '$VIRTUAL_ENV not defined'
@@ -195,24 +191,6 @@ let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
-
-" cd $HOME
-" echom getcwd()
-" echom 'basic.vim'
-" pwd
-
-" echo 'which python3'
-" echo system('which python3')
-" echo 'pip list'
-" echo system('pip list')
-" echo '$PATH'
-" echo $PATH
-
-" echo getcwd()
-" 
-" sleep 60
-
-
 
 
 let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'

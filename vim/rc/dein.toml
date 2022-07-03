@@ -693,8 +693,6 @@ on_source = 'nvim-lspconfig'
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
 hook_add = '''
-echom "null-ls add"
-pwd
 lua << EOF
    require('lua.null-ls')
 EOF
@@ -750,8 +748,6 @@ EOF
 repo = 'neovim/nvim-lspconfig'
 on_source = 'RRethy/vim-illuminate'
 hook_add = '''
-echom "nvim-lspconfig add"
-pwd
 lua << EOF
     require('lua.lsp')
 EOF
