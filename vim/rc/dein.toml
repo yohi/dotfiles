@@ -695,6 +695,7 @@ on_source = 'nvim-lspconfig'
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
+on_source = 'nvim-lspconfig'
 hook_add = '''
 lua << EOF
    require('lua.null-ls')

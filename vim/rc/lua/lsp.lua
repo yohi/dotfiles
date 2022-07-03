@@ -138,15 +138,7 @@ end
 -- server nameやsetup functionを含んでいます。
 lsp_installer.on_server_ready(function(server)
     local opts = {}
-
-    if server.name == 'sumneko_lua' then
-        print('hello world')
-    elseif server.name == 'tsserver' or server.name == 'eslint' then
-        opts.root_dir = nvim_lsp.util.root_pattern("package.json")
-    elseif server.name == 'denols' then
-        opts.root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc", "deps.ts")
-        opts.init_options = { lint = true, unstable = true, }
-    end
+    local lspconfig = require('lspconfig')
 
     -- serverに対応しているfiletypeのbufferを開いたら、
     -- 実行するfunctionを設定します。
@@ -157,6 +149,21 @@ lsp_installer.on_server_ready(function(server)
         -- print(bufnr)
         lsp_highlight_document(client)
         lsp_keymaps(bufnr)
+
+        print(server.name)
+        if server.name == 'sumneko_lua' then
+            print('hello world')
+        elseif server.name == 'tsserver' or server.name == 'eslint' then
+            opts.root_dir = lspconfig.util.root_pattern("package.json")
+        elseif server.name == 'denols' then
+            opts.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "deps.ts")
+            opts.init_options = { lint = true, unstable = true, }
+        elseif server.name == 'pyright' then
+            print('hello pyright')
+            opts.root_dir = lspconfig.util.root_pattern(".venv")
+        end
+
+
     end
 
     -- LSPのsetupをします。
