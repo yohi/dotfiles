@@ -1,5 +1,6 @@
 " BASIC.VIM ================================================
 
+
 " VIとの互換性をとらない
 set nocompatible
 
@@ -163,6 +164,9 @@ let g:loaded_perl_provider = 0
 " endif
 
 
+echom 'basic.vim'
+pwd
+
 let g:virtual_env = $VIRTUAL_ENV
 if strlen(g:virtual_env) == 0
     " echo '$VIRTUAL_ENV not defined'
@@ -191,6 +195,11 @@ let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
+
+" cd $HOME
+" echom getcwd()
+" echom 'basic.vim'
+" pwd
 
 " echo 'which python3'
 " echo system('which python3')

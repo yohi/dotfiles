@@ -692,7 +692,13 @@ on_source = 'nvim-lspconfig'
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
-on_source = 'nvim-lspconfig'
+hook_add = '''
+echom "null-ls add"
+pwd
+lua << EOF
+   require('lua.null-ls')
+EOF
+'''
 ##### hook_add = '''
 ##### lua <<EOF
 ##### 
@@ -743,14 +749,13 @@ on_source = 'nvim-lspconfig'
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_source = 'RRethy/vim-illuminate'
-on_event = 'BufEnter'
 hook_add = '''
+echom "nvim-lspconfig add"
+pwd
 lua << EOF
     require('lua.lsp')
 EOF
-" ctermfg: 前面
-" ctermbg: 背景
-" underline: 下線
+pwd
 '''
 # highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
 # highlight LspDiagnosticsSignHint ctermbg=142 ctermfg=15
@@ -966,31 +971,31 @@ repo = 'hrsh7th/vim-vsnip'
 hook_add = '''
 " NOTE: You can use other key to expand snippet.
 
-" Expand
-imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+"" Expand
+"imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+"smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
 
-" Expand or jump
-imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+"" Expand or jump
+"imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+"smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
 
-" Jump forward or backward
-imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+"" Jump forward or backward
+"imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+"smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+"imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+"smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
-" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
-" See https://github.com/hrsh7th/vim-vsnip/pull/50
-nmap        s   <Plug>(vsnip-select-text)
-xmap        s   <Plug>(vsnip-select-text)
-nmap        S   <Plug>(vsnip-cut-text)
-xmap        S   <Plug>(vsnip-cut-text)
+"" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
+"" See https://github.com/hrsh7th/vim-vsnip/pull/50
+" nmap        s   <Plug>(vsnip-select-text)
+" xmap        s   <Plug>(vsnip-select-text)
+" nmap        S   <Plug>(vsnip-cut-text)
+" xmap        S   <Plug>(vsnip-cut-text)
 
 " If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
-let g:vsnip_filetypes = {}
-let g:vsnip_filetypes.javascriptreact = ['javascript']
-let g:vsnip_filetypes.typescriptreact = ['typescript']
+"let g:vsnip_filetypes = {}
+"let g:vsnip_filetypes.javascriptreact = ['javascript']
+"let g:vsnip_filetypes.typescriptreact = ['typescript']
  '''
 
 [[plugins]]
@@ -1024,15 +1029,15 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
-# Search Count
-[[plugins]]
-repo = 'osyo-manga/vim-anzu'
-hook_add = '''
-    nmap n <Plug>(anzu-n-with-echo)
-    nmap N <Plug>(anzu-N-with-echo)
-    nmap * <Plug>(anzu-star)
-    nmap # <Plug>(anzu-sharp)
-'''
+# # Search Count
+# [[plugins]]
+# repo = 'osyo-manga/vim-anzu'
+# hook_add = '''
+#     nmap n <Plug>(anzu-n-with-echo)
+#     nmap N <Plug>(anzu-N-with-echo)
+#     nmap * <Plug>(anzu-star)
+#     nmap # <Plug>(anzu-sharp)
+# '''
 
 # Visualize Space
 [[plugins]]
@@ -1101,8 +1106,8 @@ EOF
 
 
 
-[[plugins]]
-repo = 'mhartington/oceanic-next'
+# [[plugins]]
+# repo = 'mhartington/oceanic-next'
 
 
 
@@ -1193,51 +1198,51 @@ lua << EOF
 EOF
 '''
 
-[[plugins]]
-repo = 'skywind3000/asyncrun.vim'
-
-# Add surrounding character
-[[plugins]]
-repo = 'tpope/vim-surround'
-
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-[[plugins]]
-repo = 'tyru/caw.vim'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
-
-# Substitute
-[[plugins]]
-repo = 'osyo-manga/vim-over'
-hook_add = '''
-" ---------- 'osyo-manga/vim-over' ----------
-" 全体置換
-nnoremap <silent> <Space>// :OverCommandLine<CR>%s/
-" カーソルしたの単語置換
-nnoremap <silent> <Space>o :OverCommandLine<CR>%s/<C-r><C-w>/
-'''
-# Substitute
-[[plugins]]
-repo = 'kana/vim-operator-user'
-
-# Substitute
-[[plugins]]
-repo = 'kana/vim-operator-replace'
-hook_add = '''
-nmap <silent> <Space>r <Plug>(operator-replace)
-'''
-
-
-# Syntax check
-[[plugins]]
-repo = 'vim-syntastic/syntastic'
-
-# Replacement preview
-[[plugins]]
-repo = 'markonm/traces.vim'
+# [[plugins]]
+# repo = 'skywind3000/asyncrun.vim'
+# 
+# # Add surrounding character
+# [[plugins]]
+# repo = 'tpope/vim-surround'
+# 
+# [[plugins]]
+# repo = 'tpope/vim-repeat'
+# 
+# [[plugins]]
+# repo = 'tyru/caw.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/context_filetype.vim'
+# 
+# # Substitute
+# [[plugins]]
+# repo = 'osyo-manga/vim-over'
+# hook_add = '''
+# " ---------- 'osyo-manga/vim-over' ----------
+# " 全体置換
+# nnoremap <silent> <Space>// :OverCommandLine<CR>%s/
+# " カーソルしたの単語置換
+# nnoremap <silent> <Space>o :OverCommandLine<CR>%s/<C-r><C-w>/
+# '''
+# # Substitute
+# [[plugins]]
+# repo = 'kana/vim-operator-user'
+# 
+# # Substitute
+# [[plugins]]
+# repo = 'kana/vim-operator-replace'
+# hook_add = '''
+# nmap <silent> <Space>r <Plug>(operator-replace)
+# '''
+# 
+# 
+# # Syntax check
+# [[plugins]]
+# repo = 'vim-syntastic/syntastic'
+# 
+# # Replacement preview
+# [[plugins]]
+# repo = 'markonm/traces.vim'
 
 
 
