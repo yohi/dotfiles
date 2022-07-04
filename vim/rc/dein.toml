@@ -51,7 +51,7 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 hook_add = '''
-let g:airline_powerline_fonts = 1
+    " let g:airline_powerline_fonts = 1
     " let g:airline_theme='oceanicnext'
     let g:airline_theme='deus'
 '''
