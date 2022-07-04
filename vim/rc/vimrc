@@ -6,14 +6,7 @@ set iminsert=0 imsearch=0
 
 "let $VIMRUNTIME="/usr/share/nvim/runtime"
 "set runtimepath+=/usr/share/nvim/runtime
-
-pwd
-lcd ${HOME}/.vim/rc
-runtime! rc/*.vim
-" runtime! rc/*.vim.lazy
-pwd
-lcd -
-pwd
+"set runtimepath+=${HOME}/.vim/rc/
 
 let g:virtual_env = $VIRTUAL_ENV
 if strlen(g:virtual_env) == 0
@@ -31,15 +24,30 @@ if strlen(g:virtual_env) == 0
         let g:python3_host_prog = s:python3_dir . '/bin/python'
         let $PATH = s:python3_dir . '/bin:' . $PATH
     endif
-" else
-"     echom '$VIRTUAL_ENV defined'
-"     echom 'install pip...'
-"     call system('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
-"     let g:python3_host_prog = g:virtual_env . '/bin/python'
-"     let $PATH = g:virtual_env . '/bin:' . $PATH
+else
+    echom '$VIRTUAL_ENV defined'
+    echom 'install pip...'
+    call system('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+    let g:python3_host_prog = g:virtual_env . '/bin/python'
+    let $PATH = g:virtual_env . '/bin:' . $PATH
 endif
 
 let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
+
+
+"echom 1
+"pwd
+"lcd ${HOME}/.vim/rc
+"echom 2
+"pwd
+runtime! rc/*.vim
+" runtime! rc/*.vim.lazy
+"echom 3
+"pwd
+"lcd -
+"echom 4
+"pwd
+

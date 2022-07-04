@@ -23,6 +23,8 @@ if dein#load_state('$HOME/.cache/dein')
     let s:toml = expand($HOME . '/.vim/rc/dein.toml')
     let s:toml_lazy = expand($HOME . '/.vim/rc/dein_lazy.toml')
 
+    echo s:toml_lazy
+
     call dein#load_toml(s:toml, { 'lazy': 0 })
     call dein#load_toml(s:toml_lazy, { 'lazy': 1 })
 

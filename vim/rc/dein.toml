@@ -697,8 +697,10 @@ on_source = 'nvim-lspconfig'
 repo = 'jose-elias-alvarez/null-ls.nvim'
 on_source = 'nvim-lspconfig'
 hook_add = '''
+echom "null-ls source"
+pwd
 lua << EOF
-   require('lua.null-ls')
+   require('config.null-ls')
 EOF
 '''
 ##### hook_add = '''
@@ -753,7 +755,7 @@ repo = 'neovim/nvim-lspconfig'
 on_source = 'RRethy/vim-illuminate'
 hook_add = '''
 lua << EOF
-    require('lua.lsp')
+    require('config.lsp')
 EOF
 '''
 # highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
