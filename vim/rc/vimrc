@@ -10,23 +10,23 @@ set iminsert=0 imsearch=0
 
 let g:virtual_env = $VIRTUAL_ENV
 if strlen(g:virtual_env) == 0
-    echom '$VIRTUAL_ENV not defined'
+    "echom '$VIRTUAL_ENV not defined'
     let s:python3 = system('which python3')
     if strlen(s:python3) != 0
         let s:python3_dir = $HOME . '/.vim/python'
         if !isdirectory(s:python3_dir)
-            echom 'create venv...'
+            "echom 'create venv...'
             call system('python3 -m venv ' . s:python3_dir)
         endif
 
-        echom 'source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt'
+        "echom 'source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt'
         call system('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
         let g:python3_host_prog = s:python3_dir . '/bin/python'
         let $PATH = s:python3_dir . '/bin:' . $PATH
     endif
 else
-    echom '$VIRTUAL_ENV defined'
-    echom 'install pip...'
+    "echom '$VIRTUAL_ENV defined'
+    "echom 'install pip...'
     call system('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
     let g:python3_host_prog = g:virtual_env . '/bin/python'
     let $PATH = g:virtual_env . '/bin:' . $PATH
