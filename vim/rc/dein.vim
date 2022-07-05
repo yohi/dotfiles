@@ -13,6 +13,8 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
+" let g:dein#auto_recache=1
+
 " Required:
 set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
 

@@ -40,15 +40,32 @@ augroup END
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 hook_add = '''
-    let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#nvimlsp#enabled = 1
-"     " let g:airline#extensions#ale#enabled = 1
-"     " let g:airline#extensions#tabline#fnamemod = ':t'
-"     " let g:airline#extensions#tabline#buffer_nr_show = 1
-    " let g:airline_powerline_fonts = 1
+    let g:airline_powerline_fonts = 1
 
-"     " nmap <C-n> <Plug>AirlineSelectNextTab
-"     " nmap <C-p> <Plug>AirlineSelectPrevTab
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#fnamemod = ':t'
+    let g:airline#extensions#tabline#buffer_nr_show = 1
+
+    let g:airline#extensions#nvimlsp#enabled = 1
+    let g:airline#extensions#nvimlsp#error_symbol = ''
+    let g:airline#extensions#nvimlsp#warning_symbol = ''
+
+
+    let g:airline#extensions#virtualenv#enabled = 1
+    let g:airline#extensions#virtualenv#ft = ['python', 'markdown']
+
+    let g:airline#extensions#whitespace#enabled = 1
+
+    let g:airline#extensions#branch#enabled = 1
+    let g:airline#extensions#branch#format = 1
+
+    let g:airline#extensions#fzf#enabled = 1
+
+    let g:airline#extensions#hunks#enabled = 1
+    let g:airline#extensions#hunks#hunk_symbols = ['+', '~', '-']
+
+    " nmap <C-n> <Plug>AirlineSelectNextTab
+    " nmap <C-p> <Plug>AirlineSelectPrevTab
 '''
 
 [[plugins]]
@@ -72,23 +89,23 @@ hook_add = '''
 # GIT系 ----------------------
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-# [[plugins]]
-# repo = 'airblade/vim-gitgutter'
-# hook_add = '''
-#     set signcolumn=yes
-#     set updatetime=100
-#     let g:gitgutter_async = 1
-#     let g:gitgutter_sign_modified = 'rw'
-#     highlight GitGutterAdd ctermfg=green
-#     highlight GitGutterChange ctermfg=yellow
-#     highlight GitGutterDelete ctermfg=red
-#     highlight GitGutterChangeDelete ctermfg=yellow
-#     nmap <C-g>s <Plug>(GitGutterPreviewHunk)
-#     nmap <C-g>j <Plug>(GitGutterNextHunk)
-#     nmap <C-g>k <Plug>(GitGutterPrevHunk)
-#     nmap <C-g>u <Plug>(GitGutterUndoHunk)
-#     nmap <C-g>h :GitGutterLineHighlightsToggle<CR>
-# '''
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+    set signcolumn=yes
+    set updatetime=100
+    let g:gitgutter_async = 1
+    let g:gitgutter_sign_modified = 'rw'
+    highlight GitGutterAdd ctermfg=green
+    highlight GitGutterChange ctermfg=yellow
+    highlight GitGutterDelete ctermfg=red
+    highlight GitGutterChangeDelete ctermfg=yellow
+    nmap <C-g>s <Plug>(GitGutterPreviewHunk)
+    nmap <C-g>j <Plug>(GitGutterNextHunk)
+    nmap <C-g>k <Plug>(GitGutterPrevHunk)
+    nmap <C-g>u <Plug>(GitGutterUndoHunk)
+    nmap <C-g>h :GitGutterLineHighlightsToggle<CR>
+'''
 
 # fzf
 [[plugins]]
@@ -1080,18 +1097,18 @@ repo = 'mileszs/ack.vim'
 repo = 'thinca/vim-qfreplace'
 
 
-[[plugins]]
-repo = 'folke/which-key.nvim'
-hook_add = '''
-lua << EOF
-  require("which-key").setup {
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
-EOF
-set timeoutlen=150
-'''
+# [[plugins]]
+# repo = 'folke/which-key.nvim'
+# hook_add = '''
+# lua << EOF
+#   require("which-key").setup {
+#     -- your configuration comes here
+#     -- or leave it empty to use the default settings
+#     -- refer to the configuration section below
+#   }
+# EOF
+# set timeoutlen=150
+# '''
 
 
 [[plugins]]

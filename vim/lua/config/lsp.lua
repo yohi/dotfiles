@@ -1,12 +1,12 @@
 local signs = {
-    { name = "DiagnosticSignError", text = "E" },
-    { name = "DiagnosticSignWarn", text = "W" },
-    { name = "DiagnosticSignHint", text = "H" },
-    { name = "DiagnosticSignInfo", text = "I" },
-    -- { name = "DiagnosticSignError", text = "" },
-    -- { name = "DiagnosticSignWarn", text = "" },
-    -- { name = "DiagnosticSignHint", text = "" },
-    -- { name = "DiagnosticSignInfo", text = "" },
+    -- { name = "DiagnosticSignError", text = "E" },
+    -- { name = "DiagnosticSignWarn", text = "W" },
+    -- { name = "DiagnosticSignHint", text = "H" },
+    -- { name = "DiagnosticSignInfo", text = "I" },
+    { name = "DiagnosticSignError", text = "" },
+    { name = "DiagnosticSignWarn", text = "" },
+    { name = "DiagnosticSignHint", text = "" },
+    { name = "DiagnosticSignInfo", text = "" },
 }
 
 for _, sign in ipairs(signs) do
@@ -28,13 +28,18 @@ local config = {
     signs = {
         active = signs,
     },
-    update_in_insert = true,
+    update_in_insert = false,
     underline = true,
     severity_sort = true,
     float = {
         focusable = false,
         style = "minimal",
-        border = "rounded",
+        -- border = "rounded",
+        -- border = "none",
+        -- border = "single",
+        -- border = "dobule",
+        -- border = "solid",
+        border = "shadow",
         source = "always",
         header = "",
         prefix = "",
