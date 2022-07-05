@@ -80,6 +80,7 @@ set softtabstop=4
 
 " 
 set ambiwidth=double
+set ambw=double
 
 augroup fileTypeIndent
     autocmd!
@@ -173,3 +174,6 @@ let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'
 
 
 inoremap <C-[> <C-[>:w<CR>
+
+
+set signcolumn=yes:1

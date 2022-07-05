@@ -4,6 +4,9 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
+[[plubins]]
+repo = 'rbtnn/vim-ambiwidth'
+
 [[plugins]]
 repo = 'powerline/powerline'
 
@@ -69,23 +72,23 @@ hook_add = '''
 # GIT系 ----------------------
 [[plugins]]
 repo = 'tpope/vim-fugitive'
-[[plugins]]
-repo = 'airblade/vim-gitgutter'
-hook_add = '''
-    set signcolumn=yes
-    set updatetime=100
-    let g:gitgutter_async = 1
-    let g:gitgutter_sign_modified = 'rw'
-    highlight GitGutterAdd ctermfg=green
-    highlight GitGutterChange ctermfg=yellow
-    highlight GitGutterDelete ctermfg=red
-    highlight GitGutterChangeDelete ctermfg=yellow
-    nmap <C-g>s <Plug>(GitGutterPreviewHunk)
-    nmap <C-g>j <Plug>(GitGutterNextHunk)
-    nmap <C-g>k <Plug>(GitGutterPrevHunk)
-    nmap <C-g>u <Plug>(GitGutterUndoHunk)
-    nmap <C-g>h :GitGutterLineHighlightsToggle<CR>
-'''
+# [[plugins]]
+# repo = 'airblade/vim-gitgutter'
+# hook_add = '''
+#     set signcolumn=yes
+#     set updatetime=100
+#     let g:gitgutter_async = 1
+#     let g:gitgutter_sign_modified = 'rw'
+#     highlight GitGutterAdd ctermfg=green
+#     highlight GitGutterChange ctermfg=yellow
+#     highlight GitGutterDelete ctermfg=red
+#     highlight GitGutterChangeDelete ctermfg=yellow
+#     nmap <C-g>s <Plug>(GitGutterPreviewHunk)
+#     nmap <C-g>j <Plug>(GitGutterNextHunk)
+#     nmap <C-g>k <Plug>(GitGutterPrevHunk)
+#     nmap <C-g>u <Plug>(GitGutterUndoHunk)
+#     nmap <C-g>h :GitGutterLineHighlightsToggle<CR>
+# '''
 
 # fzf
 [[plugins]]
