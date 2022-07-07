@@ -4,11 +4,11 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
-[[plubins]]
-repo = 'rbtnn/vim-ambiwidth'
-
-[[plugins]]
-repo = 'powerline/powerline'
+# [[plubins]]
+# repo = 'rbtnn/vim-ambiwidth'
+# 
+# [[plugins]]
+# repo = 'powerline/powerline'
 
 # カラースキーマ
 [[plugins]]
@@ -18,23 +18,24 @@ hook_source = '''
     " au MyAutoCmd VimEnter * nested colorscheme codedark
     autocmd VimEnter * ++nested colorscheme codedark
 '''
-[[plugins]]
-repo = 'kyazdani42/nvim-web-devicons'
 
-[[plugins]]
-repo = 'folke/trouble.nvim'
-on_source = 'kyazdani42/nvim-web-devicons'
+# [[plugins]]
+# repo = 'kyazdani42/nvim-web-devicons'
+# 
+# [[plugins]]
+# repo = 'folke/trouble.nvim'
+# on_source = 'kyazdani42/nvim-web-devicons'
 
 # 全角スペースをホワイトに表示
-[[plugins]]
-repo = 'thinca/vim-zenspace'
-hook_add = '''
-let g:zenspace#default_mode = 'on'
-augroup vimrc-highlight
-  autocmd!
-  autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
-augroup END
-'''
+# [[plugins]]
+# repo = 'thinca/vim-zenspace'
+# hook_add = '''
+# let g:zenspace#default_mode = 'on'
+# augroup vimrc-highlight
+#   autocmd!
+#   autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
+# augroup END
+# '''
 
 # ステータスバー
 [[plugins]]
@@ -82,7 +83,7 @@ repo = 'Yggdroot/indentLine'
 hook_add = '''
     let g:indentLine_color_term = 239
     let g:indentLine_color_gui = '#708090'
-    let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+    let g:indentLine_char_list = ['|']
     let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
 '''
 
@@ -92,7 +93,6 @@ repo = 'tpope/vim-fugitive'
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
 hook_add = '''
-    set signcolumn=yes
     set updatetime=100
     let g:gitgutter_async = 1
     let g:gitgutter_sign_modified = 'rw'
@@ -205,10 +205,12 @@ hook_add = '''
     let g:blamer_date_format = '%Y/%m/%d %H:%M'
     let g:blamer_template = '<committer>, <committer-time>  * <summary>'
 '''
+
 # [[plugins]]
 # repo = 'pechorin/any-jump.vim'
-[[plugins]]
-repo = 'RRethy/vim-illuminate'
+
+# [[plugins]]
+# repo = 'RRethy/vim-illuminate'
 
 
 [[plugins]]
@@ -277,22 +279,22 @@ repo = 'lambdalisue/pastefix.vim'
 repo = 'vim-denops/denops.vim'
 
 # command
-[[plugins]]
-repo = 'skanehira/command.vim'
+# [[plugins]]
+# repo = 'skanehira/command.vim'
 
 # nvim-dap
-[[plugins]]
-repo = 'mfussenegger/nvim-dap'
-[[plugins]]
-repo = 'mfussenegger/nvim-dap-python'
-hook_add = '''
-    lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
-    lua require('dap-python').test_runner = 'pytest'
-
-    nnoremap <silent> dn :lua require('dap-python').test_method()<CR>
-    nnoremap <silent> df :lua require('dap-python').test_class()<CR>
-    " vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
-'''
+# [[plugins]]
+# repo = 'mfussenegger/nvim-dap'
+# [[plugins]]
+# repo = 'mfussenegger/nvim-dap-python'
+# hook_add = '''
+#     lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+#     lua require('dap-python').test_runner = 'pytest'
+# 
+#     nnoremap <silent> dn :lua require('dap-python').test_method()<CR>
+#     nnoremap <silent> df :lua require('dap-python').test_class()<CR>
+#     " vnoremap <silent> <leader>ds <ESC>:lua require('dap-python').debug_selection()<CR>
+# '''
 
 # deoppet
 [[plugins]]
@@ -1126,17 +1128,8 @@ lua << EOF
 EOF
 '''
 
-
-
-
-
-
-
-
-# [[plugins]]
-# repo = 'mhartington/oceanic-next'
-
-
+[[plugins]]
+repo = 'mhartington/oceanic-next'
 
 # Icons
 [[plugins]]
@@ -1267,9 +1260,9 @@ EOF
 # [[plugins]]
 # repo = 'vim-syntastic/syntastic'
 # 
-# # Replacement preview
-# [[plugins]]
-# repo = 'markonm/traces.vim'
+# Replacement preview
+[[plugins]]
+repo = 'markonm/traces.vim'
 
 
 
