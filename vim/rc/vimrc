@@ -8,7 +8,8 @@ set iminsert=0 imsearch=0
 "set runtimepath+=/usr/share/nvim/runtime
 "set runtimepath+=${HOME}/.vim/rc/
 
-let s:venv_dir = '.venv'
+let s:venv_dir = getcwd() . '/.venv'
+echom s:venv_dir
 if isdirectory(s:venv_dir)
     let $VIRTUAL_ENV = s:venv_dir
 endif
