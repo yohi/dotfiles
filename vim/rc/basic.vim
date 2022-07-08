@@ -176,4 +176,4 @@ let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'
 inoremap <C-[> <C-[>:w<CR>
 
 
-set signcolumn=yes:1
+set signcolumn=yes:2
