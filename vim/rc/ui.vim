@@ -8,8 +8,8 @@ set syntax=on
 set list
 set listchars=tab:>-,trail:_,nbsp:%,extends:<
 
-" 全角文字を半角倍幅で表示する
-set ambiwidth=double
+" 全角文字を半角倍幅で表示する -> しない
+set ambiwidth=single
 
 " 行番号表示
 set number
@@ -56,6 +56,5 @@ set wildmode=longest:full,list
 "コマンドモードに戻る時IMEをOFFにする
 set imdisable
 
-
-
-
+" 
+set signcolumn=yes

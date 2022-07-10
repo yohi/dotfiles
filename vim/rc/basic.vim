@@ -5,7 +5,7 @@
 set nocompatible
 
 " VIMが通常使う文字エンコーディング
-set encoding=utf8
+set encoding=utf-8
 
 " 自動認識する文字エンコーディングの優先順一覧
 set fileencodings=ucs-bom,utf-8,iso-2022-jp,euc-jp,cp932,utf-16,utf-16le
@@ -78,9 +78,6 @@ set tabstop=4
 " 連続した空白に対してタブやバックスペースでカーソルが動く幅
 set softtabstop=4
 
-" 
-set ambiwidth=double
-set ambw=double
 
 augroup fileTypeIndent
     autocmd!
@@ -174,6 +171,3 @@ let g:node_host_pro= '/home/linuxbrew/.linuxbrew/bin/node'
 
 
 inoremap <C-[> <C-[>:w<CR>
-
-
-set signcolumn=yes:2
