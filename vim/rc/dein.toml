@@ -722,11 +722,11 @@ on_source = [
     'nvim-lspconfig',
 ]
 hook_add = '''
-echom "null-ls"
-pwd
-echom $VIRTUAL_ENV
-echo system('which python3')
-echo g:python3_host_prog
+" echom "null-ls"
+" pwd
+" echom $VIRTUAL_ENV
+" echo system('which python3')
+" echo g:python3_host_prog
 lua << EOF
    require('config.null-ls')
 EOF

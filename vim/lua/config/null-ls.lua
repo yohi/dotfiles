@@ -65,8 +65,8 @@ local sources = {
     ),
 }
 
-print('sources')
-print(dump(sources))
+-- print('sources')
+-- print(dump(sources))
 -- print('========================')
 -- for k, v in pairs(sources) do
 --     print(k, v)

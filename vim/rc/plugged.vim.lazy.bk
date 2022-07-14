@@ -616,16 +616,16 @@ nnoremap <C-p> :FzfPreviewProjectFile<CR>
 
 
 lua <<EOF
-    require("null-ls").setup({
-        sources = {
-            debug = true,
-            -- require("null-ls").builtins.formatting.djlint,
-            -- require("null-ls").builtins.diagnostics.djlint,
-            -- require("null-ls").builtins.diagnostics.cspell,
-            -- require("null-ls").builtins.diagnostics.mypy,
-            -- require("null-ls").builtins.diagnostics.flake8,
-        },
-    })
+    -- require("null-ls").setup({
+    --     sources = {
+    --         -- debug = true,
+    --         -- require("null-ls").builtins.formatting.djlint,
+    --         -- require("null-ls").builtins.diagnostics.djlint,
+    --         -- require("null-ls").builtins.diagnostics.cspell,
+    --         -- require("null-ls").builtins.diagnostics.mypy,
+    --         -- require("null-ls").builtins.diagnostics.flake8,
+    --     },
+    -- })
 
 
 

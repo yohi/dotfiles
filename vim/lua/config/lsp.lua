@@ -155,7 +155,7 @@ lsp_installer.on_server_ready(function(server)
         lsp_highlight_document(client)
         lsp_keymaps(bufnr)
 
-        print(server.name)
+        -- print(server.name)
         if server.name == 'sumneko_lua' then
             print('hello world')
         elseif server.name == 'tsserver' or server.name == 'eslint' then
