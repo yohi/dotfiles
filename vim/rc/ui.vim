@@ -57,4 +57,4 @@ set wildmode=longest:full,list
 set imdisable
 
 " 
-set signcolumn=yes
+set signcolumn=yes:2

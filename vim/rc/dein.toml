@@ -19,13 +19,6 @@ hook_source = '''
     autocmd VimEnter * ++nested colorscheme codedark
 '''
 
-# [[plugins]]
-# repo = 'kyazdani42/nvim-web-devicons'
-# 
-# [[plugins]]
-# repo = 'folke/trouble.nvim'
-# on_source = 'kyazdani42/nvim-web-devicons'
-
 # 全角スペースをホワイトに表示
 # [[plugins]]
 # repo = 'thinca/vim-zenspace'
@@ -43,13 +36,22 @@ repo = 'vim-airline/vim-airline'
 hook_add = '''
     let g:airline_powerline_fonts = 1
 
+    if !exists('g:airline_symbols')
+      let g:airline_symbols = {}
+    endif
+
+    let g:airline_symbols.colnr = '  :'
+    let g:airline_symbols.readonly = ' '
+    let g:airline_symbols.linenr = '  :'
+
     let g:airline#extensions#tabline#enabled = 1
-    let g:airline#extensions#tabline#fnamemod = ':t'
-    let g:airline#extensions#tabline#buffer_nr_show = 1
+    let g:airline#extensions#tabline#formatter = 'unique_tail'
+    " let g:airline#extensions#tabline#fnamemod = ':t'
+    " let g:airline#extensions#tabline#buffer_nr_show = 1
 
     let g:airline#extensions#nvimlsp#enabled = 1
-    let g:airline#extensions#nvimlsp#error_symbol = ''
-    let g:airline#extensions#nvimlsp#warning_symbol = ''
+    let g:airline#extensions#nvimlsp#error_symbol = ' '
+    let g:airline#extensions#nvimlsp#warning_symbol = ' '
 
 
     let g:airline#extensions#virtualenv#enabled = 1
@@ -72,10 +74,17 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 hook_add = '''
-    " let g:airline_powerline_fonts = 1
     " let g:airline_theme='oceanicnext'
+    " let g:airline_theme='wombat'
     let g:airline_theme='deus'
 '''
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+
+[[plugins]]
+repo = 'folke/trouble.nvim'
+on_source = 'kyazdani42/nvim-web-devicons'
 
 # インデント
 [[plugins]]
@@ -95,7 +104,10 @@ repo = 'airblade/vim-gitgutter'
 hook_add = '''
     set updatetime=100
     let g:gitgutter_async = 1
-    let g:gitgutter_sign_modified = 'rw'
+    " let g:gitgutter_sign_modified = 'rw'
+    let g:gitgutter_sign_added = '✚'
+    let g:gitgutter_sign_modified = '➡'
+    let g:gitgutter_sign_removed = '✖'
     highlight GitGutterAdd ctermfg=green
     highlight GitGutterChange ctermfg=yellow
     highlight GitGutterDelete ctermfg=red
