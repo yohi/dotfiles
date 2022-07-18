@@ -5,3 +5,4 @@ isort
 pylsp-mypy
 pyls-isort
 djlint
+djhtml
