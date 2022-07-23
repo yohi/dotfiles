@@ -34,15 +34,15 @@ local config = {
     float = {
         focusable = false,
         style = "minimal",
-        -- border = "rounded",
-        -- border = "none",
-        -- border = "single",
-        -- border = "dobule",
-        -- border = "solid",
-        border = "shadow",
         source = "always",
         header = "",
         prefix = "",
+        border = "rounded",
+        -- border = "double",
+        -- border = "shadow",
+        -- border = "solid",
+        -- border = "none",
+        -- border = "single",
     },
 }
 vim.diagnostic.config(config)
@@ -224,17 +224,23 @@ lspconfig.pyright.setup {
     settings = {
         python = {
             analysis = {
+                -- disableLanguageService = false,
+                -- disableOrganizeImports = false,
+                -- openFilesOnly = false,
+                -- useLibraryCodeForType = false
                 autoImportCompletions = true,
                 autoSearchPaths = true,
                 diagnosticMode = "workspace",
-                diagnosticSeverityOverrides = "none",
+                diagnosticSeverityOverrides = "warning",
                 -- extraPaths = '',
                 logLevel = 'Information',
                 -- stubPath = '',
-                typeCheckingMode = 'off',
+                typeCheckingMode = 'strict',
                 -- typeshedPaths = '',
                 useLibraryCodeForType = true,
-            }
+            },
+            -- pythonPath = ''
+            -- venvPath = ''
         },
     },
 }

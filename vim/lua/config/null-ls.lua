@@ -31,6 +31,9 @@ local sources = {
     null_ls.builtins.diagnostics.cspell.with({
         --extra_args = { "--config", "./.flake8" },
         prefer_local = root_dir .. ".venv/bin",
+        diagnostics_postprocess = function(diagnostic)
+            diagnostic.severity =  vim.diagnostic.severity["INFO"]
+        end,
         -- extra_args = function(params)
         --     return  {
         --         '--config',
