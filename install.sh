@@ -29,7 +29,7 @@ $(ln -nfs ~/dotfiles/vim ~/.config/nvim)
 $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
 
 # ZSH
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
+bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 $(ln -nfs ~/dotfiles/zsh/rc/zshrc ~/.zshrc)
 sudo sh -c "echo $(which zsh) >> /etc/shells"
 chsh -s $(which zsh)
@@ -49,9 +49,9 @@ sudo refind-mkdefault
 
 # ROOTLESS DOCKER
 curl -fsSL https://get.docker.com/rootless | sh
-export PATH=/home/testuser/bin:$PATH
-export PATH=$PATH:/sbin
-export DOCKER_HOST=unix:///run/user/1001/docker.sock
+export PATH=/home/${USER}/bin:${PATH}
+export PATH=${PATH}:/sbin
+export DOCKER_HOST=unix:///run/user/1000/docker.sock
 cat <<EOF | sudo sh -x
 apt-get install -y uidmap
 EOF
@@ -60,7 +60,7 @@ sudo loginctl enable-linger ${USER}
 
 # git config
 git config --global user.name 'Yusuke Ohi'
-git config --global user.email 'yohi@diamondhead.tech'
+git config --global user.email "${EMAIL:-yohi@diamondhead.tech}"
 
 # gnome shell
 sudo apt install -y chrome-gnome-shell
