@@ -31,6 +31,7 @@ $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
 # ZSH
 bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
 $(ln -nfs ~/dotfiles/zsh/rc/zshrc ~/.zshrc)
+$(ln -nfs ~/dotfiles/zsh/p10.zsh ~/.p10k.zsh)
 sudo sh -c "echo $(which zsh) >> /etc/shells"
 chsh -s $(which zsh)
 
