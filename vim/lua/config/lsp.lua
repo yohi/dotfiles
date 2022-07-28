@@ -87,7 +87,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 })
 
 -- nvim-lsp-installer --
-local lsp_installer = require("nvim-lsp-installer")
+-- local lsp_installer = require("nvim-lsp-installer")
 
 -- local function _lsp_keymaps(bufnr)
 --     local bufopts = {
@@ -141,45 +141,51 @@ end
 -- installしているserverの起動準備をします。
 -- `server` に格納しているのはServer classで、
 -- server nameやsetup functionを含んでいます。
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    local lspconfig = require('lspconfig')
+local mason = require('mason')
+mason.setup({})
 
-    -- serverに対応しているfiletypeのbufferを開いたら、
-    -- 実行するfunctionを設定します。
-    -- sumneko_luaはluaのLSP serverなので、
-    -- luaのbufferを開いたら、実行するfunctionです。
-    opts.on_attach = function(client, bufnr)
-        -- print(vim.inspect(client))
-        -- print(bufnr)
-        lsp_highlight_document(client)
-        lsp_keymaps(bufnr)
+local mason_lspconfig = require('mason-lspconfig')
+mason_lspconfig.setup_handlers(
+    {
+        function(server)
+            local opts = {}
+            local lspconfig = require('lspconfig')
 
-        -- print(server.name)
-        if server.name == 'sumneko_lua' then
-            print('hello world')
-        elseif server.name == 'tsserver' or server.name == 'eslint' then
-            opts.root_dir = lspconfig.util.root_pattern("package.json")
-        elseif server.name == 'denols' then
-            opts.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "deps.ts")
-            opts.init_options = { lint = true, unstable = true, }
-        elseif server.name == 'pyright' then
-            print('hello pyright')
-            opts.root_dir = lspconfig.util.root_pattern(".venv")
+            -- serverに対応しているfiletypeのbufferを開いたら、
+
+            -- 実行するfunctionを設定します。
+            -- sumneko_luaはluaのLSP serverなので、
+            -- luaのbufferを開いたら、実行するfunctionです。
+            opts.on_attach = function(client, bufnr)
+                -- print(vim.inspect(client))
+                -- print(bufnr)
+                lsp_highlight_document(client)
+                lsp_keymaps(bufnr)
+
+                -- print(server.name)
+                if server.name == 'sumneko_lua' then
+                    print('hello world')
+                elseif server.name == 'tsserver' or server.name == 'eslint' then
+                    opts.root_dir = lspconfig.util.root_pattern("package.json")
+                elseif server.name == 'denols' then
+                    opts.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "deps.ts")
+                    opts.init_options = { lint = true, unstable = true, }
+                elseif server.name == 'pyright' then
+                    print('hello pyright')
+                    opts.root_dir = lspconfig.util.root_pattern(".venv")
+                end
+            end
+
+            -- LSPのsetupをします。
+            -- setupをしないとserverは動作しません。
+            lspconfig[server].setup(opts)
+
+            -- vim.diagnostic.open_float()
+
+            vim.cmd [[ do User LspAttachBuffers ]]
         end
-
-
-    end
-
-    -- LSPのsetupをします。
-    -- setupをしないとserverは動作しません。
-    server:setup(opts)
-
-    -- vim.diagnostic.open_float()
-
-    vim.cmd [[ do User LspAttachBuffers ]]
-
-end)
+    }
+)
 
 
 

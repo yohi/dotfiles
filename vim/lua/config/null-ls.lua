@@ -11,6 +11,30 @@ local function dump(o)
    end
 end
 
+-- cspell --
+local cspell_config_dir = '~/.config/cspell'
+local cspell_data_dir = '~/.local/share/cspell'
+
+local cspell_files = {
+    config = vim.call('expand', cspell_config_dir .. '/cspell.json'),
+    dotfiles = vim.call('expand', cspell_config_dir .. '/dotfiles.txt'),
+    vim = vim.call('expand', cspell_data_dir .. '/vim.txt.gz'),
+    user = vim.call('expand', cspell_data_dir .. '/user.txt'),
+}
+
+-- vim辞書がなければダウンロード
+if vim.fn.filereadable(cspell_files.vim) ~= 1 then
+  local vim_dictionary_url = 'https://github.com/iamcco/coc-spell-checker/raw/master/dicts/vim/vim.txt.gz'
+  io.popen('curl -fsSLo ' .. cspell_files.vim .. ' --create-dirs ' .. vim_dictionary_url)
+end
+
+-- ユーザー辞書がなければ作成
+if vim.fn.filereadable(cspell_files.user) ~= 1 then
+  io.popen('mkdir -p ' .. cspell_data_dir)
+  io.popen('touch ' .. cspell_files.user)
+end
+
+
 -- null-ls --
 local null_ls = require("null-ls")
 local null_ls_utils = require("null-ls.utils")
@@ -34,13 +58,16 @@ local sources = {
         diagnostics_postprocess = function(diagnostic)
             diagnostic.severity =  vim.diagnostic.severity["INFO"]
         end,
+        extra_args = {
+            '--config',
+            cspell_files.config,
+        }
         -- extra_args = function(params)
         --     return  {
         --         '--config',
         --         params.root .. '/.cspell'
         --     }
         -- end,
-
     }),
     null_ls.builtins.diagnostics.mypy.with({
         --extra_args = { "--config", "./.flake8" },
