@@ -97,6 +97,35 @@ mason.setup({
 })
 
 local mason_lspconfig = require('mason-lspconfig')
+
+mason_lspconfig.setup({
+    ensure_installed = {
+        'bash-language-server',
+        'cspell',
+        'djlint',
+        'dockerfile-language-server',
+        'dot-language-server',
+        'flake8',
+        'html-lsp',
+        'isort',
+        'json-lsp',
+        'json-to-struct',
+        'lua-language-server',
+        'luacheck',
+        'luaformatter',
+        'markdownlint',
+        'mypy',
+        'pyright',
+        'shellcheck',
+        'sql-formatter',
+        'sqlls',
+        'vim-language-server',
+        'yaml-language-server',
+        'yamllint',
+    },
+    automatic_installation = true,
+})
+
 local lspconfig = require('lspconfig')
 mason_lspconfig.setup_handlers({
     function(server_name)
@@ -159,6 +188,8 @@ mason_lspconfig.setup_handlers({
     end
 })
 
+print(lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'))
+
 lspconfig.pyright.setup {
     settings = {
         python = {
@@ -178,8 +209,10 @@ lspconfig.pyright.setup {
                 -- typeshedPaths = '',
                 useLibraryCodeForType = true,
             },
-            -- pythonPath = ''
-            -- venvPath = ''
+            pythonPath = vim.env.PYTHONPATH,
         },
     },
+    before_init = function(_, config)
+        config.settings.python.pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+    end
 }
