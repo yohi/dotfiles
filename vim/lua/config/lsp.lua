@@ -47,7 +47,6 @@ local config = {
 }
 vim.diagnostic.config(config)
 
-
 local function on_cursor_hold()
     if vim.lsp.buf.server_ready() then
         vim.diagnostic.open_float()
@@ -86,145 +85,79 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
     border = "rounded",
 })
 
--- nvim-lsp-installer --
--- local lsp_installer = require("nvim-lsp-installer")
-
--- local function _lsp_keymaps(bufnr)
---     local bufopts = {
---         noremap = true,
---         silent = true,
---     }
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', bufopts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", bufopts)
---     vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
--- end
-
-local function lsp_highlight_document(client)
-    -- illuminate.on_attach(client)
-end
-
-local function lsp_keymaps(bufnr)
-    -- Mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local bufopts = { noremap=true, silent=true, buffer=bufnr }
-    -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-    vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
-    -- vim.keymap.set('n', '<Leader>lk', vim.lsp.buf.hover, bufopts)
-    -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-    -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-    -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-    -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-    -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-
-    -- vim.keymap.set('n', '<space>wl', function()
-    --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    -- end, bufopts)
-
-    -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-    -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-    -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-    -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-    -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-end
-
-
--- installしているserverの起動準備をします。
--- `server` に格納しているのはServer classで、
--- server nameやsetup functionを含んでいます。
 local mason = require('mason')
-mason.setup({})
+mason.setup({
+    ui = {
+        icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗"
+        }
+    }
+})
 
 local mason_lspconfig = require('mason-lspconfig')
-mason_lspconfig.setup_handlers(
-    {
-        function(server)
-            local opts = {}
-            local lspconfig = require('lspconfig')
-
-            -- serverに対応しているfiletypeのbufferを開いたら、
-
-            -- 実行するfunctionを設定します。
-            -- sumneko_luaはluaのLSP serverなので、
-            -- luaのbufferを開いたら、実行するfunctionです。
-            opts.on_attach = function(client, bufnr)
-                -- print(vim.inspect(client))
-                -- print(bufnr)
-                lsp_highlight_document(client)
-                lsp_keymaps(bufnr)
-
-                -- print(server.name)
-                if server.name == 'sumneko_lua' then
-                    print('hello world')
-                elseif server.name == 'tsserver' or server.name == 'eslint' then
-                    opts.root_dir = lspconfig.util.root_pattern("package.json")
-                elseif server.name == 'denols' then
-                    opts.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "deps.ts")
-                    opts.init_options = { lint = true, unstable = true, }
-                elseif server.name == 'pyright' then
-                    print('hello pyright')
-                    opts.root_dir = lspconfig.util.root_pattern(".venv")
-                end
-            end
-
-            -- LSPのsetupをします。
-            -- setupをしないとserverは動作しません。
-            lspconfig[server].setup(opts)
-
-            -- vim.diagnostic.open_float()
-
-            vim.cmd [[ do User LspAttachBuffers ]]
-        end
-    }
-)
-
-
-
-
-
-
--- local function lsp_keymaps(bufnr)
---     local opts = {
---         noremap = true,
---         silent = true
---     }
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-k>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
---     -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
---     -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
---     -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
---     vim.api.nvim_buf_set_keymap(
---         bufnr,
---         "n",
---         "gl",
---         '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>',
---         opts
---     )
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
---     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
---     vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
--- end
-
-
-
-
--- lspconfig --
-
 local lspconfig = require('lspconfig')
+mason_lspconfig.setup_handlers({
+    function(server_name)
+        local opts = {}
+
+        ---@diagnostic disable: undefined-global
+        if lsp_capabilities ~= nil then
+            opts.capabilities = lsp_capabilities
+        end
+        ---@diagnostic enable: undefined-global
+
+        -- serverに対応しているfiletypeのbufferを開いたら、
+        if server_name == 'sumneko_lua' then
+            print('hello world')
+        elseif server_name == 'tsserver' or server_name == 'eslint' then
+            opts.root_dir = lspconfig.util.root_pattern("package.json")
+        elseif server_name == 'denols' then
+            opts.root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "deps.ts")
+            opts.init_options = { lint = true, unstable = true, }
+        elseif server_name == 'pyright' then
+            print('hello pyright')
+            opts.root_dir = lspconfig.util.root_pattern(".venv")
+        end
+
+        -- 実行するfunctionを設定します。
+        -- sumneko_luaはluaのLSP serverなので、
+        -- luaのbufferを開いたら、実行するfunctionです。
+        opts.on_attach = function(client, bufnr)
+            print('hello setup')
+            -- Key Mappings.
+            -- See `:help vim.lsp.*` for documentation on any of the below functions
+            local bufopts = { noremap=true, silent=true, buffer=bufnr }
+            -- vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+            vim.keymap.set('n', '<F12>', vim.lsp.buf.definition, bufopts)
+            -- vim.keymap.set('n', '<Leader>lk', vim.lsp.buf.hover, bufopts)
+            -- vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+            -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+            -- vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+            -- vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+            -- vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+
+            -- vim.keymap.set('n', '<space>wl', function()
+            --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+            -- end, bufopts)
+
+            -- vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+            -- vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+            -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+            -- vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+            -- vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+        end
+
+        -- LSPのsetupをします。
+        -- setupをしないとserverは動作しません。
+        lspconfig[server_name].setup(opts)
+
+        -- vim.diagnostic.open_float()
+
+        -- vim.cmd [[ do User LspAttachBuffers ]]
+    end
+})
 
 lspconfig.pyright.setup {
     settings = {
