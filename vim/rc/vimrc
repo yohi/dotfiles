@@ -29,7 +29,7 @@ if strlen(g:virtual_env) == 0
             " echom 'create venv...'
             call system('python3 -m venv ' . s:python3_dir)
         endif
-        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install pynvim neovim')
         let g:python3_host_prog = s:python3_dir . '/bin/python'
         let $PATH = s:python3_dir . '/bin:' . $PATH
         let $VIRTUAL_ENV = s:python3_dir
@@ -38,9 +38,9 @@ else
     " echom '$VIRTUAL_ENV defined'
     " echom 'install pip...'
     " echom 'source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
-    call jobstart('source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt')
-    let g:python3_host_prog = g:virtual_env . '/bin/python'
-    let $PATH = g:virtual_env . '/bin:' . $PATH
+    call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim neovim')
+    let g:python3_host_prog = s:virtual_env . '/bin/python'
+    let $PATH = s:virtual_env . '/bin:' . $PATH
 endif
 
 let g:pythonpath = $PYTHONPATH

@@ -171,7 +171,7 @@ hook_add = '''
 [[plugins]]
 repo = 'airblade/vim-rooter'
 hook_add = '''
-let g:rooter_patterns = ['.git', 'Makefile', '*.sln', 'build/env.sh', '.venv']
+let g:rooter_patterns = ['.venv/', '.git/', 'Makefile', '*.sln', 'build/env.sh']
 '''
 
 # LINT
@@ -726,6 +726,16 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'williamboman/nvim-lsp-installer'
 on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+on_source = 'mason.nvim'
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
+on_source = 'nvim-lspconfig'
+
+
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
