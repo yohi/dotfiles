@@ -723,12 +723,8 @@ on_source = 'ddc.vim'
 repo = 'Shougo/ddc-cmdline'
 on_source = 'ddc.vim'
 
-# [[plugins]]
-# repo = 'williamboman/nvim-lsp-installer'
-# on_source = 'nvim-lspconfig'
-
 [[plugins]]
-repo = 'williamboman/mason.nvim'
+repo = 'williamboman/nvim-lsp-installer'
 on_source = 'nvim-lspconfig'
 
 [[plugins]]

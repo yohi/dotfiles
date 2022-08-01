@@ -1,0 +1,8 @@
+neovim
+pynvim
+flake8
+isort
+pylsp-mypy
+pyls-isort
+djlint
+djhtml
