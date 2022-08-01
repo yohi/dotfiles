@@ -262,12 +262,9 @@ mason_lspconfig.setup_handlers({
         -- LSPのsetupをします。
         -- setupをしないとserverは動作しません。
         lspconfig[server_name].setup(opts)
+    end
+})
 
-    -- LSPのsetupをします。
-    -- setupをしないとserverは動作しません。
-    server:setup(opts)
-
-    -- vim.diagnostic.open_float()
 
 local handle_lsp = function(opts)
     return opts
