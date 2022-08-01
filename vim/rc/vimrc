@@ -7,6 +7,44 @@ set iminsert=0 imsearch=0
 "let $VIMRUNTIME="/usr/share/nvim/runtime"
 "set runtimepath+=/usr/share/nvim/runtime
 "set runtimepath+=${HOME}/.vim/rc/
+let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
+echom 'docker volume create ' . s:volume_name
+call system('docker volume ' . s:volume_name)
+call system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages  app')
+let s:compose_ps = json_decode(system('docker compose ps app --format json'))
+
+echom s:compose_ps
+" echom system('docker inspect $(docker compose ps -q app) | jq')
+echom system(printf("%s | jq '.[].Mounts'", s:compose_ps))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 let s:venv_dir = getcwd() . '/.venv'
 " echom s:venv_dir
