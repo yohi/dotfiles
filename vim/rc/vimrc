@@ -19,8 +19,8 @@ endif
 "     call system('source ' . venv_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
 " endfunction
 
-let g:virtual_env = $VIRTUAL_ENV
-if strlen(g:virtual_env) == 0
+let s:virtual_env = $VIRTUAL_ENV
+if strlen(s:virtual_env) == 0
     " echom '$VIRTUAL_ENV not defined'
     let s:python3 = system('which python3')
     if strlen(s:python3) != 0
@@ -43,8 +43,8 @@ else
     let $PATH = s:virtual_env . '/bin:' . $PATH
 endif
 
-let g:pythonpath = $PYTHONPATH
-if strlen(g:pythonpath) == 0
+let s:pythonpath = $PYTHONPATH
+if strlen(s:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
 
