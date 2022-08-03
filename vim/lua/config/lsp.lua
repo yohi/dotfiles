@@ -196,7 +196,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.s
 })
 
 -- nvim-lsp-installer --
-local lsp_installer = require("nvim-lsp-installer")
+-- local lsp_installer = require("nvim-lsp-installer")
 
 -- local function _lsp_keymaps(bufnr)
 --     local bufopts = {
@@ -222,6 +222,67 @@ local function lsp_highlight_document(client)
     -- illuminate.on_attach(client)
 end
 
+local mason = require('mason')
+local mason_lspconfig = require('mason-lspconfig')
+local lspconfig = require('lspconfig')
+
+
+-- 1. LSP Sever management
+mason.setup()
+
+mason_lspconfig.setup({
+    ensure_installed = {
+        'bash-language-server',
+        'cspell',
+        'djlint',
+        'dockerfile-language-server',
+        'dot-language-server',
+        'flake8',
+        'html-lsp',
+        'isort',
+        'json-lsp',
+        'json-to-struct',
+        'lua-language-server',
+        'markdownlint',
+        'mypy',
+        'pyright',
+        'shellcheck',
+        'sql-formatter',
+        'sqlls',
+        'vim-language-server',
+        'yaml-language-server',
+        'yamllint',
+    },
+    automatic_installation = true,
+})
+
+mason_lspconfig.setup_handlers({ function(server)
+  local opt = {
+    -- -- Function executed when the LSP server startup
+    -- on_attach = function(client, bufnr)
+    --   local opts = { noremap=true, silent=true }
+    --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+    --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
+    -- end,
+  }
+  local opts = {}
+
+  ---@diagnostic disable: undefined-global
+  if lsp_capabilities ~= nil then
+      opts.capabilities = lsp_capabilities
+  end
+  ---@diagnostic enable: undefined-global
+
+  -- serverに対応しているfiletypeのbufferを開いたら、
+  if server_name == 'sumneko_lua' then
+    print('hello world')
+  elseif server_name == 'pyright' then
+    print('hello pyright')
+    opts.root_dir = lspconfig.util.root_pattern(".venv")
+  end
+
+  lspconfig[server].setup(opt)
+end })
 
 
 -- 2. build-in LSP function
@@ -267,94 +328,14 @@ vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 -- capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 -- local opts = { capabilities = capabilities, on_attach = on_attach }
 
-local lspconfig = require("lspconfig")
-local mason_lspconfig = require('mason-lspconfig')
-
-require("mason-lspconfig").setup_handlers({
-    function(server_name)
-
-        -- Mappings.
-        -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-        local opts = {
-            noremap = true,
-            silent = true,
-        }
-       -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-       -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-       -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-       -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
-       -- -- Use an on_attach function to only map the following keys
-       -- -- after the language server attaches to the current buffer
-       -- opts.on_attach = function(client, bufnr)
-       --     -- Enable completion triggered by <c-x><c-o>
-       --     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-       --     -- Mappings.
-       --     -- See `:help vim.lsp.*` for documentation on any of the below functions
-       --     local bufopts = {
-       --         noremap=true,
-       --         silent=true,
-       --         buffer=bufnr,
-       --     }
-       --     vim.keymap.set('n', '<F12>', vim.lsp.buf.declaration, bufopts)
-       --     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-       --     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-       --     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-       --     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-       --     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-       --     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-       --     vim.keymap.set('n', '<space>wl', function()
-       --       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-       --     end, bufopts)
-       --     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-       --     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-       --     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-       --     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-       --     vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-       --     require("nvim-navic").attach(client, bufnr)
-       -- end
 
 
--- installしているserverの起動準備をします。
--- `server` に格納しているのはServer classで、
--- server nameやsetup functionを含んでいます。
-lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    local lspconfig = require('lspconfig')
-
-    -- serverに対応しているfiletypeのbufferを開いたら、
-    -- 実行するfunctionを設定します。
-    -- sumneko_luaはluaのLSP serverなので、
-    -- luaのbufferを開いたら、実行するfunctionです。
-    opts.on_attach = function(client, bufnr)
-        -- print(vim.inspect(client))
-        -- print(bufnr)
-        lsp_highlight_document(client)
-        lsp_keymaps(bufnr)
-
-        -- print(server.name)
-        if server.name == 'sumneko_lua' then
-            print('hello world')
-        elseif server_name == 'pyright' then
-            print('hello pyright')
-            opts.root_dir = lspconfig.util.root_pattern(".venv")
-        end
-
-        -- LSPのsetupをします。
-        -- setupをしないとserverは動作しません。
-        lspconfig[server_name].setup(opts)
-
-    -- LSPのsetupをします。
-    -- setupをしないとserverは動作しません。
-    server:setup(opts)
-
-    -- vim.diagnostic.open_float()
 
 local handle_lsp = function(opts)
     return opts
 end
 
-lspconfig.pyright.setup(handle_lsp {
+lspconfig.pyright.setup(handle_lsp{
     root_dir = lspconfig.util.root_pattern('.venv'),
     settings = {
         python = {
@@ -376,10 +357,220 @@ lspconfig.pyright.setup(handle_lsp {
             },
             pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
             venvPath = '.',
-            venv='.venv'
-        },
-    },
-    -- before_init = function(_, config)
-    --     config.settings.python.venvPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
-    -- end
+            venv='.venv',
+        }
+    }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------- local lspconfig = require("lspconfig")
+---------- local mason = require('mason')
+---------- local mason_lspconfig = require('mason-lspconfig')
+---------- 
+---------- mason.setup()
+---------- mason_lspconfig.setup({
+----------     ensure_installed = {
+----------         'bash-language-server',
+----------         'cspell',
+----------         'djlint',
+----------         'dockerfile-language-server',
+----------         'dot-language-server',
+----------         'flake8',
+----------         'html-lsp',
+----------         'isort',
+----------         'json-lsp',
+----------         'json-to-struct',
+----------         'lua-language-server',
+----------         'markdownlint',
+----------         'mypy',
+----------         'pyright',
+----------         'shellcheck',
+----------         'sql-formatter',
+----------         'sqlls',
+----------         'vim-language-server',
+----------         'yaml-language-server',
+----------         'yamllint',
+----------     },
+----------     automatic_installation = true,
+---------- })
+---------- 
+---------- mason_lspconfig.setup_handlers({
+----------     function(server_name)
+---------- 
+----------         -- Mappings.
+----------         -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+----------         local opts = {
+----------             noremap = true,
+----------             silent = true,
+----------         }
+----------        -- vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+----------        -- vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+----------        -- vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+----------        -- vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+---------- 
+----------        -- -- Use an on_attach function to only map the following keys
+----------        -- -- after the language server attaches to the current buffer
+----------        -- opts.on_attach = function(client, bufnr)
+----------        --     -- Enable completion triggered by <c-x><c-o>
+----------        --     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+----------        --     -- Mappings.
+----------        --     -- See `:help vim.lsp.*` for documentation on any of the below functions
+----------        --     local bufopts = {
+----------        --         noremap=true,
+----------        --         silent=true,
+----------        --         buffer=bufnr,
+----------        --     }
+----------        --     vim.keymap.set('n', '<F12>', vim.lsp.buf.declaration, bufopts)
+----------        --     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+----------        --     vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+----------        --     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+----------        --     vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+----------        --     vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+----------        --     vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+----------        --     vim.keymap.set('n', '<space>wl', function()
+----------        --       print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+----------        --     end, bufopts)
+----------        --     vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+----------        --     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
+----------        --     vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+----------        --     vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+----------        --     vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
+----------        --     require("nvim-navic").attach(client, bufnr)
+----------        -- end
+----------        lspconfig[server_name].setup(opt)
+----------    end
+---------- })
+---------- 
+---------- 
+---------- -- installしているserverの起動準備をします。
+---------- -- `server` に格納しているのはServer classで、
+---------- -- server nameやsetup functionを含んでいます。
+---------- -- lsp_installer.on_server_ready(function(server)
+---------- --     local opts = {}
+---------- --     local lspconfig = require('lspconfig')
+---------- -- 
+---------- --     -- serverに対応しているfiletypeのbufferを開いたら、
+---------- --     -- 実行するfunctionを設定します。
+---------- --     -- sumneko_luaはluaのLSP serverなので、
+---------- --     -- luaのbufferを開いたら、実行するfunctionです。
+---------- --     opts.on_attach = function(client, bufnr)
+---------- --         -- print(vim.inspect(client))
+---------- --         -- print(bufnr)
+---------- --         lsp_highlight_document(client)
+---------- --         lsp_keymaps(bufnr)
+---------- -- 
+---------- --         -- print(server.name)
+---------- --         if server.name == 'sumneko_lua' then
+---------- --             print('hello world')
+---------- --         elseif server_name == 'pyright' then
+---------- --             print('hello pyright')
+---------- --             opts.root_dir = lspconfig.util.root_pattern(".venv")
+---------- --         end
+---------- -- 
+---------- --         -- LSPのsetupをします。
+---------- --         -- setupをしないとserverは動作しません。
+---------- --         lspconfig[server_name].setup(opts)
+---------- --     end
+---------- -- end)
+---------- 
+---------- local handle_lsp = function(opts)
+----------     return opts
+---------- end
+---------- 
+---------- lspconfig.pyright.setup(handle_lsp(){
+----------     root_dir = lspconfig.util.root_pattern('.venv'),
+----------     settings = {
+----------         python = {
+----------             analysis = {
+----------                 -- disableLanguageService = true,
+----------                 -- disableOrganizeImports = true,
+----------                 -- openFilesOnly = false,
+----------                 -- useLibraryCodeForType = false
+----------                 autoImportCompletions = true,
+----------                 autoSearchPaths = true,
+----------                 diagnosticMode = "workspace",
+----------                 diagnosticSeverityOverrides = "warning",
+----------                 -- extraPaths = '',
+----------                 logLevel = 'Information',
+----------                 -- stubPath = '',
+----------                 typeCheckingMode = 'off',
+----------                 -- typeshedPaths = '',
+----------                 useLibraryCodeForType = true,
+----------             },
+----------             pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
+----------             venvPath = '.',
+----------             venv='.venv',
+----------         }
+----------     }
+---------- })
+---------- -- 
+---------- -- 
+---------- -- lspconfig.pyright.setup {
+---------- --     root_dir = lspconfig.util.root_pattern('.venv'),
+---------- --     settings = {
+---------- --         python = {
+---------- --             analysis = {
+---------- --                 -- disableLanguageService = true,
+---------- --                 -- disableOrganizeImports = true,
+---------- --                 -- openFilesOnly = false,
+---------- --                 -- useLibraryCodeForType = false
+---------- --                 autoImportCompletions = true,
+---------- --                 autoSearchPaths = true,
+---------- --                 diagnosticMode = "workspace",
+---------- --                 diagnosticSeverityOverrides = "warning",
+---------- --                 -- extraPaths = '',
+---------- --                 logLevel = 'Information',
+---------- --                 -- stubPath = '',
+---------- --                 typeCheckingMode = 'off',
+---------- --                 -- typeshedPaths = '',
+---------- --                 useLibraryCodeForType = true,
+---------- --             },
+---------- --             pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
+---------- --             venvPath = '.',
+---------- --             venv='.venv',
+---------- --         }
+---------- --     },
+---------- --     -- before_init = function(_, config)
+---------- --     --     config.settings.python.venvPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+---------- --     -- end
+---------- -- }

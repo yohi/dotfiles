@@ -33,7 +33,6 @@ local sources = {
     null_ls.builtins.diagnostics.mypy.with({
         prefer_local = '.venv/bin',
         --extra_args = { "--config", "./.flake8" },
-        prefer_local = root_dir .. ".venv/bin",
         -- filetypes = { '*' },
         -- extra_args = function(params)
         --     return  {

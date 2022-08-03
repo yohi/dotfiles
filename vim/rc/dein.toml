@@ -723,17 +723,21 @@ on_source = 'ddc.vim'
 repo = 'Shougo/ddc-cmdline'
 on_source = 'ddc.vim'
 
+# [[plugins]]
+# repo = 'williamboman/nvim-lsp-installer'
+# on_source = 'nvim-lspconfig'
+
 [[plugins]]
-repo = 'williamboman/nvim-lsp-installer'
+repo = 'williamboman/mason.nvim'
 on_source = 'nvim-lspconfig'
 
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
 on_source = 'mason.nvim'
 
-[[plugins]]
-repo = 'SmiteshP/nvim-navic'
-on_source = 'nvim-lspconfig'
+# [[plugins]]
+# repo = 'SmiteshP/nvim-navic'
+# on_source = 'nvim-lspconfig'
 
 
 
