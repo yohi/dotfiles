@@ -8,6 +8,40 @@ set iminsert=0 imsearch=0
 "set runtimepath+=/usr/share/nvim/runtime
 "set runtimepath+=${HOME}/.vim/rc/
 
+
+try
+    let s:docker_envs = json_deocde(system('docker compose config --format json | jq ".services.app.environment"'))
+    if type(s:docker_envs) == v:t_dict
+        for k in keys(s:docker_envs)
+            call setenv(k, s:docker_envs[k])
+        endfor
+    endif
+catch
+endtry
+
+" if filereadable(expand('compose.yaml'))
+"     let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
+"     echom 'docker volume create ' . s:volume_name
+"     call system('docker volume ' . s:volume_name)
+"     let s:container_id = system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages app')
+"     " let s:compose_ps = json_decode(system('docker compose ps app --format json'))
+"     " let s:inspect = substitute(system(printf('docker inspect --type="container" %s', s:container_id)), '\n', '', 'g')
+"     let s:inspect = system(printf('docker inspect --type="container" %s', s:container_id))
+"     " echom s:inspect
+"     echom system(json_encode(s:inspect) . " | jq '.[].Mounts[]'")
+"     "echom printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name)
+"     "echom system(printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name))
+"     "let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
+"     " echom system('docker inspect $(docker compose ps -q app) | jq')
+"     " echom system(printf("'%s' | jq '.[].Mounts'", s:compose_ps))
+" endif
+
+
+
+
+
+
+
 let s:venv_dir = getcwd() . '/.venv'
 " echom s:venv_dir
 if isdirectory(s:venv_dir)
@@ -48,25 +82,4 @@ if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
 
-" echom 'vimrc PYTHONPATH'
-" echom $PYTHONPATH
-" 
-" echom 'vimrc virtualenv'
-" echom $VIRTUAL_ENV
-" 
-" echom 'vimrc pwd'
-" pwd
-
-"echom 1
-"pwd
-"lcd ${HOME}/.vim/rc
-"echom 2
-"pwd
 runtime! rc/*.vim
-" runtime! rc/*.vim.lazy
-"echom 3
-"pwd
-"lcd -
-"echom 4
-"pwd
-
