@@ -19,8 +19,8 @@ endif
 "     call system('source ' . venv_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
 " endfunction
 
-let g:virtual_env = $VIRTUAL_ENV
-if strlen(g:virtual_env) == 0
+let s:virtual_env = $VIRTUAL_ENV
+if strlen(s:virtual_env) == 0
     " echom '$VIRTUAL_ENV not defined'
     let s:python3 = system('which python3')
     if strlen(s:python3) != 0
@@ -37,7 +37,7 @@ if strlen(g:virtual_env) == 0
 else
     " echom '$VIRTUAL_ENV defined'
     " echom 'install pip...'
-    " echom 'source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
+    " echom 'source ' . s:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
     call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim neovim')
     let g:python3_host_prog = s:virtual_env . '/bin/python'
     let $PATH = s:virtual_env . '/bin:' . $PATH
