@@ -9,22 +9,22 @@ set iminsert=0 imsearch=0
 "set runtimepath+=${HOME}/.vim/rc/
 
 
-if filereadable(expand('compose.yaml'))
-    let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
-    echom 'docker volume create ' . s:volume_name
-    call system('docker volume ' . s:volume_name)
-    let s:container_id = system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages app')
-    " let s:compose_ps = json_decode(system('docker compose ps app --format json'))
-    " let s:inspect = substitute(system(printf('docker inspect --type="container" %s', s:container_id)), '\n', '', 'g')
-    let s:inspect = system(printf('docker inspect --type="container" %s', s:container_id))
-    " echom s:inspect
-    echom system(json_encode(s:inspect) . " | jq '.[].Mounts[]'")
-    "echom printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name)
-    "echom system(printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name))
-    "let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
-    " echom system('docker inspect $(docker compose ps -q app) | jq')
-    " echom system(printf("'%s' | jq '.[].Mounts'", s:compose_ps))
-endif
+" if filereadable(expand('compose.yaml'))
+"     let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
+"     echom 'docker volume create ' . s:volume_name
+"     call system('docker volume ' . s:volume_name)
+"     let s:container_id = system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages app')
+"     " let s:compose_ps = json_decode(system('docker compose ps app --format json'))
+"     " let s:inspect = substitute(system(printf('docker inspect --type="container" %s', s:container_id)), '\n', '', 'g')
+"     let s:inspect = system(printf('docker inspect --type="container" %s', s:container_id))
+"     " echom s:inspect
+"     echom system(json_encode(s:inspect) . " | jq '.[].Mounts[]'")
+"     "echom printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name)
+"     "echom system(printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name))
+"     "let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
+"     " echom system('docker inspect $(docker compose ps -q app) | jq')
+"     " echom system(printf("'%s' | jq '.[].Mounts'", s:compose_ps))
+" endif
 
 
 
@@ -76,7 +76,7 @@ if strlen(s:virtual_env) == 0
             " echom 'create venv...'
             call system('python3 -m venv ' . s:python3_dir)
         endif
-        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install pynvim')
+        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install pynvim neovim')
         let g:python3_host_prog = s:python3_dir . '/bin/python'
         let $PATH = s:python3_dir . '/bin:' . $PATH
         let $VIRTUAL_ENV = s:python3_dir
@@ -85,7 +85,7 @@ else
     " echom '$VIRTUAL_ENV defined'
     " echom 'install pip...'
     " echom 'source ' . g:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
-    call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim')
+    call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim neovim')
     let g:python3_host_prog = s:virtual_env . '/bin/python'
     let $PATH = s:virtual_env . '/bin:' . $PATH
 endif

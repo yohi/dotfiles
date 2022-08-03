@@ -171,7 +171,7 @@ hook_add = '''
 [[plugins]]
 repo = 'airblade/vim-rooter'
 hook_add = '''
-let g:rooter_patterns = ['.git', 'Makefile', '*.sln', 'build/env.sh', '.venv']
+let g:rooter_patterns = ['.git/', 'Makefile', '*.sln', 'build/env.sh', '.venv/']
 '''
 
 # LINT
@@ -1166,7 +1166,7 @@ hook_add = '''
 lua <<EOF
   require'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
-    ensure_installed = { "c", "lua", "rust","typescript","vim","json","javascript", "python" },
+    ensure_installed = { "c", "lua", "rust","typescript","vim","json","javascript", "python", "jsonc" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -1237,6 +1237,17 @@ lua << EOF
       -- termcolors = {} -- table of colour name strings
     }
     }
+EOF
+'''
+
+[[plugins]]
+repo = 'jamestthompson3/nvim-remote-containers'
+
+[[plugins]]
+repo = 'esensar/nvim-dev-container'
+hook_add = '''
+lua << EOF
+    require("devcontainer").setup{}
 EOF
 '''
 
@@ -1737,4 +1748,7 @@ repo = 'markonm/traces.vim'
 ## 
 ## " ddu ======================
 ## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
+
+
+
 
