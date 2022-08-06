@@ -12,8 +12,8 @@ sudo update-locale LANG=ja_JP.UTF8
 # HOMEBREW
 sudo apt -y install build-essential curl file git
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/y_ohi/.profile
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/y_ohi/.profile
+# eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle
 
 

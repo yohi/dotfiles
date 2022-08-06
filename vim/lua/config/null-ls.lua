@@ -52,17 +52,17 @@ local sources = {
             --     }
             -- end,
     }),
-    null_ls.builtins.formatting.djhtml.with({
-        prefer_local = '.venv/bin',
-            -- extra_args = { "--config", "./.flake8" },
-            -- prefer_local = root_dir .. ".venv/bin",
-            -- extra_args = function(params)
-            --     return  {
-            --         '--config',
-            --         params.root .. '/.flake8'
-            --     }
-            -- end,
-    }),
+    -- null_ls.builtins.formatting.djhtml.with({
+    --     prefer_local = '.venv/bin',
+    --         -- extra_args = { "--config", "./.flake8" },
+    --         -- prefer_local = root_dir .. ".venv/bin",
+    --         -- extra_args = function(params)
+    --         --     return  {
+    --         --         '--config',
+    --         --         params.root .. '/.flake8'
+    --         --     }
+    --         -- end,
+    -- }),
     null_ls.builtins.diagnostics.djlint.with({
         prefer_local = '.venv/bin',
         --extra_args = { "--config", "./.flake8" },

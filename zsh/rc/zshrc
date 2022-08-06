@@ -269,20 +269,20 @@ eval "$(direnv hook zsh)"
 # export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/lib/pkgconfig"
 alias pip='pip3'
 alias python='python3'
-export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/bin:$PATH"
+# export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/bin:$PATH"
 
 
-function nvimvenv {
-  if [[ -e "$VIRTUAL_ENV" && -f "$VIRTUAL_ENV/bin/activate" ]]; then
-    source "$VIRTUAL_ENV/bin/activate"
-    command nvim $@
-    deactivate
-  else
-    command nvim $@
-  fi
-}
-
-alias nvim=nvimvenv
+# function nvimvenv {
+#   if [[ -e "$VIRTUAL_ENV" && -f "$VIRTUAL_ENV/bin/activate" ]]; then
+#     source "$VIRTUAL_ENV/bin/activate"
+#     command nvim $@
+#     deactivate
+#   else
+#     command nvim $@
+#   fi
+# }
+# 
+# alias nvim=nvimvenv
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

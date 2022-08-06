@@ -11,13 +11,9 @@ set iminsert=0 imsearch=0
 
 try
     let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
-    echom s:docker_env_json
     let s:docker_env_dict = json_decode(s:docker_env_json)
-    echom s:docker_env_dict
-    echom type(s:docker_env_dict) == v:t_dict
     if type(s:docker_env_dict) == v:t_dict
         for k in keys(s:docker_env_dict)
-            echom k . ': ' . s:docker_env_dict[k]
             call setenv(k, s:docker_env_dict[k])
         endfor
     endif
@@ -25,67 +21,117 @@ catch
     echom 'does not docker environment'
 endtry
 
-" if filereadable(expand('compose.yaml'))
-"     let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
-"     echom 'docker volume create ' . s:volume_name
-"     call system('docker volume ' . s:volume_name)
-"     let s:container_id = system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages app')
-"     " let s:compose_ps = json_decode(system('docker compose ps app --format json'))
-"     " let s:inspect = substitute(system(printf('docker inspect --type="container" %s', s:container_id)), '\n', '', 'g')
-"     let s:inspect = system(printf('docker inspect --type="container" %s', s:container_id))
-"     " echom s:inspect
-"     echom system(json_encode(s:inspect) . " | jq '.[].Mounts[]'")
-"     "echom printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name)
-"     "echom system(printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name))
-"     "let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
-"     " echom system('docker inspect $(docker compose ps -q app) | jq')
-"     " echom system(printf("'%s' | jq '.[].Mounts'", s:compose_ps))
-" endif
+""""""""""""""""""" if filereadable(expand('compose.yaml'))
+"""""""""""""""""""     let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
+"""""""""""""""""""     echom 'docker volume create ' . s:volume_name
+"""""""""""""""""""     call system('docker volume ' . s:volume_name)
+"""""""""""""""""""     let s:container_id = system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages app')
+"""""""""""""""""""     " let s:compose_ps = json_decode(system('docker compose ps app --format json'))
+"""""""""""""""""""     " let s:inspect = substitute(system(printf('docker inspect --type="container" %s', s:container_id)), '\n', '', 'g')
+"""""""""""""""""""     let s:inspect = system(printf('docker inspect --type="container" %s', s:container_id))
+"""""""""""""""""""     " echom s:inspect
+"""""""""""""""""""     echom system(json_encode(s:inspect) . " | jq '.[].Mounts[]'")
+"""""""""""""""""""     "echom printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name)
+"""""""""""""""""""     "echom system(printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name))
+"""""""""""""""""""     "let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
+"""""""""""""""""""     " echom system('docker inspect $(docker compose ps -q app) | jq')
+"""""""""""""""""""     " echom system(printf("'%s' | jq '.[].Mounts'", s:compose_ps))
+""""""""""""""""""" endif
+""""""""""""""""""
+""""""""""""""""""
+""""""""""""""""""
+""""""""""""""""""
+""""""""""""""""""
+""""""""""""""""""
+""""""""""""""""""
+""""""""""""""""""let s:venv_dir = getcwd() . '/.venv'
+""""""""""""""""""" echom s:venv_dir
+""""""""""""""""""if isdirectory(s:venv_dir)
+""""""""""""""""""    let $VIRTUAL_ENV = s:venv_dir
+""""""""""""""""""endif
+""""""""""""""""""
+""""""""""""""""""" function! installRequirements(venv_dir)
+"""""""""""""""""""     echom 'install requirements...'
+"""""""""""""""""""     call system('source ' . venv_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
+""""""""""""""""""" endfunction
+""""""""""""""""""
+""""""""""""""""""let s:virtual_env = $VIRTUAL_ENV
+""""""""""""""""""if strlen(s:virtual_env) == 0
+""""""""""""""""""    " echom '$VIRTUAL_ENV not defined'
+""""""""""""""""""    let s:python3 = system('which python3')
+""""""""""""""""""    if strlen(s:python3) != 0
+""""""""""""""""""        let s:python3_dir = $HOME . '/.vim/python'
+""""""""""""""""""        if !isdirectory(s:python3_dir)
+""""""""""""""""""            " echom 'create venv...'
+""""""""""""""""""            call system('python3 -m venv ' . s:python3_dir)
+""""""""""""""""""        endif
+""""""""""""""""""        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install pynvim neovim')
+""""""""""""""""""        let g:python3_host_prog = s:python3_dir . '/bin/python'
+""""""""""""""""""        let $PATH = s:python3_dir . '/bin:' . $PATH
+""""""""""""""""""        let $VIRTUAL_ENV = s:python3_dir
+""""""""""""""""""    endif
+""""""""""""""""""else
+""""""""""""""""""    " echom '$VIRTUAL_ENV defined'
+""""""""""""""""""    " echom 'install pip...'
+""""""""""""""""""    " echom 'source ' . s:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
+""""""""""""""""""    call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim neovim')
+""""""""""""""""""    let g:python3_host_prog = s:virtual_env . '/bin/python'
+""""""""""""""""""    let $PATH = s:virtual_env . '/bin:' . $PATH
+""""""""""""""""""endif
+""""""""""""""""""
+""""""""""""""""""let g:pythonpath = $PYTHONPATH
+""""""""""""""""""if strlen(g:pythonpath) == 0
+""""""""""""""""""    let $PYTHONPATH = getcwd()
+""""""""""""""""""endif
+""""""""""""""""""
+""""""""""""""""""runtime! rc/*.vim
 
 
 
+let g:loaded_python_provider = 0
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+
+let g:node_host_provider = system('which node')
 
 
-
-
-let s:venv_dir = getcwd() . '/.venv'
-" echom s:venv_dir
-if isdirectory(s:venv_dir)
-    let $VIRTUAL_ENV = s:venv_dir
-endif
-
-" function! installRequirements(venv_dir)
-"     echom 'install requirements...'
-"     call system('source ' . venv_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
-" endfunction
-
-let s:virtual_env = $VIRTUAL_ENV
-if strlen(s:virtual_env) == 0
-    " echom '$VIRTUAL_ENV not defined'
-    let s:python3 = system('which python3')
-    if strlen(s:python3) != 0
-        let s:python3_dir = $HOME . '/.vim/python'
-        if !isdirectory(s:python3_dir)
-            " echom 'create venv...'
-            call system('python3 -m venv ' . s:python3_dir)
-        endif
-        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install pynvim neovim')
-        let g:python3_host_prog = s:python3_dir . '/bin/python'
-        let $PATH = s:python3_dir . '/bin:' . $PATH
-        let $VIRTUAL_ENV = s:python3_dir
+function InstallPipPackage(package_name)
+    echom 'install pip package'
+    echom g:python3_host_prog
+    let s:is_installed = system(g:python3_host_prog .' -m pip show ' . a:package_name)
+    if v:shell_error
+        let s:is_installed = system(g:python3_host_prog .' -m pip install ' . a:package_name)
+        echom s:is_installed
     endif
+endfunction
+
+let s:virtual_env = getcwd() . '/.venv'
+echom s:virtual_env
+if isdirectory(s:virtual_env)
+    echom 'isdirectory'
+    let $VIRTUAL_ENV = s:virtual_env
 else
-    " echom '$VIRTUAL_ENV defined'
-    " echom 'install pip...'
-    " echom 'source ' . s:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
-    call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim neovim')
-    let g:python3_host_prog = s:virtual_env . '/bin/python'
-    let $PATH = s:virtual_env . '/bin:' . $PATH
+    " virtual_envがない場合
+    let s:python3 = system('which python3')
+    let s:virtual_env = $HOME . '/.vim/vimvenv'
+    if !isdirectory(s:virtual_env)
+        echom 'call'
+        call system('python3 -m venv ' . s:virtual_env)
+    endif
+    let $VIRTUAL_ENV = s:virtual_env
 endif
+
+let g:python3_host_prog = s:virtual_env . '/bin/python'
+let $PATH = s:virtual_env . '/bin:' . $PATH
+
+call InstallPipPackage('pynvim')
 
 let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
+
+echom 'function end'
+echom g:python3_host_prog
 
 runtime! rc/*.vim
