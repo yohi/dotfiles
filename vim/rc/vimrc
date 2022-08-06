@@ -1,3 +1,6 @@
+let max_length = v:echospace + ((&cmdheight - 1) * &columns)
+
+
 "highlight CursorIM guibg=Red
 "highlight CursorIM guibg=Red guifg=NONE
 set iminsert=0 imsearch=0
@@ -9,7 +12,7 @@ set iminsert=0 imsearch=0
 "set runtimepath+=${HOME}/.vim/rc/
 
 
-try
+function s:export_docker_environment()
     let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
     let s:docker_env_dict = json_decode(s:docker_env_json)
     if type(s:docker_env_dict) == v:t_dict
@@ -17,9 +20,10 @@ try
             call setenv(k, s:docker_env_dict[k])
         endfor
     endif
-catch
-    echom 'does not docker environment'
-endtry
+endfunction
+
+call timer_start(0, s:export_docker_environment())
+" call s:export_docker_environment()
 
 """"""""""""""""""" if filereadable(expand('compose.yaml'))
 """""""""""""""""""     let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
@@ -95,27 +99,24 @@ let g:loaded_perl_provider = 0
 let g:node_host_provider = system('which node')
 
 
-function InstallPipPackage(package_name)
-    echom 'install pip package'
-    echom g:python3_host_prog
-    let s:is_installed = system(g:python3_host_prog .' -m pip show ' . a:package_name)
+function s:install_pip_package(package_name) abort
+    let s:pip_show = system(g:python3_host_prog .' -m pip show ' . a:package_name)
     if v:shell_error
-        let s:is_installed = system(g:python3_host_prog .' -m pip install ' . a:package_name)
-        echom s:is_installed
+        let s:pip_install = system(g:python3_host_prog .' -m pip install -U ' . a:package_name)
+        if v:shell_error
+            echoerr  a:package_name . ' install error'
+        endif
     endif
 endfunction
 
 let s:virtual_env = getcwd() . '/.venv'
-echom s:virtual_env
 if isdirectory(s:virtual_env)
-    echom 'isdirectory'
     let $VIRTUAL_ENV = s:virtual_env
 else
     " virtual_envがない場合
     let s:python3 = system('which python3')
     let s:virtual_env = $HOME . '/.vim/vimvenv'
     if !isdirectory(s:virtual_env)
-        echom 'call'
         call system('python3 -m venv ' . s:virtual_env)
     endif
     let $VIRTUAL_ENV = s:virtual_env
@@ -124,14 +125,11 @@ endif
 let g:python3_host_prog = s:virtual_env . '/bin/python'
 let $PATH = s:virtual_env . '/bin:' . $PATH
 
-call InstallPipPackage('pynvim')
+call s:install_pip_package('pynvim')
 
 let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
-
-echom 'function end'
-echom g:python3_host_prog
 
 runtime! rc/*.vim
