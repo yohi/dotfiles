@@ -75,31 +75,17 @@ local sources = {
         -- end,
     }),
     null_ls.builtins.diagnostics.cspell.with({
-        --extra_args = { "--config", "./.flake8" },
-        -- prefer_local = root_dir .. ".venv/bin",
         diagnostics_postprocess = function(diagnostic)
+            -- レベルをINFOに変更
             diagnostic.severity =  vim.diagnostic.severity["INFO"]
         end,
-        -- extra_args = function(params)
-        --     return  {
-        --         '--config',
-        --         params.root .. '/.cspell'
-        --     }
-        -- end,
+        condition = function()
+            -- cpellが実行できるときのみ実行
+            return vim.fn.executable('cspell') > 0
+        end,
     }),
 }
 
--- print('sources')
--- print(dump(sources))
--- print('========================')
--- for k, v in pairs(sources) do
---     print(k, v)
---     for k1, v1 in pairs(v) do
---         print(k1, v1)
---     end
---     print('========================')
--- end
-local root_dir = utils.root_pattern('.venv')
 null_ls.setup({
     debug = true,
     -- diagnostics_format = '#{m} [#{c}]',

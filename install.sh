@@ -27,6 +27,7 @@ $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.vimrc)
 $(ln -nfs ~/dotfiles/vim/rc/gvimrc ~/.gvimrc)
 $(ln -nfs ~/dotfiles/vim ~/.config/nvim)
 $(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
+$(ln -nfs ~/dotfiles/cspell ~/.config/cspell)
 
 # ZSH
 bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
