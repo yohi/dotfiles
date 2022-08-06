@@ -75,6 +75,10 @@ local sources = {
         -- end,
     }),
     null_ls.builtins.diagnostics.cspell.with({
+        extra_args = {
+            '--config',
+            '~/.config/cspell/cspell.json',
+        },
         diagnostics_postprocess = function(diagnostic)
             -- レベルをINFOに変更
             diagnostic.severity =  vim.diagnostic.severity["INFO"]

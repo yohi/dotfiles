@@ -122,3 +122,8 @@ sudo apt update
 sudo apt install remmina remmina-plugin-rdp remmina-plugin-secret
 
 # https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1
+
+
+
+
+# apt install libmariadb-dev
