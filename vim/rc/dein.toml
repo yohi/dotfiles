@@ -412,67 +412,7 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_add = '''
-    call ddu#custom#patch_global({
-        \   'ui': 'ff',
-        \   'sourceOptions': {
-        \     '_': {
-        \       'matchers': ['matcher_substring'],
-        \     },
-        \   },
-        \   'kindOptions': {
-        \     'file': {
-        \       'defaultAction': 'open',
-        \     },
-        \   },
-        \   'uiParams': {
-        \     'ff': {
-        \        'autoResize': v:true,
-        \        'split': 'floating',
-        \        'startFilter': v:true,
-        \        'filterSplitDirection': 'floating',
-        \        'filterFloatingPosition': 'top',
-        \        'highlights': {'floating': 'NormalFloat', 'prompt': 'Special'},
-        \        'previewFloating': v:true,
-        \        'previewHeight': 100,
-        \        'previewWidth': 400,
-        \        'prompt': '> ',
-        \     }
-        \   },
-        \})
-
-    autocmd FileType ddu-ff call s:ddu_my_settings()
-    function! s:ddu_my_settings() abort
-      nnoremap <buffer><silent> <CR>
-            \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-      nnoremap <buffer><silent> <Space>
-            \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-      nnoremap <buffer><silent> i
-            \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
-      nnoremap <buffer><silent> q
-            \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-    endfunction
-
-    autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
-    function! s:ddu_filter_my_settings() abort
-      inoremap <buffer> <C-j>
-      \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')+1,0)")<CR>
-      inoremap <buffer> <C-k>
-      \ <Cmd>call ddu#ui#ff#execute("call cursor(line('.')-1,0)")<CR>
-      inoremap <buffer><silent> <CR>
-      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-      inoremap <buffer><silent> q
-      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-      inoremap <buffer><silent> ^[
-      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-      nnoremap <buffer><silent> <CR>
-      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-      nnoremap <buffer><silent> q
-      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-      nnoremap <buffer><silent> ^[
-      \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-      inoremap <buffer> <CR>
-      \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-    endfunction
+    source ~/dotfiles/vim/rc/plugins/ddu.rc.vim
 '''
 [[plugins]]
 repo = 'Shougo/ddu-ui-ff'
@@ -535,37 +475,7 @@ repo = 'Shougo/ddc.vim'
 on_event = ['InsertEnter', 'CursorHold']
 depends = ['denops.vim', 'pum.vim']
 hook_add = '''
-call ddc#custom#patch_global('sources', [
-\ 'around',
-\ 'nvim-lsp',
-\ 'file',
-\ 'vsnip'
-\ ])
-call ddc#custom#patch_global('sourceOptions', {
-\ '_': {
-\   'matchers': ['matcher_head'],
-\   'sorters': ['sorter_rank'],
-\   'converters': ['converter_remove_overlap'],
-\ },
-\ 'around': {'mark': 'Around'},
-\ 'nvim-lsp': {
-\   'mark': 'lsp',
-\   'matchers': ['matcher_head'],
-\   'forceCompletionPattern': '\.|:|->|"\w+/*'
-\ },
-\ })
-call ddc#enable()
-" inoremap <Tab> <Cmd>call pum#map#insert_relative(+1)<CR>
-" inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-imap <silent><expr> <Down>
-      \ pum#visible() ? '<Cmd>call pum#map#select_relative(+1)<CR>' :
-      \ '<Down>'
-imap <silent><expr> <Up>
-      \ pum#visible() ? '<Cmd>call pum#map#select_relative(-1)<CR>' :
-      \ '<Up>'
-imap <silent><expr> <CR>
-      \ pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' :
-      \ '<CR>
+    source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
 '''
 # hook_add = '''
 #     nnoremap :       <Cmd>call CommandlinePre()<CR>:
@@ -778,9 +688,9 @@ on_source = 'nvim-lspconfig'
 repo = 'williamboman/mason-lspconfig.nvim'
 on_source = 'mason.nvim'
 
-# [[plugins]]
-# repo = 'SmiteshP/nvim-navic'
-# on_source = 'nvim-lspconfig'
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
+on_source = 'nvim-lspconfig'
 
 
 
@@ -1101,12 +1011,14 @@ repo = 'hrsh7th/vim-vsnip-integ'
 
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
+on_source = 'ddc.vim'
 hook_add = '''
     call popup_preview#enable()
 '''
 
 [[plugins]]
 repo = 'matsui54/denops-signature_help'
+on_source = 'ddc.vim'
 hook_add = '''
     call signature_help#enable()
 

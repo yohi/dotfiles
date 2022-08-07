@@ -125,32 +125,34 @@ mason_lspconfig.setup({
     automatic_installation = true,
 })
 
-mason_lspconfig.setup_handlers({ function(server)
-  local opt = {
-    -- -- Function executed when the LSP server startup
-    -- on_attach = function(client, bufnr)
-    --   local opts = { noremap=true, silent=true }
-    --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-    --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-    -- end,
-  }
-  local opts = {}
+mason_lspconfig.setup_handlers({ function(server_name)
+    local navic = require("nvim-navic")
+    local opt = {
+      -- Function executed when the LSP server startup
+      on_attach = function(client, bufnr)
+        navic.attach(client, bufnr)
+      end,
+      --   local opts = { noremap=true, silent=true }
+      --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+      --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
+      -- end,
+    }
 
-  ---@diagnostic disable: undefined-global
-  if lsp_capabilities ~= nil then
-      opts.capabilities = lsp_capabilities
-  end
-  ---@diagnostic enable: undefined-global
+    ---@diagnostic disable: undefined-global
+    if lsp_capabilities ~= nil then
+        opts.capabilities = lsp_capabilities
+    end
+    ---@diagnostic enable: undefined-global
 
-  -- serverに対応しているfiletypeのbufferを開いたら、
-  if server_name == 'sumneko_lua' then
-    print('hello world')
-  elseif server_name == 'pyright' then
-    print('hello pyright')
-    opts.root_dir = lspconfig.util.root_pattern(".venv")
-  end
+    -- serverに対応しているfiletypeのbufferを開いたら、
+    if server_name == 'sumneko_lua' then
+      print('hello world')
+    elseif server_name == 'pyright' then
+      print('hello pyright')
+      opt.root_dir = lspconfig.util.root_pattern(".venv")
+    end
 
-  lspconfig[server].setup(opt)
+    lspconfig[server_name].setup(opt)
 end })
 
 
