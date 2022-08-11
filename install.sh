@@ -22,12 +22,14 @@ sudo apt -y install chrome-gnome-shell
 $(mkdir -p ~/.config)
 
 # VIM
-$(ln -nfs ~/dotfiles/vim ~/.vim)
-$(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.vimrc)
-$(ln -nfs ~/dotfiles/vim/rc/gvimrc ~/.gvimrc)
-$(ln -nfs ~/dotfiles/vim ~/.config/nvim)
-$(ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim)
-$(ln -nfs ~/dotfiles/cspell ~/.config/cspell)
+ln -nfs ~/dotfiles/vim ~/.vim
+ln -nfs ~/dotfiles/vim/rc/vimrc ~/.vimrc
+ln -nfs ~/dotfiles/vim/rc/gvimrc ~/.gvimrc
+ln -nfs ~/dotfiles/vim ~/.config/nvim
+ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim
+ln -nfs ~/dotfiles/cspell ~/.config/cspell
+ln -nfs ~/dotfiles/vim/denops_translate ~/.config/denops_translate
+
 
 # ZSH
 bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"
