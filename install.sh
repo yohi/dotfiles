@@ -64,7 +64,7 @@ sudo loginctl enable-linger ${USER}
 
 # git config
 git config --global user.name 'Yusuke Ohi'
-git config --global user.email "${EMAIL:-yohi@diamondhead.tech}"
+git config --global user.email "${EMAIL:-y.ohi@diamondhead.tech}"
 
 # gnome shell
 sudo apt install -y chrome-gnome-shell
@@ -122,6 +122,14 @@ sudo apt install pgadmin4-desktop
 sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
 sudo apt update
 sudo apt install remmina remmina-plugin-rdp remmina-plugin-secret
+
+# logiopts
+# cf.) https://github.com/PixlOne/logiops
+sudo ln -nfs ~/dotfiles/logid/logid.cfg /etc/logid.cfg
+
+
+
+
 
 # https://qiita.com/harmegiddo/items/0daac48c0f58596a52f1
 
