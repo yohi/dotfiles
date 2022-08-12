@@ -137,6 +137,7 @@ hook_add = '''
     let g:indentLine_color_gui = '#708090'
     let g:indentLine_char_list = ['|']
     let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
+    autocmd Filetype json :IndentLinesDisable
 '''
 
 # GIT系 ----------------------
@@ -1270,6 +1271,15 @@ let g:translate_popup_window = 0 " if you want use popup window, set value 1
 let g:translate_winsize = 10 " set buffer window height size if you doesn't use popup window
 let g:translate_endpoint = 'https://api-free.deepl.com/v2/translate'
 let g:translate_ui = 'popup'
+'''
+
+[[plugins]]
+repo = 'elzr/vim-json'
+hook_add = '''
+let g:vim_json_syntax_conceal = 0
+let g:indentLine_concealcursor="nc"
+au! BufAdd,BufRead,BufNew,BufEnter *.json let g:indentLine_conceallevel=1
+au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=2
 '''
 
 
