@@ -241,3 +241,13 @@ lspconfig.pyright.setup(handle_lsp{
         }
     }
 })
+
+lspconfig.sumneko_lua.setup{
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = {'vim'},
+            }
+        }
+    }
+}
