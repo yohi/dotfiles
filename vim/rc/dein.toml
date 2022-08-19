@@ -1215,9 +1215,13 @@ EOF
 # repo = 'skywind3000/asyncrun.vim'
 # 
 # # Add surrounding character
-# [[plugins]]
-# repo = 'tpope/vim-surround'
-# 
+ [[plugins]]
+ repo = 'tpope/vim-surround'
+ hook_add = '''
+ vnoremap " <Plug>VSurround"
+ vnoremap ' <Plug>VSurround'
+ '''
+
 # [[plugins]]
 # repo = 'tpope/vim-repeat'
 # 

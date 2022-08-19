@@ -30,18 +30,18 @@ local sources = {
         prefer_local = '.venv/bin',
     }),
     null_ls.builtins.diagnostics.cspell.with({
-        extra_args = {
-            '--config',
-            '~/.config/cspell/cspell.json',
-        },
+        -- extra_args = {
+        --     '--config',
+        --     '~/.config/cspell/cspell.json',
+        -- },
         diagnostics_postprocess = function(diagnostic)
             -- レベルをINFOに変更
             diagnostic.severity =  vim.diagnostic.severity["INFO"]
         end,
-        condition = function()
-            -- cpellが実行できるときのみ実行
-            return vim.fn.executable('cspell') > 0
-        end,
+        -- condition = function()
+        --     -- cpellが実行できるときのみ実行
+        --     return vim.fn.executable('cspell') > 0
+        -- end,
     }),
     -- Formatting
     null_ls.builtins.formatting.isort.with({
