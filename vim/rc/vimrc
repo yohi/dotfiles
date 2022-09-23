@@ -14,6 +14,7 @@ set iminsert=0 imsearch=0
 
 function s:export_docker_environment()
     try
+        echom("export docker enviroment...")
         let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
         let s:docker_env_dict = json_decode(s:docker_env_json)
         if type(s:docker_env_dict) == v:t_dict
@@ -22,6 +23,8 @@ function s:export_docker_environment()
             endfor
         endif
     catch
+        echom("export docker enviroment Exception")
+        echom v:exception
     endtry
 endfunction
 
@@ -102,12 +105,19 @@ let g:loaded_perl_provider = 0
 let g:node_host_provider = system('which node')
 
 
-function s:install_pip_package(package_name) abort
-    let s:pip_show = system(g:python3_host_prog .' -m pip show ' . a:package_name)
-    if v:shell_error
-        let s:pip_install = system(g:python3_host_prog .' -m pip install -U ' . a:package_name)
+function s:install_pip_package(package_name, bin=v:false) abort
+    if a:bin && !exists('.venv/bin/' . a:package_name)
+        let s:pip_install = system(g:python3_host_prog .' -m pip install --force-reinstall ' . a:package_name)
         if v:shell_error
-            echoerr  a:package_name . ' install error'
+            echoerr a:package_name . ' force reinstall error'
+        endif
+    else
+        let s:pip_show = system(g:python3_host_prog .' -m pip show ' . a:package_name)
+        if v:shell_error
+            let s:pip_install = system(g:python3_host_prog .' -m pip install -U ' . a:package_name)
+            if v:shell_error
+                echoerr  a:package_name . ' install error'
+            endif
         endif
     endif
 endfunction
@@ -129,6 +139,9 @@ let g:python3_host_prog = s:virtual_env . '/bin/python'
 let $PATH = s:virtual_env . '/bin:' . $PATH
 
 call s:install_pip_package('pynvim')
+call s:install_pip_package('mypy', v:true)
+call s:install_pip_package('flake8', v:true)
+call s:install_pip_package('djlint', v:true)
 
 let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
