@@ -24,7 +24,6 @@ function s:export_docker_environment()
         endif
     catch
         echom("export docker enviroment Exception")
-        echom v:exception
     endtry
 endfunction
 
