@@ -37,10 +37,10 @@ local sources = {
         prefer_local = '.venv/bin',
         timeout = 60000,
         -- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-        diagnostics_postprocess = function(diagnostic)
-            -- レベルをWARNに変更
-            diagnostic.severity =  vim.diagnostic.severity["WARN"]
-        end,
+        -- diagnostics_postprocess = function(diagnostic)
+        --     -- レベルをWARNに変更
+        --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
+        -- end,
         extra_args = {
             "--cache-dir",
             "/dev/null",
@@ -63,6 +63,7 @@ local sources = {
     -- Formatting
     null_ls.builtins.formatting.isort.with({
         command = 'python3 -m isort',
+        timeout = 60000,
         prefer_local = '.venv/bin',
         diagnostics_postprocess = function(diagnostic)
             -- レベルをWARNに変更
@@ -80,7 +81,7 @@ local sources = {
 }
 
 null_ls.setup({
-    debug = true,
+    -- debug = true,
     -- diagnostics_format = '#{m} [#{c}]',
     -- diagnostics_format = '#{m} (#{s})',
     diagnostics_format = '#{s}: #{m}',

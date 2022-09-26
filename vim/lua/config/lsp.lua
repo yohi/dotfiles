@@ -196,7 +196,12 @@ vim.keymap.set('n', 'g]', '<cmd>lua vim.diagnostic.goto_next()<CR>')
 vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 
 -- 3, create user command
-vim.api.nvim_create_user_command('Formatting', vim.lsp.buf.formatting, {})
+-- vim.api.nvim_create_user_command('Formatting', vim.lsp.buf.formatting, {})
+vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = true}", {})
+
+
+-- vim.lsp.buf.formatting is deprecated. Use vim.lsp.buf.format { async = true } instead
+
 
 -- Reference highlight
 -- vim.cmd [[

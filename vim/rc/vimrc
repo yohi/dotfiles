@@ -13,8 +13,8 @@ set iminsert=0 imsearch=0
 
 
 function s:export_docker_environment()
+    echom("export_docker_environment running...")
     try
-        echom("export docker enviroment...")
         let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
         let s:docker_env_dict = json_decode(s:docker_env_json)
         if type(s:docker_env_dict) == v:t_dict
@@ -23,9 +23,11 @@ function s:export_docker_environment()
             endfor
         endif
     catch
-        echom("export docker enviroment Exception")
+        echom("export docker enviroment Exception:" . v:exception)
     endtry
+    echom('export_docker_environment done!')
 endfunction
+
 
 call timer_start(0, s:export_docker_environment())
 " call s:export_docker_environment()
@@ -105,7 +107,9 @@ let g:node_host_provider = system('which node')
 
 
 function s:install_pip_package(package_name, bin=v:false) abort
-    if a:bin && !exists('.venv/bin/' . a:package_name)
+    echom('install_pip_package ' . a:package_name . ' running...!')
+    if a:bin && !filereadable('.venv/bin/' . a:package_name)
+        echom('force reinstall ' . a:package_name)
         let s:pip_install = system(g:python3_host_prog .' -m pip install --force-reinstall ' . a:package_name)
         if v:shell_error
             echoerr a:package_name . ' force reinstall error'
@@ -113,12 +117,14 @@ function s:install_pip_package(package_name, bin=v:false) abort
     else
         let s:pip_show = system(g:python3_host_prog .' -m pip show ' . a:package_name)
         if v:shell_error
+            echom('install ' . a:package_name)
             let s:pip_install = system(g:python3_host_prog .' -m pip install -U ' . a:package_name)
             if v:shell_error
                 echoerr  a:package_name . ' install error'
             endif
         endif
     endif
+    echom('install_pip_package ' . a:package_name . ' done!')
 endfunction
 
 let s:virtual_env = getcwd() . '/.venv'
@@ -136,11 +142,9 @@ endif
 
 let g:python3_host_prog = s:virtual_env . '/bin/python'
 let $PATH = s:virtual_env . '/bin:' . $PATH
-
-call s:install_pip_package('pynvim')
-call s:install_pip_package('mypy', v:true)
-call s:install_pip_package('flake8', v:true)
-call s:install_pip_package('djlint', v:true)
+call timer_start(0, s:install_pip_package('pynvim'))
+call timer_start(0, s:install_pip_package('mypy', v:true))
+call timer_start(0, s:install_pip_package('flake8', v:true))
 
 let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0
