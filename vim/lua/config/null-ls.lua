@@ -36,7 +36,7 @@ local sources = {
     null_ls.builtins.diagnostics.mypy.with({
         prefer_local = '.venv/bin',
         timeout = 60000,
-        -- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+        method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
         -- diagnostics_postprocess = function(diagnostic)
         --     -- レベルをWARNに変更
         --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
