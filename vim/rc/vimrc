@@ -12,24 +12,23 @@ set iminsert=0 imsearch=0
 "set runtimepath+=${HOME}/.vim/rc/
 
 
-function s:export_docker_environment()
-    echom("export_docker_environment running...")
-    try
-        let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
-        let s:docker_env_dict = json_decode(s:docker_env_json)
-        if type(s:docker_env_dict) == v:t_dict
-            for k in keys(s:docker_env_dict)
-                call setenv(k, s:docker_env_dict[k])
-            endfor
-        endif
-    catch
-        echom("export docker enviroment Exception:" . v:exception)
-    endtry
-    echom('export_docker_environment done!')
-endfunction
+" function s:export_docker_environment()
+"     echom("export_docker_environment running...")
+"     try
+"         let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
+"         let s:docker_env_dict = json_decode(s:docker_env_json)
+"         if type(s:docker_env_dict) == v:t_dict
+"             for k in keys(s:docker_env_dict)
+"                 call setenv(k, s:docker_env_dict[k])
+"             endfor
+"         endif
+"     catch
+"         echom("export docker enviroment Exception:" . v:exception)
+"     endtry
+"     echom('export_docker_environment done!')
+" endfunction
+" call timer_start(0, s:export_docker_environment())
 
-
-call timer_start(0, s:export_docker_environment())
 " call s:export_docker_environment()
 
 """"""""""""""""""" if filereadable(expand('compose.yaml'))
