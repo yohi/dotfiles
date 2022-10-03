@@ -11,43 +11,6 @@ local function dump(o)
    end
 end
 
-local function export_docker_environment()
-    print('export docker environment')
-        local handle = io.popen('docker compose config --format json | jq ".services.app.environment"')
-        if handle ~= nil then
-            local result = handle:read("*a")
-            local docker_env = vim.fn.json_decode(result)
-            for key, value in pairs(docker_env) do
-                vim.fn.setenv(key, value)
-            end
-        end
-end
-pcall(export_docker_environment)
-print(vim.env.VIRTUAL_ENV)
-
-local function install_pip_package(package_name, bin)
-    print('install pip package ' .. package_name)
-    local bin = bin or false
-    local f = io.open(vim.env.VIRTUAL_ENV .. '.venv/bin/' .. package_name)
-    if bin and f ~= nil then
-        print(vim.g.python3_host_prog .. ' -m pip install --force-reinstall '  .. package_name)
-        io.open(vim.g.python3_host_prog .. ' -m pip install --force-reinstall '  .. package_name)
-        io.close(f)
-    else
-        local check = io.open(vim.g.python3_host_prog .. ' -m pip show '  .. package_name) == nil
-        if check == nil then
-            print(vim.g.python3_host_prog .. ' -m pip install -U  '  .. package_name)
-            io.open(vim.g.python3_host_prog .. ' -m pip install -U  '  .. package_name)
-        end
-    end
-end
-pcall(install_pip_package, 'pynvim')
-pcall(install_pip_package, 'mypy', true)
-pcall(install_pip_package, 'flake8', true)
-pcall(install_pip_package, 'isort', true)
-pcall(install_pip_package, 'djlint', true)
-
-
 -- null-ls --
 local null_ls = require("null-ls")
 local utils = require("lspconfig.util")
