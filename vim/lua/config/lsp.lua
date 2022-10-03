@@ -145,12 +145,14 @@ mason_lspconfig.setup_handlers({ function(server_name)
     ---@diagnostic enable: undefined-global
 
     -- serverに対応しているfiletypeのbufferを開いたら、
+    print(server_name)
     if server_name == 'sumneko_lua' then
       print('hello world')
     elseif server_name == 'pyright' then
       print('hello pyright')
       opt.root_dir = lspconfig.util.root_pattern(".venv")
     end
+    print('we are sapporo')
 
     lspconfig[server_name].setup(opt)
 end })
@@ -165,7 +167,7 @@ vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
 -- 改行やインデントのフォーマティング
 vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
--- 
+--
 vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
 
 --定義ジャンプ
@@ -199,6 +201,8 @@ vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 -- vim.api.nvim_create_user_command('Formatting', vim.lsp.buf.formatting, {})
 vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = true}", {})
 
+print('kawasasaki yowai')
+
 
 -- vim.lsp.buf.formatting is deprecated. Use vim.lsp.buf.format { async = true } instead
 
@@ -219,6 +223,8 @@ vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = 
 local handle_lsp = function(opts)
     return opts
 end
+
+print('hokkaido consadole sapporo')
 
 lspconfig.pyright.setup(handle_lsp{
     root_dir = lspconfig.util.root_pattern('.venv'),

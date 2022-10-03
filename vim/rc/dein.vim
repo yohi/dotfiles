@@ -27,8 +27,10 @@ if dein#load_state('$HOME/.cache/dein')
 
     echo s:toml_lazy
 
+    echom 'install plugin from toml...'
     call dein#load_toml(s:toml, { 'lazy': 0 })
     call dein#load_toml(s:toml_lazy, { 'lazy': 1 })
+    echom 'done'
 
     " Required:
     call dein#end()

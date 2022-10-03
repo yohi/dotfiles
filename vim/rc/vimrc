@@ -141,9 +141,9 @@ endif
 
 let g:python3_host_prog = s:virtual_env . '/bin/python'
 let $PATH = s:virtual_env . '/bin:' . $PATH
-call timer_start(0, s:install_pip_package('pynvim'))
-call timer_start(0, s:install_pip_package('mypy', v:true))
-call timer_start(0, s:install_pip_package('flake8', v:true))
+" call timer_start(0, s:install_pip_package('pynvim'))
+" call timer_start(0, s:install_pip_package('mypy', v:true))
+" call timer_start(0, s:install_pip_package('flake8', v:true))
 
 let g:pythonpath = $PYTHONPATH
 if strlen(g:pythonpath) == 0

@@ -23,11 +23,12 @@ local function export_docker_environment()
         end
 end
 pcall(export_docker_environment)
+print(vim.env.VIRTUAL_ENV)
 
 local function install_pip_package(package_name, bin)
     print('install pip package ' .. package_name)
     local bin = bin or false
-    local f = io.open('.venv/bin/' .. package_name)
+    local f = io.open(vim.env.VIRTUAL_ENV .. '.venv/bin/' .. package_name)
     if bin and f ~= nil then
         print(vim.g.python3_host_prog .. ' -m pip install --force-reinstall '  .. package_name)
         io.open(vim.g.python3_host_prog .. ' -m pip install --force-reinstall '  .. package_name)
@@ -35,11 +36,17 @@ local function install_pip_package(package_name, bin)
     else
         local check = io.open(vim.g.python3_host_prog .. ' -m pip show '  .. package_name) == nil
         if check == nil then
-            print(vim.g.python3_host_prog .. ' -m pip install -U  '  .. package_name) 
-            io.open(vim.g.python3_host_prog .. ' -m pip install -U  '  .. package_name) 
+            print(vim.g.python3_host_prog .. ' -m pip install -U  '  .. package_name)
+            io.open(vim.g.python3_host_prog .. ' -m pip install -U  '  .. package_name)
         end
     end
 end
+pcall(install_pip_package, 'pynvim')
+pcall(install_pip_package, 'mypy', true)
+pcall(install_pip_package, 'flake8', true)
+pcall(install_pip_package, 'isort', true)
+pcall(install_pip_package, 'djlint', true)
+
 
 -- null-ls --
 local null_ls = require("null-ls")
@@ -57,14 +64,15 @@ local sources = {
     debug = true,
     -- Diagnostics
     null_ls.builtins.diagnostics.flake8.with({
-        prefer_local = '.venv/bin',
+        prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
         diagnostics_postprocess = function(diagnostic)
             -- レベルをWARNに変更
             diagnostic.severity =  vim.diagnostic.severity["WARN"]
         end,
     }),
     null_ls.builtins.diagnostics.mypy.with({
-        prefer_local = '.venv/bin',
+        prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+        -- prefer_local = '.venv/bin',
         timeout = 60000,
         method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
         -- diagnostics_postprocess = function(diagnostic)
@@ -92,17 +100,19 @@ local sources = {
     }),
     -- Formatting
     null_ls.builtins.formatting.isort.with({
-        command = 'python3 -m isort',
+        command = 'isort',
         timeout = 60000,
-        prefer_local = '.venv/bin',
+        -- prefer_local = '.venv/bin',
+        prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
         diagnostics_postprocess = function(diagnostic)
             -- レベルをWARNに変更
             diagnostic.severity =  vim.diagnostic.severity["WARN"]
         end,
     }),
     null_ls.builtins.formatting.djlint.with({
-        command = 'python3 -m djlint',
-        prefer_local = '.venv/bin',
+        command = 'djlint',
+        -- prefer_local = '.venv/bin',
+        prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
         diagnostics_postprocess = function(diagnostic)
             -- レベルをWARNに変更
             diagnostic.severity =  vim.diagnostic.severity["WARN"]
