@@ -150,11 +150,12 @@ if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
 
-" echom('g:python3_host_prog')
-" echom(g:python3_host_prog)
 lua << EOF
-    -- require('config.docker')
     require('config.python')
 EOF
 
 runtime! rc/*.vim
+
+lua << EOF
+    require('config.docker')
+EOF
