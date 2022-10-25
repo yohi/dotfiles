@@ -58,3 +58,6 @@ set imdisable
 
 " 
 set signcolumn=yes:2
+
+" 
+set termguicolors

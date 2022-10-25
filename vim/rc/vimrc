@@ -150,9 +150,28 @@ if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
 
-lua << EOF
-    require('config.python')
-EOF
+
+
+" C++ のソースコードの編集するときは、タブキーをスペースを用いたインデント用に使用する
+:autocmd FileType python lua require('config.python')
+
+" " Makefile を編集するときは、タブキーをタブ文字の入力に使用する
+" :autocmd FileType make  setlocal noexpandtab
+" 
+" " ~/.vimrc を保存したときにリロードする（source コマンドで変更を反映する）
+" :autocmd BufWritePost  ~/.vimrc  so ~/.vimrc
+" 
+" " 拡張子 .cpp のファイルを開いたバッファに入るとき、~/.vimrc_cpp を実行する
+" :autocmd BufEnter  *.cpp  so ~/.vimrc_cpp
+" 
+" " C 言語のソースコードを編集し始めるときに、カーソルを最初の関数に合わせる
+" :autocmd BufRead  *.c,*.h  1;/^{
+" 
+" " 新規に .java ファイルを作成する場合にテンプレートファイルを使用する（:e new.java や :tabnew new.java としたとき）
+" :autocmd BufNewFile  *.java  0r ~/vim/skeleton.java
+" 
+" " 新規に .hello ファイルを作成する場合に Hello というテキストを挿入する
+" :autocmd BufNewFile  *.hello  put='Hello'
 
 runtime! rc/*.vim
 

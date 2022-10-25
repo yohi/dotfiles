@@ -24,7 +24,7 @@ local root_dir = utils.root_pattern('.venv')
 -- print(root_dir)
 
 local sources = {
-    debug = true,
+    debug = false,
     -- Diagnostics
     null_ls.builtins.diagnostics.flake8.with({
         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',

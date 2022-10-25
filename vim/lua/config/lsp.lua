@@ -100,29 +100,29 @@ local lspconfig = require('lspconfig')
 mason.setup()
 
 mason_lspconfig.setup({
-    ensure_installed = {
-        'bash-language-server',
-        'cspell',
-        'djlint',
-        'dockerfile-language-server',
-        'dot-language-server',
-        'flake8',
-        'html-lsp',
-        'isort',
-        'json-lsp',
-        'json-to-struct',
-        'lua-language-server',
-        'markdownlint',
-        'mypy',
-        'pyright',
-        'shellcheck',
-        'sql-formatter',
-        'sqlls',
-        'vim-language-server',
-        'yaml-language-server',
-        'yamllint',
-    },
-    automatic_installation = true,
+    -- ensure_installed = {
+    --     'bash-language-server',
+    --     'cspell',
+    --     'djlint',
+    --     'dockerfile-language-server',
+    --     'dot-language-server',
+    --     'flake8',
+    --     'html-lsp',
+    --     'isort',
+    --     'json-lsp',
+    --     'json-to-struct',
+    --     'lua-language-server',
+    --     'markdownlint',
+    --     'mypy',
+    --     'pyright',
+    --     'shellcheck',
+    --     'sql-formatter',
+    --     'sqlls',
+    --     'vim-language-server',
+    --     'yaml-language-server',
+    --     'yamllint',
+    -- },
+    automatic_installation = false,
 })
 
 mason_lspconfig.setup_handlers({ function(server_name)
@@ -146,9 +146,9 @@ mason_lspconfig.setup_handlers({ function(server_name)
 
     -- serverに対応しているfiletypeのbufferを開いたら、
     if server_name == 'sumneko_lua' then
-      print('hello world')
+      -- print('hello world')
     elseif server_name == 'pyright' then
-      print('hello pyright')
+      -- print('hello pyright')
       opt.root_dir = lspconfig.util.root_pattern(".venv")
     end
 
@@ -224,23 +224,55 @@ end
 
 lspconfig.pyright.setup(handle_lsp{
     root_dir = lspconfig.util.root_pattern('.venv'),
+    -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
     settings = {
+        pyright = {
+            -- disableLanguageService = true,
+            -- disableOrganizeImports = true,
+        },
         python = {
             analysis = {
-                -- disableLanguageService = true,
-                -- disableOrganizeImports = true,
-                -- openFilesOnly = false,
-                -- useLibraryCodeForType = false
+                inlayHints = {
+                    functionReturnTypes = true,
+                    variableTypes = true,
+                },
+
+                --
                 autoImportCompletions = true,
+
+                -- 事前定義された名前にもどついて検索パスを自動的に追加するか
                 autoSearchPaths = true,
+
+                -- [openFilesOnly, workspace]
                 diagnosticMode = "workspace",
-                diagnosticSeverityOverrides = "warning",
+
+                -- 診断のレベルを上書きする
+                -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+                diagnosticSeverityOverrides = {
+                    reportGeneralTypeIssues = "none",
+                    reportMissingTypeArgument = "none",
+                    reportUnknownMemberType = "none",
+                    reportUnknownVariableType = "none",
+                    reportUnknownArgumentType = "none",
+                },
+
+                -- インポート解決のための追加検索パス指定
                 -- extraPaths = '',
+
+                -- default: Information [Error, Warning, Information, Trace]
                 logLevel = 'Information',
+
+                -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
                 -- stubPath = '',
+
+                -- 型チェックの分析レベル default: off [off, basic, strict]
                 typeCheckingMode = 'off',
+
+                --
                 -- typeshedPaths = '',
-                useLibraryCodeForType = true,
+
+                -- default: false
+                useLibraryCodeForTypes = false,
             },
             pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
             venvPath = '.',
