@@ -134,6 +134,7 @@ else
     let s:python3 = system('which python3')
     let s:virtual_env = $HOME . '/.vim/vimvenv'
     if !isdirectory(s:virtual_env)
+        echom('install vim virtualenv')
         call system('python3 -m venv ' . s:virtual_env)
     endif
     let $VIRTUAL_ENV = s:virtual_env
@@ -150,10 +151,23 @@ if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
 
+runtime! rc/*.vim
 
+lua << EOF
+    require('config.python')
+    InstallPipPackage('pynvim')
+EOF
 
 " C++ のソースコードの編集するときは、タブキーをスペースを用いたインデント用に使用する
-:autocmd FileType python lua require('config.python')
+:autocmd FileType python lua pcall(InstallPipPackage, 'mypy', true)
+:autocmd FileType python lua pcall(InstallPipPackage, 'flake8', true)
+:autocmd FileType python lua pcall(InstallPipPackage, 'isort', true)
+:autocmd FileType python lua pcall(InstallPipPackage, 'djlint', true)
+
+lua << EOF
+    require('config.docker')
+EOF
+
 
 " " Makefile を編集するときは、タブキーをタブ文字の入力に使用する
 " :autocmd FileType make  setlocal noexpandtab
@@ -173,8 +187,3 @@ endif
 " " 新規に .hello ファイルを作成する場合に Hello というテキストを挿入する
 " :autocmd BufNewFile  *.hello  put='Hello'
 
-runtime! rc/*.vim
-
-lua << EOF
-    require('config.docker')
-EOF

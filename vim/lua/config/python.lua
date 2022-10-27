@@ -4,9 +4,9 @@ local function file_exists(file)
   return f ~= nil
 end
 
-local function install_pip_package(package_name, bin)
+function InstallPipPackage(package_name, bin)
     vim.notify('install pip package ' .. package_name)
-    local bin = bin or false
+    bin = bin or false
     local file = vim.env.VIRTUAL_ENV .. '.venv/bin/' .. package_name
     if bin and file_exists(file) then
         vim.notify(vim.g.python3_host_prog .. ' -m pip install --force-reinstall '  .. package_name)
@@ -35,8 +35,8 @@ end
 --     pcall(install_pip_package, 'djlint', true)
 -- end)
 
-pcall(install_pip_package, 'pynvim')
-pcall(install_pip_package, 'mypy', true)
-pcall(install_pip_package, 'flake8', true)
-pcall(install_pip_package, 'isort', true)
-pcall(install_pip_package, 'djlint', true)
+-- pcall(install_pip_package, 'pynvim')
+-- pcall(install_pip_package, 'mypy', true)
+-- pcall(install_pip_package, 'flake8', true)
+-- pcall(install_pip_package, 'isort', true)
+-- pcall(install_pip_package, 'djlint', true)
