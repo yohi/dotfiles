@@ -25,6 +25,24 @@ hook_source = '''
     autocmd VimEnter * ++nested colorscheme codedark
 '''
 
+# for python developmen
+[[plugins]]
+repo = 'jmcantrell/vim-virtualenv'
+[[plugins]]
+repo = 'sansyrox/vim-python-virtualenv'
+# [[plugins]]
+# repo = 'Vimjas/vim-python-pep8-indent'
+# [[plugins]]
+# repo = 'lambdalisue/vim-django-support'
+
+
+[[plugins]]
+repo = '~/.vim/read-or-create-venv.vim'
+on_source = [
+    'jmcantrell/vim-virtualenv',
+    'sansyrox/vim-python-virtualenv',
+]
+
 # 全角スペースをホワイトに表示
 # [[plugins]]
 # repo = 'thinca/vim-zenspace'
@@ -248,16 +266,6 @@ repo = 'cohama/lexima.vim'
 repo = 'rhysd/git-messenger.vim'
 [[plugins]]
 repo = 'vim-scripts/dbext.vim'
-
-# for python developmen
-[[plugins]]
-repo = 'jmcantrell/vim-virtualenv'
-[[plugins]]
-repo = 'sansyrox/vim-python-virtualenv'
-# [[plugins]]
-# repo = 'Vimjas/vim-python-pep8-indent'
-# [[plugins]]
-# repo = 'lambdalisue/vim-django-support'
 
 
 [[plugins]]
@@ -1744,9 +1752,15 @@ au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=
 ## " ddu ======================
 ## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
 
+# ~/.vim/vim-show-weather 
+
+[[plugins]]
+repo = '~/.vim/vim-show-weather'
+
 [[plugins]]
 repo = 'yohi/set-docker-compose-env.nvim'
 depends = ['nvim-notify']
 lua_source = '''
   require('set-docker-compose-env').setup()
 '''
+
