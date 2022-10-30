@@ -25,10 +25,10 @@ if dein#load_state('$HOME/.cache/dein')
     let s:toml = expand($HOME . '/.vim/rc/dein.toml')
     let s:toml_lazy = expand($HOME . '/.vim/rc/dein_lazy.toml')
 
-    echom 'install plugin from toml...'
+    "echom 'install plugin from toml...'
     call dein#load_toml(s:toml, { 'lazy': 0 })
     call dein#load_toml(s:toml_lazy, { 'lazy': 1 })
-    echom 'done'
+    " echom 'done'
 
     " Required:
     call dein#end()

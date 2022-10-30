@@ -134,7 +134,7 @@ else
     let s:python3 = system('which python3')
     let s:virtual_env = $HOME . '/.vim/vimvenv'
     if !isdirectory(s:virtual_env)
-        echom('install vim virtualenv')
+       "  echo('install vim virtualenv')
         call system('python3 -m venv ' . s:virtual_env)
     endif
     let $VIRTUAL_ENV = s:virtual_env

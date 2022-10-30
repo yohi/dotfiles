@@ -9,7 +9,7 @@ repo = 'rcarriga/nvim-notify'
 
 # [[plubins]]
 # repo = 'rbtnn/vim-ambiwidth'
-# 
+#
 # [[plugins]]
 # repo = 'powerline/powerline'
 
