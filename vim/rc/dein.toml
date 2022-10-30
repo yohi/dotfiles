@@ -274,7 +274,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'gelguy/wilder.nvim'
-hook_add = '''
+hook_source = '''
     call wilder#enable_cmdline_enter()
 
     set wildcharm=<Tab>
@@ -358,7 +358,7 @@ repo = 'vim-denops/denops.vim'
 # deoppet
 [[plugins]]
 repo = 'Shougo/deoppet.nvim'
-hook_add = '''
+hook_source = '''
     call deoppet#initialize()
     call deoppet#custom#option('snippets',
     \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
@@ -415,7 +415,7 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/ddu.vim'
-hook_add = '''
+hook_source = '''
     source ~/dotfiles/vim/rc/plugins/ddu.rc.vim
 '''
 [[plugins]]
@@ -478,7 +478,7 @@ repo = 'Shougo/pum.vim'
 repo = 'Shougo/ddc.vim'
 on_event = ['InsertEnter', 'CursorHold']
 depends = ['denops.vim', 'pum.vim']
-hook_add = '''
+hook_source = '''
     source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
 '''
 # hook_add = '''
@@ -1017,14 +1017,14 @@ repo = 'hrsh7th/vim-vsnip-integ'
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
 on_source = 'ddc.vim'
-hook_add = '''
+hook_source = '''
     call popup_preview#enable()
 '''
 
 [[plugins]]
 repo = 'matsui54/denops-signature_help'
 on_source = 'ddc.vim'
-hook_add = '''
+hook_source = '''
     call signature_help#enable()
 
     " if you use with vim-lsp, disable vim-lsp's signature help feature
