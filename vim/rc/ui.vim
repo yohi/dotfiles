@@ -59,5 +59,6 @@ set imdisable
 " 
 set signcolumn=yes:2
 
-" 
-set termguicolors
+if has('nvim') || has('termguicolors')
+  set termguicolors
+endif

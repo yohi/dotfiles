@@ -153,20 +153,20 @@ endif
 
 runtime! rc/*.vim
 
-lua << EOF
-    require('config.python')
-    InstallPipPackage('pynvim')
-EOF
+" lua << EOF
+"     require('config.python')
+"     InstallPipPackage('pynvim')
+" EOF
+" 
+" " C++ のソースコードの編集するときは、タブキーをスペースを用いたインデント用に使用する
+" :autocmd FileType python lua pcall(InstallPipPackage, 'mypy', true)
+" :autocmd FileType python lua pcall(InstallPipPackage, 'flake8', true)
+" :autocmd FileType python lua pcall(InstallPipPackage, 'isort', true)
+" :autocmd FileType python lua pcall(InstallPipPackage, 'djlint', true)
 
-" C++ のソースコードの編集するときは、タブキーをスペースを用いたインデント用に使用する
-:autocmd FileType python lua pcall(InstallPipPackage, 'mypy', true)
-:autocmd FileType python lua pcall(InstallPipPackage, 'flake8', true)
-:autocmd FileType python lua pcall(InstallPipPackage, 'isort', true)
-:autocmd FileType python lua pcall(InstallPipPackage, 'djlint', true)
-
-lua << EOF
-    require('config.docker')
-EOF
+" lua << EOF
+"     require('config.docker')
+" EOF
 
 
 " " Makefile を編集するときは、タブキーをタブ文字の入力に使用する
