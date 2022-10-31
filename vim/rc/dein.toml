@@ -25,23 +25,64 @@ hook_source = '''
     autocmd VimEnter * ++nested colorscheme codedark
 '''
 
+[[plugins]]
+repo = '~/.vim/read-or-create-venv.vim'
+# repo = 'yohi/read-or-create-venv.vim'
+hook_source = '''
+call read_or_create_venv#ReadOrCreateVenv()
+'''
+
 # for python developmen
 [[plugins]]
 repo = 'jmcantrell/vim-virtualenv'
+on_source = '~/.vim/read-or-create-venv.vim'
+# on_source = 'yohi/read-or-create-venv.vim'
+
 [[plugins]]
 repo = 'sansyrox/vim-python-virtualenv'
+on_source = '~/.vim/read-or-create-venv.vim'
+# on_source = 'yohi/read-or-create-venv.vim'
+
 # [[plugins]]
 # repo = 'Vimjas/vim-python-pep8-indent'
+
 # [[plugins]]
 # repo = 'lambdalisue/vim-django-support'
 
-
 [[plugins]]
-repo = '~/.vim/read-or-create-venv.vim'
+repo = '~/.vim/install-pip-package.nvim'
+# repo = 'yohi/install-pip-package.nvim'
+depends = '~/.vim/read-or-create-venv.vim'
 on_source = [
     'jmcantrell/vim-virtualenv',
     'sansyrox/vim-python-virtualenv',
 ]
+lua_source = '''
+print('install-pip-package-nvim')
+require('install-pip-package').setup('pynvim')
+vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'python',
+        callback = function()
+            vim.schedule(function()
+                require('install-pip-package').setup('mypy', true)
+            end)
+            vim.schedule(function()
+                require('install-pip-package').setup('flake8', true)
+            end)
+            vim.schedule(function()
+                require('install-pip-package').setup('isort', true)
+            end)
+            vim.schedule(function()
+                require('install-pip-package').setup('djlint', true)
+            end)
+        end,
+        once = true,
+    })
+'''
+
+
+
+
 
 # 全角スペースをホワイトに表示
 # [[plugins]]
@@ -709,23 +750,6 @@ on_source = 'nvim-lspconfig'
 
 
 
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-# rev = '1e59a77cf9db24a713d85525f4b55e3a6b5d115f'
-on_source = [
-    'vim-python-virtualenv',
-    'nvim-lspconfig',
-]
-hook_add = '''
-" echom "null-ls"
-" pwd
-" echom $VIRTUAL_ENV
-" echo system('which python3')
-" echo g:python3_host_prog
-lua << EOF
-   require('config.null-ls')
-EOF
-'''
 ##### hook_add = '''
 ##### lua <<EOF
 ##### 
@@ -775,7 +799,10 @@ EOF
 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-on_source = 'RRethy/vim-illuminate'
+on_source = [
+    'RRethy/vim-illuminate',
+    'read-or-create-venv.vim',
+]
 hook_add = '''
 lua << EOF
     require('config.lsp')
@@ -1755,12 +1782,11 @@ au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=
 # ~/.vim/vim-show-weather 
 
 [[plugins]]
-repo = '~/.vim/vim-show-weather'
-
-[[plugins]]
+# repo = '~/.vim/set-docker-compose-env.nvim'
 repo = 'yohi/set-docker-compose-env.nvim'
 depends = ['nvim-notify']
 lua_source = '''
   require('set-docker-compose-env').setup()
 '''
+
 

@@ -159,10 +159,10 @@ runtime! rc/*.vim
 " EOF
 " 
 " " C++ のソースコードの編集するときは、タブキーをスペースを用いたインデント用に使用する
-" :autocmd FileType python lua pcall(InstallPipPackage, 'mypy', true)
-" :autocmd FileType python lua pcall(InstallPipPackage, 'flake8', true)
-" :autocmd FileType python lua pcall(InstallPipPackage, 'isort', true)
-" :autocmd FileType python lua pcall(InstallPipPackage, 'djlint', true)
+" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'mypy', true)
+" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'flake8', true)
+" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'isort', true)
+" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'djlint', true)
 
 " lua << EOF
 "     require('config.docker')
