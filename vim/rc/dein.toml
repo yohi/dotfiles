@@ -4,6 +4,99 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
+
+[[plugins]]
+repo = 'yohi/read-or-create-venv.vim'
+hook_add = '''
+echom('yohi/read-or-create-venv.vim')
+echom('hook_add')
+'''
+hook_source = '''
+echom('yohi/read-or-create-venv.vim')
+echom('hook_source')
+'''
+hook_post_source = '''
+echom('yohi/read-or-create-venv.vim')
+echom('yohi/set-docker-compose-env.nvim')
+echom('hook_post_source')
+'''
+
+[[plugins]]
+repo = 'jmcantrell/vim-virtualenv'
+on_source = 'yohi/read-or-create-venv.vim'
+# hook_add = '''
+# echom('vim-virutualenv')
+# echom(system('env'))
+# echom('hook_add')
+# '''
+lua_add = '''
+    print('lua_add')
+    -- require('install-pip-package').setup('pynvim')
+'''
+hook_source = '''
+echom('vim-virutualenv')
+echom('hook_source')
+'''
+hook_post_source = '''
+echom('vim-virutualenv')
+echom('hook_post_source')
+'''
+
+# [[plugins]]
+# repo = 'sansyrox/vim-python-virtualenv'
+# on_source = 'yohi/read-or-create-venv.vim'
+
+[[plugins]]
+repo = 'yohi/install-pip-package.nvim'
+# on_source = [
+#     'jmcantrell/vim-virtualenv',
+#     'sansyrox/vim-python-virtualenv',
+# ]
+lua_add = '''
+print('install-pip-package-nvim')
+print('lua_add')
+-- require('install-pip-package').setup('pynvim')
+'''
+lua_source = '''
+print('install-pip-package-nvim')
+print('lua_source')
+vim.api.nvim_create_autocmd('FileType', {
+        pattern = 'python',
+        callback = function()
+            vim.schedule(function()
+                require('install-pip-package').setup('mypy', true)
+            end)
+            vim.schedule(function()
+                require('install-pip-package').setup('flake8', true)
+            end)
+            vim.schedule(function()
+                require('install-pip-package').setup('isort', true)
+            end)
+            vim.schedule(function()
+                require('install-pip-package').setup('djlint', true)
+            end)
+        end,
+        once = true,
+    })
+'''
+
+
+[[plugins]]
+repo = 'yohi/set-docker-compose-env.nvim'
+hook_add = '''
+echom('yohi/set-docker-compose-env.nvim')
+echom('hook_add')
+'''
+hook_source = '''
+echom('yohi/set-docker-compose-env.nvim')
+echom('hook_source')
+'''
+hook_post_source = '''
+echom('yohi/set-docker-compose-env.nvim')
+echom('hook_post_source')
+'''
+
+
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
 hook_add = '''
@@ -25,23 +118,6 @@ hook_source = '''
     autocmd VimEnter * ++nested colorscheme codedark
 '''
 
-[[plugins]]
-repo = '~/.vim/read-or-create-venv.vim'
-# repo = 'yohi/read-or-create-venv.vim'
-hook_source = '''
-call read_or_create_venv#ReadOrCreateVenv()
-'''
-
-# for python developmen
-[[plugins]]
-repo = 'jmcantrell/vim-virtualenv'
-on_source = '~/.vim/read-or-create-venv.vim'
-# on_source = 'yohi/read-or-create-venv.vim'
-
-[[plugins]]
-repo = 'sansyrox/vim-python-virtualenv'
-on_source = '~/.vim/read-or-create-venv.vim'
-# on_source = 'yohi/read-or-create-venv.vim'
 
 # [[plugins]]
 # repo = 'Vimjas/vim-python-pep8-indent'
@@ -49,36 +125,6 @@ on_source = '~/.vim/read-or-create-venv.vim'
 # [[plugins]]
 # repo = 'lambdalisue/vim-django-support'
 
-[[plugins]]
-repo = '~/.vim/install-pip-package.nvim'
-# repo = 'yohi/install-pip-package.nvim'
-depends = '~/.vim/read-or-create-venv.vim'
-on_source = [
-    'jmcantrell/vim-virtualenv',
-    'sansyrox/vim-python-virtualenv',
-]
-lua_source = '''
-print('install-pip-package-nvim')
-require('install-pip-package').setup('pynvim')
-vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'python',
-        callback = function()
-            vim.schedule(function()
-                require('install-pip-package').setup('mypy', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('flake8', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('isort', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('djlint', true)
-            end)
-        end,
-        once = true,
-    })
-'''
 
 
 
@@ -411,6 +457,7 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'Shougo/deoppet.nvim'
 hook_source = '''
+    echom(g:python3_host_prog)
     call deoppet#initialize()
     call deoppet#custom#option('snippets',
     \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
@@ -1779,14 +1826,9 @@ au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=
 ## " ddu ======================
 ## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
 
-# ~/.vim/vim-show-weather 
-
-[[plugins]]
-# repo = '~/.vim/set-docker-compose-env.nvim'
-repo = 'yohi/set-docker-compose-env.nvim'
-depends = ['nvim-notify']
-lua_source = '''
-  require('set-docker-compose-env').setup()
-'''
-
-
+# [[plugins]]
+# repo = 'yohi/set-docker-compose-env.nvim'
+# depends = ['nvim-notify']
+# lua_add = '''
+#   require('set-docker-compose-env').setup()
+# '''
