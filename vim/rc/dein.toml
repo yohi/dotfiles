@@ -4,42 +4,49 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+hook_add = '''
+set termguicolors
+'''
 
 [[plugins]]
 repo = 'yohi/read-or-create-venv.vim'
 hook_add = '''
-echom('yohi/read-or-create-venv.vim')
-echom('hook_add')
+"echom('yohi/read-or-create-venv.vim')
+"echom('hook_add')
 '''
 hook_source = '''
-echom('yohi/read-or-create-venv.vim')
-echom('hook_source')
+"echom('yohi/read-or-create-venv.vim')
+"echom('has python3?')
+"echom(has('python3'))
+"echom(system('which python3'))
+"echom('hook_source')
 '''
 hook_post_source = '''
-echom('yohi/read-or-create-venv.vim')
-echom('yohi/set-docker-compose-env.nvim')
-echom('hook_post_source')
+"echom('yohi/read-or-create-venv.vim')
+"echom('hook_post_source')
 '''
 
 [[plugins]]
 repo = 'jmcantrell/vim-virtualenv'
 on_source = 'yohi/read-or-create-venv.vim'
-# hook_add = '''
-# echom('vim-virutualenv')
-# echom(system('env'))
-# echom('hook_add')
-# '''
+hook_add = '''
+"echom('vim-virutualenv')
+" "echom(system('env'))
+"echom('hook_add')
+'''
 lua_add = '''
-    print('lua_add')
+    -- print('lua_add')
     -- require('install-pip-package').setup('pynvim')
 '''
 hook_source = '''
-echom('vim-virutualenv')
-echom('hook_source')
+"echom('vim-virutualenv')
+"echom('hook_source')
 '''
 hook_post_source = '''
-echom('vim-virutualenv')
-echom('hook_post_source')
+"echom('vim-virutualenv')
+"echom('hook_post_source')
 '''
 
 # [[plugins]]
@@ -53,13 +60,13 @@ repo = 'yohi/install-pip-package.nvim'
 #     'sansyrox/vim-python-virtualenv',
 # ]
 lua_add = '''
-print('install-pip-package-nvim')
-print('lua_add')
+-- print('install-pip-package-nvim')
+-- print('lua_add')
 -- require('install-pip-package').setup('pynvim')
 '''
 lua_source = '''
-print('install-pip-package-nvim')
-print('lua_source')
+-- print('install-pip-package-nvim')
+-- print('lua_source')
 vim.api.nvim_create_autocmd('FileType', {
         pattern = 'python',
         callback = function()
@@ -83,25 +90,26 @@ vim.api.nvim_create_autocmd('FileType', {
 
 [[plugins]]
 repo = 'yohi/set-docker-compose-env.nvim'
-hook_add = '''
-echom('yohi/set-docker-compose-env.nvim')
-echom('hook_add')
+# hook_add = '''
+# "echom('yohi/set-docker-compose-env.nvim')
+# "echom('hook_add')
+# '''
+# lua_add = '''
+# require('set-docker-compose-env').setup()
+# '''
+# hook_source = '''
+# "echom('yohi/set-docker-compose-env.nvim')
+# "echom('hook_source')
+# '''
+lua_source = '''
+    require('set-docker-compose-env').setup()
 '''
-hook_source = '''
-echom('yohi/set-docker-compose-env.nvim')
-echom('hook_source')
-'''
-hook_post_source = '''
-echom('yohi/set-docker-compose-env.nvim')
-echom('hook_post_source')
-'''
+# hook_post_source = '''
+# "echom('yohi/set-docker-compose-env.nvim')
+# "echom('hook_post_source')
+# '''
 
 
-[[plugins]]
-repo = 'rcarriga/nvim-notify'
-hook_add = '''
-set termguicolors
-'''
 
 # [[plubins]]
 # repo = 'rbtnn/vim-ambiwidth'
@@ -435,6 +443,9 @@ repo = 'lambdalisue/pastefix.vim'
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+
 # command
 # [[plugins]]
 # repo = 'skanehira/command.vim'
@@ -457,7 +468,9 @@ repo = 'vim-denops/denops.vim'
 [[plugins]]
 repo = 'Shougo/deoppet.nvim'
 hook_source = '''
-    echom(g:python3_host_prog)
+    "echom(g:python3_host_prog)
+    "echom('has python3?')
+    "echom(has('python3'))
     call deoppet#initialize()
     call deoppet#custom#option('snippets',
     \ map(globpath(&runtimepath, 'neosnippets', 1, 1),

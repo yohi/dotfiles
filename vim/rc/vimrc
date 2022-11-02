@@ -102,8 +102,9 @@ let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
 
-let g:node_host_provider = system('which node')
-let g:python3_host_prog = system('which python3')
+let g:node_host_provider = system('echo -n $(which node)')
+" let g:python3_host_prog = system('which python3')
+let g:python3_host_prog = system('echo -n $(which python3)')
 
 
 " function s:install_pip_package(package_name, bin=v:false) abort
