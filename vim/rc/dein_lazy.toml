@@ -1,3 +1,5 @@
+
+
 # # ddc ---------------
 # 
 # [[plugins]]
@@ -354,23 +356,3 @@
 #         },
 #     }
 # '''
-
-
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-# rev = '1e59a77cf9db24a713d85525f4b55e3a6b5d115f'
-on_source = [
-    'nvim-lspconfig',
-]
-hook_source = '''
-echom "null-ls"
-pwd
-echom $VIRTUAL_ENV
-echo system('which python3')
-echo g:python3_host_prog
-lua << EOF
-   require('config.null-ls')
-EOF
-'''
-
-
