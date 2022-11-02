@@ -6,9 +6,15 @@ repo = 'wsdjeg/dein-ui.vim'
 
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
-hook_add = '''
-set termguicolors
+lua_add = '''
+vim.opt.termguicolors = true
+require('notify').setup({
+    background_colour = "#000000",
+})
 '''
+# hook_add = '''
+# set termguicolors
+# '''
 
 [[plugins]]
 repo = 'yohi/read-or-create-venv.vim'
@@ -94,16 +100,16 @@ repo = 'yohi/set-docker-compose-env.nvim'
 # "echom('yohi/set-docker-compose-env.nvim')
 # "echom('hook_add')
 # '''
-# lua_add = '''
-# require('set-docker-compose-env').setup()
-# '''
+lua_add = '''
+require('set-docker-compose-env').setup()
+'''
 # hook_source = '''
 # "echom('yohi/set-docker-compose-env.nvim')
 # "echom('hook_source')
 # '''
-lua_source = '''
-    require('set-docker-compose-env').setup()
-'''
+# lua_source = '''
+#     require('set-docker-compose-env').setup()
+# '''
 # hook_post_source = '''
 # "echom('yohi/set-docker-compose-env.nvim')
 # "echom('hook_post_source')
