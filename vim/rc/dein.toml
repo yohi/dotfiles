@@ -1,8 +1,10 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
+
 
 # カラースキーマ
 [[plugins]]
@@ -13,6 +15,7 @@ hook_source = '''
     autocmd VimEnter * ++nested colorscheme codedark
 '''
 
+
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
 lua_add = '''
@@ -21,13 +24,25 @@ require('notify').setup({
     background_colour = "#000000",
 })
 '''
+hook_source = '''
+" echom('yohi/read-or-create-venv.vim')
+" echom('has python3?')
+" echom(has('python3'))
+" echom(system('which python3'))
+" echom('hook_source')
+'''
+hook_post_source = '''
+" echom('yohi/read-or-create-venv.vim')
+" echom('hook_post_source')
+'''
+
 
 [[plugins]]
 repo = 'yohi/read-or-create-venv.vim'
 hook_add = '''
-echom('yohi/read-or-create-venv.vim')
-echom('hook_add')
-echom('read_or_create_venv function exec')
+" echom('yohi/read-or-create-venv.vim')
+" echom('hook_add')
+" echom('read_or_create_venv function exec')
 let s:virtual_env = getcwd() . '/.venv'
 if isdirectory(s:virtual_env)
     let $VIRTUAL_ENV = s:virtual_env
@@ -53,53 +68,44 @@ if strlen(g:pythonpath) == 0
     let $PYTHONPATH = getcwd()
 endif
 
-echom(g:pythonpath)
-echom($PYTHONPATH)
-echom($VIRTUAL_ENV)
-'''
-hook_source = '''
-echom('yohi/read-or-create-venv.vim')
-echom('has python3?')
-echom(has('python3'))
-echom(system('which python3'))
-echom('hook_source')
-'''
-hook_post_source = '''
-echom('yohi/read-or-create-venv.vim')
-echom('hook_post_source')
+" echom($PYTHONPATH)
+" echom($VIRTUAL_ENV)
 '''
 
 [[plugins]]
-repo = 'jmcantrell/vim-virtualenv'
+repo = 'sansyrox/vim-python-virtualenv'
 on_source = 'yohi/read-or-create-venv.vim'
-hook_add = '''
-echom('vim-virutualenv')
- "echom(system('env'))
-echom('hook_add')
-'''
-lua_add = '''
-    -- print('lua_add')
-    -- require('install-pip-package').setup('pynvim')
-'''
-hook_source = '''
-echom('vim-virutualenv')
-echom('hook_source')
-'''
-hook_post_source = '''
-echom('vim-virutualenv')
-echom('hook_post_source')
-'''
+
 
 # [[plugins]]
-# repo = 'sansyrox/vim-python-virtualenv'
+# repo = 'jmcantrell/vim-virtualenv'
 # on_source = 'yohi/read-or-create-venv.vim'
+# # hook_add = '''
+# # echom('vim-virutualenv')
+# # "echom(system('env'))
+# # echom('hook_add')
+# # echom(g:python3_host_prog)
+# # '''
+# lua_add = '''
+# print('vim-virtualenv')
+# print('lua_add')
+# '''
+# hook_source = '''
+# echom('vim-virutualenv')
+# echom('hook_source')
+# '''
+# hook_post_source = '''
+# echom('vim-virutualenv')
+# echom('hook_post_source')
+# '''
+
+
 
 [[plugins]]
 repo = 'yohi/install-pip-package.nvim'
-# on_source = [
-#     'jmcantrell/vim-virtualenv',
-#     'sansyrox/vim-python-virtualenv',
-# ]
+on_source = [
+'sansyrox/vim-python-virtualenv',
+]
 lua_add = '''
 -- print('install-pip-package-nvim')
 -- print('lua_add')
@@ -108,6 +114,7 @@ lua_add = '''
 lua_source = '''
 -- print('install-pip-package-nvim')
 -- print('lua_source')
+require('install-pip-package').setup('pynvim')
 vim.api.nvim_create_autocmd('FileType', {
         pattern = 'python',
         callback = function()
@@ -129,27 +136,6 @@ vim.api.nvim_create_autocmd('FileType', {
 '''
 
 
-[[plugins]]
-repo = 'yohi/set-docker-compose-env.nvim'
-# hook_add = '''
-# "echom('yohi/set-docker-compose-env.nvim')
-# "echom('hook_add')
-# '''
-lua_add = '''
-require('set-docker-compose-env').setup()
-'''
-# hook_source = '''
-# "echom('yohi/set-docker-compose-env.nvim')
-# "echom('hook_source')
-# '''
-# lua_source = '''
-#     require('set-docker-compose-env').setup()
-# '''
-# hook_post_source = '''
-# "echom('yohi/set-docker-compose-env.nvim')
-# "echom('hook_post_source')
-# '''
-
 # nvim-lspconfig ----------
 
 [[plugins]]
@@ -164,41 +150,39 @@ lua << eof
 eof
 '''
 
-# [[plugins]]
-# repo = 'williamboman/nvim-lsp-installer'
-# on_source = 'nvim-lspconfig'
 
 [[plugins]]
 repo = 'williamboman/mason.nvim'
 on_source = 'nvim-lspconfig'
 
+
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
 on_source = 'mason.nvim'
+
 
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
 on_source = 'nvim-lspconfig'
 
+
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
-rev = '1e59a77cf9db24a713d85525f4b55e3a6b5d115f'
-on_source = 'nvim-lspconfig'
-# on_source = [
-#     'nvim-lspconfig',
-#     # 'jmcantrell/vim-virtualenv',
-# ]
-lua_add = '''
-print('null-ls')
-print('lua_add')
-'''
+# rev = '1e59a77cf9db24a713d85525f4b55e3a6b5d115f'
+on_source = [
+    'nvim-lspconfig',
+    'sansyrox/vim-python-virtualenv',
+    'yohi/set-docker-compose-env.nvim',
+]
+# lua_add = '''
+# print('null-ls')
+# print('lua_add')
+# '''
 lua_source = '''
-print('null-ls')
-print('lua_source')
 require('config.null-ls')
 '''
 # hook_add = '''
-# echom "null-ls"
+# " echom "null-ls"
 # pwd
 # echom $VIRTUAL_ENV
 # echom system('which python3')
@@ -206,6 +190,28 @@ require('config.null-ls')
 # lua << EOF
 # EOF
 # '''
+
+[[plugins]]
+repo = 'yohi/set-docker-compose-env.nvim'
+on_source = ''
+hook_add = '''
+" echom('yohi/set-docker-compose-env.nvim')
+" echom('hook_add')
+'''
+# hook_source = '''
+# echom('yohi/set-docker-compose-env.nvim')
+# echom('hook_source')
+# '''
+lua_source = '''
+-- print('yohi/set-docker-compose-env.nvim')
+-- print('lua_source')
+require('set-docker-compose-env').setup()
+'''
+hook_post_source = '''
+"echom('yohi/set-docker-compose-env.nvim')
+"echom('hook_post_source')
+'''
+
 
 
 
@@ -557,10 +563,15 @@ repo = 'Shougo/ddc-ui-native'
 # deoppet
 [[plugins]]
 repo = 'Shougo/deoppet.nvim'
+on_source = [
+'yohi/install-pip-package.nvim',
+]
 hook_source = '''
-    "echom(g:python3_host_prog)
-    "echom('has python3?')
-    "echom(has('python3'))
+    " echom('deoppet')
+    " echom('g:python3_host_prog')
+    " echom(g:python3_host_prog)
+    " echom('has python3?')
+    " echom(has('python3'))
     call deoppet#initialize()
     call deoppet#custom#option('snippets',
     \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
@@ -1911,10 +1922,3 @@ au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=
 ## 
 ## " ddu ======================
 ## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>
-
-# [[plugins]]
-# repo = 'yohi/set-docker-compose-env.nvim'
-# depends = ['nvim-notify']
-# lua_add = '''
-#   require('set-docker-compose-env').setup()
-# '''
