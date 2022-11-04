@@ -39,23 +39,16 @@ hook_post_source = '''
 
 [[plugins]]
 repo = 'yohi/set-docker-compose-env.nvim'
-on_source = ''
-hook_add = '''
-" echom('yohi/set-docker-compose-env.nvim')
-" echom('hook_add')
-'''
-# hook_source = '''
-# echom('yohi/set-docker-compose-env.nvim')
-# echom('hook_source')
-# '''
-lua_source = '''
--- print('yohi/set-docker-compose-env.nvim')
--- print('lua_source')
+lua_add = '''
+print('yohi/set-docker-compose-env.nvim: lua_add')
 require('set-docker-compose-env').setup()
 '''
+lua_source = '''
+print('yohi/set-docker-compose-env.nvim: lua_source')
+-- require('set-docker-compose-env').setup()
+'''
 hook_post_source = '''
-"echom('yohi/set-docker-compose-env.nvim')
-"echom('hook_post_source')
+echom('yohi/set-docker-compose-env.nvim: hook_post_source')
 '''
 
 
@@ -196,25 +189,14 @@ on_source = [
     'sansyrox/vim-python-virtualenv',
     'yohi/set-docker-compose-env.nvim',
 ]
-# lua_add = '''
-# print('null-ls')
-# print('lua_add')
-# '''
-lua_source = '''
+lua_add = '''
+print('null-ls: lua_add')
 require('config.null-ls')
 '''
-# hook_add = '''
-# " echom "null-ls"
-# pwd
-# echom $VIRTUAL_ENV
-# echom system('which python3')
-# echom g:python3_host_prog
-# lua << EOF
-# EOF
-# '''
-
-
-
+lua_source = '''
+print('null-ls: lua_source')
+-- require('config.null-ls')
+'''
 
 
 # [[plubins]]
