@@ -25,6 +25,7 @@ require('notify').setup({
 })
 '''
 hook_source = '''
+
 " echom('yohi/read-or-create-venv.vim')
 " echom('has python3?')
 " echom(has('python3'))
@@ -34,6 +35,27 @@ hook_source = '''
 hook_post_source = '''
 " echom('yohi/read-or-create-venv.vim')
 " echom('hook_post_source')
+'''
+
+[[plugins]]
+repo = 'yohi/set-docker-compose-env.nvim'
+on_source = ''
+hook_add = '''
+" echom('yohi/set-docker-compose-env.nvim')
+" echom('hook_add')
+'''
+# hook_source = '''
+# echom('yohi/set-docker-compose-env.nvim')
+# echom('hook_source')
+# '''
+lua_source = '''
+-- print('yohi/set-docker-compose-env.nvim')
+-- print('lua_source')
+require('set-docker-compose-env').setup()
+'''
+hook_post_source = '''
+"echom('yohi/set-docker-compose-env.nvim')
+"echom('hook_post_source')
 '''
 
 
@@ -191,26 +213,6 @@ require('config.null-ls')
 # EOF
 # '''
 
-[[plugins]]
-repo = 'yohi/set-docker-compose-env.nvim'
-on_source = ''
-hook_add = '''
-" echom('yohi/set-docker-compose-env.nvim')
-" echom('hook_add')
-'''
-# hook_source = '''
-# echom('yohi/set-docker-compose-env.nvim')
-# echom('hook_source')
-# '''
-lua_source = '''
--- print('yohi/set-docker-compose-env.nvim')
--- print('lua_source')
-require('set-docker-compose-env').setup()
-'''
-hook_post_source = '''
-"echom('yohi/set-docker-compose-env.nvim')
-"echom('hook_post_source')
-'''
 
 
 
