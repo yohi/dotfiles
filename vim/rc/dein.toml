@@ -165,7 +165,6 @@ lua << eof
 eof
 '''
 
-
 [[plugins]]
 repo = 'williamboman/mason.nvim'
 on_source = 'nvim-lspconfig'
@@ -175,11 +174,13 @@ on_source = 'nvim-lspconfig'
 repo = 'williamboman/mason-lspconfig.nvim'
 on_source = 'mason.nvim'
 
+[[plugins]]
+repo = 'WhoIsSethDaniel/mason-tool-installer.nvim'
+on_source = 'mason.nvim'
 
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
 on_source = 'nvim-lspconfig'
-
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
@@ -523,9 +524,6 @@ repo = 'lambdalisue/pastefix.vim'
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 
-[[plugins]]
-repo = 'Shougo/ddc-ui-native'
-
 # command
 # [[plugins]]
 # repo = 'skanehira/command.vim'
@@ -675,161 +673,17 @@ repo = 'Shougo/pum.vim'
 repo = 'Shougo/ddc.vim'
 on_event = ['InsertEnter', 'CursorHold']
 depends = ['denops.vim', 'pum.vim']
-hook_source = '''
+hook_add = '''
+    echom('ddc.vim')
+    echom('hook_add')
     source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
 '''
-# hook_add = '''
-#     nnoremap :       <Cmd>call CommandlinePre()<CR>:
-# 
-#     function! CommandlinePre() abort
-#       " Note: It disables default command line completion!
-#       cnoremap <expr> <Tab>
-#       \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-#       \ ddc#manual_complete()
-#       cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-#       cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-#       cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-# 
-#       " Overwrite sources
-#       if !exists('b:prev_buffer_config')
-#         let b:prev_buffer_config = ddc#custom#get_buffer()
-#       endif
-#       call ddc#custom#patch_buffer('sources',
-#               \ ['cmdline', 'cmdline-history', 'around'])
-# 
-#       autocmd User DDCCmdlineLeave ++once call CommandlinePost()
-#       autocmd InsertEnter <buffer> ++once call CommandlinePost()
-# 
-#       " Enable command line completion
-#       call ddc#enable_cmdline_completion()
-#     endfunction
-# 
-#     function! CommandlinePost() abort
-#       cunmap <Tab>
-#       cunmap <S-Tab>
-#       cunmap <C-y>
-#       cunmap <C-e>
-# 
-#       " Restore sources
-#       if exists('b:prev_buffer_config')
-#         call ddc#custom#set_buffer(b:prev_buffer_config)
-#         unlet b:prev_buffer_config
-#       else
-#         call ddc#custom#set_buffer({})
-#       endif
-#     endfunction
-# 
-# 
-#     inoremap <silent><expr> <TAB>
-#           \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-#           \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-#           \ '<TAB>' : ddc#manual_complete()
-#     inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-#     inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
-#     inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
-#     inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-#     inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-# 
-# 
-# '''
-# hook_source = '''
-#     call ddc#custom#patch_global(
-#     \       'sources',
-#     \       [
-#     \           'around',
-#     \           'buffer',
-#     \           'deoppet',
-#     \           'necovim',
-#     \           'tabnine',
-#     \           'nvim-lsp',
-#     \       ]
-#     \   )
-#     call ddc#custom#patch_global(
-#     \       'sourceOptions',
-#     \       {
-#     \           '_': {
-#     \               'matchers': ['matcher_head'],
-#     \               'sorters': ['sorter_rank'],
-#     \               'converters': ['converter_remove_overlap']
-#     \           },
-#     \           'around': {
-#     \               'mark': 'A'
-#     \           },
-#     \           'buffer': {
-#     \               'mark': 'B'
-#     \           },
-#     \           'deoppet': {
-#     \               'mark': 'dp'
-#     \           },
-#     \           'necovim': {
-#     \               'mark': 'vim'
-#     \           },
-#     \           'tabnine': {
-#     \               'mark': 'TN',
-#     \               'isVolatile': v:true,
-#     \               'maxSize': 200,
-#     \           },
-#     \           'nvim-lsp': {
-#     \               'mark': 'lsp',
-#     \               'forceCompletionPattern': '\.\w*|:\w*|->\w*',
-#     \               'useIcon': v:true,
-#     \           },
-#     \       }
-#     \   )
-#     call ddc#custom#patch_global(
-#     \       'sourceParams',
-#     \       {
-#     \           'around': {
-#     \               'maxSize': 500,
-#     \           },
-#     \           'nvim-lsp': {
-#     \               'kindLabels': {
-#     \                   'Class': 'c'
-#     \               },
-#     \               'useIcon': v:true,
-#     \           }
-#     \       }
-#     \   )
-#     call ddc#custom#patch_global(
-#     \       'filterParams',
-#     \       {
-#     \           'buffer': {
-#     \               'requireSameFiletype': v:false
-#     \           }
-#     \       }
-#     \   )
-#     call ddc#custom#patch_global(
-#     \       'autoCompleteEvents',
-#     \       [
-#     \           'InsertEnter',
-#     \           'TextChangedI',
-#     \           'TextChangedP',
-#     \           'CmdlineEnter',
-#     \           'CmdlineChanged',
-#     \       ]
-#     \   )
-#     call ddc#custom#patch_global('completionMenu', 'pum.vim')
-# 
-#     " inoremap <silent><expr> <TAB>
-#     " \ pumvisible() ? '<C-n>' :
-#     " \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-#     " \ '<TAB>' : ddc#manual_complete()
-# 
-#     " <S-TAB>: completion back.
-#     " inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
-# 
-#     " inoremap <silent><expr> <TAB>
-#     " \   ddc#map#pum_visible() ? '<C-n>' :
-#     " \   (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-#     " \   '<TAB>' : ddc#map#manual_complete()
-#     " inoremap <expr><S-TAB>  ddc#map#pum_visible() ? '<C-p>' : '<C-h>'
-# 
-#     call ddc#enable()
-# '''
-
 
 [[plugins]]
-repo = 'Shougo/ddc-around'
+repo = 'Shougo/ddc-ui-native'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
 on_source = 'ddc.vim'
 
 [[plugins]]

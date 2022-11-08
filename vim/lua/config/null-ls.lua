@@ -56,6 +56,7 @@ local sources = {
             -- レベルをINFOに変更
             diagnostic.severity =  vim.diagnostic.severity["INFO"]
         end,
+        method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
         -- condition = function()
         --     -- cpellが実行できるときのみ実行
         --     return vim.fn.executable('cspell') > 0

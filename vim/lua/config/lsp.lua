@@ -94,36 +94,72 @@ end
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
 local lspconfig = require('lspconfig')
-
+local mason_tool_installer = require('mason-tool-installer')
 
 -- 1. LSP Sever management
 mason.setup()
 
-mason_lspconfig.setup({
-    -- ensure_installed = {
-    --     'bash-language-server',
-    --     'cspell',
-    --     'djlint',
-    --     'dockerfile-language-server',
-    --     'dot-language-server',
-    --     'flake8',
-    --     'html-lsp',
-    --     'isort',
-    --     'json-lsp',
-    --     'json-to-struct',
-    --     'lua-language-server',
-    --     'markdownlint',
-    --     'mypy',
-    --     'pyright',
-    --     'shellcheck',
-    --     'sql-formatter',
-    --     'sqlls',
-    --     'vim-language-server',
-    --     'yaml-language-server',
-    --     'yamllint',
-    -- },
-    automatic_installation = false,
+mason_tool_installer.setup({
+    ensure_installed = {
+        'bash-language-server',
+        'cspell',
+        'djlint',
+        'dockerfile-language-server',
+        'dot-language-server',
+        'flake8',
+        'html-lsp',
+        'isort',
+        'json-lsp',
+        'json-to-struct',
+        'lua-language-server',
+        'markdownlint',
+        'mypy',
+        'pyright',
+        'shellcheck',
+        'sql-formatter',
+        'sqlls',
+        'vim-language-server',
+        'yaml-language-server',
+        'yamllint',
+    },
+    auto_update = true,
+    run_on_start = true,
+    start_delay = 0,
 })
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MasonToolsUpdateCompleted',
+  callback = function()
+    vim.schedule(function()
+      print 'mason-tool-installer has finished'
+    end)
+  end,
+})
+
+-- mason_lspconfig.setup({
+--     ensure_installed = {
+--         'bash-language-server',
+--         'cspell',
+--         'djlint',
+--         'dockerfile-language-server',
+--         'dot-language-server',
+--         'flake8',
+--         'html-lsp',
+--         'isort',
+--         'json-lsp',
+--         'json-to-struct',
+--         'lua-language-server',
+--         'markdownlint',
+--         'mypy',
+--         'pyright',
+--         'shellcheck',
+--         'sql-formatter',
+--         'sqlls',
+--         'vim-language-server',
+--         'yaml-language-server',
+--         'yamllint',
+--     },
+--     automatic_installation = true,
+-- })
 
 mason_lspconfig.setup_handlers({ function(server_name)
     local navic = require("nvim-navic")
@@ -227,8 +263,8 @@ lspconfig.pyright.setup(handle_lsp{
     -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
     settings = {
         pyright = {
-            -- disableLanguageService = true,
-            -- disableOrganizeImports = true,
+            disableLanguageService = false,
+            disableOrganizeImports = false,
         },
         python = {
             analysis = {
