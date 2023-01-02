@@ -1,21 +1,22 @@
+# プラグインマネージャー
 [[plugins]]
 repo = 'Shougo/dein.vim'
-
-
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
-
-# カラースキーマ
+# パッケージマネージャー
 [[plugins]]
-repo = 'tomasiser/vim-code-dark'
-hook_source = '''
-    " colorscheme codedark
-    " au MyAutoCmd VimEnter * nested colorscheme codedark
-    autocmd VimEnter * ++nested colorscheme codedark
+repo = 'williamboman/mason.nvim'
+on_source = 'mason-lspconfig.nvim'
+
+# オプティマイザ
+[[plubins]]
+repo = 'lewis6991/impatient.nvim'
+lua_source = '''
+    require('impatient')
 '''
 
-
+# 通知
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
 lua_add = '''
@@ -24,213 +25,63 @@ require('notify').setup({
     background_colour = "#000000",
 })
 '''
-hook_source = '''
-
-" echom('yohi/read-or-create-venv.vim')
-" echom('has python3?')
-" echom(has('python3'))
-" echom(system('which python3'))
-" echom('hook_source')
-'''
-hook_post_source = '''
-" echom('yohi/read-or-create-venv.vim')
-" echom('hook_post_source')
-'''
-
-[[plugins]]
-repo = 'yohi/set-docker-compose-env.nvim'
-lua_add = '''
-print('yohi/set-docker-compose-env.nvim: lua_add')
-require('set-docker-compose-env').setup()
-'''
-lua_source = '''
-print('yohi/set-docker-compose-env.nvim: lua_source')
--- require('set-docker-compose-env').setup()
-'''
-hook_post_source = '''
-echom('yohi/set-docker-compose-env.nvim: hook_post_source')
-'''
-
-
-[[plugins]]
-repo = 'yohi/read-or-create-venv.vim'
-hook_add = '''
-" echom('yohi/read-or-create-venv.vim')
-" echom('hook_add')
-" echom('read_or_create_venv function exec')
-let s:virtual_env = getcwd() . '/.venv'
-if isdirectory(s:virtual_env)
-    let $VIRTUAL_ENV = s:virtual_env
-else
-    " virtual_envがない場合
-    let s:python3 = system('which python3')
-    let s:virtual_env = $HOME . '/.vim/vimvenv'
-    if !isdirectory(s:virtual_env)
-        " echom('install vim virtualenv')
-        call system('python3 -m venv ' . s:virtual_env)
-    endif
-    let $VIRTUAL_ENV = s:virtual_env
-endif
-
-let g:python3_host_prog = s:virtual_env . '/bin/python'
-let $PATH = s:virtual_env . '/bin:' . $PATH
-" call timer_start(0, s:istall_pip_package('pynvim'))
-" call timer_start(0, s:install_pip_package('mypy', v:true))
-" call timer_start(0, s:install_pip_package('flake8', v:true))
-
-let g:pythonpath = $PYTHONPATH
-if strlen(g:pythonpath) == 0
-    let $PYTHONPATH = getcwd()
-endif
-
-" echom($PYTHONPATH)
-" echom($VIRTUAL_ENV)
-'''
-
-[[plugins]]
-repo = 'sansyrox/vim-python-virtualenv'
-on_source = 'yohi/read-or-create-venv.vim'
-
-
-# [[plugins]]
-# repo = 'jmcantrell/vim-virtualenv'
-# on_source = 'yohi/read-or-create-venv.vim'
-# # hook_add = '''
-# # echom('vim-virutualenv')
-# # "echom(system('env'))
-# # echom('hook_add')
-# # echom(g:python3_host_prog)
-# # '''
-# lua_add = '''
-# print('vim-virtualenv')
-# print('lua_add')
-# '''
 # hook_source = '''
-# echom('vim-virutualenv')
-# echom('hook_source')
+# " echom('yohi/read-or-create-venv.vim')
+# " echom('has python3?')
+# " echom(has('python3'))
+# " echom(system('which python3'))
+# " echom('hook_source')
 # '''
 # hook_post_source = '''
-# echom('vim-virutualenv')
-# echom('hook_post_source')
+# " echom('yohi/read-or-create-venv.vim')
+# " echom('hook_post_source')
 # '''
 
-
-
+# 自動インデント検出
 [[plugins]]
-repo = 'yohi/install-pip-package.nvim'
-on_source = [
-'sansyrox/vim-python-virtualenv',
-]
-lua_add = '''
--- print('install-pip-package-nvim')
--- print('lua_add')
--- require('install-pip-package').setup('pynvim')
-'''
+repo = 'Darazaki/indent-o-matic'
 lua_source = '''
--- print('install-pip-package-nvim')
--- print('lua_source')
-require('install-pip-package').setup('pynvim')
-vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'python',
-        callback = function()
-            vim.schedule(function()
-                require('install-pip-package').setup('mypy', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('flake8', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('isort', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('djlint', true)
-            end)
-        end,
-        once = true,
-    })
+    require('indent-o-matic').setup {
+        -- The values indicated here are the default
+
+        -- Number of lines without indentation before giving up (use -1 for infinite)
+        max_lines = 2048,
+
+        -- Space indentations that should be detected
+        standard_widths = { 2, 4, 8 },
+
+        -- Skip multi-line comments and strings (more accurate detection but less performant)
+        skip_multiline = true,
+    }
 '''
 
-
-# nvim-lspconfig ----------
-
+# 
 [[plugins]]
-repo = 'neovim/nvim-lspconfig'
-on_source = [
-    'rrethy/vim-illuminate',
-    'read-or-create-venv.vim',
-]
-hook_add = '''
-lua << eof
-    require('config.lsp')
-eof
+repo = 'antoinemadec/FixCursorHold.nvim'
+hook_source = '''
+    " in millisecond, used for both CursorHold and CursorHoldI,
+    " use updatetime instead if not defined
+    let g:cursorhold_updatetime = 100
 '''
 
+# アイコン
 [[plugins]]
-repo = 'williamboman/mason.nvim'
-on_source = 'nvim-lspconfig'
+repo = 'ryanoasis/vim-devicons'
 
-
-[[plugins]]
-repo = 'williamboman/mason-lspconfig.nvim'
-on_source = 'mason.nvim'
-
-[[plugins]]
-repo = 'WhoIsSethDaniel/mason-tool-installer.nvim'
-on_source = 'mason.nvim'
-
-[[plugins]]
-repo = 'SmiteshP/nvim-navic'
-on_source = 'nvim-lspconfig'
-
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-# rev = '1e59a77cf9db24a713d85525f4b55e3a6b5d115f'
-on_source = [
-    'nvim-lspconfig',
-    'sansyrox/vim-python-virtualenv',
-    'yohi/set-docker-compose-env.nvim',
-]
-lua_add = '''
-print('null-ls: lua_add')
-require('config.null-ls')
-'''
-lua_source = '''
-print('null-ls: lua_source')
--- require('config.null-ls')
-'''
-
-
-# [[plubins]]
-# repo = 'rbtnn/vim-ambiwidth'
-#
+# バッファライン
 # [[plugins]]
-# repo = 'powerline/powerline'
-
-
-
-# [[plugins]]
-# repo = 'Vimjas/vim-python-pep8-indent'
-
-# [[plugins]]
-# repo = 'lambdalisue/vim-django-support'
-
-
-
-
-
-
-# 全角スペースをホワイトに表示
-# [[plugins]]
-# repo = 'thinca/vim-zenspace'
-# hook_add = '''
-# let g:zenspace#default_mode = 'on'
-# augroup vimrc-highlight
-#   autocmd!
-#   autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
-# augroup END
+# repo = 'akinsho/bufferline.nvim'
+# rev = 'v3.*'
+# depends = ['nvim-web-devicons']
+# lua_source = '''
+#     vim.opt.termguicolors = true
+#     require("bufferline").setup{}
 # '''
 
-# ステータスバー
+[[plugins]]
+repo = 'nvim-tree/nvim-web-devicons'
+
+# ステータスライン
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 hook_add = '''
@@ -279,8 +130,445 @@ hook_add = '''
     let g:airline_theme='deus'
 '''
 
+# シンタックスハイライト
 [[plugins]]
-repo = 'kyazdani42/nvim-web-devicons'
+repo = 'nvim-treesitter/nvim-treesitter'
+lua_add = '''
+  require'nvim-treesitter.configs'.setup {
+    -- A list of parser names, or "all"
+    ensure_installed = { "c", "lua", "rust","typescript","vim","json","javascript", "python", "jsonc" },
+
+    -- Install parsers synchronously (only applied to `ensure_installed`)
+    sync_install = false,
+
+    -- List of parsers to ignore installing (for "all")
+    -- ignore_install = { "javascript" },
+
+    highlight = {
+      -- `false` will disable the whole extension
+      enable = true,
+
+      -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+      -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+      -- the name of the parser)
+      -- list of language that will be disabled
+      disable = { "c", "rust" },
+
+      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+      -- Using this option may slow down your editor, and you may see some duplicate highlights.
+      -- Instead of true it can also be a list of languages
+      additional_vim_regex_highlighting = false,
+    },
+  }
+'''
+
+# カッコハイライト
+[[plugins]]
+repo = 'p00f/nvim-ts-rainbow'
+lua_source = '''
+    require("nvim-treesitter.configs").setup {
+        highlight = {
+            -- ...
+        },
+        -- ...
+        rainbow = {
+          enable = true,
+          -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
+          extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
+          max_file_lines = nil, -- Do not enable for files with more than n lines, int
+          -- colors = {}, -- table of hex strings
+          -- termcolors = {} -- table of colour name strings
+        }
+    }
+'''
+
+# タグ自動クローズ
+[[plugins]]
+repo = 'windwp/nvim-ts-autotag'
+lua_source = '''
+  require'nvim-treesitter.configs'.setup {
+    autotag = {
+      enable = true,
+    }
+  }
+  require('nvim-ts-autotag').setup()
+'''
+
+# コンテクストコメント
+repo = 'JoosepAlviste/nvim-ts-context-commentstring'
+lua_source = '''
+    require'nvim-treesitter.configs'.setup {
+      context_commentstring = {
+        enable = true
+      }
+    }
+'''
+
+# LSP
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+on_source = [
+    'mason-lspconfig.nvim'
+    'rrethy/vim-illuminate',
+    'read-or-create-venv.vim',
+]
+lua_add = '''
+    require('config.lsp')
+'''
+
+# LSP設定
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+on_source = 'mason.nvim'
+
+# フォーマッター・リンター
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+on_source = 'mason.nvim'
+# depends = [
+#     'nvim-lspconfig',
+#     'vim-python-virtualenv',
+#     # 'yohi/set-docker-compose-env.nvim',
+# ]
+lua_source = '''
+    print('null-ls lua_source')
+    require('config.null-ls')
+'''
+lua_add = '''
+    print('null-ls lua_add')
+'''
+
+# null-ls設定
+repo = 'jayp0521/mason-null-ls.nvim'
+on_source = [
+    'mason.nvim',
+    # 'null-ls.nvim',
+]
+lua_source = '''
+    print('mason-null-ls lua_source')
+'''
+
+# DAP
+[[plugins]]
+repo = 'mfussenegger/nvim-dap'
+
+# DAP設定
+[[plugins]]
+repo = 'jayp0521/mason-nvim-dap.nvim'
+depends = [
+    'mason.nvim',
+    'nvim-dap',
+]
+lua_source = '''
+    require("mason-nvim-dap").setup({
+        automatic_setup = true,
+        ensure_installed = { "python", "delve" }
+    })
+'''
+
+# DAPUI
+[[plugins]]
+repo = 'rcarriga/nvim-dap-ui'
+depends = [
+    'nvim-dap'
+]
+lua_source = '''
+    require("dapui").setup({
+      icons = { expanded = "", collapsed = "", current_frame = "" },
+      mappings = {
+        -- Use a table to apply multiple mappings
+        expand = { "<CR>", "<2-LeftMouse>" },
+        open = "o",
+        remove = "d",
+        edit = "e",
+        repl = "r",
+        toggle = "t",
+      },
+      -- Use this to override mappings for specific elements
+      element_mappings = {
+        -- Example:
+        -- stacks = {
+        --   open = "<CR>",
+        --   expand = "o",
+        -- }
+      },
+      -- Expand lines larger than the window
+      -- Requires >= 0.7
+      expand_lines = vim.fn.has("nvim-0.7") == 1,
+      -- Layouts define sections of the screen to place windows.
+      -- The position can be "left", "right", "top" or "bottom".
+      -- The size specifies the height/width depending on position. It can be an Int
+      -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
+      -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
+      -- Elements are the elements shown in the layout (in order).
+      -- Layouts are opened in order so that earlier layouts take priority in window sizing.
+      layouts = {
+        {
+          elements = {
+          -- Elements can be strings or table with id and size keys.
+            { id = "scopes", size = 0.25 },
+            "breakpoints",
+            "stacks",
+            "watches",
+          },
+          size = 40, -- 40 columns
+          position = "left",
+        },
+        {
+          elements = {
+            "repl",
+            "console",
+          },
+          size = 0.25, -- 25% of total lines
+          position = "bottom",
+        },
+      },
+      controls = {
+        -- Requires Neovim nightly (or 0.8 when released)
+        enabled = true,
+        -- Display controls in this element
+        element = "repl",
+        icons = {
+          pause = "",
+          play = "",
+          step_into = "",
+          step_over = "",
+          step_out = "",
+          step_back = "",
+          run_last = "",
+          terminate = "",
+        },
+      },
+      floating = {
+        max_height = nil, -- These can be integers or a float between 0 and 1.
+        max_width = nil, -- Floats will be treated as percentage of your screen.
+        border = "single", -- Border style. Can be "single", "double" or "rounded"
+        mappings = {
+          close = { "q", "<Esc>" },
+        },
+      },
+      windows = { indent = 1 },
+      render = {
+        max_type_length = nil, -- Can be integer or nil.
+        max_value_lines = 100, -- Can be integer or nil.
+      }
+    })
+'''
+
+# FZF
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+
+[[plugins]]
+repo = 'yuki-yano/fzf-preview.vim'
+rev = 'release/rpc'
+hook_add = '''
+
+    nnoremap <C-p> :FzfPreviewProjectFile<CR>
+
+    " if executable('fish')
+    "     " use fish for embedded terminals
+    "     set shell=fish
+    "     " use bash for else
+    "     let $SHELL = 'bash'
+    " endif
+    " let mapleader = "\<Space>"
+
+    " " nnoremap <silent> <Leader>f     :<C-u>FzfPreviewFromResourcesRpc project_mru git<CR>
+    " " nnoremap <silent> <Leader>s    :<C-u>FzfPreviewGitStatusRpc<CR>
+    " " nnoremap <silent> <Leader>A    :<C-u>FzfPreviewGitActionsRpc<CR>
+    " " nnoremap <silent> <Leader>b     :<C-u>FzfPreviewBuffersRpc<CR>
+    " " nnoremap <silent> <Leader>B     :<C-u>FzfPreviewAllBuffersRpc<CR>
+    " " nnoremap <silent> <Leader>h     :<C-u>FzfPreviewFromResourcesRpc buffer project_mru<CR>
+    " " nnoremap <silent> <Leader><C-o> :<C-u>FzfPreviewJumpsRpc<CR>
+    " " nnoremap <silent> <Leader>c    :<C-u>FzfPreviewChangesRpc<CR>
+    " " nnoremap <silent> <Leader>/     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
+    " " nnoremap <silent> <Leader>*     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
+    " " nnoremap          <Leader>g    :<C-u>FzfPreviewProjectGrepRpc<Space>
+    " " xnoremap          <Leader>g    "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+    " " nnoremap <silent> <Leader>t     :<C-u>FzfPreviewBufferTagsRpc<CR>
+    " " nnoremap <silent> <Leader>;     :<C-u>FzfPreviewQuickFixRpc<CR>
+    " " nnoremap <silent> <Leader>l     :<C-u>FzfPreviewLocationListRpc<CR>
+
+    " augroup fzf_preview
+    "   autocmd!
+    "   autocmd User fzf_preview#rpc#initialized call s:fzf_preview_settings() " fzf_preview#remote#initialized or fzf_preview#coc#initialized
+    " augroup END
+
+    " function! s:fzf_preview_settings() abort
+    "   let g:fzf_preview_command = 'COLORTERM=truecolor ' . g:fzf_preview_command
+    "   let g:fzf_preview_grep_preview_cmd = 'COLORTERM=truecolor ' . g:fzf_preview_grep_preview_cmd
+    " endfunction
+'''
+
+# Autopairs
+[[plugins]]
+repo = 'windwp/nvim-autopairs'
+lua_add = '''
+  require('nvim-autopairs').setup{}
+'''
+
+# カラースキーマ
+[[plugins]]
+repo = 'tomasiser/vim-code-dark'
+hook_source = '''
+    " colorscheme codedark
+    " au MyAutoCmd VimEnter * nested colorscheme codedark
+    autocmd VimEnter * ++nested colorscheme codedark
+'''
+
+# 自作
+[[plugins]]
+repo = 'sansyrox/vim-python-virtualenv'
+on_source = 'yohi/read-or-create-venv.vim'
+# [[plugins]]
+# repo = 'yohi/set-docker-compose-env.nvim'
+# lua_add = '''
+# print('yohi/set-docker-compose-env.nvim: lua_add')
+# require('set-docker-compose-env').setup()
+# '''
+# lua_source = '''
+# print('yohi/set-docker-compose-env.nvim: lua_source')
+# -- require('set-docker-compose-env').setup()
+# '''
+# hook_post_source = '''
+# echom('yohi/set-docker-compose-env.nvim: hook_post_source')
+# '''
+# 
+[[plugins]]
+repo = 'yohi/read-or-create-venv.vim'
+hook_add = '''
+" echom('yohi/read-or-create-venv.vim')
+" echom('hook_add')
+" echom('read_or_create_venv function exec')
+let s:virtual_env = getcwd() . '/.venv'
+if isdirectory(s:virtual_env)
+    let $VIRTUAL_ENV = s:virtual_env
+else
+    " virtual_envがない場合
+    let s:python3 = system('which python3')
+    let s:virtual_env = $HOME . '/.vim/vimvenv'
+    if !isdirectory(s:virtual_env)
+        " echom('install vim virtualenv')
+        call system('python3 -m venv ' . s:virtual_env)
+    endif
+    let $VIRTUAL_ENV = s:virtual_env
+endif
+
+let g:python3_host_prog = s:virtual_env . '/bin/python'
+let $PATH = s:virtual_env . '/bin:' . $PATH
+" call timer_start(0, s:istall_pip_package('pynvim'))
+" call timer_start(0, s:install_pip_package('mypy', v:true))
+" call timer_start(0, s:install_pip_package('flake8', v:true))
+
+let g:pythonpath = $PYTHONPATH
+if strlen(g:pythonpath) == 0
+    let $PYTHONPATH = getcwd()
+endif
+
+" echom($PYTHONPATH)
+" echom($VIRTUAL_ENV)
+'''
+# [[plugins]]
+# repo = 'yohi/install-pip-package.nvim'
+# on_source = [
+# 'sansyrox/vim-python-virtualenv',
+# ]
+# lua_add = '''
+# -- print('install-pip-package-nvim')
+# -- print('lua_add')
+# -- require('install-pip-package').setup('pynvim')
+# '''
+# lua_source = '''
+# -- print('install-pip-package-nvim')
+# -- print('lua_source')
+# require('install-pip-package').setup('pynvim')
+# vim.api.nvim_create_autocmd('FileType', {
+#         pattern = 'python',
+#         callback = function()
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('mypy', true)
+#             end)
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('flake8', true)
+#             end)
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('isort', true)
+#             end)
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('djlint', true)
+#             end)
+#         end,
+#         once = true,
+#     })
+# '''
+# [[plugins]]
+# repo = 'jmcantrell/vim-virtualenv'
+# on_source = 'yohi/read-or-create-venv.vim'
+# # hook_add = '''
+# # echom('vim-virutualenv')
+# # "echom(system('env'))
+# # echom('hook_add')
+# # echom(g:python3_host_prog)
+# # '''
+# lua_add = '''
+# print('vim-virtualenv')
+# print('lua_add')
+# '''
+# hook_source = '''
+# echom('vim-virutualenv')
+# echom('hook_source')
+# '''
+# hook_post_source = '''
+# echom('vim-virutualenv')
+# echom('hook_post_source')
+# '''
+
+
+[[plugins]]
+repo = 'WhoIsSethDaniel/mason-tool-installer.nvim'
+on_source = 'mason.nvim'
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
+on_source = 'nvim-lspconfig'
+
+
+
+# [[plubins]]
+# repo = 'rbtnn/vim-ambiwidth'
+#
+# [[plugins]]
+# repo = 'powerline/powerline'
+
+
+
+# [[plugins]]
+# repo = 'Vimjas/vim-python-pep8-indent'
+
+# [[plugins]]
+# repo = 'lambdalisue/vim-django-support'
+
+
+
+
+
+
+# 全角スペースをホワイトに表示
+# [[plugins]]
+# repo = 'thinca/vim-zenspace'
+# hook_add = '''
+# let g:zenspace#default_mode = 'on'
+# augroup vimrc-highlight
+#   autocmd!
+#   autocmd ColorScheme * highlight ZenSpace ctermbg=White guibg=White
+# augroup END
+# '''
+
+# ステータスバー
 
 [[plugins]]
 repo = 'folke/trouble.nvim'
@@ -364,52 +652,6 @@ hook_add = '''
 '''
 
 # fzf
-[[plugins]]
-repo = 'junegunn/fzf'
-build = './install --all'
-merged = 0
-
-[[plugins]]
-repo = 'yuki-yano/fzf-preview.vim'
-rev = 'release/rpc'
-hook_add = '''
-
-    nnoremap <C-p> :FzfPreviewProjectFile<CR>
-
-    " if executable('fish')
-    "     " use fish for embedded terminals
-    "     set shell=fish
-    "     " use bash for else
-    "     let $SHELL = 'bash'
-    " endif
-    " let mapleader = "\<Space>"
-
-    " " nnoremap <silent> <Leader>f     :<C-u>FzfPreviewFromResourcesRpc project_mru git<CR>
-    " " nnoremap <silent> <Leader>s    :<C-u>FzfPreviewGitStatusRpc<CR>
-    " " nnoremap <silent> <Leader>A    :<C-u>FzfPreviewGitActionsRpc<CR>
-    " " nnoremap <silent> <Leader>b     :<C-u>FzfPreviewBuffersRpc<CR>
-    " " nnoremap <silent> <Leader>B     :<C-u>FzfPreviewAllBuffersRpc<CR>
-    " " nnoremap <silent> <Leader>h     :<C-u>FzfPreviewFromResourcesRpc buffer project_mru<CR>
-    " " nnoremap <silent> <Leader><C-o> :<C-u>FzfPreviewJumpsRpc<CR>
-    " " nnoremap <silent> <Leader>c    :<C-u>FzfPreviewChangesRpc<CR>
-    " " nnoremap <silent> <Leader>/     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'"<CR>
-    " " nnoremap <silent> <Leader>*     :<C-u>FzfPreviewLinesRpc --add-fzf-arg=--no-sort --add-fzf-arg=--query="'<C-r>=expand('<cword>')<CR>"<CR>
-    " " nnoremap          <Leader>g    :<C-u>FzfPreviewProjectGrepRpc<Space>
-    " " xnoremap          <Leader>g    "sy:FzfPreviewProjectGrepRpc<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
-    " " nnoremap <silent> <Leader>t     :<C-u>FzfPreviewBufferTagsRpc<CR>
-    " " nnoremap <silent> <Leader>;     :<C-u>FzfPreviewQuickFixRpc<CR>
-    " " nnoremap <silent> <Leader>l     :<C-u>FzfPreviewLocationListRpc<CR>
-
-    " augroup fzf_preview
-    "   autocmd!
-    "   autocmd User fzf_preview#rpc#initialized call s:fzf_preview_settings() " fzf_preview#remote#initialized or fzf_preview#coc#initialized
-    " augroup END
-
-    " function! s:fzf_preview_settings() abort
-    "   let g:fzf_preview_command = 'COLORTERM=truecolor ' . g:fzf_preview_command
-    "   let g:fzf_preview_grep_preview_cmd = 'COLORTERM=truecolor ' . g:fzf_preview_grep_preview_cmd
-    " endfunction
-'''
 
 # vim rooter
 [[plugins]]
@@ -529,8 +771,6 @@ repo = 'vim-denops/denops.vim'
 # repo = 'skanehira/command.vim'
 
 # nvim-dap
-# [[plugins]]
-# repo = 'mfussenegger/nvim-dap'
 # [[plugins]]
 # repo = 'mfussenegger/nvim-dap-python'
 # hook_add = '''
@@ -672,7 +912,10 @@ repo = 'Shougo/pum.vim'
 [[plugins]]
 repo = 'Shougo/ddc.vim'
 on_event = ['InsertEnter', 'CursorHold']
-depends = ['denops.vim', 'pum.vim']
+depends = [
+    'denops.vim',
+    'pum.vim',
+]
 hook_add = '''
     echom('ddc.vim')
     echom('hook_add')
@@ -730,1033 +973,3 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'Shougo/ddc-cmdline'
 on_source = 'ddc.vim'
-
-
-##### hook_add = '''
-##### lua <<EOF
-##### 
-#####     local null_ls = require("null-ls")
-##### 
-#####     local sources = {
-#####         null_ls.builtins.diagnostics.djlint,
-#####         null_ls.builtins.diagnostics.cspell,
-#####         null_ls.builtins.diagnostics.mypy,
-#####         null_ls.builtins.diagnostics.flake8,
-#####     }
-##### 
-#####     null_ls.setup({
-#####     -- diagnostics_format = '#{m} [#{c}]',
-#####     -- diagnostics_format = '#{m} (#{s})',
-#####     diagnostics_format = '#{s}: #{m}',
-#####     sources = sources,
-#####     -- on_attach = on_attach
-#####   })
-##### 
-##### EOF
-##### '''
-##### 
-##### # hook_add = '''
-##### #     lua <<EOF
-##### #         require("null-ls").setup({
-##### #             sources = {
-##### #                 debug = true,
-##### # 
-##### #                 -- require("null-ls").builtins.diagnostics.djlint,
-##### #                 require("null-ls").builtins.diagnostics.cspell,
-##### #                 -- require("null-ls").builtins.diagnostics.mypy,
-##### #                 -- require("null-ls").builtins.diagnostics.flake8,
-##### #             },
-##### #         })
-##### #         vim.lsp.set_log_level("DEBUG")
-##### # 
-##### # EOF
-##### # '''
-
-
-
-
-
-
-# # nvim-lspconfig ----------
-# 
-# [[plugins]]
-# repo = 'neovim/nvim-lspconfig'
-# on_source = [
-#     'rrethy/vim-illuminate',
-#     'read-or-create-venv.vim',
-# ]
-# hook_add = '''
-# lua << eof
-#     require('config.lsp')
-# eof
-# '''
-# highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
-# highlight LspDiagnosticsSignHint ctermbg=142 ctermfg=15
-# hook_add = '''
-# lua << EOF
-#   -- Mappings.
-#   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-#   local opts = { noremap=true, silent=true }
-# 
-#   vim.api.nvim_set_keymap('n', '<space>p', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-#   vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-#   vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-#   vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-#   vim.api.nvim_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-# 
-# 
-# 
-# 
-#   -- Use an on_attach function to only map the following keys
-#   -- after the language server attaches to the current buffer
-#   local on_attach = function(client, bufnr)
-#     -- Enable completion triggered by <c-x><c-o>
-#     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-# 
-#     -- Mappings.
-#     -- See `:help vim.lsp.*` for documentation on any of the below functions
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-#     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-#   end
-# 
-#   require('lspconfig').pyright.setup {
-#     settings = {
-#       python = {
-#         analysis = {
-#           autoImportCompletions = true,
-#           autoSearchPaths = true,
-#           diagnosticMode = "workspace",
-#           diagnosticSeverityOverrides = "none",
-#           -- extraPaths = '',
-#           logLevel = 'Information',
-#           -- stubPath = '',
-#           typeCheckingMode = 'off',
-#           -- typeshedPaths = '',
-#           useLibraryCodeForType = true,
-#         }
-#       },
-#     },
-#   }
-# 
-#   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-#       vim.lsp.diagnostic.on_publish_diagnostics, {
-#           sign = true,
-#           underline = true,
-#           virtual_text = false,
-#           -- virtual_text = {
-#           --     spacing = 4,
-#           -- },
-#       }
-#   )
-# 
-#   -- local on_references = vim.lsp.handlers["textDocument/references"]
-#   -- vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
-#   --   on_references, {
-#   --     -- Use location list instead of quickfix list
-#   --     loclist = true,
-#   --   }
-#   -- )
-# 
-#   -- vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-#   --   vim.lsp.handlers.hover, {
-#   --     -- Use a sharp border with `FloatBorder` highlights
-#   --     border = "single"
-#   --   }
-#   -- )
-# 
-#   -- vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-#   --   vim.lsp.handlers.signature_help, {
-#   --     -- Use a sharp border with `FloatBorder` highlights
-#   --     border = "single"
-#   --   }
-#   -- )
-# 
-# 
-#   -- Use a loop to conveniently call 'setup' on multiple servers and
-#   -- map buffer local keybindings when the language server attaches
-#   -- local servers = { 'pyright', 'rust_analyzer', 'tsserver'  }
-#   -- local lsp_installer = require "nvim-lsp-installer"
-#   -- local lspconfig = require "lspconfig"
-#   -- lsp_installer.setup()
-#   -- for _, lsp in pairs(servers) do
-#   -- for _, server in pairs(lsp_installer.get_installed_servers()) do
-#   --   lspconfig[server.name].setup {
-#   --     on_attach = on_attach,
-#   --     flags = {
-#   --       -- This will be the default in neovim 0.7+
-#   --       debounce_text_changes = 150,
-#   --     }
-#   --   }
-#   -- end
-# 
-# EOF
-# 
-# highlight LspDiagnosticsSignError ctermbg=9 ctermfg=15
-# highlight LspDiagnosticsSignHint ctermbg=142 ctermfg=15
-# '''
-# hook_source = '''
-#     lua <<EOF
-#         require('nvim-lsp-installer').on_server_ready(function(server)
-#             local opts = {}
-#             opts.on_attach = function(client, buffer_number)
-#             end
-#             server:setup(opts)
-#         end)
-# 
-#         vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-#             vim.lsp.diagnostic.on_publish_diagnostics, {
-#                 sign = true,
-#                 underline = true,
-#                 -- virtual_text = false,
-#                 virtual_text = {
-#                     spacing = 4,
-#                 },
-#             }
-#         )
-# 
-#         local on_references = vim.lsp.handlers["textDocument/references"]
-#         vim.lsp.handlers["textDocument/references"] = vim.lsp.with(
-#           on_references, {
-#             -- Use location list instead of quickfix list
-#             loclist = true,
-#           }
-#         )
-# 
-#         vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-#           vim.lsp.handlers.hover, {
-#             -- Use a sharp border with `FloatBorder` highlights
-#             border = "single"
-#           }
-#         )
-# 
-#         vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-#           vim.lsp.handlers.signature_help, {
-#             -- Use a sharp border with `FloatBorder` highlights
-#             border = "single"
-#           }
-#         )
-# 
-#         require('lspconfig').pylsp.setup {}
-# 
-#         -- require('lspconfig').pyright.setup {
-#         --   settings = {
-#         --     python = {
-#         --       analysis = {
-#         --         autoSearchPaths = true,
-#         --         diagnosticMode = "workspace",
-#         --         useLibraryCodeForTypes = true,
-#         --         typeCheckingMode = 'off',
-#         --       }
-#         --     },
-#         --   },
-#         -- }
-# EOF
-#     nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
-#     nnoremap <C-j> :LspDefinition<CR>
-# '''
-# hook_source = '''
-#     lua <<EOF
-#         local nvim_lspconfig = require("lspconfig")
-#         local on_attach = function(client, bufnr)
-#         local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-#         local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-# 
-#         local opts = { noremap=true, silent=true }
-#             buf_set_keymap('n', '<F12>', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-#         end
-# 
-#         nvim_lspconfig.pyright.setup{
-#             on_attach = on_attach,
-#             filetypes = { "python" }
-#         }
-# 
-#         local nvim_lsp_installer = require("nvim-lsp-installer")
-#         nvim_lsp_installer.on_server_ready(function(server)
-#             local opts = {}
-#             server:setup(opts)
-#         end)
-# 
-#         nvim_lsp_installer.settings({
-#           log_level = vim.log.levels.DEBUG,
-#         })
-# 
-#         vim.lsp.set_log_level("INFO")
-# EOF
-#     " nnoremap <F12> :LspDefinition
-#     " nnoremap <F12> <cmd>lua vim.lsp.buf.definition()<CR>
-#     " nnoremap <C-j> :LspDefinition<CR>
-#     set completeopt-=preview
-# '''
-
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip'
-hook_add = '''
-" NOTE: You can use other key to expand snippet.
-
-"" Expand
-"imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-"smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
-
-"" Expand or jump
-"imap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-"smap <expr> <C-l>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
-
-"" Jump forward or backward
-"imap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-"smap <expr> <Tab>   vsnip#jumpable(1)   ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
-"imap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-"smap <expr> <S-Tab> vsnip#jumpable(-1)  ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
-
-"" Select or cut text to use as $TM_SELECTED_TEXT in the next snippet.
-"" See https://github.com/hrsh7th/vim-vsnip/pull/50
-" nmap        s   <Plug>(vsnip-select-text)
-" xmap        s   <Plug>(vsnip-select-text)
-" nmap        S   <Plug>(vsnip-cut-text)
-" xmap        S   <Plug>(vsnip-cut-text)
-
-" If you want to use snippet for multiple filetypes, you can `g:vsnip_filetypes` for it.
-"let g:vsnip_filetypes = {}
-"let g:vsnip_filetypes.javascriptreact = ['javascript']
-"let g:vsnip_filetypes.typescriptreact = ['typescript']
- '''
-
-[[plugins]]
-repo = 'hrsh7th/vim-vsnip-integ'
-
-[[plugins]]
-repo = 'matsui54/denops-popup-preview.vim'
-on_source = 'ddc.vim'
-hook_source = '''
-    call popup_preview#enable()
-'''
-
-[[plugins]]
-repo = 'matsui54/denops-signature_help'
-on_source = 'ddc.vim'
-hook_source = '''
-    call signature_help#enable()
-
-    " if you use with vim-lsp, disable vim-lsp's signature help feature
-    let g:lsp_signature_help_enabled = 0
-'''
-
-
-
-
-
-
-
-# ADD ======================================
-
-
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-
-# # Search Count
-# [[plugins]]
-# repo = 'osyo-manga/vim-anzu'
-# hook_add = '''
-#     nmap n <Plug>(anzu-n-with-echo)
-#     nmap N <Plug>(anzu-N-with-echo)
-#     nmap * <Plug>(anzu-star)
-#     nmap # <Plug>(anzu-sharp)
-# '''
-
-# Visualize Space
-[[plugins]]
-repo = 'bronson/vim-trailing-whitespace'
-
-# Filer
-[[plugins]]
-repo = 'scrooloose/nerdtree'
-hook_add = '''
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▼'
-let g:NERDTreeShowBookmarks=1
-let g:NERDTreeShowHidden=1
-let g:NERDTreeQuitOnOpen=1
-let g:NERDTreeIgnore=['\.git$', '\.clean$', '\.swp$', '\.bak$', '\~$']
-
-function MyNerdToggle()
-    if &filetype == 'nerdtree'
-        :NERDTreeToggle
-    else
-        :NERDTreeFind
-    endif
-endfunction
-
-nnoremap <Space>e :call MyNerdToggle()<CR>
-" map <Space>e :NERDTreeToggle<CR>
-'''
-
-[[plugins]]
-repo = 'jistr/vim-nerdtree-tabs'
-
-
-[[plugins]]
-repo = 'mileszs/ack.vim'
-
-[[plugins]]
-repo = 'thinca/vim-qfreplace'
-
-
-# [[plugins]]
-# repo = 'folke/which-key.nvim'
-# hook_add = '''
-# lua << EOF
-#   require("which-key").setup {
-#     -- your configuration comes here
-#     -- or leave it empty to use the default settings
-#     -- refer to the configuration section below
-#   }
-# EOF
-# set timeoutlen=150
-# '''
-
-
-[[plugins]]
-repo = 'j-hui/fidget.nvim'
-hook_add = '''
-lua << EOF
-  require"fidget".setup{}
-EOF
-'''
-
-[[plugins]]
-repo = 'mhartington/oceanic-next'
-
-# Icons
-[[plugins]]
-repo = 'ryanoasis/vim-devicons'
-
-
-# Syntax Highlight
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-hook_add = '''
-" treesitter
-lua <<EOF
-  require'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all"
-    ensure_installed = { "c", "lua", "rust","typescript","vim","json","javascript", "python", "jsonc" },
-
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
-
-    -- List of parsers to ignore installing (for "all")
-    -- ignore_install = { "javascript" },
-
-    highlight = {
-      -- `false` will disable the whole extension
-      enable = true,
-
-      -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
-      -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
-      -- the name of the parser)
-      -- list of language that will be disabled
-      disable = { "c", "rust" },
-
-      -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-      -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-      -- Using this option may slow down your editor, and you may see some duplicate highlights.
-      -- Instead of true it can also be a list of languages
-      additional_vim_regex_highlighting = false,
-    },
-  }
-EOF
-'''
-
-# Autopairs
-# [[plugins]]
-# repo = 'windwp/nvim-autopairs'
-# hook_add = '''
-# lua << EOF
-#   require('nvim-autopairs').setup{}
-# EOF
-# '''
-
-# Autotag
-[[plugins]]
-repo = 'windwp/nvim-ts-autotag'
-hook_add = '''
-lua << EOF
-  require'nvim-treesitter.configs'.setup {
-    autotag = {
-      enable = true,
-    }
-  }
-  require('nvim-ts-autotag').setup()
-
-EOF
-'''
-
-# Syntax Highlight
-[[plugins]]
-repo = 'p00f/nvim-ts-rainbow'
-hook_add = '''
-lua << EOF
-  require("nvim-treesitter.configs").setup {
-    highlight = {
-        -- ...
-    },
-    -- ...
-    rainbow = {
-      enable = true,
-      -- disable = { "jsx", "cpp" }, list of languages you want to disable the plugin for
-      extended_mode = true, -- Also highlight non-bracket delimiters like html tags, boolean or table: lang -> boolean
-      max_file_lines = nil, -- Do not enable for files with more than n lines, int
-      -- colors = {}, -- table of hex strings
-      -- termcolors = {} -- table of colour name strings
-    }
-    }
-EOF
-'''
-
-# [[plugins]]
-# repo = 'jamestthompson3/nvim-remote-containers'
-# 
-# [[plugins]]
-# repo = 'esensar/nvim-dev-container'
-# hook_add = '''
-# lua << EOF
-#     require("devcontainer").setup{}
-# EOF
-# '''
-
-# [[plugins]]
-# repo = 'skywind3000/asyncrun.vim'
-# 
-# # Add surrounding character
- [[plugins]]
- repo = 'tpope/vim-surround'
- hook_add = '''
- vnoremap " <Plug>VSurround"
- vnoremap ' <Plug>VSurround'
- '''
-
-# [[plugins]]
-# repo = 'tpope/vim-repeat'
-# 
-# [[plugins]]
-# repo = 'tyru/caw.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/context_filetype.vim'
-# 
-# # Substitute
-# [[plugins]]
-# repo = 'osyo-manga/vim-over'
-# hook_add = '''
-# " ---------- 'osyo-manga/vim-over' ----------
-# " 全体置換
-# nnoremap <silent> <Space>// :OverCommandLine<CR>%s/
-# " カーソルしたの単語置換
-# nnoremap <silent> <Space>o :OverCommandLine<CR>%s/<C-r><C-w>/
-# '''
-# # Substitute
-# [[plugins]]
-# repo = 'kana/vim-operator-user'
-# 
-# # Substitute
-# [[plugins]]
-# repo = 'kana/vim-operator-replace'
-# hook_add = '''
-# nmap <silent> <Space>r <Plug>(operator-replace)
-# '''
-# 
-# 
-# # Syntax check
-# [[plugins]]
-# repo = 'vim-syntastic/syntastic'
-# 
-# Replacement preview
-[[plugins]]
-repo = 'markonm/traces.vim'
-
-
-
-
-
-[[plugins]]
-repo = 'skanehira/denops-translate.vim'
-depends = 'denops.vim'
-hook_add = '''
-let g:translate_source = "en"
-let g:translate_target = "ja"
-let g:translate_popup_window = 0 " if you want use popup window, set value 1
-let g:translate_winsize = 10 " set buffer window height size if you doesn't use popup window
-let g:translate_endpoint = 'https://api-free.deepl.com/v2/translate'
-let g:translate_ui = 'popup'
-'''
-
-[[plugins]]
-repo = 'elzr/vim-json'
-hook_add = '''
-let g:vim_json_syntax_conceal = 0
-let g:indentLine_concealcursor="nc"
-au! BufAdd,BufRead,BufNew,BufEnter *.json let g:indentLine_conceallevel=1
-au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=2
-'''
-
-
-## ========================================================================
-
-
-## " neoclide/coc.nvim
-## " let g:coc_global_extensions = [
-## "       \ 'coc-python',
-## "       \ 'coc-json',
-## "       \ 'coc-html',
-## "       \ 'coc-css',
-## "       \ 'coc-python',
-## "       \ 'coc-pyright',
-## "       \ 'coc-pyls',
-## "       \ 'coc-explorer',
-## "       \ 'coc-yank',
-## "       \ 'coc-snippets'
-## "       \ ]
-## 
-## " junegunn/fzf
-## " junegunn/fzf.vim
-## " nnoremap <C-g> :FzfPreviewProjectGrep .<CR>
-## " nnoremap <C-p> :FzfPreviewProjectFile<CR>
-## " nnoremap <C-g> :CocCommand fzf-preview.ProjectGrep .<CR>
-## " nnoremap <C-p> :CocCommand fzf-preview.ProjectFiles<CR>
-## 
-## " vim-lsp
-## let g:lsp_signs_enabled = 1         " enable signs
-## let g:lsp_diagnostics_enabled = 1 " Lintの有効or無効
-## let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-## let g:lsp_diagnostics_float_cursor = 0
-## let g:lsp_diagnostics_virtual_text_insert_mode_enabled = 1
-## let g:lsp_diagnostics_virtual_text_enabled = 0 " Lintエラーの横に仮想テキスト表示
-## let g:lsp_signs_error = {'text': 'x'} " errorサインの変更
-## let g:lsp_signs_warning = {'text': '!'} " warningサインの変更
-## let g:lsp_signs_hint = {'text': '?'} " hintサインの変更
-## let g:lsp_highlights_enabled = 1
-## let g:lsp_highlight_references_enabled = 1
-## let g:lsp_textprop_enabled = 1
-## let g:lsp_virtual_text_enabled = 0
-## let g:lsp_insert_text_enabled = 0
-## let g:lsp_text_edit_enabled = 0
-## "let g:asyncomplete_auto_popup = 1
-## "let g:asyncomplete_auto_completeopt = 0
-## "let g:asyncomplete_popup_delay = 200
-## let g:asyncomplete_matchfuzzy = 1
-## 
-## 
-## if g:nvim_lsp
-## else
-##     " vim-lsp-settings
-##     let g:lsp_settings_filetype_python = ['pyright-langserver', 'pylsp']
-##     " let g:lsp_settings = {
-##     " \       'pyright-langserver': {
-##     " \           'alllowlist': [
-##     " \               'python',
-##     " \           ],
-##     " \           'workspace_config': {
-##     " \               'python': {
-##     " \                   'analysis': {
-##     " \                       'useLibraryCodeForTypes': v:true,
-##     " \                       'typeCheckingMode': 'off',
-##     " \                   }
-##     " \               },
-##     " \               'pylsp': {
-##     " \                   'configurationSources': ['flake8'],
-##     " \                   'plugins': {
-##     " \                       'flake8': {
-##     " \                           'enabled': 1
-##     " \                       },
-##     " \                       'mccabe': {
-##     " \                           'enabled': 0
-##     " \                       },
-##     " \                       'pycodestyle': {
-##     " \                           'enabled': 0
-##     " \                       },
-##     " \                       'pyflakes': {
-##     " \                           'enabled': 0
-##     " \                       },
-##     " \                       'pylsp_mypy': {
-##     " \                           'enabled': 0
-##     " \                       }
-##     " \                   }
-##     " \               }
-##     " \           }
-##     " \       }
-##     " \   }
-##     nnoremap <F12> :LspDefinition<CR>
-##     nnoremap <C-j> :LspDefinition<CR>
-## endif
-## 
-## 
-## " pechorin/any-jump.vim
-## " let g:any_jump_disable_default_keybindings = 1
-## " " Normal mode: Jump to definition under cursore
-## " nnoremap <C-j> :AnyJump<CR>
-## " " Visual mode: jump to selected text in visual mode
-## " xnoremap <C-j> :AnyJumpVisual<CR>
-## " " Normal mode: open previous opened file (after jump)
-## " nnoremap <C-ab> :AnyJumpBack<CR>
-## " " Normal mode: open last closed search window again
-## " nnoremap <C-al> :AnyJumpLastResults<CR>
-## 
-## 
-## """"""""""""""""""""""""""""""""""""""""""""""" Define mappings
-## """"""""""""""""""""""""""""""""""""""""""""""autocmd FileType denite call s:denite_my_settings()
-## """"""""""""""""""""""""""""""""""""""""""""""function! s:denite_my_settings() abort
-## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> <CR>
-## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action')
-## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> d
-## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action', 'delete')
-## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> p
-## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('do_action', 'preview')
-## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> q
-## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('quit')
-## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> i
-## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('open_filter_buffer')
-## """"""""""""""""""""""""""""""""""""""""""""""  nnoremap <silent><buffer><expr> <Space>
-## """"""""""""""""""""""""""""""""""""""""""""""  \ denite#do_map('toggle_select').'j'
-## """"""""""""""""""""""""""""""""""""""""""""""endfunction
-## """"""""""""""""""""""""""""""""""""""""""""""
-## """"""""""""""""""""""""""""""""""""""""""""""let s:denite_win_width_percent = 0.85
-## """"""""""""""""""""""""""""""""""""""""""""""let s:denite_win_height_percent = 0.7
-## """"""""""""""""""""""""""""""""""""""""""""""
-## """"""""""""""""""""""""""""""""""""""""""""""" " Change denite default options
-## """"""""""""""""""""""""""""""""""""""""""""""" call denite#custom#option('default', {
-## """""""""""""""""""""""""""""""""""""""""""""""     \ 'split': 'floating',
-## """""""""""""""""""""""""""""""""""""""""""""""     \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
-## """""""""""""""""""""""""""""""""""""""""""""""     \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
-## """""""""""""""""""""""""""""""""""""""""""""""     \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
-## """""""""""""""""""""""""""""""""""""""""""""""     \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
-## """""""""""""""""""""""""""""""""""""""""""""""     \ })
-## """"""""""""""""""""""""""""""""""""""""""""""" 
-## """"""""""""""""""""""""""""""""""""""""""""""" call denite#custom#var('file/rec', 'command',
-## """"""""""""""""""""""""""""""""""""""""""""""" \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
-## """"""""""""""""""""""""""""""""""""""""""""""" customize ignore globs
-## """"""""""""""""""""""""""""""""""""""""""""""call denite#custom#source('file_rec', 'matchers', ['matcher_fuzzy','matcher_ignore_globs'])
-## """"""""""""""""""""""""""""""""""""""""""""""call denite#custom#filter('matcher_ignore_globs', 'ignore_globs',
-## """"""""""""""""""""""""""""""""""""""""""""""      \ [
-## """"""""""""""""""""""""""""""""""""""""""""""      \ '.git/', 'build/', '__pycache__/',
-## """"""""""""""""""""""""""""""""""""""""""""""      \ 'images/', '*.o', '*.make',
-## """"""""""""""""""""""""""""""""""""""""""""""      \ '*.min.*',
-## """"""""""""""""""""""""""""""""""""""""""""""      \ 'img/', 'fonts/'])
-## 
-## " nvim-treesitter
-## " lua <<EOF
-## " require'nvim-treesitter.configs'.setup {
-## "   ensure_installed = 'all',
-## "   highlight = { enable = true, },
-## "   incremental_selection = { enable = true, },
-## "   refactor = {
-## "     highlight_definitions = { enable = true },
-## "     highlight_current_scope = { enable = true },
-## "       smart_rename = { enable = true, },
-## "       navigation = { enable = true, },
-## " 
-## "     textobjects = {
-## "       select = { enable = true, },
-## "       swap = { enable = true, },
-## "       move = { enable = true, },
-## "     }
-## " }
-## " EOF
-## 
-## " lua <<EOF
-## " require'nvim-treesitter.configs'.setup {
-## "   -- Modules and its options go here
-## "   highlight = { enable = true },
-## "   incremental_selection = { enable = true },
-## "   refactor = {
-## "     highlight_definitions = { enable = true },
-## "     smart_rename = { enable = true },
-## "     navigation = { enable = true },
-## "   },
-## "   textobjects = { enable = true },
-## " }
-## " EOF
-## " lua <<EOF
-## " require'nvim-treesitter.configs'.setup {
-## "   highlight = {
-## "     enable = true,
-## "   },
-## "   indent = {
-## "     enable = true,
-## "   }
-## " }
-## " EOF
-## 
-## " treesitter
-## " lua <<EOF
-## " require'nvim-treesitter.configs'.setup {
-## "   highlight = {
-## "     enable = true,
-## "   },
-## "   indent = {
-## "     enable = false,
-## "   },
-## " }
-## " EOF
-## 
-## 
-## 
-## " Change file/rec command 
-## " call denite#custom#var('file/rec', 'command',
-## " \ ['rg', '--files', '--glob', '!.git', '--color', 'never'])
-## " 
-## " " Ripgrep command on grep source
-## " call denite#custom#var('grep', {
-## "            \ 'command': ['rg'],
-## "            \ 'default_opts': ['-i', '--vimgrep', '--no-heading'],
-## "            \ 'recursive_opts': [],
-## "            \ 'pattern_opt': ['--regexp'],
-## "            \ 'separator': ['--'],
-## "            \ 'final_opts': [],
-## "            \ })
-## " 
-## " 
-## " if 1
-## "     let s:floating_window_width_ratio = 0.85
-## "     let s:floating_window_height_ratio = 0.7
-## " 
-## "     call denite#custom#option('default', {
-## "     \ 'auto_action': 'preview',
-## "     \ 'floating_preview': v:true,
-## "     \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
-## "     \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
-## "     \ 'prompt': '> ',
-## "     \ 'split': 'floating',
-## "     \ 'vertical_preview': v:true,
-## "     \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
-## "     \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
-## "     \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
-## "     \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio / 2),
-## "     \ 'floating-border': '|'
-## "     \ })
-## " else
-## "     let s:floating_window_width_ratio = 0.85
-## "     let s:floating_window_height_ratio = 0.7
-## " 
-## "     " Change denite default options
-## "     call denite#custom#option('default', {
-## "         \ 'auto_action': 'preview',
-## "         \ 'floating_preview': v:true,
-## "         \ 'preview_height': float2nr(&lines * s:floating_window_height_ratio),
-## "         \ 'preview_width': float2nr(&columns * s:floating_window_width_ratio / 2),
-## "         \ 'prompt': '> ',
-## "         \ 'split': 'floating',
-## "         \ 'vertical_preview': v:true,
-## "         \ 'winwidth': float2nr(&columns * s:floating_window_width_ratio),
-## "         \ 'wincol': float2nr((&columns - (&columns * s:floating_window_width_ratio)) / 2),
-## "         \ 'winheight': float2nr(&lines * s:floating_window_height_ratio),
-## "         \ 'winrow': float2nr((&lines - (&lines * s:floating_window_height_ratio)) / 2),
-## "         \ })
-## " endif
-## " 
-## " 
-## " 
-## " nmap <silent> ;f  :<C-u>Denite -start-filter file/rec<CR>
-## " nmap <silent> ;F  :<C-u>DeniteProjectDir -start-filter file/rec<CR>
-## " nmap <silent> ;g  :<C-u>DeniteProjectDir grep:::<C-r><C-w><CR>
-## " nmap <silent> ;G  :<C-u>DeniteProjectDir grep:::<C-r><C-a><CR>
-## " nmap <silent> ;;g :<C-u>Denite grep<CR>
-## " nmap <silent> ;;G :<C-u>DeniteProjectDir grep<CR>
-## " " nnoremap <C-p> :DeniteProjectDir -start-filter file/rec<CR>
-## " nnoremap <C-g> :DeniteProjectDir -start-filter grep<CR>
-## 
-## 
-## 
-## 
-## 
-## 
-## 
-## 
-## 
-## 
-## " ddc =====================================================
-## function DdcSource()
-##     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'zsh']
-##     " let l:sources = ['around', 'buffer', 'deoppet', 'necovim', 'tabnine']
-##     let l:sources = ['around', 'buffer', 'deoppet', 'necovim']
-##     if g:nvim_lsp
-##         let l:lsp_source = ['nvim-lsp']
-##     else
-##         let l:lsp_source = ['vim-lsp']
-##     endif
-##     return l:lsp_source + l:sources
-## endfunction
-## 
-## function DdcSourceOptions()
-##     let l:source_options = {
-##     \           '_': {
-##     \             'matchers': ['matcher_head'],
-##     \             'sorters': ['sorter_rank'],
-##     \             'converters': ['converter_remove_overlap']
-##     \           },
-##     \           'around': {
-##     \               'mark': 'A'
-##     \           },
-##     \           'buffer': {
-##     \               'mark': 'B'
-##     \           },
-##     \           'deoppet': {
-##     \               'mark': 'dp'
-##     \           },
-##     \           'necovim': {
-##     \               'mark': 'vim'
-##     \           },
-##     \           'tabnine': {
-##     \               'mark': 'TN',
-##     \               'isVolatile': v:true,
-##     \               'maxSize': 200,
-##     \           },
-##     \    }
-##     if g:nvim_lsp
-##         " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\\.|:|->', 'useIcon': v:true }
-##         let l:source_options['nvim-lsp'] = { 
-##         \ }
-##         " let l:source_options['nvim-lsp'] = { 'mark': 'lsp', 'forceCompletionPattern': '\.\w*|:\w*|->\w*', 'useIcon': v:true }
-##     else
-##         let l:source_options['vim-lsp'] = {
-##         \     'mark': 'lsp',
-##         \     'matchers': ['matcher_head'],
-##         \     'forceCompletionPattern': '\.|:|->|"\w+/*'
-##         \ }
-##     endif
-##     return l:source_options
-## endfunction
-## 
-## function DdcSourceParams()
-##     let l:source_params = {'around': { 'maxSize': 500 }}
-##     if g:nvim_lsp
-##         let l:source_params['nvim-lsp'] = { 'kindLabels': {'Class': 'c'}, 'useIcon': v:true }
-##    endif
-##    return l:source_params
-## endfunction
-## 
-## " Use matcher_head and sorter_rank.
-## let s:sources = DdcSource()
-## call ddc#custom#patch_global('sources', s:sources)
-## let s:source_options = DdcSourceOptions()
-## call ddc#custom#patch_global('sourceOptions', s:source_options)
-## let s:source_params = DdcSourceParams()
-## call ddc#custom#patch_global('sourceParams', s:source_params)
-## call ddc#custom#patch_global('filterParams', { 'buffer': { 'requireSameFiletype': v:false }})
-## 
-## 
-## "" " https://zenn.dev/shougo/articles/ddc-vim-pum-vim
-## "" call ddc#custom#patch_global('completionMenu', 'pum.vim')
-## "" call ddc#custom#patch_global('autoCompleteEvents', [
-## ""     \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
-## ""     \ 'CmdlineEnter', 'CmdlineChanged',
-## ""     \ ])
-## "" 
-## "" nnoremap :       <Cmd>call CommandlinePre()<CR>:
-## "" 
-## "" function! CommandlinePre() abort
-## ""   " Note: It disables default command line completion!
-## ""   cnoremap <expr> <Tab>
-## ""   \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-## ""   \ ddc#manual_complete()
-## ""   cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-## ""   cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-## ""   cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-## "" 
-## ""   " Overwrite sources
-## ""   if !exists('b:prev_buffer_config')
-## ""     let b:prev_buffer_config = ddc#custom#get_buffer()
-## ""   endif
-## ""   call ddc#custom#patch_buffer('sources',
-## ""           \ ['cmdline', 'cmdline-history', 'around'])
-## "" 
-## ""   autocmd User DDCCmdlineLeave ++once call CommandlinePost()
-## ""   autocmd InsertEnter <buffer> ++once call CommandlinePost()
-## "" 
-## ""   " Enable command line completion
-## ""   call ddc#enable_cmdline_completion()
-## "" endfunction
-## "" 
-## "" function! CommandlinePost() abort
-## ""   cunmap <Tab>
-## ""   cunmap <S-Tab>
-## ""   cunmap <C-y>
-## ""   cunmap <C-e>
-## "" 
-## ""   " Restore sources
-## ""   if exists('b:prev_buffer_config')
-## ""     call ddc#custom#set_buffer(b:prev_buffer_config)
-## ""     unlet b:prev_buffer_config
-## ""   else
-## ""     call ddc#custom#set_buffer({})
-## ""   endif
-## "" endfunction
-## 
-## " Mappings
-## 
-## " <TAB>: completion.
-## 
-## " ddc.vim - pum.vim
-## " inoremap <silent><expr> <TAB>
-## "     \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-## "     \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-## "     \ '<TAB>' : ddc#manual_complete()
-## " inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-## " inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
-## " inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
-## " inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-## " inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-## 
-## 
-## " if you use with vim-lsp, disable vim-lsp's signature help feature
-## " let g:lsp_signature_help_enabled = 0
-## 
-## 
-## if g:deoplete
-##     " Shougo/deoplete.nvim
-##     let g:deoplete#enable_at_startup = 1
-## 
-##     autocmd FileType denite call s:denite_my_settings()
-##     function! s:denite_my_settings() abort
-##       call deoplete#custom#buffer_option('auto_complete', v:false)
-## 
-##     " " ref. https://github.com/Shougo/denite.nvim/issues/657
-##     " autocmd FileType denite-filter call s:denite_filter_my_settings()
-##     " function! s:denite_filter_my_settings() abort
-##     "   call deoplete#custom#buffer_option('auto_complete', v:false)
-##     " endfunction
-## 
-## 
-##       " エンターキー: 垂直分割でファイルを開く
-##       nnoremap <silent><buffer><expr> <CR>
-##       \ denite#do_map('do_action', 'vsplit')
-##       " スペースキー: 水平分割でファイルを開く
-##       nnoremap <silent><buffer><expr> <Space>
-##       \ denite#do_map('do_action', 'split')
-##       " エスケープキー: 終了
-##       nnoremap <silent><buffer><expr> <Esc>
-##       \ denite#do_map('quit')
-##       " Qキー: 終了
-##       nnoremap <silent><buffer><expr> q
-##       \ denite#do_map('quit')
-##       " Iキー: フィルター入力の開始
-##       nnoremap <silent><buffer><expr> i
-##       \ denite#do_map('open_filter_buffer')
-##       " Aキー: フィルター入力の開始
-##       nnoremap <silent><buffer><expr> a
-##       \ denite#do_map('open_filter_buffer')
-##     endfunction
-## endif
-## 
-## " ddu ======================
-## " nnoremap <C-p> :call ddu#start({'sources': [{'name': 'file_rec'}]})<CR>

@@ -12,8 +12,10 @@ local function dump(o)
 end
 
 -- null-ls --
+local mason = require("mason")
 local null_ls = require("null-ls")
 local utils = require("lspconfig.util")
+local mason_null_ls = require("mason-null-ls")
 -- local command_resolver = require("null-ls.helpers.command_resolver")
 -- local root_dir = utils.root_pattern('.venv')
 local root_dir = utils.root_pattern('.venv')
@@ -22,6 +24,8 @@ local root_dir = utils.root_pattern('.venv')
 -- print(vim.fn.getcwd())
 -- print('root_dir')
 -- print(root_dir)
+
+
 
 local sources = {
     debug = false,
@@ -84,6 +88,7 @@ local sources = {
     }),
 }
 
+mason.setup()
 null_ls.setup({
     -- debug = true,
     -- diagnostics_format = '#{m} [#{c}]',
@@ -100,4 +105,9 @@ null_ls.setup({
 
     --     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
     -- end
+})
+mason_null_ls.setup({
+    ensure_installed = nil,
+    automatic_installation = true,
+    automatic_setup = false,
 })
