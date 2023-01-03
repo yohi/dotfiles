@@ -37,10 +37,8 @@ if dein#load_state(s:dein_dir)
     let s:toml = g:rc_dir . '/dein.toml'
     let s:toml_lazy = g:rc_dir . '/dein_lazy.toml'
 
-    echom 'install plugin from toml...'
     call dein#load_toml(s:toml, { 'lazy': 0 })
     call dein#load_toml(s:toml_lazy, { 'lazy': 1 })
-    echom 'done'
 
     " Required:
     call dein#end()

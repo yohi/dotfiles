@@ -101,31 +101,43 @@ mason.setup()
 
 mason_tool_installer.setup({
     ensure_installed = {
+        -- LSP
         'bash-language-server',
-        'cspell',
-        'djlint',
         'dockerfile-language-server',
         'dot-language-server',
-        'flake8',
         'html-lsp',
-        'isort',
         'json-lsp',
-        'json-to-struct',
         'lua-language-server',
-        'markdownlint',
-        'mypy',
         'pyright',
-        'shellcheck',
-        'sql-formatter',
         'sqlls',
         'vim-language-server',
         'yaml-language-server',
+        'sourcery',
+        -- Formatter
+        'isort',
+        -- Linter
+        'cspell',
+        'flake8',
+        'pydocstyle',
+        'shellcheck',
+        'rstcheck',
+        'vulture',
         'yamllint',
+        'mypy',
+        'sql-formatter',
+        -- Formatter/Linter
+        'djlint',
+        'markdownlint',
+        -- DAP
+        'debugpy',
+        -- Other
+        'json-to-struct',
     },
     auto_update = true,
     run_on_start = true,
     start_delay = 0,
 })
+
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MasonToolsUpdateCompleted',
   callback = function()
@@ -160,6 +172,8 @@ vim.api.nvim_create_autocmd('User', {
 --     },
 --     automatic_installation = true,
 -- })
+
+mason_lspconfig.setup()
 
 mason_lspconfig.setup_handlers({ function(server_name)
     local navic = require("nvim-navic")
@@ -257,6 +271,7 @@ local handle_lsp = function(opts)
     return opts
 end
 
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
 lspconfig.pyright.setup(handle_lsp{
     root_dir = lspconfig.util.root_pattern('.venv'),
@@ -325,4 +340,20 @@ lspconfig.sumneko_lua.setup{
             }
         }
     }
+}
+
+lspconfig.sourcery.setup{
+    init_options = {
+        --- The Sourcery token for authenticating the user.
+        --- This is retrieved from the Sourcery website and must be
+        --- provided by each user. The extension must provide a
+        --- configuration option for the user to provide this value.
+        token = '',  -- TODO
+
+        --- The extension's name and version as defined by the extension.
+        extension_version = 'vim.lsp',
+
+        --- The editor's name and version as defined by the editor.
+        editor_version = 'vim',
+    },
 }

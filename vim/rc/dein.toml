@@ -5,6 +5,17 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'wsdjeg/dein-ui.vim'
 
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
 # パッケージマネージャー
 [[plugins]]
 repo = 'williamboman/mason.nvim'
@@ -225,11 +236,7 @@ on_source = 'mason.nvim'
 #     # 'yohi/set-docker-compose-env.nvim',
 # ]
 lua_source = '''
-    print('null-ls lua_source')
     require('config.null-ls')
-'''
-lua_add = '''
-    print('null-ls lua_add')
 '''
 
 # null-ls設定
@@ -238,9 +245,6 @@ on_source = [
     'mason.nvim',
     # 'null-ls.nvim',
 ]
-lua_source = '''
-    print('mason-null-ls lua_source')
-'''
 
 # DAP
 [[plugins]]
@@ -421,15 +425,7 @@ on_source = 'yohi/read-or-create-venv.vim'
 [[plugins]]
 repo = 'yohi/set-docker-compose-env.nvim'
 lua_add = '''
-print('yohi/set-docker-compose-env.nvim: lua_add')
 require('set-docker-compose-env').setup()
-'''
-lua_source = '''
-print('yohi/set-docker-compose-env.nvim: lua_source')
--- require('set-docker-compose-env').setup()
-'''
-hook_post_source = '''
-echom('yohi/set-docker-compose-env.nvim: hook_post_source')
 '''
 
 [[plugins]]
@@ -467,39 +463,39 @@ endif
 " echom($VIRTUAL_ENV)
 '''
 
-[[plugins]]
-repo = 'yohi/install-pip-package.nvim'
-on_source = [
-'sansyrox/vim-python-virtualenv',
-]
-lua_add = '''
--- print('install-pip-package-nvim')
--- print('lua_add')
--- require('install-pip-package').setup('pynvim')
-'''
-lua_source = '''
--- print('install-pip-package-nvim')
--- print('lua_source')
-require('install-pip-package').setup('pynvim')
-vim.api.nvim_create_autocmd('FileType', {
-        pattern = 'python',
-        callback = function()
-            vim.schedule(function()
-                require('install-pip-package').setup('mypy', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('flake8', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('isort', true)
-            end)
-            vim.schedule(function()
-                require('install-pip-package').setup('djlint', true)
-            end)
-        end,
-        once = true,
-    })
-'''
+# [[plugins]]
+# repo = 'yohi/install-pip-package.nvim'
+# on_source = [
+# 'sansyrox/vim-python-virtualenv',
+# ]
+# lua_add = '''
+# -- print('install-pip-package-nvim')
+# -- print('lua_add')
+# -- require('install-pip-package').setup('pynvim')
+# '''
+# lua_source = '''
+# -- print('install-pip-package-nvim')
+# -- print('lua_source')
+# require('install-pip-package').setup('pynvim')
+# vim.api.nvim_create_autocmd('FileType', {
+#         pattern = 'python',
+#         callback = function()
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('mypy', true)
+#             end)
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('flake8', true)
+#             end)
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('isort', true)
+#             end)
+#             vim.schedule(function()
+#                 require('install-pip-package').setup('djlint', true)
+#             end)
+#         end,
+#         once = true,
+#     })
+# '''
 [[plugins]]
 repo = 'jmcantrell/vim-virtualenv'
 on_source = 'yohi/read-or-create-venv.vim'
@@ -509,18 +505,6 @@ on_source = 'yohi/read-or-create-venv.vim'
 # echom('hook_add')
 # echom(g:python3_host_prog)
 # '''
-lua_add = '''
-print('vim-virtualenv')
-print('lua_add')
-'''
-hook_source = '''
-echom('vim-virutualenv')
-echom('hook_source')
-'''
-hook_post_source = '''
-echom('vim-virutualenv')
-echom('hook_post_source')
-'''
 
 
 [[plugins]]
@@ -540,12 +524,7 @@ on_source = [
     'yohi/set-docker-compose-env.nvim',
 ]
 lua_add = '''
-print('null-ls: lua_add')
 require('config.null-ls')
-'''
-lua_source = '''
-print('null-ls: lua_source')
--- require('config.null-ls')
 '''
 
 
@@ -915,21 +894,82 @@ repo = 'MunifTanjim/prettier.nvim'
 [[plugins]]
 repo = 'Shougo/pum.vim'
 
+
 [[plugins]]
 repo = 'Shougo/ddc.vim'
-on_event = ['InsertEnter', 'CursorHold']
+on_event = [
+    'InsertEnter',
+    'CursorHold',
+]
 depends = [
     'denops.vim',
     'pum.vim',
+    'context_filetype.vim'
 ]
 hook_add = '''
-    echom('ddc.vim')
-    echom('hook_add')
-    source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
+    echom('ddc.vim hook_add')
+    " set completeopt-=preview
+    " call ddc#custom#patch_global('ui', 'native')
+    " " call ddc#custom#patch_global('completionMenu', 'pum.vim')
+    " call ddc#custom#patch_global('sources', [
+    "     \ 'around',
+    "     \ 'nvim-lsp',
+    "     \ 'file',
+    "     \ 'vsnip'
+    "     \ ])
+    " call ddc#custom#patch_global('sourceOptions', {
+    "     \ '_': {
+    "     \   'matchers': ['matcher_head'],
+    "     \   'sorters': ['sorter_rank'],
+    "     \   'converters': ['converter_remove_overlap'],
+    "     \ },
+    "     \ 'around': {'mark': 'Around'},
+    "     \ 'nvim-lsp': {
+    "     \   'mark': 'lsp',
+    "     \   'matchers': ['matcher_head'],
+    "     \   'forceCompletionPattern': '\.|:|->|"\w+/*'
+    "     \ },
+    "     \ })
+    " call ddc#enable()
+" Hidden autocomplete preview
+set completeopt-=preview
+
+call ddc#custom#patch_global('ui', 'native')
+" Use Customized labels
+call ddc#custom#patch_global('sourceParams', {
+      \ 'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
+      \ })
+
+" Customize global settings
+call ddc#custom#patch_global('sources', ['around'])
+call ddc#custom#patch_global('sources', ['nvim-lsp'])
+
+" Use matcher_head and sorter_rank.
+call ddc#custom#patch_global('sourceOptions', {
+      \ '_': {
+      \   'matchers': ['matcher_head'],
+      \   'sorters': ['sorter_rank'],
+      \ },
+      \ 'nvim-lsp': {
+      \   'mark': 'lsp',
+      \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
+      \ })
+
+" Change source options
+call ddc#custom#patch_global('sourceOptions', {
+      \ 'around': {'mark': 'A'},
+      \ })
+call ddc#custom#patch_global('sourceParams', {
+      \ 'around': {'maxSize': 500},
+      \ })
+
+" Use ddc.
+call ddc#enable()
 '''
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-source-around'
