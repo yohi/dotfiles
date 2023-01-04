@@ -357,3 +357,35 @@ lspconfig.sourcery.setup{
         editor_version = 'vim',
     },
 }
+-- lspconfig.pylsp.setup{
+--   root_dir = lspconfig.util.root_pattern('.venv'),
+--   cmd = {'python3', '-m', 'pylsp'},
+--   settings = {
+--     pylsp = {
+--       plugins = {
+--         pylsp_mypy = {
+--             enabled = true,
+--             live_mode = true,
+--             dmypy = false,
+--             -- overrides = {
+--             --     '--use-fine-grained-cache',
+--             --     -- '--cache-dir',
+--             --     -- '/dev/null',
+--             -- },
+--             config_sub_paths = {
+--                 '/home/y_ohi/docker/scs2/django/project/',
+--             }
+--         },
+--         autopep8 = { enabled = false },
+--         flake8 = { enabled = false },
+--         pydocstyle = { enabled = false },
+--         pycodestyle = { enabled = false },
+--         pyflakes = { enabled = false },
+--         pylint = { enabled = false },
+--         rope_completion = { enabled = false },
+--         rope_rename = { enabled = false },
+--         yapf = { enabled = false },
+--       }
+--     }
+--   }
+-- }

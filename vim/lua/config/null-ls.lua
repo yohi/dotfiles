@@ -86,7 +86,13 @@ local sources = {
             diagnostic.severity =  vim.diagnostic.severity["WARN"]
         end,
     }),
-}
+    -- null_ls.builtins.diagnostics.pydocstyle.with({
+    -- }),
+    null_ls.builtins.diagnostics.rstcheck.with({
+    }),
+    -- null_ls.builtins.diagnostics.vulture.with({
+    -- }),
+  }
 
 mason.setup()
 null_ls.setup({
