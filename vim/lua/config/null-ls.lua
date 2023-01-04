@@ -37,20 +37,23 @@ local sources = {
             diagnostic.severity =  vim.diagnostic.severity["WARN"]
         end,
     }),
-    null_ls.builtins.diagnostics.mypy.with({
-        prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-        -- prefer_local = '.venv/bin',
-        timeout = 60000,
-        method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-        -- diagnostics_postprocess = function(diagnostic)
-        --     -- レベルをWARNに変更
-        --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
-        -- end,
-        extra_args = {
-            "--cache-dir",
-            "/dev/null",
-        }
-    }),
+    -- null_ls.builtins.diagnostics.mypy.with({
+    --     prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+    --     -- prefer_local = '.venv/bin',
+    --     timeout = 60000,
+    --     -- method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+    --     -- diagnostics_postprocess = function(diagnostic)
+    --     --     -- レベルをWARNに変更
+    --     --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
+    --     -- end,
+    --     extra_args = {
+    --         "--cache-dir",
+    --         "/dev/null",
+    --         "--incremental",
+    --         "--follow-imports",
+    --         "silent",
+    --     }
+    -- }),
     null_ls.builtins.diagnostics.cspell.with({
         -- extra_args = {
         --     '--config',

@@ -200,6 +200,9 @@ mason_lspconfig.setup_handlers({ function(server_name)
     elseif server_name == 'pyright' then
       -- print('hello pyright')
       opt.root_dir = lspconfig.util.root_pattern(".venv")
+    elseif server_name == 'pylsp' then
+      -- print('hello pyright')
+      opt.root_dir = lspconfig.util.root_pattern(".venv")
     end
 
     lspconfig[server_name].setup(opt)
@@ -348,7 +351,7 @@ lspconfig.sourcery.setup{
         --- This is retrieved from the Sourcery website and must be
         --- provided by each user. The extension must provide a
         --- configuration option for the user to provide this value.
-        token = '',  -- TODO
+        token = 'user_bhLcgZ_lSulx5RTMLvnQBUvHJyro9QUX3g_jWfHqzxhAY6LJosb78fCJBdw',  -- TODO
 
         --- The extension's name and version as defined by the extension.
         extension_version = 'vim.lsp',
@@ -389,3 +392,38 @@ lspconfig.sourcery.setup{
 --     }
 --   }
 -- }
+
+-- pip install git+https://github.com/python-lsp/python-lsp-server@03c53724654477b8a85eb816275a9ea06b13c7eb
+-- pip install git+https://github.com/syphar/python-lsp-server@initialize-progress-token
+lspconfig.pylsp.setup(handle_lsp{
+    root_dir = lspconfig.util.root_pattern('.venv'),
+    -- cmd = {'python3', '-m', 'pylsp'},
+    settings = {
+      pylsp = {
+        plugins = {
+          pylsp_mypy = {
+              enabled = true,
+              live_mode = true,
+              dmypy = false,
+              -- overrides = {
+              --     '--use-fine-grained-cache',
+              --     -- '--cache-dir',
+              --     -- '/dev/null',
+              -- },
+              -- config_sub_paths = {
+              --     '/home/y_ohi/docker/scs2/django/project/',
+              -- }
+          },
+          autopep8 = { enabled = false },
+          flake8 = { enabled = false },
+          pydocstyle = { enabled = false },
+          pycodestyle = { enabled = false },
+          pyflakes = { enabled = false },
+          pylint = { enabled = false },
+          rope_completion = { enabled = false },
+          rope_rename = { enabled = false },
+          yapf = { enabled = false },
+        }
+      }
+    }
+})
