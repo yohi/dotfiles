@@ -97,83 +97,86 @@ local lspconfig = require('lspconfig')
 local mason_tool_installer = require('mason-tool-installer')
 
 -- 1. LSP Sever management
-mason.setup()
-
-mason_tool_installer.setup({
-    ensure_installed = {
-        -- LSP
-        'bash-language-server',
-        'dockerfile-language-server',
-        'dot-language-server',
-        'html-lsp',
-        'json-lsp',
-        'lua-language-server',
-        'pyright',
-        'sqlls',
-        'vim-language-server',
-        'yaml-language-server',
-        'sourcery',
-        -- Formatter
-        'isort',
-        -- Linter
-        'cspell',
-        'flake8',
-        'pydocstyle',
-        'shellcheck',
-        'rstcheck',
-        'vulture',
-        'yamllint',
-        'mypy',
-        'sql-formatter',
-        -- Formatter/Linter
-        'djlint',
-        'markdownlint',
-        -- DAP
-        'debugpy',
-        -- Other
-        'json-to-struct',
-    },
-    auto_update = true,
-    run_on_start = true,
-    start_delay = 0,
+mason.setup({
+    -- PATH = 'skip',
+    log_level = vim.log.levels.DEBUG,
+    ui = {
+        icons = {
+            -- server_installed = "✓",
+            -- server_pending = "➜",
+            -- server_uninstalled = "✗",
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+        }
+    }
 })
 
-vim.api.nvim_create_autocmd('User', {
-  pattern = 'MasonToolsUpdateCompleted',
-  callback = function()
-    vim.schedule(function()
-      print 'mason-tool-installer has finished'
-    end)
-  end,
-})
-
--- mason_lspconfig.setup({
+-- mason_tool_installer.setup({
 --     ensure_installed = {
+--         -- LSP
 --         'bash-language-server',
---         'cspell',
---         'djlint',
 --         'dockerfile-language-server',
 --         'dot-language-server',
---         'flake8',
 --         'html-lsp',
---         'isort',
 --         'json-lsp',
---         'json-to-struct',
 --         'lua-language-server',
---         'markdownlint',
---         'mypy',
 --         'pyright',
---         'shellcheck',
---         'sql-formatter',
 --         'sqlls',
 --         'vim-language-server',
 --         'yaml-language-server',
+--         'sourcery',
+--         -- Formatter
+--         'isort',
+--         -- Linter
+--         'cspell',
+--         'flake8',
+--         'pydocstyle',
+--         'shellcheck',
+--         'rstcheck',
+--         'vulture',
 --         'yamllint',
+--         'mypy',
+--         'sql-formatter',
+--         -- Formatter/Linter
+--         'djlint',
+--         'markdownlint',
+--         -- DAP
+--         'debugpy',
+--         -- Other
+--         'json-to-struct',
 --     },
---     automatic_installation = true,
+--     auto_update = true,
+--     run_on_start = true,
+--     start_delay = 0,
+-- })
+-- 
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'MasonToolsUpdateCompleted',
+--   callback = function()
+--     vim.schedule(function()
+--       print 'mason-tool-installer has finished'
+--     end)
+--   end,
 -- })
 
-mason_lspconfig.setup()
+mason_lspconfig.setup({
+    ensure_installed = {
+        'bashls',
+        'dockerls',
+        'dotls',
+        'html',
+        'jsonls',
+        -- 'pylsp',
+        'pyright',
+        -- 'sourcery',
+        'sqlls',
+        'sumneko_lua',
+        'vimls',
+        'yamlls',
+    },
+    automatic_installation = false,
+})
 
 mason_lspconfig.setup_handlers({ function(server_name)
     local navic = require("nvim-navic")
@@ -279,6 +282,7 @@ end
 lspconfig.pyright.setup(handle_lsp{
     root_dir = lspconfig.util.root_pattern('.venv'),
     -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
+    log_level = vim.log.levels.ERROR,
     settings = {
         pyright = {
             disableLanguageService = false,
@@ -345,24 +349,25 @@ lspconfig.sumneko_lua.setup{
     }
 }
 
-lspconfig.sourcery.setup{
-    init_options = {
-        --- The Sourcery token for authenticating the user.
-        --- This is retrieved from the Sourcery website and must be
-        --- provided by each user. The extension must provide a
-        --- configuration option for the user to provide this value.
-        token = 'user_bhLcgZ_lSulx5RTMLvnQBUvHJyro9QUX3g_jWfHqzxhAY6LJosb78fCJBdw',  -- TODO
+-- lspconfig.sourcery.setup{
+--     init_options = {
+--         --- The Sourcery token for authenticating the user.
+--         --- This is retrieved from the Sourcery website and must be
+--         --- provided by each user. The extension must provide a
+--         --- configuration option for the user to provide this value.
+--         token = 'user_bhLcgZ_lSulx5RTMLvnQBUvHJyro9QUX3g_jWfHqzxhAY6LJosb78fCJBdw',  -- TODO
+-- 
+--         --- The extension's name and version as defined by the extension.
+--         extension_version = 'vim.lsp',
+-- 
+--         --- The editor's name and version as defined by the editor.
+--         editor_version = 'vim',
+--     },
+-- }
 
-        --- The extension's name and version as defined by the extension.
-        extension_version = 'vim.lsp',
-
-        --- The editor's name and version as defined by the editor.
-        editor_version = 'vim',
-    },
-}
 -- lspconfig.pylsp.setup{
 --   root_dir = lspconfig.util.root_pattern('.venv'),
---   cmd = {'python3', '-m', 'pylsp'},
+--   -- cmd = {'python3', '-m', 'pylsp'},
 --   settings = {
 --     pylsp = {
 --       plugins = {
@@ -395,35 +400,44 @@ lspconfig.sourcery.setup{
 
 -- pip install git+https://github.com/python-lsp/python-lsp-server@03c53724654477b8a85eb816275a9ea06b13c7eb
 -- pip install git+https://github.com/syphar/python-lsp-server@initialize-progress-token
-lspconfig.pylsp.setup(handle_lsp{
-    root_dir = lspconfig.util.root_pattern('.venv'),
-    -- cmd = {'python3', '-m', 'pylsp'},
-    settings = {
-      pylsp = {
-        plugins = {
-          pylsp_mypy = {
-              enabled = true,
-              live_mode = true,
-              dmypy = false,
-              -- overrides = {
-              --     '--use-fine-grained-cache',
-              --     -- '--cache-dir',
-              --     -- '/dev/null',
-              -- },
-              -- config_sub_paths = {
-              --     '/home/y_ohi/docker/scs2/django/project/',
-              -- }
-          },
-          autopep8 = { enabled = false },
-          flake8 = { enabled = false },
-          pydocstyle = { enabled = false },
-          pycodestyle = { enabled = false },
-          pyflakes = { enabled = false },
-          pylint = { enabled = false },
-          rope_completion = { enabled = false },
-          rope_rename = { enabled = false },
-          yapf = { enabled = false },
-        }
-      }
-    }
-})
+-- lspconfig.pylsp.setup(handle_lsp{
+--     root_dir = lspconfig.util.root_pattern('.venv'),
+--     -- cmd = {'python3', '-m', 'pylsp'},
+--     -- cmd_env = {
+--     --     VIRTUAL_ENV = vim.env,VIRTUAL_ENV,
+--     --     PATH = '/home/y_ohi/docker/scs2/django/project/.venv/bin' .. ':' .. vim.env.PATH,
+--     -- },
+--     log_level = vim.log.levels.DEBUG,
+--     settings = {
+--       pylsp = {
+--         plugins = {
+--           pylsp_mypy = {
+--               enabled = false,
+--               live_mode = true,
+--               report_progress = true,
+--               dmypy = false,
+--               overrides = {
+--                 '--python-executable',
+--                 '/home/y_ohi/docker/scs2/django/project/.venv/bin/python',
+--                 true,
+--                 '--cache-dir',
+--                 '/dev/null',
+--                 -- '--use-fine-grained-cache',
+--               },
+--               config_sub_paths = {
+--                   '/home/y_ohi/docker/scs2/django/project/',
+--               },
+--           },
+--           autopep8 = { enabled = false },
+--           flake8 = { enabled = false },
+--           pydocstyle = { enabled = false },
+--           pycodestyle = { enabled = false },
+--           pyflakes = { enabled = false },
+--           pylint = { enabled = false },
+--           rope_completion = { enabled = false },
+--           rope_rename = { enabled = false },
+--           yapf = { enabled = false },
+--         }
+--       }
+--     }
+-- })

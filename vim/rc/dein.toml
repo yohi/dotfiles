@@ -907,7 +907,6 @@ depends = [
     'context_filetype.vim'
 ]
 hook_add = '''
-    echom('ddc.vim hook_add')
     " set completeopt-=preview
     " call ddc#custom#patch_global('ui', 'native')
     " " call ddc#custom#patch_global('completionMenu', 'pum.vim')
@@ -931,6 +930,7 @@ hook_add = '''
     "     \ },
     "     \ })
     " call ddc#enable()
+
 " Hidden autocomplete preview
 set completeopt-=preview
 
