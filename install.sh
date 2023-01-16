@@ -4,13 +4,15 @@
 cd /tmp
 
 # ホームディレクトリを英語名にする
-LANG=C xdg-user-dirs-gtk-updat
+LANG=C xdg-user-dirs-gtk-update
 
 sudo apt update
 sudo apt -y upgrade
 
 sudo apt -y install language-pack-ja
 sudo update-locale LANG=ja_JP.UTF8
+
+sudo apt -y install build-essential curl file git wget
 
 # Ubuntu Japanese
 wget https://www.ubuntulinux.jp/ubuntu-jp-ppa-keyring.gpg -P /etc/apt/trusted.gpg.d/
@@ -34,7 +36,6 @@ sudo apt install -y gdebi
 
 
 # HOMEBREW
-sudo apt -y install build-essential curl file git
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/y_ohi/.profile
 # eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
@@ -116,24 +117,24 @@ sudo apt install -y howdy
 sudo howdy add
 
 # tilix
-sudo apt install tilix
+sudo apt install -y tilix
 dconf load /com/gexperts/Tilix/ < tilix/tilix.dconf
 
 # GoogleChrome
-sudo apt install google-chrome-stable google-chrome-beta
+sudo apt install -y google-chrome-stable google-chrome-beta
 
 # KChangeGrind
-sudo apt install kcachegrind
+sudo apt install -y kcachegrind
 
 # pgadmin
 curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
 sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
-sudo apt install pgadmin4-desktop
+sudo apt install -y pgadmin4-desktop
 
 # remmina
 sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
 sudo apt update
-sudo apt install remmina remmina-plugin-rdp remmina-plugin-secret
+sudo apt install -y remmina remmina-plugin-rdp remmina-plugin-secret
 
 # logiopts
 # cf.) https://github.com/PixlOne/logiops
@@ -145,11 +146,11 @@ sudo apt install -y blueman
 # copyq
 sudo add-apt-repository ppa:hluk/copyq
 sudo apt update
-sudo apt install copyq
+sudo apt install -y copyq
 
 # mattermost
 curl -o- https://deb.packages.mattermost.com/setup-repo.sh | sudo bash
-sudo apt install mattermost-desktop
+sudo apt install -y mattermost-desktop
 
 # appimageluncher
 add-apt-repository ppa:appimagelauncher-team/stable
