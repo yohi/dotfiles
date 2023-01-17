@@ -38,6 +38,8 @@ sudo apt -y install chrome-gnome-shell
 
 # HOMEBREW
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+export PATH=/usr/local/bin:$PATH >> ~/.bash_profile
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bash_profile
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle
 
@@ -80,7 +82,8 @@ sudo apt install -y refind
 sudo refind-mkdefault
 
 # ROOTLESS DOCKER
-curl -fsSL https://get.docker.com/rootless | sh
+# curl -fsSL https://get.docker.com/rootless | sh
+dockerd-rootless-setuptool.sh install
 export PATH=/home/${USER}/bin:${PATH}
 export PATH=${PATH}:/sbin
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
@@ -89,6 +92,8 @@ apt-get install -y uidmap
 EOF
 systemctl --user start docker.service
 sudo loginctl enable-linger ${USER}
+mkdir -p ~/.docker/cli-plugins
+ln -sfn $(brew --prefix)/opt/docker-compose/bin/docker-compose ~/.docker/cli-plugins/docker-compose
 
 # gnome shell
 sudo apt install -y chrome-gnome-shell
@@ -140,22 +145,22 @@ curl -o- https://deb.packages.mattermost.com/setup-repo.sh | sudo bash
 sudo apt install -y mattermost-desktop
 
 # appimageluncher
-add-apt-repository -y ppa:appimagelauncher-team/stable
-apt update
-apt install -y appimagelauncher
+sudo add-apt-repository -y ppa:appimagelauncher-team/stable
+sudo apt update
+sudo apt install -y appimagelauncher
 
 # meld
-apt install -y meld
+sudo apt install -y meld
 
 # extension-manager
-apt install -y gnome-shell-extension-manager
+sudo apt install -y gnome-shell-extension-manager
 
 # conky
 # cf.) https://www.kwonline.org/memo2/2020/11/04/ubuntu-20_04-install-conky/
-apt install -y conky-all
+sudo apt install -y conky-all
 
 # synaptic
-apt install -y synaptic apt-xapian-index
+sudo apt install -y synaptic apt-xapian-index
 update-apt-xapian-index -vf
 
 ## deb package
@@ -231,3 +236,6 @@ sudo howdy add
 # MAINLINE
 sudo add-apt-repository -y ppa:cappelikan/ppa
 sudo apt update && sudo apt install -y mainline
+
+# Generete SSH Key
+ssh-keygen -t ed25519 -C "${EMAIL:-y.ohi@diamondhead.tech}"
