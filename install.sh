@@ -55,6 +55,7 @@ ln -nfs ~/dotfiles/vim ~/.config/nvim
 ln -nfs ~/dotfiles/vim/rc/vimrc ~/.config/nvim/init.vim
 ln -nfs ~/dotfiles/cspell ~/.config/cspell
 ln -nfs ~/dotfiles/vim/denops_translate ~/.config/denops_translate
+sudo apt install -y xclip xsel
 
 
 # ZSH

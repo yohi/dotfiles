@@ -83,8 +83,10 @@ bindkey "^[[3~" delete-char
 ###########################3 
 #
 # HOMEBREW
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH=/home/${USER}/bin:${PATH}
+export PATH=${PATH}:/sbin
+# export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+# export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # SSH AGENT TODO
 # eval $(ssh-agent)
