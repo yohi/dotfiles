@@ -12,7 +12,7 @@ sudo apt -y upgrade
 sudo apt -y install language-pack-ja
 sudo update-locale LANG=ja_JP.UTF8
 
-sudo apt -y install build-essential curl file git wget
+sudo apt -y install build-essential curl file wget
 
 # Ubuntu Japanese
 wget https://www.ubuntulinux.jp/ubuntu-jp-ppa-keyring.gpg -P /etc/apt/trusted.gpg.d/
@@ -33,16 +33,15 @@ sudo apt install -y flatpak
 # gdebi
 sudo apt install -y gdebi
 
-
+# chrome-gnome-shell
+sudo apt -y install chrome-gnome-shell
 
 # HOMEBREW
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-# echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)' >> /home/y_ohi/.profile
-# eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew bundle
 
-
-sudo apt -y install chrome-gnome-shell
+## config file
 
 $(mkdir -p ~/.config)
 
@@ -64,26 +63,24 @@ sudo sh -c "echo $(which zsh) >> /etc/shells"
 chsh -s $(which zsh)
 
 # FISH
-curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
-$(ln -nfs ~/dotfiles/fish/rc/fishrc ~/.config/fish/config.fish)
+# curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
+# $(ln -nfs ~/dotfiles/fish/rc/fishrc ~/.config/fish/config.fish)
+
+# logiopts
+# cf.) https://github.com/PixlOne/logiops
+sudo ln -nfs ~/dotfiles/logid/logid.cfg /etc/logid.cfg
+
 
 # git config
 git config --global user.name 'Yusuke Ohi'
 git config --global user.email "${EMAIL:-y.ohi@diamondhead.tech}"
-
-
-# MAINLINE
-sudo add-apt-repository -y ppa:cappelikan/ppa
-sudo apt update && sudo apt install -y mainline
-sudo mainline --install-latest
 
 # refind
 sudo apt install -y refind
 sudo refind-mkdefault
 
 # ROOTLESS DOCKER
-sudo apt install -y docker-ce-rootless-extras
-dockerd-rootless-setuptool.sh install
+curl -fsSL https://get.docker.com/rootless | sh
 export PATH=/home/${USER}/bin:${PATH}
 export PATH=${PATH}:/sbin
 export DOCKER_HOST=unix:///run/user/1000/docker.sock
@@ -106,15 +103,9 @@ sudo apt update && sudo apt install -y terminator
 
 # TablePlus
 wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg
-sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
+sudo add-apt-repository -y "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
 sudo apt update
 sudo apt install -y tableplus
-
-# howdy
-sudo add-apt-repository -y ppa:boltgolt/howdy
-sudo apt update
-sudo apt install -y howdy
-sudo howdy add
 
 # tilix
 sudo apt install -y tilix
@@ -132,19 +123,15 @@ sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] h
 sudo apt install -y pgadmin4-desktop
 
 # remmina
-sudo apt-add-repository ppa:remmina-ppa-team/remmina-next
+sudo apt-add-repository -y ppa:remmina-ppa-team/remmina-next
 sudo apt update
 sudo apt install -y remmina remmina-plugin-rdp remmina-plugin-secret
-
-# logiopts
-# cf.) https://github.com/PixlOne/logiops
-sudo ln -nfs ~/dotfiles/logid/logid.cfg /etc/logid.cfg
 
 # blueman
 sudo apt install -y blueman
 
 # copyq
-sudo add-apt-repository ppa:hluk/copyq
+sudo add-apt-repository -y ppa:hluk/copyq
 sudo apt update
 sudo apt install -y copyq
 
@@ -153,7 +140,7 @@ curl -o- https://deb.packages.mattermost.com/setup-repo.sh | sudo bash
 sudo apt install -y mattermost-desktop
 
 # appimageluncher
-add-apt-repository ppa:appimagelauncher-team/stable
+add-apt-repository -y ppa:appimagelauncher-team/stable
 apt update
 apt install -y appimagelauncher
 
@@ -190,8 +177,8 @@ sudo gdebi -n wps-office_11.1.0.11664.XA_amd64.deb
 
 ## flatpak package
 
-# bottles
-flatpak install flathub com.usebottles.bottles
+# bottles TODO
+# flatpak install flathub.com.usebottles.bottles
 
 # discord TODO
 # wget https://discord.com/api/download?platform=linux&format=deb
@@ -233,3 +220,14 @@ flatpak install flathub com.usebottles.bottles
 # system-monitor-next
 # teaks-syste-menu
 # user-themes
+
+
+# howdy
+sudo add-apt-repository -y ppa:boltgolt/howdy
+sudo apt update
+sudo apt install -y howdy
+sudo howdy add
+
+# MAINLINE
+sudo add-apt-repository -y ppa:cappelikan/ppa
+sudo apt update && sudo apt install -y mainline
