@@ -238,5 +238,9 @@ sudo howdy add
 sudo add-apt-repository -y ppa:cappelikan/ppa
 sudo apt update && sudo apt install -y mainline
 
+# AWS Session Manager Plugin
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+sudo gdebi -n session-manager-plugin.deb
+
 # Generete SSH Key
 ssh-keygen -t ed25519 -C "${EMAIL:-y.ohi@diamondhead.tech}"
