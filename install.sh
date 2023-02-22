@@ -240,3 +240,6 @@ sudo apt update && sudo apt install -y mainline
 
 # Generete SSH Key
 ssh-keygen -t ed25519 -C "${EMAIL:-y.ohi@diamondhead.tech}"
+
+# Fig
+bash <(curl -fSsL https://fig.io/headless.sh) && exec $SHELL
