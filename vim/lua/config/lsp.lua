@@ -275,8 +275,8 @@ mason_lspconfig.setup_handlers({
                         },
                         pylsp_mypy = {
                             enabled = true,
-                            live_mode = true,
-                            dmypy = false,
+                            live_mode = false,
+                            dmypy = true,
                             report_progress = false,
                             strict = false,
                             overrides = {

@@ -169,8 +169,8 @@ mason_null_ls.setup_handlers{
     null_ls.register(
       null_ls.builtins.formatting.djlint.with({
           command = 'djlint',
-          -- prefer_local = '.venv/bin',
-          prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+          prefer_local = '.venv/bin',
+          -- prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
           diagnostics_postprocess = function(diagnostic)
               -- レベルをWARNに変更
               diagnostic.severity =  vim.diagnostic.severity["WARN"]
