@@ -69,9 +69,6 @@ chsh -s $(which zsh)
 # curl https://git.io/fisher --create-dirs -sLo ~/.config/fish/functions/fisher.fish
 # $(ln -nfs ~/dotfiles/fish/rc/fishrc ~/.config/fish/config.fish)
 
-# logiopts
-# cf.) https://github.com/PixlOne/logiops
-sudo ln -nfs ~/dotfiles/logid/logid.cfg /etc/logid.cfg
 
 
 # git config
@@ -247,3 +244,15 @@ ssh-keygen -t ed25519 -C "${EMAIL:-y.ohi@diamondhead.tech}"
 
 # Fig
 bash <(curl -fSsL https://fig.io/headless.sh) && exec $SHELL
+# logiopts
+# cf.) https://github.com/PixlOne/logiops
+sudo apt install -y cmake libevdev-dev libudev-dev libconfig++-dev
+git clone https://github.com/PixlOne/logiops.git
+cd logiops
+mkdir build
+cd build
+cmake ..
+make
+sudo make install
+sudo systemctl enable logid
+sudo ln -nfs ~/dotfiles/logid/logid.cfg /etc/logid.cfg

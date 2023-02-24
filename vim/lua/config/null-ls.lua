@@ -19,6 +19,7 @@ local mason_null_ls = require("mason-null-ls")
 -- local command_resolver = require("null-ls.helpers.command_resolver")
 -- local root_dir = utils.root_pattern('.venv')
 local root_dir = utils.root_pattern('.venv')
+vim.fn.setenv('MYPYPATH', vim.env.VIRTUAL_ENV)
 
 -- local sources = {
 --     debug = false,
