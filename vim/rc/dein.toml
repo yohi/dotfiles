@@ -215,7 +215,7 @@ repo = 'neovim/nvim-lspconfig'
 on_source = [
     'mason-lspconfig.nvim'
     'rrethy/vim-illuminate',
-    'read-or-create-venv.vim',
+    # 'read-or-create-venv.vim',
 ]
 lua_add = '''
     require('config.lsp')
@@ -418,9 +418,9 @@ hook_source = '''
 '''
 
 # 自作
-[[plugins]]
-repo = 'sansyrox/vim-python-virtualenv'
-on_source = 'yohi/read-or-create-venv.vim'
+# [[plugins]]
+# repo = 'sansyrox/vim-python-virtualenv'
+# on_source = 'yohi/read-or-create-venv.vim'
 
 [[plugins]]
 repo = 'yohi/set-docker-compose-env.nvim'
@@ -428,40 +428,40 @@ lua_add = '''
 require('set-docker-compose-env').setup()
 '''
 
-[[plugins]]
-repo = 'yohi/read-or-create-venv.vim'
-hook_add = '''
-" echom('yohi/read-or-create-venv.vim')
-" echom('hook_add')
-" echom('read_or_create_venv function exec')
-let s:virtual_env = getcwd() . '/.venv'
-if isdirectory(s:virtual_env)
-    let $VIRTUAL_ENV = s:virtual_env
-else
-    " virtual_envがない場合
-    let s:python3 = system('which python3')
-    let s:virtual_env = $HOME . '/.vim/vimvenv'
-    if !isdirectory(s:virtual_env)
-        " echom('install vim virtualenv')
-        call system('python3 -m venv ' . s:virtual_env)
-    endif
-    let $VIRTUAL_ENV = s:virtual_env
-endif
-
-let g:python3_host_prog = s:virtual_env . '/bin/python'
-let $PATH = s:virtual_env . '/bin:' . $PATH
-" call timer_start(0, s:istall_pip_package('pynvim'))
-" call timer_start(0, s:install_pip_package('mypy', v:true))
-" call timer_start(0, s:install_pip_package('flake8', v:true))
-
-let g:pythonpath = $PYTHONPATH
-if strlen(g:pythonpath) == 0
-    let $PYTHONPATH = getcwd()
-endif
-
-" echom($PYTHONPATH)
-" echom($VIRTUAL_ENV)
-'''
+# [[plugins]]
+# repo = 'yohi/read-or-create-venv.vim'
+# hook_add = '''
+# " echom('yohi/read-or-create-venv.vim')
+# " echom('hook_add')
+# " echom('read_or_create_venv function exec')
+# let s:virtual_env = getcwd() . '/.venv'
+# if isdirectory(s:virtual_env)
+#     let $VIRTUAL_ENV = s:virtual_env
+# else
+#     " virtual_envがない場合
+#     let s:python3 = system('which python3')
+#     let s:virtual_env = $HOME . '/.vim/vimvenv'
+#     if !isdirectory(s:virtual_env)
+#         " echom('install vim virtualenv')
+#         call system('python3 -m venv ' . s:virtual_env)
+#     endif
+#     let $VIRTUAL_ENV = s:virtual_env
+# endif
+# 
+# let g:python3_host_prog = s:virtual_env . '/bin/python'
+# let $PATH = s:virtual_env . '/bin:' . $PATH
+# " call timer_start(0, s:istall_pip_package('pynvim'))
+# " call timer_start(0, s:install_pip_package('mypy', v:true))
+# " call timer_start(0, s:install_pip_package('flake8', v:true))
+# 
+# let g:pythonpath = $PYTHONPATH
+# if strlen(g:pythonpath) == 0
+#     let $PYTHONPATH = getcwd()
+# endif
+# 
+# " echom($PYTHONPATH)
+# " echom($VIRTUAL_ENV)
+# '''
 
 # [[plugins]]
 # repo = 'yohi/install-pip-package.nvim'
@@ -496,9 +496,9 @@ endif
 #         once = true,
 #     })
 # '''
-[[plugins]]
-repo = 'jmcantrell/vim-virtualenv'
-on_source = 'yohi/read-or-create-venv.vim'
+# [[plugins]]
+# repo = 'jmcantrell/vim-virtualenv'
+# on_source = 'yohi/read-or-create-venv.vim'
 # hook_add = '''
 # echom('vim-virutualenv')
 # "echom(system('env'))
@@ -1096,8 +1096,8 @@ repo = 'Shougo/neomru.vim'
 # '''
 
 # Visualize Space
-[[plugins]]
-repo = 'bronson/vim-trailing-whitespace'
+# [[plugins]]
+# repo = 'bronson/vim-trailing-whitespace'
 
 # Filer
 [[plugins]]

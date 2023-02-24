@@ -244,3 +244,6 @@ sudo gdebi -n session-manager-plugin.deb
 
 # Generete SSH Key
 ssh-keygen -t ed25519 -C "${EMAIL:-y.ohi@diamondhead.tech}"
+
+# Fig
+bash <(curl -fSsL https://fig.io/headless.sh) && exec $SHELL

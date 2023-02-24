@@ -96,6 +96,9 @@ local mason_lspconfig = require('mason-lspconfig')
 local lspconfig = require('lspconfig')
 local mason_tool_installer = require('mason-tool-installer')
 
+-- local root_dir = lspconfig.util.root_pattern('.venv')
+-- local python_path = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python')
+
 -- 1. LSP Sever management
 mason.setup({
     -- PATH = 'skip',
@@ -162,54 +165,195 @@ mason.setup({
 
 mason_lspconfig.setup({
     ensure_installed = {
+        'pyright',
+        'pylsp',
+        'mypy',
+        'flake8',
+        'isort',
         'bashls',
         'dockerls',
         'dotls',
         'html',
         'jsonls',
-        -- 'pylsp',
-        'pyright',
         -- 'sourcery',
         'sqlls',
-        'sumneko_lua',
+        'lua_ls',
         'vimls',
         'yamlls',
     },
     automatic_installation = false,
 })
 
-mason_lspconfig.setup_handlers({ function(server_name)
-    local navic = require("nvim-navic")
-    local opt = {
-      -- Function executed when the LSP server startup
-      on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-      end,
-      --   local opts = { noremap=true, silent=true }
-      --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-      --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-      -- end,
-    }
 
-    ---@diagnostic disable: undefined-global
-    if lsp_capabilities ~= nil then
-        opts.capabilities = lsp_capabilities
-    end
-    ---@diagnostic enable: undefined-global
 
-    -- serverに対応しているfiletypeのbufferを開いたら、
-    if server_name == 'sumneko_lua' then
-      -- print('hello world')
-    elseif server_name == 'pyright' then
-      -- print('hello pyright')
-      opt.root_dir = lspconfig.util.root_pattern(".venv")
-    elseif server_name == 'pylsp' then
-      -- print('hello pyright')
-      opt.root_dir = lspconfig.util.root_pattern(".venv")
-    end
+mason_lspconfig.setup_handlers({
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
 
-    lspconfig[server_name].setup(opt)
-end })
+    function(server_name)
+        lspconfig[server_name].setup({})
+    end,
+
+    -- Next, you can provide targeted overrides for specific servers.
+    pyright = function()
+        lspconfig.pyright.setup {
+            root_dir = lspconfig.util.root_pattern('.venv'),
+            -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
+            log_level = vim.log.levels.ERROR,
+            settings = {
+                pyright = {
+                    disableLanguageService = false,
+                    disableOrganizeImports = false,
+                },
+                python = {
+                    pythonPath = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'),
+                    venvPath = root_dir,
+                    venv = '.venv',
+                    analysis = {
+                        inlayHints = {
+                            functionReturnTypes = true,
+                            variableTypes = true,
+                        },
+
+                        --
+                        autoImportCompletions = true,
+
+                        -- 事前定義された名前にもどついて検索パスを自動的に追加するか
+                        autoSearchPaths = true,
+
+                        -- [openFilesOnly, workspace]
+                        diagnosticMode = "workspace",
+
+                        -- 診断のレベルを上書きする
+                        -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+                        diagnosticSeverityOverrides = {
+                            reportGeneralTypeIssues = "none",
+                            reportMissingTypeArgument = "none",
+                            reportUnknownMemberType = "none",
+                            reportUnknownVariableType = "none",
+                            reportUnknownArgumentType = "none",
+                        },
+
+                        -- インポート解決のための追加検索パス指定
+                        -- extraPaths = '',
+
+                        -- default: Information [Error, Warning, Information, Trace]
+                        logLevel = 'Information',
+
+                        -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
+                        -- stubPath = '',
+
+                        -- 型チェックの分析レベル default: off [off, basic, strict]
+                        typeCheckingMode = 'off',
+
+                        --
+                        -- typeshedPaths = '',
+
+                        -- default: false
+                        useLibraryCodeForTypes = false,
+                    },
+                }
+            }
+        }
+    end,
+    pylsp = function()
+        lspconfig.pylsp.setup {
+            root_dir = lspconfig.util.root_pattern('.venv'),
+            log_level = vim.log.levels.DEBUG,
+            settings = {
+                pylsp = {
+                    configurationSources = {
+                        'flake8'
+                    },
+                    plugins = {
+                        flake8 = {
+                            enabled = true,
+                        },
+                        pyls_isort = {
+                            enabled = true,
+                        },
+                        pylsp_mypy = {
+                            enabled = true,
+                            live_mode = false,
+                            dmypy = true,
+                            report_progress = false,
+                            strict = false,
+                            overrides = {
+                                -- '--use-fine-grained-cache',
+                                -- '--cache-dir',
+                                -- '/dev/null',
+                                -- '--python-executable',
+                                -- '/home/y_ohi/docker/scs2/django/project/.venv/bin/python',
+                                -- true,
+                                '--cache-dir', '/dev/null',
+                                '--python-executable', lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'), true,
+                            },
+                            config_sub_paths = {
+                              -- '/home/y_ohi/docker/scs2/django/project/',
+                            }
+                        },
+                        pycodestyle = {
+                            enabled = true,
+                            maxLineLength = 120,
+                        },
+                        pyflakes = {
+                            enabled = false,
+                        },
+                        autopep8 = {
+                            enabled = false,
+                        },
+                        yapf = {
+                            enabled = false,
+                        },
+                        pylsp_black = {
+                            enabled = false,
+                        },
+                        memestra = {
+                            enabled = false,
+                        },
+                        mccabe = {
+                            enabled = false
+                        },
+                    },
+                },
+            },
+        }
+    end,
+})
+
+-- mason_lspconfig.setup_handlers({ function(server_name)
+--     local navic = require("nvim-navic")
+--     local opt = {
+--       -- Function executed when the LSP server startup
+--       on_attach = function(client, bufnr)
+--         navic.attach(client, bufnr)
+--       end,
+--       --   local opts = { noremap=true, silent=true }
+--       --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+--       --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
+--       -- end,
+--     }
+-- 
+--     ---@diagnostic disable: undefined-global
+--     if lsp_capabilities ~= nil then
+--         opts.capabilities = lsp_capabilities
+--     end
+--     ---@diagnostic enable: undefined-global
+-- 
+--     -- serverに対応しているfiletypeのbufferを開いたら、
+--     if server_name == 'lua_ls' then
+--       -- print('hello world')
+--     elseif server_name == 'pyright' then
+--       -- print('hello pyright')
+--       opt.root_dir = lspconfig.util.root_pattern(".venv")
+--     elseif server_name == 'pylsp' then
+--       -- print('hello pyright')
+--       opt.root_dir = lspconfig.util.root_pattern(".venv")
+--     end
+-- 
+--     lspconfig[server_name].setup(opt)
+-- end })
 
 
 -- 2. build-in LSP function
@@ -279,75 +423,75 @@ end
 
 -- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
-lspconfig.pyright.setup(handle_lsp{
-    root_dir = lspconfig.util.root_pattern('.venv'),
-    -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-    log_level = vim.log.levels.ERROR,
-    settings = {
-        pyright = {
-            disableLanguageService = false,
-            disableOrganizeImports = false,
-        },
-        python = {
-            analysis = {
-                inlayHints = {
-                    functionReturnTypes = true,
-                    variableTypes = true,
-                },
-
-                --
-                autoImportCompletions = true,
-
-                -- 事前定義された名前にもどついて検索パスを自動的に追加するか
-                autoSearchPaths = true,
-
-                -- [openFilesOnly, workspace]
-                diagnosticMode = "workspace",
-
-                -- 診断のレベルを上書きする
-                -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
-                diagnosticSeverityOverrides = {
-                    reportGeneralTypeIssues = "none",
-                    reportMissingTypeArgument = "none",
-                    reportUnknownMemberType = "none",
-                    reportUnknownVariableType = "none",
-                    reportUnknownArgumentType = "none",
-                },
-
-                -- インポート解決のための追加検索パス指定
-                -- extraPaths = '',
-
-                -- default: Information [Error, Warning, Information, Trace]
-                logLevel = 'Information',
-
-                -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
-                -- stubPath = '',
-
-                -- 型チェックの分析レベル default: off [off, basic, strict]
-                typeCheckingMode = 'off',
-
-                --
-                -- typeshedPaths = '',
-
-                -- default: false
-                useLibraryCodeForTypes = false,
-            },
-            pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
-            venvPath = '.',
-            venv='.venv',
-        }
-    }
-})
-
-lspconfig.sumneko_lua.setup{
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = {'vim'},
-            }
-        }
-    }
-}
+-- lspconfig.pyright.setup(handle_lsp{
+--     root_dir = lspconfig.util.root_pattern('.venv'),
+--     -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
+--     log_level = vim.log.levels.ERROR,
+--     settings = {
+--         pyright = {
+--             disableLanguageService = false,
+--             disableOrganizeImports = false,
+--         },
+--         python = {
+--             analysis = {
+--                 inlayHints = {
+--                     functionReturnTypes = true,
+--                     variableTypes = true,
+--                 },
+-- 
+--                 --
+--                 autoImportCompletions = true,
+-- 
+--                 -- 事前定義された名前にもどついて検索パスを自動的に追加するか
+--                 autoSearchPaths = true,
+-- 
+--                 -- [openFilesOnly, workspace]
+--                 diagnosticMode = "workspace",
+-- 
+--                 -- 診断のレベルを上書きする
+--                 -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+--                 diagnosticSeverityOverrides = {
+--                     reportGeneralTypeIssues = "none",
+--                     reportMissingTypeArgument = "none",
+--                     reportUnknownMemberType = "none",
+--                     reportUnknownVariableType = "none",
+--                     reportUnknownArgumentType = "none",
+--                 },
+-- 
+--                 -- インポート解決のための追加検索パス指定
+--                 -- extraPaths = '',
+-- 
+--                 -- default: Information [Error, Warning, Information, Trace]
+--                 logLevel = 'Information',
+-- 
+--                 -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
+--                 -- stubPath = '',
+-- 
+--                 -- 型チェックの分析レベル default: off [off, basic, strict]
+--                 typeCheckingMode = 'off',
+-- 
+--                 --
+--                 -- typeshedPaths = '',
+-- 
+--                 -- default: false
+--                 useLibraryCodeForTypes = false,
+--             },
+--             pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
+--             venvPath = '.',
+--             venv='.venv',
+--         }
+--     }
+-- })
+-- 
+-- lspconfig.lua_ls.setup{
+--     settings = {
+--         Lua = {
+--             diagnostics = {
+--                 globals = {'vim'},
+--             }
+--         }
+--     }
+-- }
 
 -- lspconfig.sourcery.setup{
 --     init_options = {

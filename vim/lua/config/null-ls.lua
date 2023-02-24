@@ -20,13 +20,6 @@ local mason_null_ls = require("mason-null-ls")
 -- local root_dir = utils.root_pattern('.venv')
 local root_dir = utils.root_pattern('.venv')
 
--- print('vim.fn.getcwd()')
--- print(vim.fn.getcwd())
--- print('root_dir')
--- print(root_dir)
-
-
-
 -- local sources = {
 --     debug = false,
 --     -- Diagnostics
@@ -119,16 +112,16 @@ mason.setup()
 mason_null_ls.setup({
     ensure_installed = {
       ---- Formatter
-      'isort',
+      -- 'isort',
       ---- Linter
       'cspell',
-      'flake8',
+      -- 'flake8',
       -- 'pydocstyle',
       'shellcheck',
       'rstcheck',
       -- 'vulture',
       'yamllint',
-      'mypy',
+      -- 'mypy',
       'sql-formatter',
       ---- Formatter/Linter
       'djlint',
@@ -153,17 +146,6 @@ mason_null_ls.setup_handlers{
     -- please add the below.
     require("mason-null-ls.automatic_setup")(source_name, methods)
   end,
-  flake8 = function(source_name, methods)
-    null_ls.register(
-      null_ls.builtins.diagnostics.flake8.with({
-          prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-          diagnostics_postprocess = function(diagnostic)
-              -- レベルをWARNに変更
-              diagnostic.severity =  vim.diagnostic.severity["WARN"]
-          end,
-      })
-    )
-  end,
   cspell = function(source_name, methods)
     null_ls.register(
       null_ls.builtins.diagnostics.cspell.with({
@@ -183,26 +165,12 @@ mason_null_ls.setup_handlers{
       })
     )
   end,
-  isort = function(source_name, methods)
-    null_ls.register(
-      null_ls.builtins.formatting.isort.with({
-          command = 'isort',
-          timeout = 60000,
-          -- prefer_local = '.venv/bin',
-          prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-          diagnostics_postprocess = function(diagnostic)
-              -- レベルをWARNに変更
-              diagnostic.severity =  vim.diagnostic.severity["WARN"]
-          end,
-      })
-    )
-  end,
   djlint = function(source_name, methods)
     null_ls.register(
       null_ls.builtins.formatting.djlint.with({
           command = 'djlint',
-          -- prefer_local = '.venv/bin',
-          prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+          prefer_local = '.venv/bin',
+          -- prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
           diagnostics_postprocess = function(diagnostic)
               -- レベルをWARNに変更
               diagnostic.severity =  vim.diagnostic.severity["WARN"]
@@ -210,26 +178,52 @@ mason_null_ls.setup_handlers{
       })
     )
   end,
-  mypy = function(source_name, methods)
-    null_ls.register(
-      null_ls.builtins.diagnostics.mypy.with({
-          prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-          -- prefer_local = '.venv/bin',
-          timeout = 60000,
-          method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-          -- diagnostics_postprocess = function(diagnostic)
-          --     -- レベルをWARNに変更
-          --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
-          -- end,
-          extra_args = {
-              -- '--use-fine-grained-cache',
-              '--cache-dir',
-              '/dev/null',
-              -- "--incremental",
-              -- "--follow-imports",
-              -- "silent",
-          }
-      })
-    )
-  end,
+  -- flake8 = function(source_name, methods)
+  --   null_ls.register(
+  --     null_ls.builtins.diagnostics.flake8.with({
+  --         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+  --         diagnostics_postprocess = function(diagnostic)
+  --             -- レベルをWARNに変更
+  --             diagnostic.severity =  vim.diagnostic.severity["WARN"]
+  --         end,
+  --     })
+  --   )
+  -- end,
+  -- isort = function(source_name, methods)
+  --   null_ls.register(
+  --     null_ls.builtins.formatting.isort.with({
+  --         command = 'isort',
+  --         timeout = 60000,
+  --         -- prefer_local = '.venv/bin',
+  --         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+  --         diagnostics_postprocess = function(diagnostic)
+  --             -- レベルをWARNに変更
+  --             diagnostic.severity =  vim.diagnostic.severity["WARN"]
+  --         end,
+  --     })
+  --   )
+  -- end,
+  -- mypy = function(source_name, methods)
+  --   null_ls.register(
+  --     null_ls.builtins.diagnostics.mypy.with({
+  --         disabled_filetypes = { "python" },
+  --         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
+  --         -- prefer_local = '.venv/bin',
+  --         timeout = 60000,
+  --         method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+  --         -- diagnostics_postprocess = function(diagnostic)
+  --         --     -- レベルをWARNに変更
+  --         --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
+  --         -- end,
+  --         extra_args = {
+  --             -- '--use-fine-grained-cache',
+  --             '--cache-dir',
+  --             '/dev/null',
+  --             -- "--incremental",
+  --             -- "--follow-imports",
+  --             -- "silent",
+  --         }
+  --     })
+  --   )
+  -- end,
 }
