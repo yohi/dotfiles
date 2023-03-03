@@ -935,14 +935,15 @@ hook_add = '''
 set completeopt-=preview
 
 call ddc#custom#patch_global('ui', 'native')
+
 " Use Customized labels
 call ddc#custom#patch_global('sourceParams', {
       \ 'nvim-lsp': { 'kindLabels': { 'Class': 'c' } },
+      \ 'around': {'maxSize': 500},
       \ })
 
 " Customize global settings
-call ddc#custom#patch_global('sources', ['around'])
-call ddc#custom#patch_global('sources', ['nvim-lsp'])
+call ddc#custom#patch_global('sources', ['around', 'nvim-lsp'])
 
 " Use matcher_head and sorter_rank.
 call ddc#custom#patch_global('sourceOptions', {
@@ -950,17 +951,10 @@ call ddc#custom#patch_global('sourceOptions', {
       \   'matchers': ['matcher_head'],
       \   'sorters': ['sorter_rank'],
       \ },
+      \ 'around': { 'mark': 'A' },
       \ 'nvim-lsp': {
       \   'mark': 'lsp',
       \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
-      \ })
-
-" Change source options
-call ddc#custom#patch_global('sourceOptions', {
-      \ 'around': {'mark': 'A'},
-      \ })
-call ddc#custom#patch_global('sourceParams', {
-      \ 'around': {'maxSize': 500},
       \ })
 
 " Use ddc.
