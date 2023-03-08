@@ -91,7 +91,7 @@ vim.fn.setenv('MYPYPATH', vim.env.VIRTUAL_ENV)
 --     -- }),
 --   }
 
-mason.setup()
+-- mason.setup()
 -- null_ls.setup({
 --     -- debug = true,
 --     -- diagnostics_format = '#{m} [#{c}]',
@@ -112,31 +112,14 @@ mason.setup()
 
 mason_null_ls.setup({
     ensure_installed = {
-      ---- Formatter
-      -- 'isort',
-      ---- Linter
-      'cspell',
-      -- 'flake8',
-      -- 'pydocstyle',
-      'shellcheck',
-      'rstcheck',
-      -- 'vulture',
-      'yamllint',
-      -- 'mypy',
-      'sql-formatter',
-      ---- Formatter/Linter
+      'icspell',
       'djlint',
-      'markdownlint',
+      'phpcs',
     },
+    root_dir = utils.root_pattern(".venv", ".git"),
+    diagnostics_format = '#{s}: #{m}',
     automatic_installation = false,
     automatic_setup = true,
-})
-
-null_ls.setup({
-  root_dir = utils.root_pattern('.venv'),
-  diagnostics_format = '#{s}: #{m}',
-  sources = {
-  },
 })
 
 mason_null_ls.setup_handlers{
@@ -147,25 +130,25 @@ mason_null_ls.setup_handlers{
     -- please add the below.
     require("mason-null-ls.automatic_setup")(source_name, methods)
   end,
-  cspell = function(source_name, methods)
-    null_ls.register(
-      null_ls.builtins.diagnostics.cspell.with({
-          -- extra_args = {
-          --     '--config',
-          --     '~/.config/cspell/cspell.json',
-          -- },
-          diagnostics_postprocess = function(diagnostic)
-              -- レベルをINFOに変更
-              diagnostic.severity =  vim.diagnostic.severity["INFO"]
-          end,
-          method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-          -- condition = function()
-          --     -- cpellが実行できるときのみ実行
-          --     return vim.fn.executable('cspell') > 0
-          -- end,
-      })
-    )
-  end,
+  -- cspell = function(source_name, methods)
+  --   null_ls.register(
+  --     null_ls.builtins.diagnostics.cspell.with({
+  --         -- extra_args = {
+  --         --     '--config',
+  --         --     '~/.config/cspell/cspell.json',
+  --         -- },
+  --         diagnostics_postprocess = function(diagnostic)
+  --             -- レベルをINFOに変更
+  --             diagnostic.severity =  vim.diagnostic.severity["INFO"]
+  --         end,
+  --         method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
+  --         -- condition = function()
+  --         --     -- cpellが実行できるときのみ実行
+  --         --     return vim.fn.executable('cspell') > 0
+  --         -- end,
+  --     })
+  --   )
+  -- end,
   djlint = function(source_name, methods)
     null_ls.register(
       null_ls.builtins.formatting.djlint.with({
@@ -179,52 +162,17 @@ mason_null_ls.setup_handlers{
       })
     )
   end,
-  -- flake8 = function(source_name, methods)
-  --   null_ls.register(
-  --     null_ls.builtins.diagnostics.flake8.with({
-  --         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-  --         diagnostics_postprocess = function(diagnostic)
-  --             -- レベルをWARNに変更
-  --             diagnostic.severity =  vim.diagnostic.severity["WARN"]
-  --         end,
-  --     })
-  --   )
-  -- end,
-  -- isort = function(source_name, methods)
-  --   null_ls.register(
-  --     null_ls.builtins.formatting.isort.with({
-  --         command = 'isort',
-  --         timeout = 60000,
-  --         -- prefer_local = '.venv/bin',
-  --         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-  --         diagnostics_postprocess = function(diagnostic)
-  --             -- レベルをWARNに変更
-  --             diagnostic.severity =  vim.diagnostic.severity["WARN"]
-  --         end,
-  --     })
-  --   )
-  -- end,
-  -- mypy = function(source_name, methods)
-  --   null_ls.register(
-  --     null_ls.builtins.diagnostics.mypy.with({
-  --         disabled_filetypes = { "python" },
-  --         prefer_local = vim.env.VIRTUAL_ENV .. '/bin',
-  --         -- prefer_local = '.venv/bin',
-  --         timeout = 60000,
-  --         method = null_ls.methods.DIAGNOSTICS_ON_SAVE,
-  --         -- diagnostics_postprocess = function(diagnostic)
-  --         --     -- レベルをWARNに変更
-  --         --     diagnostic.severity =  vim.diagnostic.severity["WARN"]
-  --         -- end,
-  --         extra_args = {
-  --             -- '--use-fine-grained-cache',
-  --             '--cache-dir',
-  --             '/dev/null',
-  --             -- "--incremental",
-  --             -- "--follow-imports",
-  --             -- "silent",
-  --         }
-  --     })
-  --   )
-  -- end,
+  phpcs = function(source_name, methods)
+    null_ls.register(
+      null_ls.builtins.diagnostics.phpcs.with({
+          diagnostics_postprocess = function(diagnostic)
+              -- レベルをWARNに変更
+              diagnostic.severity =  vim.diagnostic.severity["WARN"]
+          end,
+      })
+    )
+  end,
 }
+
+null_ls.setup()
+

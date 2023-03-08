@@ -180,6 +180,7 @@ mason_lspconfig.setup({
         'lua_ls',
         'vimls',
         'yamlls',
+        'phpcs',
     },
     automatic_installation = false,
 })
