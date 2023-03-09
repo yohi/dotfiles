@@ -167,9 +167,9 @@ mason_lspconfig.setup({
     ensure_installed = {
         'pyright',
         'pylsp',
-        'mypy',
-        'flake8',
-        'isort',
+        -- 'mypy',
+        -- 'flake8',
+        -- 'isort',
         'bashls',
         'dockerls',
         'dotls',
@@ -180,7 +180,7 @@ mason_lspconfig.setup({
         'lua_ls',
         'vimls',
         'yamlls',
-        'phpcs',
+        -- 'phpcs',
     },
     automatic_installation = false,
 })
