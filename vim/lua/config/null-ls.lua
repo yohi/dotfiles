@@ -38,9 +38,9 @@ mason_null_ls.setup({
                     args = {
                         '--standard=./phpcs.xml',
                     },
-                    diagnostics_postprocess = function(diagnostics)
+                    diagnostics_postprocess = function(diagnostic)
                         -- レベルをWARNに変更
-                        diagnostics.severity = vim.diagnostics.severity['WARN']
+                        diagnostic.severity = vim.diagnostic.severity['WARN']
                     end,
                 })
             )
@@ -49,9 +49,9 @@ mason_null_ls.setup({
             -- cspell
             null_ls.register(
                 null_ls.builtins.diagnostics.cspell.with({
-                    diagnostics_postprocess = function(diagnostics)
-                      -- レベルをINFOに変更
-                      diagnostics.severity = vim.diagnostics.severity['INFO']
+                    diagnostics_postprocess = function(diagnostic)
+                        -- レベルをINFOに変更
+                        diagnostic.severity = vim.diagnostic.severity['INFO']
                     end,
                     condition = function()
                       -- cpellが実行できるときのみ実行
@@ -65,9 +65,9 @@ mason_null_ls.setup({
             null_ls.register(
                 null_ls.builtins.diagnostics.djlint.with({
                     -- prefer_local = vim.env.VIRTUAL_ENV .. '/bin',  TODO
-                    diagnostics_postprocess = function(diagnostics)
+                    diagnostics_postprocess = function(diagnostic)
                       -- レベルをWARNに変更
-                      diagnostics.severity = vim.diagnostics.severity['WARN']
+                      diagnostic.severity = vim.diagnostic.severity['WARN']
                     end,
                 })
             )
