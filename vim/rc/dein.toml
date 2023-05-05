@@ -402,7 +402,38 @@ on_source = 'mason.nvim'
 
 [[plugins]]
 repo = 'SmiteshP/nvim-navic'
-on_source = 'nvim-lspconfig'
+on_source = [
+    'nvim-lspconfig',
+]
+
+
+[[plugins]]
+repo = "utilyre/barbecue.nvim",
+depends = [
+    "nvim-navic",
+    "nvim-web-devicons",
+]
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'numToStr/Comment.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navbuddy'
+on_source = [
+    "nvim-lspconfig",
+    "nvim-navic",
+    "nui.nvim",
+    "Comment.nvim",
+    "telescope.nvim",
+]
+
 
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
