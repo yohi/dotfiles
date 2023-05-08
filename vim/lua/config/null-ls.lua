@@ -13,6 +13,7 @@ mason_null_ls.setup({
     ensure_installed = {
         'stylua',
         'phpcs',
+        'phpcsfixer',
         'cspell',
         'djlint',
         'flake8',
@@ -42,6 +43,21 @@ mason_null_ls.setup({
                         -- レベルをWARNに変更
                         diagnostic.severity = vim.diagnostic.severity['WARN']
                     end,
+                })
+            )
+        end,
+        phpcsfixer = function(source_name, methods)
+            -- phpcs
+            null_ls.register(
+                null_ls.builtins.formatting.phpcsfixer.with({
+                    args = {
+                        '--standard=./phpcs.xml',
+                    },
+                    diagnostics_postprocess = function(diagnostic)
+                        -- レベルをWARNに変更
+                        diagnostic.severity =  vim.diagnostic.severity['WARN']
+                    end,
+
                 })
             )
         end,
@@ -128,6 +144,7 @@ mason_null_ls.setup({
 })
 
 null_ls.setup({
+    debug = true,
     root_dir = utils.root_pattern('.venv', '.git'),
     diagnostics_format = '#{s}: #{m}',
     on_attach = function(_, bufnr)
