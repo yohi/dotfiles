@@ -118,7 +118,7 @@ repo = 'p00f/nvim-ts-rainbow'
 depends = [
     'nvim-treesitter/nvim-treesitter',
 ]
-lua_source = '''
+lua_add = '''
     require('nvim-ts-autotag').setup()
 '''
 
@@ -358,7 +358,7 @@ hook_source = '''
 [[plugins]]
 # repo = 'yohi/set-docker-compose-env.nvim'
 repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
-lua_add = '''
+lua_source = '''
 require('set-docker-compose-env').setup()
 '''
 
