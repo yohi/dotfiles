@@ -184,6 +184,7 @@ mason_lspconfig.setup({
         'yamlls',
         -- 'phpcs',
         'intelephense',
+        -- 'sql_formatter',
     },
     automatic_installation = false,
 })
@@ -204,6 +205,16 @@ mason_lspconfig.setup_handlers({
         lspconfig.intelephense.setup {
         }
     end,
+
+    sqlls = function()
+        lspconfig.sqlls.setup {
+        }
+    end,
+
+    -- sql_formatter = function()
+    --     lspconfig.sql_formatter.setup {
+    --     }
+    -- end,
 
     pyright = function()
         lspconfig.pyright.setup {

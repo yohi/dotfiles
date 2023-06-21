@@ -119,7 +119,7 @@ depends = [
     'nvim-treesitter/nvim-treesitter',
 ]
 lua_add = '''
-    require('nvim-ts-autotag').setup()
+    require('nvim-treesitter.configs')
 '''
 
 # タグ自動クローズ
