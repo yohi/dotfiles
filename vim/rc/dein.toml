@@ -982,7 +982,7 @@ repo = 'thinca/vim-qfreplace'
 repo = 'j-hui/fidget.nvim'
 hook_add = '''
 lua << EOF
-  require"fidget".setup{}
+  require("fidget").setup{}
 EOF
 '''
 
