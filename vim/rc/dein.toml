@@ -794,6 +794,9 @@ depends = [
 lua_add = '''
     require('config.ddc')
 '''
+hook_source = '''
+    source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
+'''
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'

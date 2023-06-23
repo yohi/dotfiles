@@ -51,9 +51,9 @@ vim.diagnostic.config(config)
 
 
 local function on_cursor_hold()
-    if vim.lsp.buf.server_ready() then
+    -- if vim.lsp.buf.server_ready() then
         vim.diagnostic.open_float()
-    end
+    -- end
 end
 
 local diagnostic_hover_augroup_name = "lspconfig-diagnostic"
