@@ -792,9 +792,10 @@ depends = [
     'pum.vim',
     'context_filetype.vim'
 ]
-hook_source = '''
-    source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
-'''
+hooks_file = '~/dotfiles/vim/rc/plugins/ddc.rc.vim'
+#  hook_source = '''
+#      source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
+#  '''
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'

@@ -73,7 +73,6 @@ call ddc#custom#patch_global('sources', [
     \ 'around',
     \ 'nvim-lsp',
     \ 'file',
-    \ 'vsnip'
     \ ])
 
 " Use matcher_head and sorter_rank.
@@ -113,4 +112,5 @@ inoremap <silent><expr> <TAB>
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
+echo 'ddc#enable()'
 call ddc#enable()
