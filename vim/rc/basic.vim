@@ -1,6 +1,5 @@
 " BASIC.VIM ================================================
 
-
 " VIとの互換性をとらない
 set nocompatible
 
@@ -78,21 +77,32 @@ set tabstop=4
 " 連続した空白に対してタブやバックスペースでカーソルが動く幅
 set softtabstop=4
 
+" シンタックスハイライト最大文字数
+set synmaxcol=200
 
+" IMDISABLE
+set imdisable
+
+" xで削除した時はヤンクしない
+noremap x "_x
+
+" INSERTモードでESCしたときに保存を行う
+" inoremap <C-[> <C-[>:w<CR>
+
+" ファイルタイプによってインデントの設定を変更する
 augroup fileTypeIndent
     autocmd!
     autocmd BufNewFile,BufRead *.yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd BufNewFile,BufRead *.yml setlocal tabstop=2 softtabstop=2 shiftwidth=2
 augroup END
 
-" IMDISABLE
-set imdisable
+" 1000行以上のJSONファイルはシンタックスハイライトを無効にする
+augroup vimrc-highlight
+  au!
+  au Syntax json if 1000 < col('$') | syntax off | endif
+augroup END
 
-" xで削除した時はヤンクしない
-"vnoremap x "_x
-"nnoremap x "_x
-
-
+" 自動実行コマンド設定
 augroup MyVariousAutoCommand
     autocmd!
     " 自動改行しない
@@ -102,20 +112,3 @@ augroup MyVariousAutoCommand
     " ファイルのディレクトリに移動
     autocmd BufNewFile,BufRead,BufEnter * execute ':lcd ' . expand('%:p:h')
 augroup END
-
-" 特定を
-set synmaxcol=200
-
-"
-augroup vimrc-highlight
-  au!
-  au Syntax json if 1000 < col('$') | syntax off | endif
-augroup END
-
-
-
-
-
-
-
-inoremap <C-[> <C-[>:w<CR>

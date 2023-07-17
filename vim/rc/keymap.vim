@@ -82,5 +82,3 @@ cnoremap <C-l> <RIGHT>
 
 " 貼り付け
 cnoremap <C-p> <C-r>+
-
-

@@ -1,23 +1,3 @@
-"" if has('vim_starting')
-""     let s:dein_dir = expand($HOME . '/.cache/dein')
-""     if !isdirectory(s:dein_dir)
-""         echo 'install dein.vim...'
-""         call system('mkdir -p ' . s:dein_dir)
-""         call system('curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ' . s:dein_dir)
-""     endif
-"" endif
-"" 
-"" "dein Scripts-----------------------------
-"" 
-"" if &compatible
-""   set nocompatible               " Be iMproved
-"" endif
-"" 
-"" " let g:dein#auto_recache=1
-"" 
-"" " Required:
-"" set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-
 " set up the dein.vim directory
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
