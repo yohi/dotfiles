@@ -794,7 +794,7 @@ depends = [
 ]
 hook_source = '''
     " echom("hook_source")
-    source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
+    source '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 '''
 # hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 
