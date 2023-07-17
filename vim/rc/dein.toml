@@ -93,7 +93,7 @@ repo = 'nvim-tree/nvim-web-devicons'
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 hook_add = '''
-    source ~/dotfiles/vim/rc/plugins/vim-airline.vim
+    source ~/dotfiles/vim/rc/plugin-configs/vim/vim-airline.vim
 '''
 
 
@@ -723,7 +723,7 @@ hook_source = '''
 [[plugins]]
 repo = 'Shougo/ddu.vim'
 hook_source = '''
-    source ~/dotfiles/vim/rc/plugins/ddu.rc.vim
+    source ~/dotfiles/vim/rc/plugin-configs/vim/ddu.rc.vim
 '''
 [[plugins]]
 repo = 'Shougo/ddu-ui-ff'
@@ -796,7 +796,7 @@ hook_source = '''
     " echom("hook_source")
     source ~/dotfiles/vim/rc/plugins/ddc.rc.vim
 '''
-# hooks_file = '~/dotfiles/vim/rc/plugins/ddc.rc.vim'
+# hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
