@@ -112,5 +112,6 @@ inoremap <silent><expr> <TAB>
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
-echo 'ddc#enable()'
+" echom('ddc#enable')
+
 call ddc#enable()
