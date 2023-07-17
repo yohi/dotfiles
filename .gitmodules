@@ -1,0 +1,9 @@
+[submodule "vim/local_plugins/read-or-create-venv.vim"]
+	path = vim/local_plugins/read-or-create-venv.vim
+	url = git@github.com:yohi/read-or-create-venv.vim
+[submodule "vim/local_plugins/install-pip-package.nvim"]
+	path = vim/local_plugins/install-pip-package.nvim
+	url = git@github.com:yohi/install-pip-package.nvim
+[submodule "vim/local_plugins/set-docker-compose-env.nvim"]
+	path = vim/local_plugins/set-docker-compose-env.nvim
+	url = git@github.com:yohi/set-docker-compose-env.nvim

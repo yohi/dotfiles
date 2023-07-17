@@ -1,31 +1,41 @@
-if has('vim_starting')
-    let s:dein_dir = expand($HOME . '/.cache/dein')
-    if !isdirectory(s:dein_dir)
-        echo 'install dein.vim...'
-        call system('mkdir -p ' . s:dein_dir)
-        call system('curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ' . s:dein_dir)
-    endif
+"" if has('vim_starting')
+""     let s:dein_dir = expand($HOME . '/.cache/dein')
+""     if !isdirectory(s:dein_dir)
+""         echo 'install dein.vim...'
+""         call system('mkdir -p ' . s:dein_dir)
+""         call system('curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh -s ' . s:dein_dir)
+""     endif
+"" endif
+"" 
+"" "dein Scripts-----------------------------
+"" 
+"" if &compatible
+""   set nocompatible               " Be iMproved
+"" endif
+"" 
+"" " let g:dein#auto_recache=1
+"" 
+"" " Required:
+"" set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
+
+" set up the dein.vim directory
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+let g:rc_dir = expand('~/.vim/rc')
+
+" automatic installation of dein.vim
+if !isdirectory(s:dein_repo_dir)
+  execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
 endif
+execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
 
-"dein Scripts-----------------------------
 
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-
-" let g:dein#auto_recache=1
-
-" Required:
-set runtimepath+=$HOME/.cache/dein/repos/github.com/Shougo/dein.vim
-
-if dein#load_state('$HOME/.cache/dein')
+if dein#load_state(s:dein_dir)
     " Required:
-    call dein#begin('$HOME/.cache/dein')
+    call dein#begin(s:dein_dir)
 
-    let s:toml = expand($HOME . '/.vim/rc/dein.toml')
-    let s:toml_lazy = expand($HOME . '/.vim/rc/dein_lazy.toml')
-
-    echo s:toml_lazy
+    let s:toml = g:rc_dir . '/dein.toml'
+    let s:toml_lazy = g:rc_dir . '/dein_lazy.toml'
 
     call dein#load_toml(s:toml, { 'lazy': 0 })
     call dein#load_toml(s:toml_lazy, { 'lazy': 1 })

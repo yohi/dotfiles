@@ -51,9 +51,9 @@ vim.diagnostic.config(config)
 
 
 local function on_cursor_hold()
-    if vim.lsp.buf.server_ready() then
+    -- if vim.lsp.buf.server_ready() then
         vim.diagnostic.open_float()
-    end
+    -- end
 end
 
 local diagnostic_hover_augroup_name = "lspconfig-diagnostic"
@@ -94,66 +94,361 @@ end
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
 local lspconfig = require('lspconfig')
+local mason_tool_installer = require('mason-tool-installer')
+local nvim_navic = require('nvim-navic')
+local barbecue = require('barbecue')
 
+-- local root_dir = lspconfig.util.root_pattern('.venv')
+-- local python_path = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python')
 
 -- 1. LSP Sever management
-mason.setup()
+mason.setup({
+    -- PATH = 'skip',
+    log_level = vim.log.levels.DEBUG,
+    ui = {
+        icons = {
+            -- server_installed = "✓",
+            -- server_pending = "➜",
+            -- server_uninstalled = "✗",
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+        }
+    }
+})
+
+-- mason_tool_installer.setup({
+--     ensure_installed = {
+--         -- LSP
+--         'bash-language-server',
+--         'dockerfile-language-server',
+--         'dot-language-server',
+--         'html-lsp',
+--         'json-lsp',
+--         'lua-language-server',
+--         'pyright',
+--         'sqlls',
+--         'vim-language-server',
+--         'yaml-language-server',
+--         'sourcery',
+--         -- Formatter
+--         'isort',
+--         -- Linter
+--         'cspell',
+--         'flake8',
+--         'pydocstyle',
+--         'shellcheck',
+--         'rstcheck',
+--         'vulture',
+--         'yamllint',
+--         'mypy',
+--         'sql-formatter',
+--         -- Formatter/Linter
+--         'djlint',
+--         'markdownlint',
+--         -- DAP
+--         'debugpy',
+--         -- Other
+--         'json-to-struct',
+--     },
+--     auto_update = true,
+--     run_on_start = true,
+--     start_delay = 0,
+-- })
+-- 
+-- vim.api.nvim_create_autocmd('User', {
+--   pattern = 'MasonToolsUpdateCompleted',
+--   callback = function()
+--     vim.schedule(function()
+--       print 'mason-tool-installer has finished'
+--     end)
+--   end,
+-- })
 
 mason_lspconfig.setup({
     ensure_installed = {
-        'bash-language-server',
-        'cspell',
-        'djlint',
-        'dockerfile-language-server',
-        'dot-language-server',
-        'flake8',
-        'html-lsp',
-        'isort',
-        'json-lsp',
-        'json-to-struct',
-        'lua-language-server',
-        'markdownlint',
-        'mypy',
         'pyright',
-        'shellcheck',
-        'sql-formatter',
+        'pylsp',
+        -- 'mypy',
+        -- 'flake8',
+        -- 'isort',
+        'bashls',
+        'dockerls',
+        'dotls',
+        'html',
+        'jsonls',
+        -- 'sourcery',
         'sqlls',
-        'vim-language-server',
-        'yaml-language-server',
-        'yamllint',
+        'lua_ls',
+        'vimls',
+        'yamlls',
+        -- 'phpcs',
+        'intelephense',
+        -- 'sql_formatter',
     },
-    automatic_installation = true,
+    automatic_installation = false,
 })
 
-mason_lspconfig.setup_handlers({ function(server_name)
-    local navic = require("nvim-navic")
-    local opt = {
-      -- Function executed when the LSP server startup
-      on_attach = function(client, bufnr)
-        navic.attach(client, bufnr)
-      end,
-      --   local opts = { noremap=true, silent=true }
-      --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-      --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
-      -- end,
-    }
 
-    ---@diagnostic disable: undefined-global
-    if lsp_capabilities ~= nil then
-        opts.capabilities = lsp_capabilities
-    end
-    ---@diagnostic enable: undefined-global
 
-    -- serverに対応しているfiletypeのbufferを開いたら、
-    if server_name == 'sumneko_lua' then
-      print('hello world')
-    elseif server_name == 'pyright' then
-      print('hello pyright')
-      opt.root_dir = lspconfig.util.root_pattern(".venv")
-    end
+mason_lspconfig.setup_handlers({
+    -- The first entry (without a key) will be the default handler
+    -- and will be called for each installed server that doesn't have
+    -- a dedicated handler.
 
-    lspconfig[server_name].setup(opt)
-end })
+    function(server_name)
+        lspconfig[server_name].setup({})
+    end,
+
+    -- Next, you can provide targeted overrides for specific servers.
+    intelephense = function()
+        lspconfig.intelephense.setup {
+        }
+    end,
+
+    sqlls = function()
+        lspconfig.sqlls.setup {
+        }
+    end,
+
+    -- sql_formatter = function()
+    --     lspconfig.sql_formatter.setup {
+    --     }
+    -- end,
+
+    pyright = function()
+        lspconfig.pyright.setup {
+            root_dir = lspconfig.util.root_pattern('.venv'),
+            -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
+            log_level = vim.log.levels.ERROR,
+            settings = {
+                pyright = {
+                    disableLanguageService = false,
+                    disableOrganizeImports = false,
+                },
+                python = {
+                    pythonPath = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'),
+                    venvPath = root_dir,
+                    venv = '.venv',
+                    analysis = {
+                        inlayHints = {
+                            functionReturnTypes = true,
+                            variableTypes = true,
+                        },
+
+                        --
+                        autoImportCompletions = true,
+
+                        -- 事前定義された名前にもどついて検索パスを自動的に追加するか
+                        autoSearchPaths = true,
+
+                        -- [openFilesOnly, workspace]
+                        diagnosticMode = "workspace",
+
+                        -- 診断のレベルを上書きする
+                        -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+                        diagnosticSeverityOverrides = {
+                            reportGeneralTypeIssues = "none",
+                            reportMissingTypeArgument = "none",
+                            reportUnknownMemberType = "none",
+                            reportUnknownVariableType = "none",
+                            reportUnknownArgumentType = "none",
+                        },
+
+                        -- インポート解決のための追加検索パス指定
+                        -- extraPaths = '',
+
+                        -- default: Information [Error, Warning, Information, Trace]
+                        logLevel = 'Information',
+
+                        -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
+                        -- stubPath = '',
+
+                        -- 型チェックの分析レベル default: off [off, basic, strict]
+                        typeCheckingMode = 'off',
+
+                        --
+                        -- typeshedPaths = '',
+
+                        -- default: false
+                        useLibraryCodeForTypes = false,
+                    },
+                }
+            }
+        }
+    end,
+    pylsp = function()
+        lspconfig.pylsp.setup {
+            root_dir = lspconfig.util.root_pattern('.venv'),
+            log_level = vim.log.levels.DEBUG,
+            settings = {
+                pylsp = {
+                    configurationSources = {
+                        'flake8'
+                    },
+                    plugins = {
+                        flake8 = {
+                            enabled = true,
+                        },
+                        pyls_isort = {
+                            enabled = true,
+                        },
+                        pylsp_mypy = {
+                            enabled = true,
+                            live_mode = false,
+                            dmypy = true,
+                            report_progress = false,
+                            strict = false,
+                            overrides = {
+                                -- '--use-fine-grained-cache',
+                                -- '--cache-dir',
+                                -- '/dev/null',
+                                -- '--python-executable',
+                                -- '/home/y_ohi/docker/scs2/django/project/.venv/bin/python',
+                                -- true,
+                                '--cache-dir', '/dev/null',
+                                '--python-executable', lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'), true,
+                            },
+                            config_sub_paths = {
+                              -- '/home/y_ohi/docker/scs2/django/project/',
+                            }
+                        },
+                        pycodestyle = {
+                            enabled = true,
+                            maxLineLength = 120,
+                        },
+                        pyflakes = {
+                            enabled = false,
+                        },
+                        autopep8 = {
+                            enabled = false,
+                        },
+                        yapf = {
+                            enabled = false,
+                        },
+                        pylsp_black = {
+                            enabled = false,
+                        },
+                        memestra = {
+                            enabled = false,
+                        },
+                        mccabe = {
+                            enabled = false
+                        },
+                    },
+                },
+            },
+        }
+    end,
+})
+
+nvim_navic.setup {
+    icons = {
+        File = ' ',
+        Module = ' ',
+        Namespace = ' ',
+        Package = ' ',
+        Class = ' ',
+        Method = ' ',
+        Property = ' ',
+        Field = ' ',
+        Constructor = ' ',
+        Enum = ' ',
+        Interface = ' ',
+        Function = ' ',
+        Variable = ' ',
+        Constant = ' ',
+        String = ' ',
+        Number = ' ',
+        Boolean = ' ',
+        Array = ' ',
+        Object = ' ',
+        Key = ' ',
+        Null = ' ',
+        EnumMember = ' ',
+        Struct = ' ',
+        Event = ' ',
+        Operator = ' ',
+        TypeParameter = ' ',
+    },
+    lsp = {
+      auto_attach = true,
+      preference = {
+          'pyright',
+      },
+    },
+    highlight = false,
+    separator = " > ",
+    depth_limit = 9,
+    depth_limit_indicator = "..",
+    safe_output = true,
+    click = false
+}
+vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+
+-- triggers CursorHold event faster
+vim.opt.updatetime = 200
+
+barbecue.setup({
+  create_autocmd = false, -- prevent barbecue from updating itself automatically
+  separator = "  ",
+  icons_enabled = true,
+  icons = {
+    default = "",
+    symlink = "",
+    git = "",
+    folder = "",
+    ["folder-open"] = "",
+  },
+})
+
+vim.api.nvim_create_autocmd({
+  "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+  "BufWinEnter",
+  "CursorHold",
+  "InsertLeave",
+
+  -- include this if you have set `show_modified` to `true`
+  "BufModifiedSet",
+}, {
+  group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+  callback = function()
+    require("barbecue.ui").update()
+  end,
+})
+
+-- mason_lspconfig.setup_handlers({ function(server_name)
+--     local navic = require("nvim-navic")
+--     local opt = {
+--       -- Function executed when the LSP server startup
+--       on_attach = function(client, bufnr)
+--         navic.attach(client, bufnr)
+--       end,
+--       --   local opts = { noremap=true, silent=true }
+--       --   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+--       --   vim.cmd 'autocmd BufWritePre * lua vim.lsp.buf.formatting_sync(nil, 1000)'
+--       -- end,
+--     }
+-- 
+--     ---@diagnostic disable: undefined-global
+--     if lsp_capabilities ~= nil then
+--         opts.capabilities = lsp_capabilities
+--     end
+--     ---@diagnostic enable: undefined-global
+-- 
+--     -- serverに対応しているfiletypeのbufferを開いたら、
+--     if server_name == 'lua_ls' then
+--       -- print('hello world')
+--     elseif server_name == 'pyright' then
+--       -- print('hello pyright')
+--       opt.root_dir = lspconfig.util.root_pattern(".venv")
+--     elseif server_name == 'pylsp' then
+--       -- print('hello pyright')
+--       opt.root_dir = lspconfig.util.root_pattern(".venv")
+--     end
+-- 
+--     lspconfig[server_name].setup(opt)
+-- end })
 
 
 -- 2. build-in LSP function
@@ -165,7 +460,7 @@ vim.keymap.set('n', 'K',  '<cmd>lua vim.lsp.buf.hover()<CR>')
 -- 改行やインデントのフォーマティング
 vim.keymap.set('n', 'gf', '<cmd>lua vim.lsp.buf.formatting()<CR>')
 
--- 
+--
 vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
 
 --定義ジャンプ
@@ -200,6 +495,7 @@ vim.keymap.set('n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = true}", {})
 
 
+
 -- vim.lsp.buf.formatting is deprecated. Use vim.lsp.buf.format { async = true } instead
 
 
@@ -220,39 +516,167 @@ local handle_lsp = function(opts)
     return opts
 end
 
-lspconfig.pyright.setup(handle_lsp{
-    root_dir = lspconfig.util.root_pattern('.venv'),
-    settings = {
-        python = {
-            analysis = {
-                -- disableLanguageService = true,
-                -- disableOrganizeImports = true,
-                -- openFilesOnly = false,
-                -- useLibraryCodeForType = false
-                autoImportCompletions = true,
-                autoSearchPaths = true,
-                diagnosticMode = "workspace",
-                diagnosticSeverityOverrides = "warning",
-                -- extraPaths = '',
-                logLevel = 'Information',
-                -- stubPath = '',
-                typeCheckingMode = 'off',
-                -- typeshedPaths = '',
-                useLibraryCodeForType = true,
-            },
-            pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
-            venvPath = '.',
-            venv='.venv',
-        }
-    }
-})
+-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
 
-lspconfig.sumneko_lua.setup{
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = {'vim'},
-            }
-        }
-    }
-}
+-- lspconfig.pyright.setup(handle_lsp{
+--     root_dir = lspconfig.util.root_pattern('.venv'),
+--     -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
+--     log_level = vim.log.levels.ERROR,
+--     settings = {
+--         pyright = {
+--             disableLanguageService = false,
+--             disableOrganizeImports = false,
+--         },
+--         python = {
+--             analysis = {
+--                 inlayHints = {
+--                     functionReturnTypes = true,
+--                     variableTypes = true,
+--                 },
+-- 
+--                 --
+--                 autoImportCompletions = true,
+-- 
+--                 -- 事前定義された名前にもどついて検索パスを自動的に追加するか
+--                 autoSearchPaths = true,
+-- 
+--                 -- [openFilesOnly, workspace]
+--                 diagnosticMode = "workspace",
+-- 
+--                 -- 診断のレベルを上書きする
+--                 -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+--                 diagnosticSeverityOverrides = {
+--                     reportGeneralTypeIssues = "none",
+--                     reportMissingTypeArgument = "none",
+--                     reportUnknownMemberType = "none",
+--                     reportUnknownVariableType = "none",
+--                     reportUnknownArgumentType = "none",
+--                 },
+-- 
+--                 -- インポート解決のための追加検索パス指定
+--                 -- extraPaths = '',
+-- 
+--                 -- default: Information [Error, Warning, Information, Trace]
+--                 logLevel = 'Information',
+-- 
+--                 -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
+--                 -- stubPath = '',
+-- 
+--                 -- 型チェックの分析レベル default: off [off, basic, strict]
+--                 typeCheckingMode = 'off',
+-- 
+--                 --
+--                 -- typeshedPaths = '',
+-- 
+--                 -- default: false
+--                 useLibraryCodeForTypes = false,
+--             },
+--             pythonPath = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, 'bin', 'python'),
+--             venvPath = '.',
+--             venv='.venv',
+--         }
+--     }
+-- })
+-- 
+-- lspconfig.lua_ls.setup{
+--     settings = {
+--         Lua = {
+--             diagnostics = {
+--                 globals = {'vim'},
+--             }
+--         }
+--     }
+-- }
+
+-- lspconfig.sourcery.setup{
+--     init_options = {
+--         --- The Sourcery token for authenticating the user.
+--         --- This is retrieved from the Sourcery website and must be
+--         --- provided by each user. The extension must provide a
+--         --- configuration option for the user to provide this value.
+--         token = 'user_bhLcgZ_lSulx5RTMLvnQBUvHJyro9QUX3g_jWfHqzxhAY6LJosb78fCJBdw',  -- TODO
+-- 
+--         --- The extension's name and version as defined by the extension.
+--         extension_version = 'vim.lsp',
+-- 
+--         --- The editor's name and version as defined by the editor.
+--         editor_version = 'vim',
+--     },
+-- }
+
+-- lspconfig.pylsp.setup{
+--   root_dir = lspconfig.util.root_pattern('.venv'),
+--   -- cmd = {'python3', '-m', 'pylsp'},
+--   settings = {
+--     pylsp = {
+--       plugins = {
+--         pylsp_mypy = {
+--             enabled = true,
+--             live_mode = true,
+--             dmypy = false,
+--             -- overrides = {
+--             --     '--use-fine-grained-cache',
+--             --     -- '--cache-dir',
+--             --     -- '/dev/null',
+--             -- },
+--             config_sub_paths = {
+--                 '/home/y_ohi/docker/scs2/django/project/',
+--             }
+--         },
+--         autopep8 = { enabled = false },
+--         flake8 = { enabled = false },
+--         pydocstyle = { enabled = false },
+--         pycodestyle = { enabled = false },
+--         pyflakes = { enabled = false },
+--         pylint = { enabled = false },
+--         rope_completion = { enabled = false },
+--         rope_rename = { enabled = false },
+--         yapf = { enabled = false },
+--       }
+--     }
+--   }
+-- }
+
+-- pip install git+https://github.com/python-lsp/python-lsp-server@03c53724654477b8a85eb816275a9ea06b13c7eb
+-- pip install git+https://github.com/syphar/python-lsp-server@initialize-progress-token
+-- lspconfig.pylsp.setup(handle_lsp{
+--     root_dir = lspconfig.util.root_pattern('.venv'),
+--     -- cmd = {'python3', '-m', 'pylsp'},
+--     -- cmd_env = {
+--     --     VIRTUAL_ENV = vim.env,VIRTUAL_ENV,
+--     --     PATH = '/home/y_ohi/docker/scs2/django/project/.venv/bin' .. ':' .. vim.env.PATH,
+--     -- },
+--     log_level = vim.log.levels.DEBUG,
+--     settings = {
+--       pylsp = {
+--         plugins = {
+--           pylsp_mypy = {
+--               enabled = false,
+--               live_mode = true,
+--               report_progress = true,
+--               dmypy = false,
+--               overrides = {
+--                 '--python-executable',
+--                 '/home/y_ohi/docker/scs2/django/project/.venv/bin/python',
+--                 true,
+--                 '--cache-dir',
+--                 '/dev/null',
+--                 -- '--use-fine-grained-cache',
+--               },
+--               config_sub_paths = {
+--                   '/home/y_ohi/docker/scs2/django/project/',
+--               },
+--           },
+--           autopep8 = { enabled = false },
+--           flake8 = { enabled = false },
+--           pydocstyle = { enabled = false },
+--           pycodestyle = { enabled = false },
+--           pyflakes = { enabled = false },
+--           pylint = { enabled = false },
+--           rope_completion = { enabled = false },
+--           rope_rename = { enabled = false },
+--           yapf = { enabled = false },
+--         }
+--       }
+--     }
+-- })

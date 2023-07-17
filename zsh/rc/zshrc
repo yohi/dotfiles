@@ -1,3 +1,5 @@
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n] confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
@@ -83,8 +85,16 @@ bindkey "^[[3~" delete-char
 ###########################3 
 #
 # HOMEBREW
-export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+export PATH=/home/${USER}/bin:${PATH}
+export PATH=${PATH}:/sbin
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+#     echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /home/y_ohi/.zprofile
+#     echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/y_ohi/.zprofile
+#     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+# export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 
 # SSH AGENT TODO
 # eval $(ssh-agent)
@@ -269,8 +279,7 @@ eval "$(direnv hook zsh)"
 # export PKG_CONFIG_PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/lib/pkgconfig"
 alias pip='pip3'
 alias python='python3'
-# export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.10/bin:$PATH"
-
+export PATH="/home/linuxbrew/.linuxbrew/opt/python@3.11/libexec/bin:$PATH"
 
 # function nvimvenv {
 #   if [[ -e "$VIRTUAL_ENV" && -f "$VIRTUAL_ENV/bin/activate" ]]; then
@@ -333,3 +342,6 @@ zinit light romkatv/powerlevel10k
 
 
 alias kgnome='killall -3 gnome-shell'
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
