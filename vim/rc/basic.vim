@@ -84,7 +84,7 @@ set synmaxcol=200
 set imdisable
 
 " xで削除した時はヤンクしない
-noremap x "_x
+" noremap x "_x
 
 " INSERTモードでESCしたときに保存を行う
 " inoremap <C-[> <C-[>:w<CR>
