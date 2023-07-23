@@ -1,3 +1,5 @@
+print 'read lsp.lua'
+
 local function dump(o)
    if type(o) == 'table' then
       local s = '{ '
