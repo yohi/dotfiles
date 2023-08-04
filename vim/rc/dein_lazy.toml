@@ -80,12 +80,37 @@ repo = 'LumaKernel/ddc-tabnine'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
+repo = 'Shougo/ddc-source-nvim-lsp'
 on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-cmdline'
 on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+on_source = 'ddc.vim'
+hook_add = '''
+" let g:vsnip_snippet_dir = g:config_home .. '/snippets'
+" inoremap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''
+" snoremap <expr> <C-l> vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : ''
+imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+smap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+let g:vsnip_filetypes = {}
+'''
+
+[[plugins]]
+repo = 'uga-rosa/ddc-source-vsnip'
+on_source = 'ddc.vim'
+hook_lua = '''
+require("ddc_nvim_lsp_setup").setup()
+require("lspconfig").denols.setup()
+'''
+
+# [[plugins]]
+# repo = 'hrsh7th/vim-vsnip-integ'
 
 # [[plugins]]
 # repo = 'hrsh7th/vim-vsnip'

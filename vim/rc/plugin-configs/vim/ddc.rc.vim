@@ -73,6 +73,7 @@ call ddc#custom#patch_global('sources', [
     \ 'around',
     \ 'nvim-lsp',
     \ 'file',
+    \ 'vsnip',
     \ ])
 
 " Use matcher_head and sorter_rank.
@@ -98,6 +99,38 @@ call ddc#custom#patch_global('sourceOptions', #{
     \   mark: 'lsp',
     \   matchers: ['matcher_head'],
     \   forceCompletionPattern: '\.|:|->|"\w+/*',
+    \ },
+    \ })
+
+call ddc#custom#patch_global('sourceOptions', #{
+    \ vsnip: #{
+    \   mark: 'vsnip',
+    \ },
+    \ })
+
+" call ddc#custom#patch_global('sourceOptions', #{
+"     \ nvim-lsp: #{
+"     \   mark: 'lsp',
+"     \   matchers: ['matcher_head'],
+"     \   forceCompletionPattern: '\.|:|->|"\w+/*',
+"     \ },
+"     \ })
+
+call ddc#custom#patch_global('sourceOptions', #{
+    \ nvim-lsp: #{
+    \   dup: 'keep',
+    \   keywordPattern: '\k+',
+    \   sorters: ['sorter_lsp-kind']
+    \ },
+    \ })
+
+call ddc#custom#patch_global('sourceParams', #{
+    \ nvim-lsp: #{
+    \     snippetEngine: denops#callback#register({
+    \           body -> vsnip#anonymous(body) }),
+    \     enableResolveItem: v:true,
+    \     enableAdditionalTextEdit: v:true,
+    \     confirmBehavior: 'replace',
     \ },
     \ })
 
