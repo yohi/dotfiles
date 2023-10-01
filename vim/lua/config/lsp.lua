@@ -47,6 +47,9 @@ local config = {
         prefix = "",
         border = "rounded",
     },
+    inlay_hints = {
+      enabled = false,
+    },
 }
 
 vim.diagnostic.config(config)
@@ -79,6 +82,38 @@ vim.api.nvim_create_autocmd(
     }
 )
 
+vim.api.nvim_create_autocmd({
+    "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+    "BufWinEnter",
+    "CursorHold",
+    "InsertLeave",
+    -- include this if you have set `show_modified` to `true`
+    "BufModifiedSet",
+},
+{
+    group = vim.api.nvim_create_augroup("barbecue.updater", {}),
+    callback = function()
+        require("barbecue.ui").update()
+    end,
+})
+
+vim.api.nvim_create_autocmd(
+    {
+    'LspAttach',
+    },
+    {
+        group = diagnostic_hover_augroup_name,
+        callback = function(args)
+            local bufnr = args.buf
+            local client = vim.lsp.get_client_by_id(args.data.client_id)
+            if client.supports_method("textDocument/inlayHint") then
+                vim.lsp.inlay_hint(bufnr, true)
+            end
+        end,
+    }
+)
+
+
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
     vim.lsp.handlers.hover, {
         border = "rounded",
@@ -99,14 +134,16 @@ local lspconfig = require('lspconfig')
 local mason_tool_installer = require('mason-tool-installer')
 local nvim_navic = require('nvim-navic')
 local barbecue = require('barbecue')
-
+-- local ddc_nvim_lsp_setup = require("ddc_nvim_lsp_setup")
 -- local root_dir = lspconfig.util.root_pattern('.venv')
 -- local python_path = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python')
+
+-- require("ddc_nvim_lsp_setup").setup()
 
 -- 1. LSP Sever management
 mason.setup({
     -- PATH = 'skip',
-    log_level = vim.log.levels.DEBUG,
+    log_level = vim.log.levels.WARN,
     ui = {
         icons = {
             -- server_installed = "✓",
@@ -167,6 +204,8 @@ mason.setup({
 --   end,
 -- })
 
+-- ddc_nvim_lsp_setup.setup()
+
 mason_lspconfig.setup({
     ensure_installed = {
         'pyright',
@@ -180,7 +219,7 @@ mason_lspconfig.setup({
         'html',
         'jsonls',
         -- 'sourcery',
-        'sqlls',
+        -- 'sqlls',
         'lua_ls',
         'vimls',
         'yamlls',
@@ -190,8 +229,6 @@ mason_lspconfig.setup({
     },
     automatic_installation = false,
 })
-
-
 
 mason_lspconfig.setup_handlers({
     -- The first entry (without a key) will be the default handler
@@ -208,25 +245,30 @@ mason_lspconfig.setup_handlers({
         }
     end,
 
-    sqlls = function()
-        lspconfig.sqlls.setup {
-        }
-    end,
+    -- sqlls = function()
+    --     lspconfig.sqlls.setup {
+    --     }
+    -- end,
 
     -- sql_formatter = function()
     --     lspconfig.sql_formatter.setup {
     --     }
     -- end,
 
+    denols = function()
+        lspconfig.denols.setup{}
+    end,
+
     pyright = function()
         lspconfig.pyright.setup {
             root_dir = lspconfig.util.root_pattern('.venv'),
             -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-            log_level = vim.log.levels.ERROR,
+            log_level = vim.log.levels.Trace,
             settings = {
                 pyright = {
                     disableLanguageService = false,
                     disableOrganizeImports = false,
+                    openFilesOnly = false,
                 },
                 python = {
                     pythonPath = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'),
@@ -258,31 +300,47 @@ mason_lspconfig.setup_handlers({
                         },
 
                         -- インポート解決のための追加検索パス指定
-                        -- extraPaths = '',
+                        extraPaths = {
+                        },
 
                         -- default: Information [Error, Warning, Information, Trace]
-                        logLevel = 'Information',
+                        -- logLevel = 'Warning',
+                        logLevel = 'Trace',
 
                         -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
                         -- stubPath = '',
 
                         -- 型チェックの分析レベル default: off [off, basic, strict]
                         typeCheckingMode = 'off',
+                        reportMissingImports = 'none',
+                        reportMissingModuleSource = 'none',
+                        reportUnusedImport = 'none',
+                        reportUnusedVariable = 'none',
+                        reportUnboundVariable = 'none',
+                        reportUndefinedVariable = 'none',
+                        reportGeneralTypeIssues = 'none',
+                        reportMissingTypeArgument = 'none',
+                        reportOptionalSubscript = 'none',
+                        reportOptionalMemberAccess = 'none',
 
                         --
                         -- typeshedPaths = '',
 
                         -- default: false
-                        useLibraryCodeForTypes = false,
+                        useLibraryCodeForTypes = true,
+
+                        pylintPath = {
+                        },
                     },
-                }
+                    good_names_rgxs = {'[a-z]{1,3}'},
+                },
             }
         }
     end,
     pylsp = function()
         lspconfig.pylsp.setup {
             root_dir = lspconfig.util.root_pattern('.venv'),
-            log_level = vim.log.levels.DEBUG,
+            log_level = vim.log.levels.WARN,
             settings = {
                 pylsp = {
                     configurationSources = {
@@ -299,16 +357,12 @@ mason_lspconfig.setup_handlers({
                             enabled = true,
                             live_mode = false,
                             dmypy = true,
-                            report_progress = false,
+                            report_progress = true,
                             strict = false,
                             overrides = {
-                                -- '--use-fine-grained-cache',
-                                -- '--cache-dir',
-                                -- '/dev/null',
-                                -- '--python-executable',
-                                -- '/home/y_ohi/docker/scs2/django/project/.venv/bin/python',
-                                -- true,
+                                '--cache-fine-grained',
                                 '--cache-dir', '/dev/null',
+                                -- '--python-executable', '/home/y_ohi/docker/scs2/django/project/.venv/bin/python', true,
                                 '--python-executable', lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'), true,
                             },
                             config_sub_paths = {
@@ -316,7 +370,7 @@ mason_lspconfig.setup_handlers({
                             }
                         },
                         pycodestyle = {
-                            enabled = true,
+                            enabled = false,
                             maxLineLength = 120,
                         },
                         pyflakes = {
@@ -335,6 +389,9 @@ mason_lspconfig.setup_handlers({
                             enabled = false,
                         },
                         mccabe = {
+                            enabled = false
+                        },
+                        pylint = {
                             enabled = false
                         },
                     },
@@ -404,20 +461,6 @@ barbecue.setup({
   },
 })
 
-vim.api.nvim_create_autocmd({
-  "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
-  "BufWinEnter",
-  "CursorHold",
-  "InsertLeave",
-
-  -- include this if you have set `show_modified` to `true`
-  "BufModifiedSet",
-}, {
-  group = vim.api.nvim_create_augroup("barbecue.updater", {}),
-  callback = function()
-    require("barbecue.ui").update()
-  end,
-})
 
 -- mason_lspconfig.setup_handlers({ function(server_name)
 --     local navic = require("nvim-navic")
@@ -506,7 +549,7 @@ vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = 
 -- set updatetime=500
 -- highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
 -- highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
--- highlight LspReferenceWrite cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+-- highlight LspReferenceWrite ctermTracerline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
 -- augroup lsp_document_highlight
 --   autocmd!
 --   autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
