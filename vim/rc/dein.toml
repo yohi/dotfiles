@@ -940,3 +940,13 @@ au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=
 '''
 
 
+
+[[plugins]]
+if = 1
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+hook_add = '''
+echom("coc hook_source")
+autocmd FileType * let b:coc_suggest_disable = 1
+'''
+# -- autocmd FileType * let b:coc_enabled = 0
