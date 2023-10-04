@@ -159,6 +159,8 @@ lua_add = '''
 repo = 'williamboman/mason-lspconfig.nvim'
 on_source = 'mason.nvim'
 
+
+
 # フォーマッター・リンター
 [[plugins]]
 repo = 'jose-elias-alvarez/null-ls.nvim'
@@ -173,11 +175,30 @@ lua_source = '''
 '''
 
 # null-ls設定
+[[plugins]]
 repo = 'jayp0521/mason-null-ls.nvim'
 on_source = [
     'mason.nvim',
     # 'null-ls.nvim',
 ]
+
+# COC
+[[plugins]]
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+hook_add = '''
+echom("coc hook_source")
+autocmd FileType * let b:coc_enabled = 0
+autocmd FileType * let b:coc_suggest_disable = 1
+'''
+
+# on_ft = 'python'
+# lua_source = '''
+#     require('config.coc')
+# '''
+[[plugins]]
+repo = 'fannheyward/coc-pyright'
+on_ft = 'python'
 
 ##### # DAP
 ##### [[plugins]]

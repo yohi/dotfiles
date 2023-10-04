@@ -1,0 +1,18 @@
+{
+    "python.PythonPath": "/home/y_ohi/docker/scs2-tenants/django/project/.venv/bin/python",
+    "python.venvPath": "/home/y_ohi/docker/scs2-tenants/django/project/.venv/",
+    "diagnostic.enable": false,
+    "suggest.enableFloat": false,
+    "suggest.snippetSupport": false,
+    "python.analysis.autoImportCompletions": false,
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.inlayHints.enabled": true,
+    "coc.preferences.diagnostic.virtualText": false,
+    "python.linting.enabled": false,
+    "pyright.disableCompletion": true,
+    "pyright.disableDiagnostics": true,
+    "pyright.disableDocumentation": true,
+    "pyright.completion.importSupport": false,
+    "pyright.completion.snippetSupport": false,
+    "python.analysis.typeCheckingMode": "none"
+}

@@ -256,3 +256,8 @@ make
 sudo make install
 sudo systemctl enable logid
 sudo ln -nfs ~/dotfiles/logid/logid.cfg /etc/logid.cfg
+
+
+# DOCKER BUIDX
+mkdir -p ~/.docker/cli-plugins
+ln -sfn $HOMEBREW_PREFIX/opt/docker-buildx/bin/docker-buildx ~/.docker/cli-plugins/docker-buildx

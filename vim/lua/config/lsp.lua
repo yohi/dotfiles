@@ -48,7 +48,7 @@ local config = {
         border = "rounded",
     },
     inlay_hints = {
-      enabled = false,
+      enabled = true,
     },
 }
 
@@ -97,6 +97,12 @@ vim.api.nvim_create_autocmd({
     end,
 })
 
+-- require('lsp-setup').setup({
+--     inlay_hints = {
+--         enabled = true,
+--     }
+-- })
+
 vim.api.nvim_create_autocmd(
     {
     'LspAttach',
@@ -106,8 +112,12 @@ vim.api.nvim_create_autocmd(
         callback = function(args)
             local bufnr = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
+            print('hokkaido consadole sapporo')
+            print(dump(client))
+            print(client.name)
+            print(client.supports_method("textDocument/inlayHint"))
             if client.supports_method("textDocument/inlayHint") then
-                vim.lsp.inlay_hint(bufnr, true)
+               vim.lsp.inlay_hint(bufnr, true)
             end
         end,
     }
@@ -128,6 +138,7 @@ local function lsp_highlight_document(client)
     -- illuminate.on_attach(client)
 end
 
+
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
 local lspconfig = require('lspconfig')
@@ -139,11 +150,13 @@ local barbecue = require('barbecue')
 -- local python_path = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python')
 
 -- require("ddc_nvim_lsp_setup").setup()
+-- lsp_inlayhints.setup()
 
 -- 1. LSP Sever management
+
 mason.setup({
     -- PATH = 'skip',
-    log_level = vim.log.levels.WARN,
+    log_level = vim.log.levels.Debug,
     ui = {
         icons = {
             -- server_installed = "✓",
@@ -210,6 +223,7 @@ mason_lspconfig.setup({
     ensure_installed = {
         'pyright',
         'pylsp',
+        -- 'pylyzer',
         -- 'mypy',
         -- 'flake8',
         -- 'isort',
@@ -259,11 +273,44 @@ mason_lspconfig.setup_handlers({
         lspconfig.denols.setup{}
     end,
 
+    -- pylyzer = function()
+    --     lspconfig.pylyzer.setup {
+    --         on_attach = nil,
+    --         root_dir = lspconfig.util.root_pattern('.venv'),
+    --         -- cmd = {
+    --         --     -- lspconfig.util.path.join(root_dir, '.venv', 'bin', 'pylyzer'),
+    --         --     '/home/y_ohi/docker/scs2-tenants/django/project/.venv/bin/pylyzer',
+    --         --     -- lspconfig.util.root_pattern('.venv') . '.venv/bin/pylyzer',
+    --         --     '--server',
+    --         -- },
+    --         log_level = vim.log.levels.Debug,
+    --         settings = {
+    --             python = {
+    --                 -- executablePath = '/home/y_ohi/docker/scs2-tenants/django/project/.venv/bin/python',
+    --                 diagnostics = true,
+    --                 inlayHints = true,
+    --                 semanticTokens = true,
+    --                 hover = true,
+    --                 smartCompletion = true,
+    --                 checkOnType = true,
+    --                 -- const executablePath = (() => {
+    --                 -- const enableDiagnostics = workspace.getConfiguration("pylyzer").get<boolean>("diagnostics", true);
+    --                 -- const enableInlayHints = workspace.getConfiguration("pylyzer").get<boolean>("inlayHints", false);
+    --                 -- const enableSemanticTokens = workspace.getConfiguration("pylyzer").get<boolean>("semanticTokens", true);
+    --                 -- const enableHover = workspace.getConfiguration("pylyzer").get<boolean>("hover", true);
+    --                 -- const smartCompletion = workspace.getConfiguration("pylyzer").get<boolean>("smartCompletion", true);
+    --                 -- const checkOnType = workspace.getConfiguration("pylyzer").get<boolean>("checkOnType", false);
+    --             },
+    --         },
+    --     }
+    -- end,
+
     pyright = function()
         lspconfig.pyright.setup {
+            on_attach = nil,
             root_dir = lspconfig.util.root_pattern('.venv'),
             -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-            log_level = vim.log.levels.Trace,
+            log_level = vim.log.levels.Debug,
             settings = {
                 pyright = {
                     disableLanguageService = false,
@@ -276,8 +323,9 @@ mason_lspconfig.setup_handlers({
                     venv = '.venv',
                     analysis = {
                         inlayHints = {
-                            functionReturnTypes = true,
-                            variableTypes = true,
+                            enabled = true,
+                            parameterHintsEnabled = true,
+                            typeHintsEnabled = true,
                         },
 
                         --
@@ -303,9 +351,9 @@ mason_lspconfig.setup_handlers({
                         extraPaths = {
                         },
 
-                        -- default: Information [Error, Warning, Information, Trace]
+                        -- default: Information [Error, Warning, Information, Debug]
                         -- logLevel = 'Warning',
-                        logLevel = 'Trace',
+                        logLevel = 'Debug',
 
                         -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
                         -- stubPath = '',
@@ -549,7 +597,7 @@ vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = 
 -- set updatetime=500
 -- highlight LspReferenceText  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
 -- highlight LspReferenceRead  cterm=underline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
--- highlight LspReferenceWrite ctermTracerline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
+-- highlight LspReferenceWrite ctermDebugrline ctermfg=1 ctermbg=8 gui=underline guifg=#A00000 guibg=#104040
 -- augroup lsp_document_highlight
 --   autocmd!
 --   autocmd CursorHold,CursorHoldI * lua vim.lsp.buf.document_highlight()
@@ -601,7 +649,7 @@ end
 --                 -- インポート解決のための追加検索パス指定
 --                 -- extraPaths = '',
 -- 
---                 -- default: Information [Error, Warning, Information, Trace]
+--                 -- default: Information [Error, Warning, Information, Debug]
 --                 logLevel = 'Information',
 -- 
 --                 -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
