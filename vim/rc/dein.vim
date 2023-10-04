@@ -46,3 +46,4 @@ highlight LspDiagnosticsSignError ctermbg=None cterm=underline ctermfg=Red
 highlight LspDiagnosticsSignWarn  ctermbg=None cterm=underline ctermfg=Yellow
 highlight LspDiagnosticsSignHint  ctermbg=None cterm=underline ctermfg=LightBlue
 highlight LspDiagnosticsSignInfo  ctermbg=None cterm=underline ctermfg=White
+highlight CocInlayHint ctermbg=18 ctermfg=112 guibg=#cceeee guifg=#004400 cterm=italic gui=italic

@@ -179,6 +179,7 @@ on_source = [
     # 'null-ls.nvim',
 ]
 
+
 ##### # DAP
 ##### [[plugins]]
 ##### repo = 'mfussenegger/nvim-dap'
@@ -356,10 +357,12 @@ hook_source = '''
 # on_source = 'yohi/read-or-create-venv.vim'
 
 [[plugins]]
-# repo = 'yohi/set-docker-compose-env.nvim'
 repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
+# lua_add = '''
+#     require('set-docker-compose-env').setup()
+# '''
 lua_source = '''
-require('set-docker-compose-env').setup()
+    require('set-docker-compose-env').setup()
 '''
 
 
@@ -402,16 +405,6 @@ on_source = [
 ]
 
 
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-on_source = [
-    'nvim-lspconfig',
-    'sansyrox/vim-python-virtualenv',
-    'yohi/set-docker-compose-env.nvim',
-]
-lua_add = '''
-require('config.null-ls')
-'''
 
 
 # [[plubins]]
@@ -946,7 +939,14 @@ if = 1
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 hook_add = '''
-echom("coc hook_source")
-autocmd FileType * let b:coc_suggest_disable = 1
+echom("coc hook_add")
+let b:coc_suggest_disable = 1
+highlight CocInlayHint ctermbg=NONE ctermfg=250 cterm=italic guibg=NONE guifg=#555555 gui=italic
+echom("coc hook_add end")
 '''
-# -- autocmd FileType * let b:coc_enabled = 0
+hook_source = '''
+echom("coc hook_source")
+let b:coc_suggest_disable = 1
+highlight CocInlayHint ctermbg=NONE ctermfg=250 cterm=italic guibg=NONE guifg=#555555 gui=italic
+echom("coc hook_source end")
+'''

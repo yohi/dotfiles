@@ -1,0 +1,6 @@
+{
+    "inlayHint.enable": true,
+    "inlayHint.enableParameter": true,
+    "inlayHint.display": true,
+    "inlayHint.refreshOnInsertMode": true
+}
