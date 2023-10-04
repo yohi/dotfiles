@@ -1,6 +1,20 @@
 {
+    "coc.preferences.diagnostic.virtualText": false,
+    "diagnostic.enable": false,
     "inlayHint.enable": true,
     "inlayHint.enableParameter": true,
     "inlayHint.display": true,
-    "inlayHint.refreshOnInsertMode": true
+    "inlayHint.refreshOnInsertMode": true,
+    "suggest.enableFloat": false,
+    "suggest.snippetSupport": false,
+    "pyright.completion.importSupport": false,
+    "pyright.completion.snippetSupport": false,
+    "pyright.disableCompletion": true,
+    "pyright.disableDiagnostics": true,
+    "pyright.disableDocumentation": true,
+    "python.analysis.autoImportCompletions": false,
+    "python.analysis.diagnosticMode": "openFilesOnly",
+    "python.analysis.inlayHints.enabled": true,
+    "python.linting.enabled": false,
+    "python.analysis.typeCheckingMode": "none"
 }
