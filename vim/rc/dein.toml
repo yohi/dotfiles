@@ -940,13 +940,20 @@ repo = 'neoclide/coc.nvim'
 rev = 'release'
 hook_add = '''
 echom("coc hook_add")
-" let b:coc_suggest_disable = 1
+let g:coc_enable = 0
+let b:coc_suggest_disable = 1
 highlight CocInlayHint ctermbg=NONE ctermfg=250 cterm=italic guibg=NONE guifg=#555555 gui=italic
 echom("coc hook_add end")
 '''
 hook_source = '''
 echom("coc hook_source")
-" let b:coc_suggest_disable = 1
+let g:coc_enable = 0
+let b:coc_suggest_disable = 1
 highlight CocInlayHint ctermbg=NONE ctermfg=250 cterm=italic guibg=NONE guifg=#555555 gui=italic
 echom("coc hook_source end")
+'''
+lua_source = '''
+    print("coc lua_source")
+    require('config.coc')
+    print("coc lua_source end")
 '''
