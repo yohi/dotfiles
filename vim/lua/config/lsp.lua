@@ -140,6 +140,26 @@ local barbecue = require('barbecue')
 
 -- require("ddc_nvim_lsp_setup").setup()
 
+local bufnr = vim.api.nvim_get_current_buf()
+local filepath = vim.api.nvim_buf_get_name(bufnr)
+local venv_path = lspconfig.util.root_pattern('.venv')(filepath)
+local python_path = nil
+if (venv_path == nil) then
+    python_path = vim.g.python3_host_prog
+else
+    python_path = lspconfig.util.path.join(
+        venv_path,
+        '.venv',
+        'bin',
+        'python'
+    )
+end
+print('hokkaido consadole sapporo')
+print(venv_path)
+print(python_path)
+
+
+
 -- 1. LSP Sever management
 mason.setup({
     -- PATH = 'skip',
@@ -238,7 +258,6 @@ mason_lspconfig.setup_handlers({
     function(server_name)
         lspconfig[server_name].setup({})
     end,
-
     -- Next, you can provide targeted overrides for specific servers.
     intelephense = function()
         lspconfig.intelephense.setup {
@@ -261,6 +280,7 @@ mason_lspconfig.setup_handlers({
 
     pyright = function()
         lspconfig.pyright.setup {
+            -- root_dir = venv_dir,
             root_dir = lspconfig.util.root_pattern('.venv'),
             -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
             log_level = vim.log.levels.Trace,
@@ -271,8 +291,8 @@ mason_lspconfig.setup_handlers({
                     openFilesOnly = false,
                 },
                 python = {
-                    pythonPath = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'),
-                    venvPath = root_dir,
+                    pythonPath = python_path,
+                    venvPath = venv_path,
                     venv = '.venv',
                     analysis = {
                         inlayHints = {
@@ -338,6 +358,16 @@ mason_lspconfig.setup_handlers({
         }
     end,
     pylsp = function()
+        -- local venv_dir = function(fname) return lspconfig.util.root_pattern('.venv')(fname) or nil end
+        -- local root_dir = venv_dir == nil and vim.fn.getcwd() or venv_dir
+        -- local lspconfig = require('lspconfig')
+        -- local root_dir = lspconfig.util.root_pattern('.venv')
+        -- local pyton_path = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python')
+        -- print(root_dir)
+        -- local python_path = venv_dir == nil and vim.g.python3_host_prog or lspconfig.util.path.join(venv_dir, '.venv', 'bin', 'python')
+
+
+        -- local lspconfig = require('lspconfig')
         lspconfig.pylsp.setup {
             root_dir = lspconfig.util.root_pattern('.venv'),
             log_level = vim.log.levels.WARN,
@@ -349,6 +379,9 @@ mason_lspconfig.setup_handlers({
                     plugins = {
                         flake8 = {
                             enabled = true,
+                            overrides = {
+                                '--python-executable', python_path, true,
+                            },
                         },
                         pyls_isort = {
                             enabled = true,
@@ -362,8 +395,7 @@ mason_lspconfig.setup_handlers({
                             overrides = {
                                 '--cache-fine-grained',
                                 '--cache-dir', '/dev/null',
-                                -- '--python-executable', '/home/y_ohi/docker/scs2/django/project/.venv/bin/python', true,
-                                '--python-executable', lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python'), true,
+                                '--python-executable', python_path, true,
                             },
                             config_sub_paths = {
                               -- '/home/y_ohi/docker/scs2/django/project/',
