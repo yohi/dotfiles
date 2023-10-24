@@ -28,10 +28,28 @@ depends = [
     'pum.vim',
     'context_filetype.vim'
 ]
-hook_source = '''
-    " echom("hook_source")
-    source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+hook_add = '''
+echom("ddc hook_add")
+source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+
 '''
+hook_source = '''
+echom("ddc hook_source")
+'''
+lua_add = '''
+print("ddc lua_add")
+'''
+lua_source = '''
+print("ddc lua_source")
+'''
+# hook_source = '''
+#     echom("hook_source")
+#     source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+# '''
+# add_source = '''
+#     echom("add_source")
+#     source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+# '''
 # hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 
 [[plugins]]
