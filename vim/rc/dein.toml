@@ -839,7 +839,7 @@ repo = 'thinca/vim-qfreplace'
 [[plugins]]
 repo = 'j-hui/fidget.nvim'
 on_event = 'LspAttach'
-rev = 'legacy'
+# rev = 'legacy'
 lua_add = '''
   require("fidget").setup{}
 '''
