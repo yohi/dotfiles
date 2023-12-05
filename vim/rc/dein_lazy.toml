@@ -98,14 +98,14 @@ repo = 'LumaKernel/ddc-tabnine'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'Shougo/ddc-source-nvim-lsp'
+repo = 'Shougo/ddc-source-lsp'
 on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'uga-rosa/ddc-nvim-lsp-setup'
 on_source = 'ddc.vim'
 depends = [
-    'ddc-source-nvim-lsp',
+    'ddc-source-lsp',
     'nvim-lspconfig',
 ]
 lua_source = '''

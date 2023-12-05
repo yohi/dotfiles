@@ -71,7 +71,8 @@ call ddc#custom#patch_global('ui', 'native')
 " https://github.com/Shougo/ddc-source-around
 call ddc#custom#patch_global('sources', [
     \ 'around',
-    \ 'nvim-lsp',
+    "\ 'nvim-lsp',
+    \ 'lsp',
     \ 'file',
     \ 'vsnip',
     \ ])
@@ -94,13 +95,20 @@ call ddc#custom#patch_global('sourceOptions', #{
     \ },
     \ })
 
+" call ddc#custom#patch_global('sourceOptions', #{
+"     \ nvim-lsp: #{
+"     \   mark: 'lsp',
+"     \   matchers: ['matcher_head'],
+"     \   forceCompletionPattern: '\.|:|->|"\w+/*',
+"     \ },
+"     \ })
+
 call ddc#custom#patch_global('sourceOptions', #{
-    \ nvim-lsp: #{
-    \   mark: 'lsp',
-    \   matchers: ['matcher_head'],
-    \   forceCompletionPattern: '\.|:|->|"\w+/*',
-    \ },
-    \ })
+      \   lsp: #{
+      \     mark: 'lsp',
+      \     forceCompletionPattern: '\.\w*|:\w*|->\w*',
+      \   },
+      \ })
 
 call ddc#custom#patch_global('sourceOptions', #{
     \ vsnip: #{
@@ -124,15 +132,25 @@ call ddc#custom#patch_global('sourceOptions', #{
     \ },
     \ })
 
+" call ddc#custom#patch_global('sourceParams', #{
+"     \ nvim-lsp: #{
+"     \     snippetEngine: denops#callback#register({
+"     \           body -> vsnip#anonymous(body) }),
+"     \     enableResolveItem: v:true,
+"     \     enableAdditionalTextEdit: v:true,
+"     \     confirmBehavior: 'replace',
+"     \ },
+"     \ })
+
 call ddc#custom#patch_global('sourceParams', #{
-    \ nvim-lsp: #{
-    \     snippetEngine: denops#callback#register({
-    \           body -> vsnip#anonymous(body) }),
-    \     enableResolveItem: v:true,
-    \     enableAdditionalTextEdit: v:true,
-    \     confirmBehavior: 'replace',
-    \ },
-    \ })
+      \   lsp: #{
+      \     snippetEngine: denops#callback#register({
+      \           body -> vsnip#anonymous(body)
+      \     }),
+      \     enableResolveItem: v:true,
+      \     enableAdditionalTextEdit: v:true,
+      \   }
+      \ })
 
 " Mappings
 
