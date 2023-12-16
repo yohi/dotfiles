@@ -295,11 +295,6 @@ mason_lspconfig.setup_handlers({
                     venvPath = venv_path,
                     venv = '.venv',
                     analysis = {
-                        inlayHints = {
-                            functionReturnTypes = true,
-                            variableTypes = true,
-                        },
-
                         --
                         autoImportCompletions = true,
 

@@ -1,7 +1,7 @@
 {
     "coc.preferences.diagnostic.virtualText": false,
     "diagnostic.enable": false,
-    "inlayHint.enable": true,
+    "inlayHint.enable": false,
     "inlayHint.enableParameter": true,
     "inlayHint.display": true,
     "inlayHint.refreshOnInsertMode": true,
