@@ -27,7 +27,6 @@ call ddc#custom#patch_global('sourceOptions', #{
     \ },
     \ })
 
-
 "" lsp =======================================
 
 call ddc#custom#patch_global('sourceOptions', #{
@@ -62,6 +61,7 @@ call ddc#custom#patch_global('sourceOptions', #{
     \   mark: 'Arround',
     \ },
     \ })
+echom('7')
 
 "" vsnip =======================================
 
@@ -82,6 +82,13 @@ inoremap <silent><expr> <TAB>
 " <S-TAB>: completion back.
 inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' : '<C-h>'
 
-echom('ddc#enable')
-
 call ddc#enable()
+
+
+function! MyNotify()
+  lua vim.notify("ddc#enable", "success")
+endfunction
+
+" ファンクション「SendNotification」を呼び出す
+call MyNotify()
+

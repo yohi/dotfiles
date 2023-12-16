@@ -97,7 +97,7 @@ lua_add = '''
 # シンタックスハイライト
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-lua_add = '''
+lua_source = '''
     require('config.nvim-treesitter')
 '''
 
