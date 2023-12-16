@@ -124,11 +124,7 @@ lua_source = '''
 # コンテクストコメント
 repo = 'JoosepAlviste/nvim-ts-context-commentstring'
 lua_source = '''
-    require'nvim-treesitter.configs'.setup {
-        context_commentstring = {
-            enable = true
-        }
-    }
+    require('nvim-treesitter.configs').setup {}
 '''
 
 # LSP
