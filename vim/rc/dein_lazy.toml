@@ -30,7 +30,6 @@ depends = [
 ]
 hook_add = '''
     echom("ddc hook_add")
-    source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
 '''
 hook_source = '''
     echom("ddc hook_source")
@@ -41,6 +40,7 @@ lua_add = '''
 lua_source = '''
     print("ddc lua_source")
 '''
+hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
@@ -88,13 +88,12 @@ on_source = 'ddc.vim'
 
 [[plugins]]
 repo = 'uga-rosa/ddc-nvim-lsp-setup'
-on_source = 'ddc.vim'
-depends = [
+on_source = [
     'ddc-source-lsp',
     'nvim-lspconfig',
 ]
 lua_source = '''
-    require("ddc_nvim_lsp_setup")
+  require('ddc_source_lsp_setup').setup()
 '''
 
 [[plugins]]
