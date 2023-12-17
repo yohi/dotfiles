@@ -1,0 +1,30 @@
+# LSP
+[[plugins]]
+repo = 'neovim/nvim-lspconfig'
+on_source = [
+    'mason-lspconfig.nvim'
+    'rrethy/vim-illuminate',
+    # 'read-or-create-venv.vim',
+]
+lua_add = '''
+    require('config.lsp')
+'''
+
+# LSP設定
+[[plugins]]
+repo = 'williamboman/mason-lspconfig.nvim'
+on_source = 'mason.nvim'
+
+# フォーマッター・リンター
+[[plugins]]
+repo = 'jose-elias-alvarez/null-ls.nvim'
+on_source = 'mason.nvim'
+lua_source = '''
+    require('config.null-ls')
+'''
+
+# null-ls設定
+repo = 'jayp0521/mason-null-ls.nvim'
+on_source = [
+    'mason.nvim',
+]

@@ -15,10 +15,16 @@ if dein#load_state(s:dein_dir)
     call dein#begin(s:dein_dir)
 
     let s:toml = g:rc_dir . '/dein.toml'
+    let s:toml_treesitter = g:rc_dir . '/dein_treesitter.toml'
+    let s:toml_lsp = g:rc_dir . '/dein_lsp.toml'
     let s:toml_lazy = g:rc_dir . '/dein_lazy.toml'
+    let s:toml_lazy_ddc = g:rc_dir . '/dein_lazy_ddc.toml'
 
     call dein#load_toml(s:toml, { 'lazy': 0 })
+    call dein#load_toml(s:toml_treesitter, { 'lazy': 0 })
+    call dein#load_toml(s:toml_lsp, { 'lazy': 0 })
     call dein#load_toml(s:toml_lazy, { 'lazy': 1 })
+    call dein#load_toml(s:toml_lazy_ddc, { 'lazy': 1 })
 
     " Required:
     call dein#end()

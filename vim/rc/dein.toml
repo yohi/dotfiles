@@ -30,49 +30,25 @@ on_source = [
 [[plubins]]
 repo = 'lewis6991/impatient.nvim'
 lua_source = '''
-    require('impatient')
+    require('impatient').setup()
 '''
 
 # 通知
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
-lua_add = '''
-    vim.opt.termguicolors = true
-    require('notify').setup({
-        background_colour = "#000000",
-    })
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-notify.lua'
 
 # 自動インデント検出
 [[plugins]]
 repo = 'Darazaki/indent-o-matic'
-lua_source = '''
-    require('indent-o-matic').setup {
-        -- The values indicated here are the default
-
-        -- Number of lines without indentation before giving up (use -1 for infinite)
-        max_lines = 2048,
-
-        -- Space indentations that should be detected
-        standard_widths = { 2, 4, 8 },
-
-        -- Skip multi-line comments and strings (more accurate detection but less performant)
-        skip_multiline = true,
-    }
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/indent-o-matic.lua'
 
 # FixCursorHold
 [[plugins]]
 repo = 'antoinemadec/FixCursorHold.nvim'
-lua_source = '''
-    -- in millisecond, used for both CursorHold and CursorHoldI,
-    -- use updatetime instead if not defined
-    vim.cmd([[
-        let g:cursorhold_updatetime = 100
-    ]])
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
 
-# アイコン
+# アイコン_
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 
@@ -82,95 +58,29 @@ repo = 'nvim-tree/nvim-web-devicons'
 # ステータスライン
 [[plugins]]
 repo = 'vim-airline/vim-airline'
-hook_add = '''
-    source ~/dotfiles/vim/rc/plugin-configs/vim/vim-airline.vim
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-airline.vim'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
-lua_add = '''
-    vim.cmd([[
-        let g:airline_theme='deus'
-    ]])
-'''
-
-# シンタックスハイライト
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'
-lua_source = '''
-    require('config.nvim-treesitter')
-'''
-
-# カッコハイライト
-[[plugins]]
-repo = 'p00f/nvim-ts-rainbow'
-depends = [
-    'nvim-treesitter/nvim-treesitter',
-]
-lua_add = '''
-    require('nvim-treesitter.configs')
-'''
-
-# タグ自動クローズ
-[[plugins]]
-repo = 'windwp/nvim-ts-autotag'
-depends = [
-    'nvim-treesitter/nvim-treesitter',
-]
-lua_source = '''
-    require('config.nvim-treesitter')
-'''
-
-# コンテクストコメント
-repo = 'JoosepAlviste/nvim-ts-context-commentstring'
-lua_source = '''
-    require('nvim-treesitter.configs').setup {}
-'''
-
-# LSP
-[[plugins]]
-repo = 'neovim/nvim-lspconfig'
 on_source = [
-    'mason-lspconfig.nvim'
-    'rrethy/vim-illuminate',
-    # 'read-or-create-venv.vim',
+    'vim-airline',
 ]
-lua_add = '''
-    require('config.lsp')
-'''
-
-# LSP設定
-[[plugins]]
-repo = 'williamboman/mason-lspconfig.nvim'
-on_source = 'mason.nvim'
-
-# フォーマッター・リンター
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-on_source = 'mason.nvim'
-lua_source = '''
-    require('config.null-ls')
-'''
-
-# null-ls設定
-repo = 'jayp0521/mason-null-ls.nvim'
-on_source = [
-    'mason.nvim',
-]
-
 
 # FZF
 [[plugins]]
 repo = 'junegunn/fzf'
 build = './install --all'
 merged = 0
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/fzf.vim'
 
 [[plugins]]
 repo = 'yuki-yano/fzf-preview.vim'
 rev = 'release/rpc'
+on_source = 'fzf'
 hook_add = '''
     nnoremap <C-p> :FzfPreviewProjectFile<CR>
 '''
+
 
 # Autopairs
 [[plugins]]
