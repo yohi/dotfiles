@@ -3,7 +3,7 @@
     "diagnostic.enable": false,
     "inlayHint.enable": true,
     "inlayHint.enableParameter": true,
-    "inlayHint.display": true,
+    "inlayHint.display": false,
     "inlayHint.refreshOnInsertMode": true,
     "suggest.enableFloat": false,
     "suggest.snippetSupport": false,
