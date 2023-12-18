@@ -14,9 +14,11 @@ depends = [
     'pum.vim',
     'context_filetype.vim'
 ]
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddc.vim'
+# hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 hook_add = '''
     echom("ddc hook_add")
-    source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+    " source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
 '''
 hook_source = '''
     echom("ddc hook_source")
@@ -27,7 +29,6 @@ lua_add = '''
 lua_source = '''
     print("ddc lua_source")
 '''
-# hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
@@ -92,6 +93,7 @@ on_source = 'ddc.vim'
 repo = 'hrsh7th/vim-vsnip'
 on_source = 'ddc.vim'
 hook_add = '''
+    echom('vim-vsnip')
     imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
     smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
     imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
@@ -103,6 +105,7 @@ hook_add = '''
 repo = 'uga-rosa/ddc-source-vsnip'
 on_source = 'ddc.vim'
 hook_lua = '''
+    print('ddc-source-vsnip')
     require("ddc_nvim_lsp_setup").setup()
     require("lspconfig").denols.setup()
 '''
@@ -110,17 +113,18 @@ hook_lua = '''
 [[plugins]]
 repo = 'matsui54/denops-popup-preview.vim'
 on_source = 'ddc.vim'
-hook_source = '''
-    call popup_preview#enable()
-'''
+# hook_source = '''
+#     echom('denops-popup-preview')
+#     call popup_preview#enable()
+# '''
 
 [[plugins]]
 repo = 'matsui54/denops-signature_help'
 on_source = 'ddc.vim'
-hook_source = '''
-    call signature_help#enable()
-
-    " if you use with vim-lsp, disable vim-lsp's signature help feature
-    let g:lsp_signature_help_enabled = 0
-'''
-
+# hook_source = '''
+#     echom('denops-signature_help')
+#     call signature_help#enable()
+# 
+#     " if you use with vim-lsp, disable vim-lsp's signature help feature
+#     let g:lsp_signature_help_enabled = 0
+# '''
