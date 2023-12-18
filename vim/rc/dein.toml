@@ -77,10 +77,6 @@ hooks_file = '~/dotfiles/vim/plugin-configs/rc/fzf.vim'
 repo = 'yuki-yano/fzf-preview.vim'
 rev = 'release/rpc'
 on_source = 'fzf'
-hook_add = '''
-    nnoremap <C-p> :FzfPreviewProjectFile<CR>
-'''
-
 
 # Autopairs
 [[plugins]]
@@ -138,60 +134,12 @@ on_source = [
 [[plugins]]
 repo = 'folke/trouble.nvim'
 on_source = 'kyazdani42/nvim-web-devicons'
-hook_add = '''
-lua << EOF
-    require("trouble").setup {
-        position = "bottom", -- position of the list can be: bottom, top, left, right
-        height = 10, -- height of the trouble list when position is top or bottom
-        width = 50, -- width of the list when position is left or right
-        icons = true, -- use devicons for filenames
-        mode = "document_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
-        fold_open = "", -- icon used for open folds
-        fold_closed = "", -- icon used for closed folds
-        group = true, -- group results by file
-        padding = true, -- add an extra new line on top of the list
-        action_keys = { -- key mappings for actions in the trouble list
-            -- map to {} to remove a mapping, for example:
-            -- close = {},
-            close = "q", -- close the list
-            cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
-            refresh = "r", -- manually refresh
-            jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
-            open_split = { "<c-x>" }, -- open buffer in new split
-            open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
-            open_tab = { "<c-t>" }, -- open buffer in new tab
-            jump_close = {"o"}, -- jump to the diagnostic and close the list
-            toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
-            toggle_preview = "P", -- toggle auto_preview
-            hover = "K", -- opens a small popup with the full multiline message
-            preview = "p", -- preview the diagnostic location
-            close_folds = {"zM", "zm"}, -- close all folds
-            open_folds = {"zR", "zr"}, -- open all folds
-            toggle_fold = {"zA", "za"}, -- toggle fold of current file
-            previous = "k", -- preview item
-            next = "j" -- next item
-        },
-        indent_lines = true, -- add an indent guide below the fold icons
-        auto_open = false, -- automatically open the list when you have diagnostics
-        auto_close = false, -- automatically close the list when you have no diagnostics
-        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
-        auto_fold = false, -- automatically fold a file trouble list at creation
-        auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
-        use_diagnostic_signs = true -- enabling this will use the signs defined in your lsp client
-    }
-EOF
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-web-devicons.lua'
 
 # インデント
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hook_add = '''
-    let g:indentLine_color_term = 239
-    let g:indentLine_color_gui = '#708090'
-    let g:indentLine_char_list = ['|']
-    let g:indentLine_fileTypeExclude = ['help', 'nerdtree']
-    autocmd Filetype json :IndentLinesDisable
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/indentLine.vim'
 
 # GIT系 ----------------------
 [[plugins]]
@@ -199,32 +147,12 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-hook_add = '''
-    set updatetime=100
-    let g:gitgutter_async = 1
-    " let g:gitgutter_sign_added = '✚'
-    " let g:gitgutter_sign_modified = '➡'
-    " let g:gitgutter_sign_removed = '✖'
-    let g:gitgutter_sign_added = '▎'
-    let g:gitgutter_sign_modified = '▎'
-    let g:gitgutter_sign_removed = '▎'
-    highlight GitGutterAdd ctermfg=green
-    highlight GitGutterChange ctermfg=yellow
-    highlight GitGutterDelete ctermfg=red
-    highlight GitGutterChangeDelete ctermfg=yellow
-    nmap <C-g>s <Plug>(GitGutterPreviewHunk)
-    nmap <C-g>j <Plug>(GitGutterNextHunk)
-    nmap <C-g>k <Plug>(GitGutterPrevHunk)
-    nmap <C-g>u <Plug>(GitGutterUndoHunk)
-    nmap <C-g>h :GitGutterLineHighlightsToggle<CR>
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-gitgutter.vim'
 
 # vim rooter
 [[plugins]]
 repo = 'airblade/vim-rooter'
-hook_add = '''
-    let g:rooter_patterns = ['.venv/', '.git/', 'Makefile', '*.sln', 'build/env.sh']
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-rooter.vim'
 
 [[plugins]]
 repo = 'rickhowe/diffchar.vim'
@@ -237,25 +165,11 @@ repo = 'vim-scripts/dbext.vim'
 
 [[plugins]]
 repo = 'APZelos/blamer.nvim'
-hook_add = '''
-    let g:blamer_enabled = 1
-    let g:blamer_date_format = '%Y/%m/%d %H:%M'
-    let g:blamer_template = '<committer>, <committer-time>  * <summary>'
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/blamer.vim'
 
 [[plugins]]
 repo = 'gelguy/wilder.nvim'
-hook_source = '''
-    call wilder#enable_cmdline_enter()
-
-    set wildcharm=<Tab>
-    cmap <expr> <Tab> wilder#in_context() ? wilder#next() : "\<Tab>"
-    cmap <expr> <S-Tab> wilder#in_context() ? wilder#previous() : "\<S-Tab>"
-
-    " only / and ? is enabled by default
-    call wilder#set_option('modes', ['/', '?', ':'])
-'''
-
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/wilder.vim'
 
 # fern.vim
 [[plugins]]
@@ -275,22 +189,7 @@ repo = 'mechatroner/rainbow_csv'
 # lazygit.vim
 [[plugins]]
 repo = 'kdheepak/lazygit.nvim'
-hook_add = '''
-    " transparency of floating window
-    let g:lazygit_floating_window_winblend = 0
-
-    " scaling factor for floating window
-    let g:lazygit_floating_window_scaling_factor = 0.9
-
-    " customize lazygit popup window corner characters
-    let g:lazygit_floating_window_border_chars = ['╭', '╮', '╰', '╯'] 
-
-    " fallback to 0 if neovim-remote is not installed
-    let g:lazygit_use_neovim_remote = 1 
-
-    " setup mapping to call :LazyGit
-    nnoremap <silent> lg :LazyGit<CR>
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/lazygit.vim'
 
 # pastefix
 [[plugins]]
@@ -306,17 +205,7 @@ repo = 'Shougo/deoppet.nvim'
 on_source = [
     'yohi/install-pip-package.nvim',
 ]
-hook_source = '''
-    call deoppet#initialize()
-    call deoppet#custom#option('snippets',
-    \ map(globpath(&runtimepath, 'neosnippets', 1, 1),
-    \     { _, val -> { 'path': val } }))
-    imap <C-k>  <Plug>(deoppet_expand)
-    imap <C-f>  <Plug>(deoppet_jump_forward)
-    imap <C-b>  <Plug>(deoppet_jump_backward)
-    smap <C-f>  <Plug>(deoppet_jump_forward)
-    smap <C-b>  <Plug>(deoppet_jump_backward)
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/deoppet.vim'
 
 
 [[plugins]]
@@ -334,25 +223,7 @@ repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
-lua_add = '''
-    local a = require "plenary.async"
-
-    local read_file = function(path)
-    local err, fd = a.uv.fs_open(path, "r", 438)
-    assert(not err, err)
-
-    local err, stat = a.uv.fs_fstat(fd)
-    assert(not err, err)
-
-    local err, data = a.uv.fs_read(fd, stat.size, 0)
-    assert(not err, err)
-
-    local err = a.uv.fs_close(fd)
-    assert(not err, err)
-
-    return data
-end
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/plenary.lua'
 
 [[plugins]]
 repo = 'MunifTanjim/prettier.nvim'
@@ -365,25 +236,7 @@ repo = 'Shougo/neomru.vim'
 # Filer
 [[plugins]]
 repo = 'scrooloose/nerdtree'
-hook_add = '''
-    let g:NERDTreeDirArrowExpandable = '▸'
-    let g:NERDTreeDirArrowCollapsible = '▼'
-    let g:NERDTreeShowBookmarks=1
-    let g:NERDTreeShowHidden=1
-    let g:NERDTreeQuitOnOpen=1
-    let g:NERDTreeIgnore=['\.git$', '\.clean$', '\.swp$', '\.bak$', '\~$']
-    
-    function MyNerdToggle()
-        if &filetype == 'nerdtree'
-            :NERDTreeToggle
-        else
-            :NERDTreeFind
-        endif
-    endfunction
-    
-    nnoremap <Space>e :call MyNerdToggle()<CR>
-    " map <Space>e :NERDTreeToggle<CR>
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/nerdtree.vim'
 
 [[plugins]]
 repo = 'jistr/vim-nerdtree-tabs'
@@ -408,10 +261,7 @@ repo = 'mhartington/oceanic-next'
 # Add surrounding character
 [[plugins]]
 repo = 'tpope/vim-surround'
-hook_add = '''
-    vnoremap " <Plug>VSurround"
-    vnoremap ' <Plug>VSurround'
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-surround.vim'
 
 
 # Replacement preview
@@ -421,23 +271,11 @@ repo = 'markonm/traces.vim'
 [[plugins]]
 repo = 'skanehira/denops-translate.vim'
 depends = 'denops.vim'
-hook_add = '''
-    let g:translate_source = "en"
-    let g:translate_target = "ja"
-    let g:translate_popup_window = 0 " if you want use popup window, set value 1
-    let g:translate_winsize = 10 " set buffer window height size if you doesn't use popup window
-    let g:translate_endpoint = 'https://api-free.deepl.com/v2/translate'
-    let g:translate_ui = 'popup'
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/denops-translate.vim'
 
 [[plugins]]
 repo = 'elzr/vim-json'
-hook_add = '''
-    let g:vim_json_syntax_conceal = 0
-    let g:indentLine_concealcursor="nc"
-    au! BufAdd,BufRead,BufNew,BufEnter *.json let g:indentLine_conceallevel=1
-    au! BufLeave,BufUnload,BufDelete,BufHidden *.json let g:indentLine_conceallevel=2
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-json.vim'
 
 
 [[plugins]]
