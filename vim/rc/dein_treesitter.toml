@@ -4,9 +4,9 @@
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 # hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-treesitter.lua'
-# lua_source = '''
-#     require('config.nvim-treesitter')
-# '''
+lua_source = '''
+    require('config.nvim-treesitter')
+'''
 
 # カッコハイライト
 [[plugins]]
@@ -25,9 +25,9 @@ repo = 'windwp/nvim-ts-autotag'
 on_source = [
     'nvim-treesitter/nvim-treesitter',
 ]
-lua_source = '''
-    require('config.nvim-treesitter')
-'''
+# lua_source = '''
+#     require('config.nvim-treesitter')
+# '''
 
 # コンテクストコメント
 repo = 'JoosepAlviste/nvim-ts-context-commentstring'
