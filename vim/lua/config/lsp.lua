@@ -296,6 +296,12 @@ mason_lspconfig.setup_handlers({
                     venv = '.venv',
                     analysis = {
                         --
+                        inlayHints = {
+                            functionReturnTypes = true,
+                            variableTypes = true,
+                        },
+
+                        --
                         autoImportCompletions = true,
 
                         -- 事前定義された名前にもどついて検索パスを自動的に追加するか
