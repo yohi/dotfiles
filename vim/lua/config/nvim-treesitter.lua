@@ -1,5 +1,7 @@
+-- lua_source {{{
+
 print('nvim-treesitter.setup')
-require'nvim-treesitter.configs'.setup {
+require('nvim-treesitter.configs').setup {
   -- シンタックスハイライト
 
   -- A list of parser names, or "all"
@@ -40,6 +42,8 @@ require'nvim-treesitter.configs'.setup {
 
   -- タグ自動クローズ
   utotag = {
-   enable = true,
+    enable = true,
   },
 }
+
+-- }}}

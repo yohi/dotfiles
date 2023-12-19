@@ -1,3 +1,5 @@
+-- lua_source {{{
+
 require('indent-o-matic').setup {
     -- The values indicated here are the default
 
@@ -10,3 +12,5 @@ require('indent-o-matic').setup {
     -- Skip multi-line comments and strings (more accurate detection but less performant)
     skip_multiline = true,
 }
+
+-- }}}

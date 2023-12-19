@@ -10,7 +10,17 @@ call ddc#custom#patch_global('ui', 'native')
 
 call ddc#custom#patch_global('sources', [
     \ 'lsp',
+    \ 'around',
+    \ 'file',
     \ ])
+
+call ddc#custom#patch_global('sourceOptions', #{
+    \ _: #{
+    \   matchers: ['matcher_head'],
+    \   sorters: ['sorter_rank'],
+    \   converters: ['converter_remove_overlap']
+    \ },
+    \ })
 
 call ddc#custom#patch_global(#{
       \ sourceOptions: #{
@@ -30,6 +40,12 @@ call ddc#custom#patch_global(#{
       \   },
       \ },
       \})
+
+call ddc#custom#patch_global('sourceOptions', #{
+    \ around: #{
+    \   mark: 'Arround',
+    \ },
+    \ })
 
 """""" around =======================================
 """"" Use around source.

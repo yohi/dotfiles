@@ -1,3 +1,5 @@
+-- lua_add {{{
+
 print 'read lsp.lua'
 
 local function dump(o)
@@ -759,3 +761,5 @@ end
 --     }
 -- })
 
+
+-- }}}

@@ -6,10 +6,10 @@ on_source = [
     'rrethy/vim-illuminate',
     # 'read-or-create-venv.vim',
 ]
-# hooks_source = '~/dotfiles/vim/plugin-configs/lua/lsp.lua'
-lua_add = '''
-    require('config.lsp')
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/lsp.lua'
+# lua_add = '''
+#     require('config.lsp')
+# '''
 
 # LSP設定
 [[plugins]]

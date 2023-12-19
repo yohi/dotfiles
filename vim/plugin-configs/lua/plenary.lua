@@ -1,3 +1,5 @@
+-- lua_add {{{
+
 local a = require "plenary.async"
 
 local read_file = function(path)
@@ -16,3 +18,4 @@ local read_file = function(path)
     return data
 end
 
+-- }}}

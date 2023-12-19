@@ -18,6 +18,28 @@ depends = [
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
+# GithubCopilot
+[[plugins]]
+repo = 'github/copilot.vim'
+on_cmd = 'Copilot'
+hook_source = '''
+  let g:copilot_no_maps = v:true
+  "let g:copilot_node_command = '/snap/bin/node'
+  let g:copilot_hide_during_completion = 0
+  imap <silent><expr> <C-g> copilot#Accept()
+  imap <silent><expr> <C-n> copilot#Next()
+  imap <silent><expr> <C-p> copilot#Previous()
+
+  " Enable copilot for text files
+  " let g:copilot_filetypes = #{
+  "   \   gitcommit: v:true,
+  "   \   markdown: v:true,
+  "   \   text: v:true,
+  "   \   yaml: v:true,
+  "   \   ddu-ff-filter: v:false,
+  "   \ }
+'''
+
 # パッケージマネージャー
 [[plugins]]
 repo = 'williamboman/mason.nvim'
@@ -134,7 +156,7 @@ on_source = [
 [[plugins]]
 repo = 'folke/trouble.nvim'
 on_source = 'kyazdani42/nvim-web-devicons'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-web-devicons.lua'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/trouble.lua'
 
 # インデント
 [[plugins]]
