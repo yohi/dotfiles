@@ -304,11 +304,12 @@ hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-json.vim'
 if = 1
 repo = 'neoclide/coc.nvim'
 rev = 'release'
-lua_add = '''
-    print("coc lua_source")
-    require('config.coc')
-    print("coc lua_source end")
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/coc.lua'
+# lua_add = '''
+#     print("coc lua_source")
+#     require('config.coc')
+#     print("coc lua_source end")
+# '''
 
 # 自作
 [[plugins]]
@@ -319,6 +320,7 @@ lua_source = '''
 
 [[plugins]]
 repo = 'Shougo/ddu.vim'
-hook_source = '''
-    source ~/dotfiles/vim/rc/plugin-configs/vim/ddu.rc.vim
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddu.vim'
+# hook_source = '''
+#     source ~/dotfiles/vim/rc/plugin-configs/vim/ddu.rc.vim
+# '''
