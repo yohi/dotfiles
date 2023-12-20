@@ -3,10 +3,10 @@
 # シンタックスハイライト
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
-# hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-treesitter.lua'
-lua_source = '''
-    require('config.nvim-treesitter')
-'''
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-treesitter.lua'
+# lua_source = '''
+#     require('config.nvim-treesitter')
+# '''
 
 # カッコハイライト
 [[plugins]]

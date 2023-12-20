@@ -16,19 +16,19 @@ depends = [
 ]
 hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddc.vim'
 # hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
-hook_add = '''
-    echom("ddc hook_add")
-    " source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
-'''
-hook_source = '''
-    echom("ddc hook_source")
-'''
-lua_add = '''
-    print("ddc lua_add")
-'''
-lua_source = '''
-    print("ddc lua_source")
-'''
+# hook_add = '''
+#     echom("ddc hook_add")
+#     " source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+# '''
+# hook_source = '''
+#     echom("ddc hook_source")
+# '''
+# lua_add = '''
+#     print("ddc lua_add")
+# '''
+# lua_source = '''
+#     print("ddc lua_source")
+# '''
 
 [[plugins]]
 repo = 'Shougo/ddc-ui-native'
@@ -92,20 +92,20 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'hrsh7th/vim-vsnip'
 on_source = 'ddc.vim'
-hook_add = '''
-    echom('vim-vsnip')
-    imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
-    smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
-    imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
-    smap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
-    let g:vsnip_filetypes = {}
-'''
+# hook_add = '''
+#     echom('vim-vsnip')
+#     imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+#     smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+#     imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+#     smap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+#     let g:vsnip_filetypes = {}
+# '''
 
 [[plugins]]
 repo = 'uga-rosa/ddc-source-vsnip'
 on_source = 'ddc.vim'
 hook_lua = '''
-    print('ddc-source-vsnip')
+    # print('ddc-source-vsnip')
     require("ddc_nvim_lsp_setup").setup()
     require("lspconfig").denols.setup()
 '''

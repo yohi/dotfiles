@@ -156,11 +156,6 @@ else
         'python'
     )
 end
-print('hokkaido consadole sapporo')
-print(venv_path)
-print(python_path)
-
-
 
 -- 1. LSP Sever management
 mason.setup({

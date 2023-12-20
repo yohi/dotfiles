@@ -93,15 +93,10 @@ call ddc#custom#patch_global('sourceOptions', #{
 """"
 
 call ddc#enable()
+lua require('notify')('ddc#enable!!')
 
-function! MyNotify()
-  lua vim.notify("ddc#enable", "success")
-endfunction
 
-" ファンクション「SendNotification」を呼び出す
-call MyNotify()
-
-echom('vim-vsnip')
+" vim-vsnip
 imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
 smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
 imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
@@ -115,10 +110,10 @@ let g:vsnip_filetypes = {}
 " hook_source {{{
 " vim9script
 
-echom('denops-popup-preview')
+" denops-popup-preview
 call popup_preview#enable()
 
-echom('denops-signature_help')
+" denops-signature_help
 call signature_help#enable()
 
 " if you use with vim-lsp, disable vim-lsp's signature help feature

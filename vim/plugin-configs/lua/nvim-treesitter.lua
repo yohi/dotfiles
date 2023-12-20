@@ -1,3 +1,6 @@
+-- lua_add {{{
+
+print('read nvim-treesitter.lua')
 require('nvim-treesitter.configs').setup {
   -- シンタックスハイライト
 
@@ -43,3 +46,4 @@ require('nvim-treesitter.configs').setup {
   },
 }
 
+-- }}}
