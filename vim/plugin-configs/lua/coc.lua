@@ -1,3 +1,5 @@
+-- lua_add {{{
+
 print('read coc.lua')
 local function dump(o)
    if type(o) == 'table' then
@@ -84,7 +86,7 @@ vim.api.nvim_create_autocmd(
         vim.b.coc_suggest_disable = true
         if filetype == "python" then
             -- メッセージを表示
-            print("This is a Python file.")
+            -- print("This is a Python file.")
             vim.g.coc_enable = true
             vim.g.coc_enabled = true
 
@@ -93,7 +95,7 @@ vim.api.nvim_create_autocmd(
             -- vim.g.coc_user_config['python']['venvPath'] = root_dir
             -- vim.g.coc_user_config['python']['pythonPath'] = lspconfig.util.path.join(root_dir, '.venv', 'bin', 'python')
         else
-            print("This is not a Python file.")
+            -- print("This is not a Python file.")
             vim.g.coc_enable = false
             vim.g.coc_enabled = false
         end
@@ -132,3 +134,6 @@ vim.api.nvim_create_autocmd(
 --   pattern = "*", -- 全てのファイルにマッチするパターン
 --   callback = MyCallback, -- 上で定義したcallback関数を指定
 -- })
+
+
+-- }}}

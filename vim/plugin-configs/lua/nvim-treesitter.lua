@@ -1,4 +1,7 @@
-require'nvim-treesitter.configs'.setup {
+-- lua_add {{{
+
+print('read nvim-treesitter.lua')
+require('nvim-treesitter.configs').setup {
   -- シンタックスハイライト
 
   -- A list of parser names, or "all"
@@ -42,3 +45,5 @@ require'nvim-treesitter.configs'.setup {
    enable = true,
   },
 }
+
+-- }}}

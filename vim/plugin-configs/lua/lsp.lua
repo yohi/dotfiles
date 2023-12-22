@@ -1,3 +1,5 @@
+-- lua_add {{{
+
 print 'read lsp.lua'
 
 local function dump(o)
@@ -154,11 +156,6 @@ else
         'python'
     )
 end
-print('hokkaido consadole sapporo')
-print(venv_path)
-print(python_path)
-
-
 
 -- 1. LSP Sever management
 mason.setup({
@@ -295,6 +292,12 @@ mason_lspconfig.setup_handlers({
                     venvPath = venv_path,
                     venv = '.venv',
                     analysis = {
+                        --
+                        -- inlayHints = {
+                        --     functionReturnTypes = true,
+                        --     variableTypes = true,
+                        -- },
+
                         --
                         autoImportCompletions = true,
 
@@ -752,3 +755,6 @@ end
 --       }
 --     }
 -- })
+
+
+-- }}}

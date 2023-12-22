@@ -59,3 +59,4 @@ function! s:ddu_filter_my_settings() abort
     inoremap <buffer> <CR>
     \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
 endfunction
+
