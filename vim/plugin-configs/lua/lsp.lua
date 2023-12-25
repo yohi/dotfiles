@@ -156,6 +156,7 @@ else
         'python'
     )
 end
+print(python_path)
 
 -- 1. LSP Sever management
 mason.setup({
@@ -367,8 +368,16 @@ mason_lspconfig.setup_handlers({
 
         -- local lspconfig = require('lspconfig')
         lspconfig.pylsp.setup {
+            -- args = {
+            --     '-vvv',
+            -- },
+            cmd = {
+                python_path,
+                '-m',
+                'pylsp',
+            },
             root_dir = lspconfig.util.root_pattern('.venv'),
-            log_level = vim.log.levels.WARN,
+            log_level = vim.log.levels.DEBUG,
             settings = {
                 pylsp = {
                     configurationSources = {
@@ -386,14 +395,15 @@ mason_lspconfig.setup_handlers({
                         },
                         pylsp_mypy = {
                             enabled = true,
-                            live_mode = false,
-                            dmypy = true,
+                            live_mode = true,
+                            dmypy = false,
                             report_progress = true,
                             strict = false,
                             overrides = {
                                 '--cache-fine-grained',
                                 '--cache-dir', '/dev/null',
                                 '--python-executable', python_path, true,
+                                '--ignore-missing-imports',
                             },
                             config_sub_paths = {
                               -- '/home/y_ohi/docker/scs2/django/project/',
