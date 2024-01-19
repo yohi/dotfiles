@@ -78,12 +78,12 @@ on_source = 'ddc.vim'
 repo = 'uga-rosa/ddc-nvim-lsp-setup'
 on_source = [
     'ddc-source-lsp',
-    'nvim-lspconfig',
+#     'nvim-lspconfig',
 ]
-lua_source = '''
-    require('ddc_source_lsp_setup').setup()
-    -- require("lspconfig").denols.setup()
-'''
+# lua_source = '''
+#     require('ddc_source_lsp_setup').setup()
+#     -- require("lspconfig").denols.setup()
+# '''
 
 [[plugins]]
 repo = 'Shougo/ddc-cmdline'
