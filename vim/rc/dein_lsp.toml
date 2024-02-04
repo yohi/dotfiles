@@ -17,16 +17,26 @@ repo = 'williamboman/mason-lspconfig.nvim'
 on_source = 'mason.nvim'
 
 # フォーマッター・リンター
-[[plugins]]
-repo = 'jose-elias-alvarez/null-ls.nvim'
-on_source = 'mason.nvim'
+# [[plugins]]
+# repo = 'jose-elias-alvarez/null-ls.nvim'
+# on_source = 'mason.nvim'
 # hooks_source = '~/dotfiles/vim/plugin-configs/lua/null-ls.lua'
 # lua_source = '''
 #     require('config.null-ls')
 # '''
 
+[[plugins]]
+repo = 'nvimtools/none-ls.nvim'
+on_source = 'mason.nvim'
+hooks_fils = '~/dotfiles/vim/plugin-configs/lua/none-ls.lua'
+
 # null-ls設定
 repo = 'jayp0521/mason-null-ls.nvim'
 on_source = [
     'mason.nvim',
+    'none-ls',
 ]
+
+[[plugins]]
+repo = 'folke/neodev.nvim'
+on_source = 'nvim-lspconfig'

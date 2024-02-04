@@ -12,3 +12,7 @@ hook_add = ''' "{{{
   nnoremap <A-b> :GitMessenger<CR>
 "}}} '''
 
+
+[[plugins]]
+repo = 'dense-analysis/ale'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/ale.vim'
