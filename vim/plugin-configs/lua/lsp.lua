@@ -177,6 +177,7 @@ local servers = {
         pyright = {
             disableLanguageService = false,
             disableOrganizeImports = false,
+            disableTaggedHints = false,
             openFilesOnly = false,
         },
         python = {
@@ -197,7 +198,7 @@ local servers = {
                 autoSearchPaths = true,
 
                 -- [openFilesOnly, workspace]
-                diagnosticMode = "workspace",
+                diagnosticMode = "openFilesOnly",
 
                 -- 診断のレベルを上書きする
                 -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
