@@ -1,0 +1,333 @@
+# プラグインマネージャー
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'wsdjeg/dein-ui.vim'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = [
+    'context_filetype.vim',
+]
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+# GithubCopilot
+[[plugins]]
+repo = 'github/copilot.vim'
+on_cmd = 'Copilot'
+hook_source = '''
+  let g:copilot_no_maps = v:true
+  "let g:copilot_node_command = '/snap/bin/node'
+  let g:copilot_hide_during_completion = 0
+  imap <silent><expr> <C-g> copilot#Accept()
+  imap <silent><expr> <C-n> copilot#Next()
+  imap <silent><expr> <C-p> copilot#Previous()
+
+  " Enable copilot for text files
+  " let g:copilot_filetypes = #{
+  "   \   gitcommit: v:true,
+  "   \   markdown: v:true,
+  "   \   text: v:true,
+  "   \   yaml: v:true,
+  "   \   ddu-ff-filter: v:false,
+  "   \ }
+'''
+
+# パッケージマネージャー
+[[plugins]]
+repo = 'williamboman/mason.nvim'
+on_source = [
+    'mason-lspconfig.nvim',
+    'nvim-lspconfig',
+]
+
+# オプティマイザ
+[[plubins]]
+repo = 'lewis6991/impatient.nvim'
+lua_source = '''
+    require('impatient').setup()
+'''
+
+# 通知
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-notify.lua'
+
+# 自動インデント検出
+[[plugins]]
+repo = 'Darazaki/indent-o-matic'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/indent-o-matic.lua'
+
+# FixCursorHold
+[[plugins]]
+repo = 'antoinemadec/FixCursorHold.nvim'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
+
+# アイコン_
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+
+[[plugins]]
+repo = 'nvim-tree/nvim-web-devicons'
+
+# ステータスライン
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-airline.vim'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+on_source = [
+    'vim-airline',
+]
+
+# FZF
+[[plugins]]
+repo = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/fzf.vim'
+
+[[plugins]]
+repo = 'yuki-yano/fzf-preview.vim'
+rev = 'release/rpc'
+on_source = 'fzf'
+
+# Autopairs
+[[plugins]]
+repo = 'windwp/nvim-autopairs'
+lua_add = '''
+    require('nvim-autopairs').setup{}
+'''
+
+# カラースキーマ
+[[plugins]]
+repo = 'tomasiser/vim-code-dark'
+hook_source = '''
+    " colorscheme codedark
+    " au MyAutoCmd VimEnter * nested colorscheme codedark
+    autocmd VimEnter * ++nested colorscheme codedark
+'''
+
+[[plugins]]
+repo = 'WhoIsSethDaniel/mason-tool-installer.nvim'
+on_source = 'mason.nvim'
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navic'
+on_source = [
+    'nvim-lspconfig',
+]
+
+[[plugins]]
+repo = "utilyre/barbecue.nvim"
+depends = [
+    "nvim-navic",
+    "nvim-web-devicons",
+]
+
+[[plugins]]
+repo = 'MunifTanjim/nui.nvim'
+
+[[plugins]]
+repo = 'numToStr/Comment.nvim'
+
+[[plugins]]
+repo = 'nvim-telescope/telescope.nvim'
+
+
+[[plugins]]
+repo = 'SmiteshP/nvim-navbuddy'
+on_source = [
+    'nvim-lspconfig',
+    'nvim-navic',
+    'nui.nvim',
+    'Comment.nvim',
+    'telescope.nvim',
+]
+
+[[plugins]]
+repo = 'folke/trouble.nvim'
+on_source = 'kyazdani42/nvim-web-devicons'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/trouble.lua'
+
+# インデント
+[[plugins]]
+repo = 'Yggdroot/indentLine'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/indentLine.vim'
+
+# GIT系 ----------------------
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-gitgutter.vim'
+
+# vim rooter
+[[plugins]]
+repo = 'airblade/vim-rooter'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-rooter.vim'
+
+[[plugins]]
+repo = 'rickhowe/diffchar.vim'
+
+[[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
+repo = 'vim-scripts/dbext.vim'
+
+[[plugins]]
+repo = 'APZelos/blamer.nvim'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/blamer.vim'
+
+[[plugins]]
+repo = 'gelguy/wilder.nvim'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/wilder.vim'
+
+# fern.vim
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+
+[[plugins]]
+repo = 'lambdalisue/fern-hijack.vim'
+
+# reword
+[[plugins]]
+repo = 'lambdalisue/reword.vim'
+
+# rainvow_csv
+[[plugins]]
+repo = 'mechatroner/rainbow_csv'
+
+# lazygit.vim
+[[plugins]]
+repo = 'kdheepak/lazygit.nvim'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/lazygit.vim'
+
+# pastefix
+[[plugins]]
+repo = 'lambdalisue/pastefix.vim'
+
+# denops
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+hook_add = '''
+    let g:denops_server_addr = '127.0.0.1:32123'
+'''
+
+[[plugins]]
+repo = 'vim-denops/denops-shared-server.vim'
+
+# deoppet
+[[plugins]]
+repo = 'Shougo/deoppet.nvim'
+on_source = [
+    'yohi/install-pip-package.nvim',
+]
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/deoppet.vim'
+
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+
+
+[[plugins]]
+repo = 'nvim-lua/plenary.nvim'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/plenary.lua'
+
+[[plugins]]
+repo = 'MunifTanjim/prettier.nvim'
+
+# ADD ======================================
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+# Filer
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/nerdtree.vim'
+
+[[plugins]]
+repo = 'jistr/vim-nerdtree-tabs'
+
+[[plugins]]
+repo = 'mileszs/ack.vim'
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+
+[[plugins]]
+repo = 'j-hui/fidget.nvim'
+on_event = 'LspAttach'
+lua_add = '''
+    require("fidget").setup{}
+'''
+
+[[plugins]]
+repo = 'mhartington/oceanic-next'
+
+
+# Add surrounding character
+[[plugins]]
+repo = 'tpope/vim-surround'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-surround.vim'
+
+
+# Replacement preview
+[[plugins]]
+repo = 'markonm/traces.vim'
+
+[[plugins]]
+repo = 'skanehira/denops-translate.vim'
+depends = 'denops.vim'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/denops-translate.vim'
+
+[[plugins]]
+repo = 'elzr/vim-json'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-json.vim'
+
+
+[[plugins]]
+if = 0
+repo = 'neoclide/coc.nvim'
+rev = 'release'
+build = 'npm ci'
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/coc.lua'
+# lua_add = '''
+#     print("coc lua_source")
+#     require('config.coc')
+#     print("coc lua_source end")
+# '''
+
+# 自作
+[[plugins]]
+repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
+lua_source = '''
+    require('set-docker-compose-env').setup()
+'''
+
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddu.vim'
+# hook_source = '''
+#     source ~/dotfiles/vim/rc/plugin-configs/vim/ddu.rc.vim
+# '''

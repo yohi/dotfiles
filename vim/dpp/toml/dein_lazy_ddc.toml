@@ -1,0 +1,130 @@
+# ddc ---------------
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+on_event = [
+    'InsertEnter',
+    'CursorHold',
+]
+depends = [
+    'denops.vim',
+    'pum.vim',
+    'context_filetype.vim'
+]
+hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddc.vim'
+# hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
+# hook_add = '''
+#     echom("ddc hook_add")
+#     " source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+# '''
+# hook_source = '''
+#     echom("ddc hook_source")
+# '''
+# lua_add = '''
+#     print("ddc lua_add")
+# '''
+# lua_source = '''
+#     print("ddc lua_source")
+# '''
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-around'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-converter_remove_overlap'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'matsui54/ddc-buffer'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-file'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nextword'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-tabnine'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-source-lsp'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'uga-rosa/ddc-nvim-lsp-setup'
+on_source = [
+    'ddc-source-lsp',
+#     'nvim-lspconfig',
+]
+# lua_source = '''
+#     require('ddc_source_lsp_setup').setup()
+#     -- require("lspconfig").denols.setup()
+# '''
+
+[[plugins]]
+repo = 'Shougo/ddc-cmdline'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'hrsh7th/vim-vsnip'
+on_source = 'ddc.vim'
+# hook_add = '''
+#     echom('vim-vsnip')
+#     imap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+#     smap <expr> <C-f> vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)' : '<C-f>'
+#     imap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+#     smap <expr> <C-b> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)' : '<C-b>'
+#     let g:vsnip_filetypes = {}
+# '''
+
+[[plugins]]
+repo = 'uga-rosa/ddc-source-vsnip'
+on_source = 'ddc.vim'
+hook_lua = '''
+    # print('ddc-source-vsnip')
+    require("ddc_nvim_lsp_setup").setup()
+    require("lspconfig").denols.setup()
+'''
+
+[[plugins]]
+repo = 'matsui54/denops-popup-preview.vim'
+on_source = 'ddc.vim'
+# hook_source = '''
+#     echom('denops-popup-preview')
+#     call popup_preview#enable()
+# '''
+
+[[plugins]]
+repo = 'matsui54/denops-signature_help'
+on_source = 'ddc.vim'
+# hook_source = '''
+#     echom('denops-signature_help')
+#     call signature_help#enable()
+# 
+#     " if you use with vim-lsp, disable vim-lsp's signature help feature
+#     let g:lsp_signature_help_enabled = 0
+# '''
