@@ -1,9 +1,9 @@
 # プラグインマネージャー
-[[plugins]]
-repo = 'Shougo/dein.vim'
-
-[[plugins]]
-repo = 'wsdjeg/dein-ui.vim'
+# [[plugins]]
+# repo = 'Shougo/dein.vim'
+# 
+# [[plugins]]
+# repo = 'wsdjeg/dein-ui.vim'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -66,9 +66,9 @@ repo = 'Darazaki/indent-o-matic'
 hooks_file = '~/dotfiles/vim/plugin-configs/lua/indent-o-matic.lua'
 
 # FixCursorHold
-[[plugins]]
-repo = 'antoinemadec/FixCursorHold.nvim'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
+# [[plugins]]
+# repo = 'antoinemadec/FixCursorHold.nvim'
+# hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
 
 # アイコン_
 [[plugins]]
@@ -242,8 +242,8 @@ repo = 'Shougo/ddu-ui-ff'
 [[plugins]]
 repo = 'Shougo/ddu-source-file_rec'
 
-[[plugins]]
-repo = 'Shougo/ddu-filter-matcher_substring'
+# [[plugins]]
+# repo = 'Shougo/ddu-filter-matcher_substring'
 
 [[plugins]]
 repo = 'Shougo/ddu-kind-file'

@@ -5,21 +5,25 @@ set nocompatible
 const s:cache_dir = expand('~/.cache')
 
 " Set dpp base path (required)
-const s:dpp_base = s:cache_dir . '/dpp/repos/'
+const s:dpp_base = s:cache_dir . '/dpp/'
+
+const s:repo_dir = s:dpp_base . 'repos/'
 
 const s:dpp_repo = 'github.com/Shougo/dpp.vim'
 const s:denops_repo = 'github.com/vim-denops/denops.vim'
 const s:ext_toml_repo = 'github.com/Shougo/dpp-ext-toml'
 const s:ext_lazy_repo = 'github.com/Shougo/dpp-ext-lazy'
 const s:ext_installer_repo = 'github.com/Shougo/dpp-ext-installer'
+const s:protocol_git_repo = 'github.com/Shougo/dpp-protocol-git'
 
 " Set dpp source path (required)
 " NOTE: The plugins must be cloned before.
-const s:dpp_src = s:dpp_base . s:dpp_repo
-const s:denops_src = s:dpp_base . s:denops_repo
-const s:ext_toml_src = s:dpp_base . s:ext_toml_repo
-const s:ext_lazy_src = s:dpp_base . s:ext_lazy_repo
-const s:ext_installer_src = s:dpp_base . s:ext_installer_repo
+const s:dpp_src = s:repo_dir . s:dpp_repo
+const s:denops_src = s:repo_dir . s:denops_repo
+const s:ext_toml_src = s:repo_dir . s:ext_toml_repo
+const s:ext_lazy_src = s:repo_dir . s:ext_lazy_repo
+const s:ext_installer_src = s:repo_dir . s:ext_installer_repo
+const s:protocol_git_src = s:repo_dir . s:protocol_git_repo
 
 if !(s:cache_dir->isdirectory())
     call mkdir(s:cache_dir, 'p)
@@ -40,29 +44,46 @@ if &runtimepath !~# '/dpp.vim'
         execute '!git clone https://' . s:ext_toml_repo s:ext_toml_src
         execute '!git clone https://' . s:ext_lazy_repo s:ext_lazy_src
         execute '!git clone https://' . s:ext_installer_repo s:ext_installer_src
+        execute '!git clone https://' . s:protocol_git_repo s:protocol_git_src
     endif
 endif
 
 " Set dpp runtime path (required)
 execute 'set runtimepath^=' .. s:dpp_src
+execute 'set runtimepath^=' .. s:denops_src
+execute 'set runtimepath^=' .. s:ext_toml_src
+execute 'set runtimepath^=' .. s:ext_lazy_src
+execute 'set runtimepath^=' .. s:ext_installer_src
+execute 'set runtimepath^=' .. s:protocol_git_src
 
-if s:dpp_base->dpp#min#load_state()
+" if s:dpp_base->dpp#min#load_state()
+" if dpp#min#load_state(s:dpp_base)
+"   " NOTE: dpp#make_state() requires denops.vim
+"   " NOTE: denops.vim and dpp plugins are must be added
+"   execute 'set runtimepath^=' .. s:denops_src
+"   execute 'set runtimepath^=' .. s:ext_toml_src
+"   execute 'set runtimepath^=' .. s:ext_lazy_src
+"   execute 'set runtimepath^=' .. s:ext_installer_src
+"   execute 'set runtimepath^=' .. s:protocol_git_src
+"
+"   autocmd User DenopsReady
+"   \ : echohl WarningMsg
+"   \ | echomsg 'dpp load_state() is failed'
+"   \ | echohl NONE
+"   \ | call dpp#make_state(s:dpp_base, '~/dotfiles/vim/dpp/dpp.ts')
+" endif
+
+if dpp#min#load_state(s:dpp_base)
   " NOTE: dpp#make_state() requires denops.vim
-  " NOTE: denops.vim and dpp plugins are must be added
-  execute 'set runtimepath^=' .. s:denops_src
-  execute 'set runtimepath^=' .. s:ext_installer_src
-
+  " execute 'set runtimepath^=' .. s:denops_src
   autocmd User DenopsReady
-  \ : echohl WarningMsg
-  \ | echomsg 'dpp load_state() is failed'
-  \ | echohl NONE
-  \ | call dpp#make_state(s:dpp_base, '{TypeScript config file path}')
+  \ call dpp#make_state(s:dpp_base, '~/dotfiles/vim/dpp/dpp.ts')
 endif
 
-autocmd User Dpp:makeStatePost
-      \ : echohl WarningMsg
-      \ | echomsg 'dpp make_state() is done'
-      \ | echohl NONE
+" autocmd User Dpp:makeStatePost
+"       \ : echohl WarningMsg
+"       \ | echomsg 'dpp make_state() is done'
+"       \ | echohl NONE
 
 " Attempt to determine the type of a file based on its name and
 " possibly its " contents. Use this to allow intelligent
@@ -73,4 +94,11 @@ filetype indent plugin on
 " Enable syntax highlighting
 if has('syntax')
   syntax on
+  " TODO
+  colorscheme codedark
+  highlight LspDiagnosticsSignError ctermbg=None cterm=underline ctermfg=Red
+  highlight LspDiagnosticsSignWarn  ctermbg=None cterm=underline ctermfg=Yellow
+  highlight LspDiagnosticsSignHint  ctermbg=None cterm=underline ctermfg=LightBlue
+  highlight LspDiagnosticsSignInfo  ctermbg=None cterm=underline ctermfg=White
+  highlight CocInlayHint ctermbg=18 ctermfg=112 guibg=#cceeee guifg=#004400 cterm=italic gui=italic
 endif
