@@ -331,3 +331,29 @@ hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddu.vim'
 # hook_source = '''
 #     source ~/dotfiles/vim/rc/plugin-configs/vim/ddu.rc.vim
 # '''
+
+
+[[plugins]]
+repo = 'jackMort/ChatGPT.nvim'
+on_event = 'VeryLazy'
+lua_add = '''
+    vim.fn.setenv("OPENAI_API_KEY", "dummy")
+    vim.fn.setenv("OPENAI_API_HOST", "http://localhost:32768")
+    require('chatgpt').setup({
+        openai_params = {
+          model = "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
+        },
+        openai_edit_params = {
+          model = "bedrock/anthropic.claude-3-sonnet-20240229-v1:0",
+        },
+        actions_paths = {
+            '~/dotfiles/vim/chatgpt-nvim-actions.json'
+        },
+})
+'''
+depends = [
+    "MunifTanjim/nui.nvim",
+    "nvim-lua/plenary.nvim",
+    "folke/trouble.nvim",
+    "nvim-telescope/telescope.nvim"
+]
