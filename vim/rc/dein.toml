@@ -221,10 +221,11 @@ repo = 'lambdalisue/pastefix.vim'
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 hook_add = '''
-    let g:denops_server_addr = '127.0.0.1:32123'
+   "let g:denops_server_addr = '127.0.0.1:32123'
 '''
 
 [[plugins]]
+if = 0
 repo = 'vim-denops/denops-shared-server.vim'
 
 # deoppet
