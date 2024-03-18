@@ -15,6 +15,9 @@ require('nvim-treesitter.configs').setup {
         "javascript",
         "python",
         "jsonc",
+        "toml",
+        "yaml",
+        "php_only",
     },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
