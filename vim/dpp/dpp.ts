@@ -1,61 +1,99 @@
 import {
   BaseConfig,
-  ContextBuilder,
-  Dpp,
+  ConfigArguments,
+  ConfigReturn,
   Plugin,
-} from "https://deno.land/x/dpp_vim@v0.0.2/types.ts";
-import { Denops, fn } from "https://deno.land/x/dpp_vim@v0.0.2/deps.ts";
+} from "https://deno.land/x/dpp_vim@v0.0.7/types.ts";
+import { fn } from "https://deno.land/x/dpp_vim@v0.0.7/deps.ts";
 
+// dpp-ext-toml
 type Toml = {
   hooks_file?: string;
   ftplugins?: Record<string, string>;
   plugins: Plugin[];
 };
 
+// dpp-ext-lazy
 type LazyMakeStateResult = {
   plugins: Plugin[];
   stateLines: string[];
 };
 
 export class Config extends BaseConfig {
-  override async config(args: {
-    denops: Denops;
-    contextBuilder: ContextBuilder;
-    basePath: string;
-    dpp: Dpp;
-  }): Promise<{
-    plugins: Plugin[];
-    stateLines: string[];
-  }> {
+  override async config(args: ConfigArguments): Promise<ConfigReturn> {
+    const hasNvim = args.denops.meta.host === "nvim";
+
+    // setting inline_vimrcs
+    const inlineVimrcs = ["$VIM_DIR/settings.vim"];
+
     args.contextBuilder.setGlobal({
+      inlineVimrcs,
+      extParams: {
+        installer: {
+          checkDiff: true,
+        },
+      },
       protocols: ["git"],
+      protocolParams: {
+        git: {
+          enablePartialClone: true,
+        },
+      },
     });
 
     const [context, options] = await args.contextBuilder.get(args.denops);
 
-    // Load toml plugins
+    // toml plugins
     const tomls: Toml[] = [];
-    const toml = await args.dpp.extAction(
-      args.denops,
-      context,
-      options,
-      "toml",
-      "load",
-      {
-        path: "~/dotfiles/vim/dpp/toml/dein.toml",
-        options: {
-          lazy: false,
-        },
-      },
-    ) as Toml | undefined;
-    // console.log(toml);
-    if (toml) {
-      tomls.push(toml);
+    // non-lazy
+    for (
+      const toml of [
+        "$VIM_TOMLS/dein.toml",
+        "$VIM_TOMLS/ddc.toml",
+        "$VIM_TOMLS/ddu.toml",
+      ]
+    ) {
+      tomls.push(
+        await args.dpp.extAction(
+          args.denops,
+          context,
+          options,
+          "toml",
+          "load",
+          {
+            path: toml,
+            options: {
+              lazy: false,
+            },
+          },
+        ) as Toml,
+      );
+    }
+    // lazy
+    for (
+      const toml of [
+        "$VIM_TOMLS/dein_lazy.toml",
+        hasNvim ? "$VIM_TOMLS/nvim.toml" : "$VIM_TOMLS/vim.toml",
+      ]
+    ) {
+      tomls.push(
+        await args.dpp.extAction(
+          args.denops,
+          context,
+          options,
+          "toml",
+          "load",
+          {
+            path: toml,
+            options: {
+              lazy: true,
+            },
+          },
+        ) as Toml,
+      );
     }
 
-    // console.log(tomls);
-
-    // Merge toml results
+    // merge result
     const recordPlugins: Record<string, Plugin> = {};
     const ftplugins: Record<string, string> = {};
     const hooksFiles: string[] = [];
@@ -66,11 +104,11 @@ export class Config extends BaseConfig {
 
       if (toml.ftplugins) {
         for (const filetype of Object.keys(toml.ftplugins)) {
-          if (ftplugins[filetype]) {
-            ftplugins[filetype] += `\n${toml.ftplugins[filetype]}`;
-          } else {
-            ftplugins[filetype] = toml.ftplugins[filetype];
+          if (!ftplugins[filetype]) {
+            ftplugins[filetype] = "";
           }
+          // ftplugins[filetype] is not undefined
+          ftplugins[filetype] += `\n${toml.ftplugins[filetype]}`;
         }
       }
 
@@ -78,37 +116,6 @@ export class Config extends BaseConfig {
         hooksFiles.push(toml.hooks_file);
       }
     }
-
-    // const localPlugins = await args.dpp.extAction(
-    //   args.denops,
-    //   context,
-    //   options,
-    //   "local",
-    //   "local",
-    //   {
-    //     directory: "~/work",
-    //     options: {
-    //       frozen: true,
-    //       merged: false,
-    //     },
-    //   },
-    // ) as Plugin[] | undefined;
-
-    // if (localPlugins) {
-    //   // Merge localPlugins
-    //   for (const plugin of localPlugins) {
-    //     if (plugin.name in recordPlugins) {
-    //       recordPlugins[plugin.name] = Object.assign(
-    //         recordPlugins[plugin.name],
-    //         plugin,
-    //       );
-    //     } else {
-    //       recordPlugins[plugin.name] = plugin;
-    //     }
-    //   }
-    // }
-
-    // console.log(recordPlugins);
 
     const lazyResult = await args.dpp.extAction(
       args.denops,
@@ -119,13 +126,47 @@ export class Config extends BaseConfig {
       {
         plugins: Object.values(recordPlugins),
       },
-    ) as LazyMakeStateResult | undefined;
+    ) as LazyMakeStateResult;
+
+    // $VIM_DIR/init.vim
+    // $VIM_DIR/settings.vim
+    // $VIM_TOMLS/*,
+    // $VIM_HOOKS/*,
+    const checkFiles: string[] = [];
+    checkFiles.push(
+      ...await fn.globpath(
+        args.denops,
+        "$VIM_DIR",
+        "*.vim",
+        1,
+        1,
+      ) as unknown as string[],
+    );
+    checkFiles.push(
+      ...await fn.globpath(
+        args.denops,
+        "$VIM_TOMLS",
+        "*",
+        1,
+        1,
+      ) as unknown as string[],
+    );
+    checkFiles.push(
+      ...await fn.globpath(
+        args.denops,
+        "$VIM_HOOKS",
+        "*",
+        1,
+        1,
+      ) as unknown as string[],
+    );
 
     return {
+      checkFiles,
       ftplugins,
       hooksFiles,
-      plugins: lazyResult?.plugins ?? [],
-      stateLines: lazyResult?.stateLines ?? [],
+      plugins: lazyResult.plugins,
+      stateLines: lazyResult.stateLines,
     };
   }
 }
