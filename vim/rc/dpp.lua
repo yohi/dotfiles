@@ -80,3 +80,12 @@ vim.api.nvim_create_autocmd('User', {
 
 vim.cmd('filetype indent plugin on')
 vim.cmd('syntax on')
+
+
+-- TODO
+vim.cmd('colorscheme codedark')
+vim.cmd('highlight LspDiagnosticsSignError ctermbg=None cterm=underline ctermfg=Red')
+vim.cmd('highlight LspDiagnosticsSignWarn  ctermbg=None cterm=underline ctermfg=Yellow')
+vim.cmd('highlight LspDiagnosticsSignHint  ctermbg=None cterm=underline ctermfg=LightBlue')
+vim.cmd('highlight LspDiagnosticsSignInfo  ctermbg=None cterm=underline ctermfg=White')
+vim.cmd('highlight CocInlayHint ctermbg=18 ctermfg=112 guibg=#cceeee guifg=#004400 cterm=italic gui=italic')
