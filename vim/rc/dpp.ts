@@ -51,22 +51,21 @@ export class Config extends BaseConfig {
       ) as Toml,
     );
 
-    // const tomls: Toml[] = [];
-    // tomls.push(
-    //   await args.dpp.extAction(
-    //     args.denops,
-    //     context,
-    //     options,
-    //     "toml",
-    //     "load",
-    //     {
-    //       path: await fn.expand(args.denops, dotfilesDir + "dein.toml"),
-    //       options: {
-    //         lazy: false,
-    //       },
-    //     },
-    //   ) as Toml,
-    // );
+    tomls.push(
+      await args.dpp.extAction(
+        args.denops,
+        context,
+        options,
+        "toml",
+        "load",
+        {
+          path: await fn.expand(args.denops, dotfilesDir + "dein_lsp.toml"),
+          options: {
+            lazy: false,
+          },
+        },
+      ) as Toml,
+    );
 
     tomls.push(
       await args.dpp.extAction(
@@ -78,7 +77,7 @@ export class Config extends BaseConfig {
         {
           path: await fn.expand(args.denops, dotfilesDir + "dein_treesitter.toml"),
           options: {
-            lazy: true,
+            lazy: false,
           },
         },
       ) as Toml,

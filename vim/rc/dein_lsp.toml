@@ -2,7 +2,7 @@
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_source = [
-    'mason-lspconfig.nvim'
+    'mason-lspconfig.nvim',
     'rrethy/vim-illuminate',
     # 'read-or-create-venv.vim',
 ]
