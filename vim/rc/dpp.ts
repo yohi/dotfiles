@@ -51,70 +51,70 @@ export class Config extends BaseConfig {
       ) as Toml,
     );
 
-    tomls.push(
-      await args.dpp.extAction(
-        args.denops,
-        context,
-        options,
-        "toml",
-        "load",
-        {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lsp.toml"),
-          options: {
-            lazy: false,
-          },
-        },
-      ) as Toml,
-    );
+    // tomls.push(
+    //   await args.dpp.extAction(
+    //     args.denops,
+    //     context,
+    //     options,
+    //     "toml",
+    //     "load",
+    //     {
+    //       path: await fn.expand(args.denops, dotfilesDir + "dein_lsp.toml"),
+    //       options: {
+    //         lazy: false,
+    //       },
+    //     },
+    //   ) as Toml,
+    // );
 
-    tomls.push(
-      await args.dpp.extAction(
-        args.denops,
-        context,
-        options,
-        "toml",
-        "load",
-        {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_treesitter.toml"),
-          options: {
-            lazy: false,
-          },
-        },
-      ) as Toml,
-    );
+    // tomls.push(
+    //   await args.dpp.extAction(
+    //     args.denops,
+    //     context,
+    //     options,
+    //     "toml",
+    //     "load",
+    //     {
+    //       path: await fn.expand(args.denops, dotfilesDir + "dein_treesitter.toml"),
+    //       options: {
+    //         lazy: false,
+    //       },
+    //     },
+    //   ) as Toml,
+    // );
 
 
-    tomls.push(
-      await args.dpp.extAction(
-        args.denops,
-        context,
-        options,
-        "toml",
-        "load",
-        {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lazy.toml"),
-          options: {
-            lazy: true,
-          },
-        },
-      ) as Toml,
-    );
+    // tomls.push(
+    //   await args.dpp.extAction(
+    //     args.denops,
+    //     context,
+    //     options,
+    //     "toml",
+    //     "load",
+    //     {
+    //       path: await fn.expand(args.denops, dotfilesDir + "dein_lazy.toml"),
+    //       options: {
+    //         lazy: true,
+    //       },
+    //     },
+    //   ) as Toml,
+    // );
 
-    tomls.push(
-      await args.dpp.extAction(
-        args.denops,
-        context,
-        options,
-        "toml",
-        "load",
-        {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lazy_ddc.toml"),
-          options: {
-            lazy: true,
-          },
-        },
-      ) as Toml,
-    );
+    // tomls.push(
+    //   await args.dpp.extAction(
+    //     args.denops,
+    //     context,
+    //     options,
+    //     "toml",
+    //     "load",
+    //     {
+    //       path: await fn.expand(args.denops, dotfilesDir + "dein_lazy_ddc.toml"),
+    //       options: {
+    //         lazy: true,
+    //       },
+    //     },
+    //   ) as Toml,
+    // );
 
     const recordPlugins: Record<string, Plugin> = {};
     const ftplugins: Record<string, string> = {};
