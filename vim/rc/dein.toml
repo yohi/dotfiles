@@ -1,9 +1,9 @@
 # プラグインマネージャー
-[[plugins]]
-repo = 'Shougo/dein.vim'
-
-[[plugins]]
-repo = 'wsdjeg/dein-ui.vim'
+# [[plugins]]
+# repo = 'Shougo/dein.vim'
+# 
+# [[plugins]]
+# repo = 'wsdjeg/dein-ui.vim'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -15,6 +15,7 @@ depends = [
 ]
 
 [[plugins]]
+if = 0
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
@@ -81,12 +82,14 @@ repo = 'nvim-tree/nvim-web-devicons'
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-airline.vim'
-
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 on_source = [
     'vim-airline',
 ]
+# [[plugins]]
+# repo = 'rebelot/heirline.nvim'
+# hooks_file = '~/dotfiles/vim/plugin-configs/lua/heirline.lua'
 
 # FZF
 [[plugins]]
