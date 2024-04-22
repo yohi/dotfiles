@@ -1,6 +1,9 @@
 # LSP
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
+depenes = [
+    'uga-rosa/ddc-source-lsp-setup',
+]
 on_source = [
     'mason-lspconfig.nvim',
     'rrethy/vim-illuminate',
@@ -41,3 +44,6 @@ on_source = [
 [[plugins]]
 repo = 'folke/neodev.nvim'
 on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'uga-rosa/ddc-source-lsp-setup'

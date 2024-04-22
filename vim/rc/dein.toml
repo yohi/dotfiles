@@ -1,8 +1,10 @@
 # プラグインマネージャー
 [[plugins]]
+if = 0
 repo = 'Shougo/dein.vim'
 
 [[plugins]]
+if = 0
 repo = 'wsdjeg/dein-ui.vim'
 
 [[plugins]]
@@ -15,6 +17,7 @@ depends = [
 ]
 
 [[plugins]]
+if = 0
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
@@ -70,10 +73,9 @@ hooks_file = '~/dotfiles/vim/plugin-configs/lua/indent-o-matic.lua'
 repo = 'antoinemadec/FixCursorHold.nvim'
 hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
 
-# アイコン_
+# アイコン
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
-
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
 
@@ -81,12 +83,15 @@ repo = 'nvim-tree/nvim-web-devicons'
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-airline.vim'
-
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
 on_source = [
     'vim-airline',
 ]
+# [[plugins]]
+# if = 0
+# repo = 'rebelot/heirline.nvim'
+# hooks_file = '~/dotfiles/vim/plugin-configs/lua/heirline.lua'
 
 # FZF
 [[plugins]]
@@ -321,6 +326,7 @@ hooks_file = '~/dotfiles/vim/plugin-configs/lua/coc.lua'
 
 # 自作
 [[plugins]]
+if = 0
 repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
 lua_source = '''
     require('set-docker-compose-env').setup()
@@ -356,5 +362,5 @@ depends = [
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
     "folke/trouble.nvim",
-    "nvim-telescope/telescope.nvim"
+    "nvim-telescope/telescope.nvim",
 ]

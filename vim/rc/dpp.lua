@@ -10,7 +10,6 @@ if vim.fn.isdirectory(cache_dir) == 0 then
 end
 
 function init_plugin(plugin, prepend)
-    print(plugin)
     local dir = repo_dir .. plugin
     if vim.fn.isdirectory(dir) == 0 then
         vim.fn.execute('!git clone https://' .. plugin .. ' ' .. dir)
@@ -29,11 +28,9 @@ end
 
 -- dpp.vimのインストール
 init_plugin(dpp_repo, true)
-print('we are sapporo')
 
 local dpp = require('dpp')
-print('j1 servive')
-print('consadole sapporo')
+
 local plugins = {
     -- 'github.com/vim-denops/denops.vim',
     'github.com/Shougo/dpp-ext-installer',
@@ -42,13 +39,13 @@ local plugins = {
     'github.com/Shougo/dpp-protocol-git',
     'github.com/Shougo/dpp-ext-installer',
 }
+
 for i, plugin in next, plugins do
     init_plugin(plugin, false)
 end
 
 
 if dpp.load_state(dpp_base) then
-    print('consadole sapporo')
     -- local plugins = {
     --     'github.com/vim-denops/denops.vim',
     --     'github.com/Shougo/dpp-ext-installer',
