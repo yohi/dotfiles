@@ -3,14 +3,14 @@
 ######################################################################
 
 
-[[plugins]]  # to Lazy
-repo   = 'rhysd/git-messenger.vim'
-on_cmd = 'GitMessenger'
-on_map = '<Plug>(git-messenger'
-hook_add = ''' "{{{
-  let g:git_messenger_no_default_mappings = v:true
-  nnoremap <A-b> :GitMessenger<CR>
-"}}} '''
+# [[plugins]]  # to Lazy
+# repo   = 'rhysd/git-messenger.vim'
+# on_cmd = 'GitMessenger'
+# on_map = '<Plug>(git-messenger'
+# hook_add = ''' "{{{
+#   let g:git_messenger_no_default_mappings = v:true
+#   nnoremap <A-b> :GitMessenger<CR>
+# "}}} '''
 
 
 [[plugins]]

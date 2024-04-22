@@ -1,7 +1,7 @@
 " hook_add {{{
 " vim9script
 
-" echom("vim-aireline")
+echom("vim-aireline")
 
 let g:airline_powerline_fonts = 1
 

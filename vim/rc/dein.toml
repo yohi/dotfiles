@@ -321,6 +321,7 @@ hooks_file = '~/dotfiles/vim/plugin-configs/lua/coc.lua'
 
 # 自作
 [[plugins]]
+if = 0
 repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
 lua_source = '''
     require('set-docker-compose-env').setup()
