@@ -26,6 +26,121 @@ local colors = {
     git_change = utils.get_highlight("diffChanged").fg,
 }
 
+local normal = 'NORMAL'
+local insert = 'INSERT'
+local visual = 'VISUAL'
+local replace = 'REPLACE'
+local command = 'COMMAND'
+
+local ViMode = {
+    -- get vim current mode, this information will be required by the provider
+    -- and the highlight functions, so we compute it only once per component
+    -- evaluation and store it as a component attribute
+    init = function(self)
+        self.mode = vim.fn.mode(1) -- :h mode()
+    end,
+    -- Now we define some dictionaries to map the output of mode() to the
+    -- corresponding string and color. We can put these into `static` to compute
+    -- them at initialisation time.
+    static = {
+        mode_names = { -- change the strings if you like it vvvvverbose!
+            n         = normal,
+            no        = normal,
+            nov       = normal,
+            noV       = normal,
+            ["no\22"] = normal,
+            niI       = normal,
+            niR       = normal,
+            niV       = normal,
+            nt        = normal,
+            v         = visual,
+            vs        = visual,
+            V         = visual,
+            Vs        = visual,
+            ["\22"]   = visual,
+            ["\22s"]  = visual,
+            s         = "S",
+            S         = "S_",
+            ["\19"]   = "^S",
+            i         = insert,
+            ic        = insert,
+            ix        = insert,
+            R         = replace,
+            Rc        = replace,
+            Rx        = replace,
+            Rv        = replace,
+            Rvc       = replace,
+            Rvx       = replace,
+            c         = command,
+            cv        = command,
+            r         = "...",
+            rm        = "M",
+            ["r?"]    = "?",
+            ["!"]     = "!",
+            t         = "T",
+        },
+        mode_fg_colors = {
+            n = "green" ,
+            i = "cyan",
+            v = "red",
+            V =  "red",
+            ["\22"] =  "red",
+            c =  "orange",
+            s =  "purple",
+            S =  "purple",
+            ["\19"] =  "purple",
+            R =  "orange",
+            r =  "orange",
+            ["!"] =  "red",
+            t =  "red",
+        },
+        mode_bg_colors = {
+            n = "green" ,
+            i = "cyan",
+            v = "red",
+            V =  "red",
+            ["\22"] =  "red",
+            c =  "orange",
+            s =  "purple",
+            S =  "purple",
+            ["\19"] =  "purple",
+            R =  "orange",
+            r =  "orange",
+            ["!"] =  "red",
+            t =  "red",
+        }
+
+    },
+    -- We can now access the value of mode() that, by now, would have been
+    -- computed by `init()` and use it to index our strings dictionary.
+    -- note how `static` fields become just regular attributes once the
+    -- component is instantiated.
+    -- To be extra meticulous, we can also add some vim statusline syntax to
+    -- control the padding and make sure our string is always at least 2
+    -- characters long. Plus a nice Icon.
+    provider = function(self)
+        return self.mode_names[self.mode]
+    end,
+    -- Same goes for the highlight. Now the foreground will change according to the current mode.
+    hl = function(self)
+        local mode = self.mode:sub(1, 1) -- get only the first mode character
+        return {
+            fg = self.mode_fg_colors[self.mode],
+            bg = self.mode_bg_colors[self.mode],
+            bold = true,
+        }
+    end,
+    -- Re-evaluate the component only on ModeChanged event!
+    -- Also allows the statusline to be re-evaluated when entering operator-pending mode
+    update = {
+        "ModeChanged",
+        pattern = "*:*",
+        callback = vim.schedule_wrap(function()
+            vim.cmd("redrawstatus")
+        end),
+    },
+}
+
 local FileNameBlock = {
     -- let's first set up some attributes needed by this component and it's children
     init = function(self)
@@ -104,10 +219,94 @@ FileNameBlock = utils.insert(FileNameBlock,
     { provider = '%<'} -- this means that the statusline is cut here when there's not enough space
 )
 
+local FileType = {
+    provider = function()
+        return string.upper(vim.bo.filetype)
+    end,
+    hl = { fg = utils.get_highlight("Type").fg, bold = true },
+}
+
+local FileEncoding = {
+    provider = function()
+        local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc -- :h 'enc'
+        return enc
+    end
+}
+
+local FileFormat = {
+    provider = function()
+        return vim.bo.fileformat
+    end
+}
+
+-- We're getting minimalists here!
+local Ruler = {
+    -- %l = current line number
+    -- %L = number of lines in the buffer
+    -- %c = column number
+    -- %P = percentage through file of displayed window
+    provider = "%7(%l/%3L%):%2c",
+}
+
+-- I take no credits for this! :lion:
+local ScrollBar ={
+    static = {
+        sbar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' }
+        -- Another variant, because the more choice the better.
+        -- sbar = { '🭶', '🭷', '🭸', '🭹', '🭺', '🭻' }
+    },
+    provider = function(self)
+        local curr_line = vim.api.nvim_win_get_cursor(0)[1]
+        local lines = vim.api.nvim_buf_line_count(0)
+        local i = math.floor((curr_line - 1) / lines * #self.sbar) + 1
+        return string.rep(self.sbar[i], 2)
+    end,
+    hl = { fg = "blue", bg = "bright_bg" },
+}
+
+local LSPActive = {
+    condition = conditions.lsp_attached,
+    update = {'LspAttach', 'LspDetach'},
+
+    -- You can keep it simple,
+    -- provider = " [LSP]",
+
+    -- Or complicate things a bit and get the servers names
+    provider  = function()
+        local names = {}
+        for i, server in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+            table.insert(names, server.name)
+        end
+        return " [" .. table.concat(names, " ") .. "]"
+    end,
+    hl = { fg = "green", bold = true },
+}
+
 local StatusLine = {
     {
+        ViMode,
+    },
+    {
         FileNameBlock,
-    }
+    },
+    {
+        FileType,
+    },
+    {
+        FileEncoding,
+    },
+    {
+        FileFormat,
+    },
+    {
+        LSPActive,
+    },
+    {
+        Ruler,
+    },
+    {
+        ScrollBar,
+    },
 }
 
 local WinBar = {
@@ -130,91 +329,3 @@ require("heirline").setup({
         colors = colors,
     },
 })
-local prequire    = require('utils').prequire
-local listinfos   = require('utils').listinfos
-
-local heirline    = prequire('heirline')
-local utils       = prequire('heirline.utils')
-local conditions  = prequire('heirline.conditions')
-
-local p = prequire('config.heirline.parts')
-
-local vim = vim
-
-if not heirline then
-  return
-end
-
-local Align       = { provider = '%=' }
-
-local FileInfo    = p.create_part(p.get_filename, 'file')
-local Readonly    = p.create_part(p.get_readonly, 'file')
-local Modified    = p.create_part(p.get_modified, 'file')
-local Filename    = { FileInfo, Readonly, Modified }
-
-local Mode        = p.create_part(require('hardline.parts.mode').get_item, 'mode')
-local Git         = p.create_part(require('hardline.parts.git').get_item, 'high')
-
-local Dirname     = p.create_part(p.get_dirname, 'med')
-local LspError    = p.create_part(p.get_lsp_errors, 'warning')
-local LspWarning  = p.create_part(p.get_lsp_warnings, 'warning')
-local Whitespace  = p.create_part(require('hardline.parts.whitespace').get_item, 'warning')
-local Filetype    = p.create_part(require('hardline.parts.filetype').get_item, 'high')
-local Lines       = p.create_part(require('hardline.parts.line').get_item, 'warning')
-local ListInfos   = p.create_part(listinfos, 'warning')
-local Context     = p.create_part(require('nvim-navic').get_location, 'file')
-
-local Statusline = {
-  Mode,
-  Git,
-  Dirname,
-  Align,
-  LspError,
-  LspWarning,
-  Whitespace,
-  Filetype,
-  Lines,
-  ListInfos,
-}
-
-local Winbar = {
-  Filename,
-  Align,
-  Context,
-}
-
-local TablineFileName = {
-  provider = function(self)
-    return p.get_tabline_filename(self.tabnr)
-  end,
-  hl = function(self)
-    return { bold = self.is_active or self.is_visible, italic = true }
-  end,
-}
-
-local TablineFileNameBlock = {
-  hl = function(self)
-    if self.is_active then
-      return 'CurSearch'
-    else
-      return 'TabLine'
-    end
-  end,
-  TablineFileName,
-}
-
-heirline.setup({
-  statusline = { Statusline },
-  winbar = { Winbar },
-  tabline = { utils.make_tablist(TablineFileNameBlock) },
-  opts = {
-    disable_winbar_cb = function(args)
-      return conditions.buffer_matches({
-        buftype = { 'nofile', 'prompt', 'help', 'quickfix', 'terminal', },
-        filetype = { '^git.*', 'fugitive', 'Trouble', 'packer', 'fugitiveblame', },
-      }, args.buf)
-    end,
-  },
-})
-
--- }}}
