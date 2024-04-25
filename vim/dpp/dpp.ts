@@ -32,7 +32,7 @@ export class Config extends BaseConfig {
     };
 
     const [context, options] = await args.contextBuilder.get(args.denops);
-    const dotfilesDir = "~/dotfiles/vim/rc/";
+    const dotfilesDir = "~/dotfiles/vim/dpp/tomls/";
 
     const tomls: Toml[] = [];
     tomls.push(
@@ -43,7 +43,7 @@ export class Config extends BaseConfig {
         "toml",
         "load",
         {
-          path: await fn.expand(args.denops, dotfilesDir + "dein.toml"),
+          path: await fn.expand(args.denops, dotfilesDir + "dpp.toml"),
           options: {
             lazy: false,
           },
@@ -59,7 +59,7 @@ export class Config extends BaseConfig {
         "toml",
         "load",
         {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lsp.toml"),
+          path: await fn.expand(args.denops, dotfilesDir + "dpp_lsp.toml"),
           options: {
             lazy: false,
           },
@@ -75,7 +75,7 @@ export class Config extends BaseConfig {
         "toml",
         "load",
         {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_treesitter.toml"),
+          path: await fn.expand(args.denops, dotfilesDir + "dpp_treesitter.toml"),
           options: {
             lazy: false,
           },
@@ -92,7 +92,7 @@ export class Config extends BaseConfig {
         "toml",
         "load",
         {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lazy.toml"),
+          path: await fn.expand(args.denops, dotfilesDir + "dpp_lazy.toml"),
           options: {
             lazy: true,
           },
@@ -108,7 +108,7 @@ export class Config extends BaseConfig {
         "toml",
         "load",
         {
-          path: await fn.expand(args.denops, dotfilesDir + "dein_lazy_ddc.toml"),
+          path: await fn.expand(args.denops, dotfilesDir + "dpp_lazy_ddc.toml"),
           options: {
             lazy: true,
           },

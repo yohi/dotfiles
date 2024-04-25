@@ -63,7 +63,7 @@ if dpp.load_state(dpp_base) then
         pattern = 'DenopsReady',
         callback = function()
             vim.notify('dpp load_state() is failed')
-            dpp.make_state(dpp_base, '~/dotfiles/vim/rc/dpp.ts')
+            dpp.make_state(dpp_base, '~/dotfiles/vim/dpp/dpp.ts')
         end,
     })
 end
