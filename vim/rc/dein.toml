@@ -1,9 +1,11 @@
 # プラグインマネージャー
-# [[plugins]]
-# repo = 'Shougo/dein.vim'
-# 
-# [[plugins]]
-# repo = 'wsdjeg/dein-ui.vim'
+[[plugins]]
+if = 0
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+if = 0
+repo = 'wsdjeg/dein-ui.vim'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -71,10 +73,9 @@ hooks_file = '~/dotfiles/vim/plugin-configs/lua/indent-o-matic.lua'
 repo = 'antoinemadec/FixCursorHold.nvim'
 hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
 
-# アイコン_
+# アイコン
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
-
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
 
@@ -369,5 +370,5 @@ depends = [
     "MunifTanjim/nui.nvim",
     "nvim-lua/plenary.nvim",
     "folke/trouble.nvim",
-    "nvim-telescope/telescope.nvim"
+    "nvim-telescope/telescope.nvim",
 ]

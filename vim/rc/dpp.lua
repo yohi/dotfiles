@@ -39,6 +39,7 @@ local plugins = {
     'github.com/Shougo/dpp-protocol-git',
     'github.com/Shougo/dpp-ext-installer',
 }
+
 for i, plugin in next, plugins do
     init_plugin(plugin, false)
 end
