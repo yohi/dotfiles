@@ -80,9 +80,11 @@ repo = 'nvim-tree/nvim-web-devicons'
 
 # ステータスライン
 [[plugins]]
+if = 0
 repo = 'vim-airline/vim-airline'
 hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-airline.vim'
 [[plugins]]
+if = 0
 repo = 'vim-airline/vim-airline-themes'
 on_source = [
     'vim-airline',
@@ -90,6 +92,13 @@ on_source = [
 # [[plugins]]
 # repo = 'rebelot/heirline.nvim'
 # hooks_file = '~/dotfiles/vim/plugin-configs/lua/heirline.lua'
+
+[[plugins]]
+repo = 'nvim-lualine/lualine.nvim'
+depends = [
+    'nvim-tree/nvim-web-devicons',
+]
+hooks_file = '~/dotfiles/vim/plugin-configs/lua/lualine.lua'
 
 # FZF
 [[plugins]]
