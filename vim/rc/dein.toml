@@ -229,13 +229,13 @@ repo = 'lambdalisue/pastefix.vim'
 # denops
 [[plugins]]
 repo = 'vim-denops/denops.vim'
-hook_add = '''
-   "let g:denops_server_addr = '127.0.0.1:32123'
-'''
+# hook_add = '''
+#    "let g:denops_server_addr = '127.0.0.1:32123'
+# '''
 
-[[plugins]]
-if = 0
-repo = 'vim-denops/denops-shared-server.vim'
+# [[plugins]]
+# if = 0
+# repo = 'vim-denops/denops-shared-server.vim'
 
 # deoppet
 [[plugins]]
@@ -329,11 +329,11 @@ hooks_file = '~/dotfiles/vim/plugin-configs/lua/coc.lua'
 # '''
 
 # 自作
-[[plugins]]
-repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
-lua_source = '''
-    require('set-docker-compose-env').setup()
-'''
+# [[plugins]]
+# repo = '~/dotfiles/vim/local_plugins/set-docker-compose-env.nvim'
+# lua_source = '''
+#     require('set-docker-compose-env').setup()
+# '''
 
 [[plugins]]
 repo = 'Shougo/ddu.vim'
