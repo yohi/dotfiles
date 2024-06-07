@@ -1,0 +1,21 @@
+[pr_reviewer] # /review #
+inline_code_comments = true
+extra_instructions = "Please use Japanese in descriptions."
+
+[pr_description] # /describe #
+extra_instructions = "Please use Japanese in descriptions."
+
+[pr_code_suggestions] # /improve #
+extra_instructions = "Please use Japanese in descriptions."
+
+[pr_add_docs] # /add_docs #
+extra_instructions = "Please use Japanese in descriptions."
+
+[pr_update_changelog] # /update_changelog #
+extra_instructions = "Please use Japanese in descriptions."
+
+[pr_test] # /test #
+extra_instructions = "Please use Japanese in descriptions."
+
+[pr_improve_component] # /improve_component #
+extra_instructions = "Please use Japanese in descriptions."
