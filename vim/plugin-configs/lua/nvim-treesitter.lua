@@ -63,5 +63,7 @@ require('nvim-treesitter.configs').setup {
         enable = true,
     },
 }
+print('read nvim-treesitter.lua FIHISNED')
+
 
 --   }}}
