@@ -155,6 +155,8 @@ let g:python3_host_prog = system('echo -n $(which python3)')
 
 runtime! rc/*.vim
 
+runtime! rc/*.lua
+
 " lua << EOF
 "     require('config.python')
 "     InstallPipPackage('pynvim')
