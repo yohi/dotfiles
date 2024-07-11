@@ -1,5 +1,5 @@
 -- lua_add {{{
-print 'read lsp.lua'
+print 'read lsp.lua !!'
 
 local function dump(o)
    if type(o) == 'table' then
@@ -14,7 +14,7 @@ local function dump(o)
    end
 end
 
-require("ddc_source_lsp_setup").setup()
+-- require("ddc_source_lsp_setup").setup()
 
 
 local neodev = require('neodev')

@@ -24,7 +24,7 @@ local nvim_navic = require('nvim-navic')
 local barbecue = require('barbecue')
 
 neodev.setup({})
-require("ddc_source_lsp_setup").setup({})
+-- require("ddc_source_lsp_setup").setup({})
 
 nvim_navic.setup({
     icons = {

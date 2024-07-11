@@ -243,6 +243,7 @@ repo = 'vim-denops/denops-shared-server.vim'
 
 # deoppet
 [[plugins]]
+if = 0
 repo = 'Shougo/deoppet.nvim'
 on_source = [
     'yohi/install-pip-package.nvim',
