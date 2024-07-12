@@ -61,17 +61,17 @@ lua_source = '''
 # 通知
 [[plugins]]
 repo = 'rcarriga/nvim-notify'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/nvim-notify.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/nvim-notify.lua'
 
 # 自動インデント検出
 [[plugins]]
 repo = 'Darazaki/indent-o-matic'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/indent-o-matic.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/indent-o-matic.lua'
 
 # FixCursorHold
 [[plugins]]
 repo = 'antoinemadec/FixCursorHold.nvim'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/FixCursorHold.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/FixCursorHold.lua'
 
 # アイコン
 [[plugins]]
@@ -83,7 +83,7 @@ repo = 'nvim-tree/nvim-web-devicons'
 [[plugins]]
 if = 0
 repo = 'vim-airline/vim-airline'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-airline.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/vim-airline.vim'
 [[plugins]]
 if = 0
 repo = 'vim-airline/vim-airline-themes'
@@ -92,21 +92,21 @@ on_source = [
 ]
 # [[plugins]]
 # repo = 'rebelot/heirline.nvim'
-# hooks_file = '~/dotfiles/vim/plugin-configs/lua/heirline.lua'
+# hooks_file = '~/dotfiles/vim/dpp/hooks/lua/heirline.lua'
 
 [[plugins]]
 repo = 'nvim-lualine/lualine.nvim'
 depends = [
     'nvim-tree/nvim-web-devicons',
 ]
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/lualine.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/lualine.lua'
 
 # FZF
 [[plugins]]
 repo = 'junegunn/fzf'
 build = './install --all'
 merged = 0
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/fzf.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/fzf.vim'
 
 [[plugins]]
 repo = 'yuki-yano/fzf-preview.vim'
@@ -169,12 +169,12 @@ on_source = [
 [[plugins]]
 repo = 'folke/trouble.nvim'
 on_source = 'kyazdani42/nvim-web-devicons'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/trouble.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/trouble.lua'
 
 # インデント
 [[plugins]]
 repo = 'Yggdroot/indentLine'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/indentLine.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/indentLine.vim'
 
 # GIT系 ----------------------
 [[plugins]]
@@ -182,12 +182,12 @@ repo = 'tpope/vim-fugitive'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-gitgutter.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/vim-gitgutter.vim'
 
 # vim rooter
 [[plugins]]
 repo = 'airblade/vim-rooter'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-rooter.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/vim-rooter.vim'
 
 [[plugins]]
 repo = 'rickhowe/diffchar.vim'
@@ -200,11 +200,11 @@ repo = 'vim-scripts/dbext.vim'
 
 [[plugins]]
 repo = 'APZelos/blamer.nvim'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/blamer.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/blamer.vim'
 
 [[plugins]]
 repo = 'gelguy/wilder.nvim'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/wilder.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/wilder.vim'
 
 # fern.vim
 [[plugins]]
@@ -224,7 +224,7 @@ repo = 'mechatroner/rainbow_csv'
 # lazygit.vim
 [[plugins]]
 repo = 'kdheepak/lazygit.nvim'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/lazygit.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/lazygit.vim'
 
 # pastefix
 [[plugins]]
@@ -248,7 +248,7 @@ repo = 'Shougo/deoppet.nvim'
 on_source = [
     'yohi/install-pip-package.nvim',
 ]
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/deoppet.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/deoppet.vim'
 
 
 [[plugins]]
@@ -266,7 +266,7 @@ repo = 'Shougo/ddu-kind-file'
 
 [[plugins]]
 repo = 'nvim-lua/plenary.nvim'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/plenary.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/plenary.lua'
 
 [[plugins]]
 repo = 'MunifTanjim/prettier.nvim'
@@ -279,7 +279,7 @@ repo = 'Shougo/neomru.vim'
 # Filer
 [[plugins]]
 repo = 'scrooloose/nerdtree'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/nerdtree.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/nerdtree.vim'
 
 [[plugins]]
 repo = 'jistr/vim-nerdtree-tabs'
@@ -304,7 +304,7 @@ repo = 'mhartington/oceanic-next'
 # Add surrounding character
 [[plugins]]
 repo = 'tpope/vim-surround'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-surround.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/vim-surround.vim'
 
 
 # Replacement preview
@@ -314,11 +314,11 @@ repo = 'markonm/traces.vim'
 [[plugins]]
 repo = 'skanehira/denops-translate.vim'
 depends = 'denops.vim'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/denops-translate.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/denops-translate.vim'
 
 [[plugins]]
 repo = 'elzr/vim-json'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/vim-json.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/vim-json.vim'
 
 
 [[plugins]]
@@ -326,7 +326,7 @@ if = 0
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 build = 'npm ci'
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/coc.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/coc.lua'
 # lua_add = '''
 #     print("coc lua_source")
 #     require('config.coc')
@@ -343,9 +343,9 @@ lua_source = '''
 
 [[plugins]]
 repo = 'Shougo/ddu.vim'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddu.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/ddu.vim'
 # hook_source = '''
-#     source ~/dotfiles/vim/rc/plugin-configs/vim/ddu.rc.vim
+#     source ~/dotfiles/vim/rc/dpp/hooks/vim/ddu.rc.vim
 # '''
 
 

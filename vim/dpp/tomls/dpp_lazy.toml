@@ -16,4 +16,4 @@ repo   = 'rhysd/git-messenger.vim'
 
 [[plugins]]
 repo = 'dense-analysis/ale'
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/ale.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/ale.vim'

@@ -14,11 +14,11 @@ depends = [
     'pum.vim',
     'context_filetype.vim'
 ]
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddc.vim'
-# hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/ddc.vim'
+# hooks_file = '~/dotfiles/vim/rc/dpp/hooks/vim/ddc.rc.vim'
 # hook_add = '''
 #     echom("ddc hook_add")
-#     " source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+#     " source ~/dotfiles/vim/rc/dpp/hooks/vim/ddc.rc.vim
 # '''
 # hook_source = '''
 #     echom("ddc hook_source")

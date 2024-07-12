@@ -9,7 +9,7 @@ on_source = [
     'rrethy/vim-illuminate',
     # 'read-or-create-venv.vim',
 ]
-hooks_file = '~/dotfiles/vim/plugin-configs/lua/lsp.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/lsp.lua'
 # lua_add = '''
 #     require('config.lsp')
 # '''
@@ -23,7 +23,7 @@ on_source = 'mason.nvim'
 # [[plugins]]
 # repo = 'jose-elias-alvarez/null-ls.nvim'
 # on_source = 'mason.nvim'
-# hooks_source = '~/dotfiles/vim/plugin-configs/lua/null-ls.lua'
+# hooks_source = '~/dotfiles/vim/dpp/hooks/lua/null-ls.lua'
 # lua_source = '''
 #     require('config.null-ls')
 # '''
@@ -31,7 +31,7 @@ on_source = 'mason.nvim'
 [[plugins]]
 repo = 'nvimtools/none-ls.nvim'
 on_source = 'mason.nvim'
-hooks_fils = '~/dotfiles/vim/plugin-configs/lua/none-ls.lua'
+hooks_fils = '~/dotfiles/vim/dpp/hooks/lua/none-ls.lua'
 
 # null-ls設定
 [[plugins]]
