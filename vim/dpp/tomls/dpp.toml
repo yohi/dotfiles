@@ -322,7 +322,7 @@ hooks_file = '~/dotfiles/vim/dpp/hooks/rc/vim-json.vim'
 
 
 [[plugins]]
-if = 0
+if = 1
 repo = 'neoclide/coc.nvim'
 rev = 'release'
 build = 'npm ci'
@@ -332,6 +332,11 @@ hooks_file = '~/dotfiles/vim/dpp/hooks/lua/coc.lua'
 #     require('config.coc')
 #     print("coc lua_source end")
 # '''
+
+[[plugins]]
+repo = 'yaegassy/coc-mypy'
+build = 'yarn install --frozen-lockfile'
+
 
 # 自作
 [[plugins]]

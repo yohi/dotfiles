@@ -44,3 +44,15 @@ on_source = [
 [[plugins]]
 repo = 'folke/neodev.nvim'
 on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'linux-cultist/venv-selector.nvim'
+rev = 'regexp'
+depenes = [
+    'neovim/nvim-lspconfig',
+    'nvim-telescope/telescope.nvim',
+    # 'mfussenegger/nvim-dap-python',
+]
+lua_source = '''
+    require('venv-selector').setup()
+'''

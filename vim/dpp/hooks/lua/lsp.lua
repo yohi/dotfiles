@@ -58,9 +58,10 @@ nvim_navic.setup({
     },
     lsp = {
         auto_attach = true,
-        preference = {
-            'pyright',
-        },
+        -- preference = {
+        --     -- 'pyright',
+        --     'basedpyright',
+        -- },
     },
     highlight = false,
     separator = " > ",
@@ -113,9 +114,9 @@ local config = {
         prefix = "",
         border = "rounded",
     },
-    inlay_hints = {
-        enabled = false,
-    },
+    -- inlay_hints = {
+    --     enabled = false,
+    -- },
     signs = {
         text = {
             [vim.diagnostic.severity.ERROR] = "",
@@ -156,152 +157,223 @@ print(python_path)
 print('venv_path')
 print(venv_path(filepath))
 
-local servers = {
-    pyright = {
-        -- root_dir = venv_path,
-        -- -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
-        -- log_level = vim.log.levels.Trace,
-        -- settings = {
-        pyright = {
-            disableLanguageService = false,
-            disableOrganizeImports = false,
-            disableTaggedHints = false,
-            openFilesOnly = false,
-        },
-        python = {
-            pythonPath = python_path,
-            venvPath = venv_path(filepath),
-            venv = '.venv',
-            analysis = {
-                --
-                -- inlayHints = {
-                --     functionReturnTypes = true,
-                --     variableTypes = true,
-                -- },
+local basedpyright_setting = {
+    basedpyright = {
+        analysis = {
+            --
+            -- inlayHints = {
+            --     functionReturnTypes = true,
+            --     variableTypes = true,
+            -- },
 
-                --
-                autoImportCompletions = true,
+            --
+            autoImportCompletions = true,
 
-                -- 事前定義された名前にもどついて検索パスを自動的に追加するか
-                autoSearchPaths = true,
+            -- 事前定義された名前にもどついて検索パスを自動的に追加するか
+            autoSearchPaths = true,
 
-                -- [openFilesOnly, workspace]
-                diagnosticMode = "openFilesOnly",
+            -- [openFilesOnly, workspace]
+            diagnosticMode = "openFilesOnly",
 
-                -- 診断のレベルを上書きする
-                -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
-                diagnosticSeverityOverrides = {
-                    reportGeneralTypeIssues = "none",
-                    reportMissingTypeArgument = "none",
-                    reportUnknownMemberType = "none",
-                    reportUnknownVariableType = "none",
-                    reportUnknownArgumentType = "none",
-                },
-
-                -- インポート解決のための追加検索パス指定
-                extraPaths = {
-                },
-
-                -- default: Information [Error, Warning, Information, Trace]
-                -- logLevel = 'Warning',
-                logLevel = 'Trace',
-
-                -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
-                -- stubPath = '',
-
-                -- 型チェックの分析レベル default: off [off, basic, strict]
-                typeCheckingMode = 'off',
-                reportMissingImports = 'none',
-                reportMissingModuleSource = 'none',
-                reportUnusedImport = 'none',
-                reportUnusedVariable = 'none',
-                reportUnboundVariable = 'none',
-                reportUndefinedVariable = 'none',
-                reportGeneralTypeIssues = 'none',
-                reportMissingTypeArgument = 'none',
-                reportOptionalSubscript = 'none',
-                reportOptionalMemberAccess = 'none',
-
-                --
-                -- typeshedPaths = '',
-
-                -- default: false
-                useLibraryCodeForTypes = true,
-
-                pylintPath = {
-                },
+            -- 診断のレベルを上書きする
+            -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+            diagnosticSeverityOverrides = {
+                reportGeneralTypeIssues = "none",
+                reportMissingTypeArgument = "none",
+                reportUnknownMemberType = "none",
+                reportUnknownVariableType = "none",
+                reportUnknownArgumentType = "none",
             },
-            good_names_rgxs = {'[a-z]{1,3}'},
+
+            -- インポート解決のための追加検索パス指定
+            extraPaths = {
+            },
+
+            -- default: Information [Error, Warning, Information, Trace]
+            -- logLevel = 'Warning',
+            logLevel = 'Trace',
+
+            -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
+            -- stubPath = '',
+
+            -- 型チェックの分析レベル default: off [off, basic, strict]
+            typeCheckingMode = 'off',
+            reportMissingImports = 'none',
+            reportMissingModuleSource = 'none',
+            reportUnusedImport = 'none',
+            reportUnusedVariable = 'none',
+            reportUnboundVariable = 'none',
+            reportUndefinedVariable = 'none',
+            reportGeneralTypeIssues = 'none',
+            reportMissingTypeArgument = 'none',
+            reportOptionalSubscript = 'none',
+            reportOptionalMemberAccess = 'none',
+
+            --
+            -- typeshedPaths = '',
+
+            -- default: false
+            useLibraryCodeForTypes = true,
+
+            pylintPath = {
+            },
         },
-        -- }
     },
+}
+
+local pyright_setting = {
+    -- root_dir = venv_path,
+    -- -- https://github.com/microsoft/pyright/blob/main/docs/settings.md
+    -- log_level = vim.log.levels.Trace,
+    -- settings = {
+    pyright = {
+        disableLanguageService = false,
+        disableOrganizeImports = false,
+        disableTaggedHints = false,
+        openFilesOnly = false,
+    },
+    python = {
+        pythonPath = python_path,
+        venvPath = venv_path(filepath),
+        venv = '.venv',
+        analysis = {
+            --
+            -- inlayHints = {
+            --     functionReturnTypes = true,
+            --     variableTypes = true,
+            -- },
+
+            --
+            autoImportCompletions = true,
+
+            -- 事前定義された名前にもどついて検索パスを自動的に追加するか
+            autoSearchPaths = true,
+
+            -- [openFilesOnly, workspace]
+            diagnosticMode = "openFilesOnly",
+
+            -- 診断のレベルを上書きする
+            -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
+            diagnosticSeverityOverrides = {
+                reportGeneralTypeIssues = "none",
+                reportMissingTypeArgument = "none",
+                reportUnknownMemberType = "none",
+                reportUnknownVariableType = "none",
+                reportUnknownArgumentType = "none",
+            },
+
+            -- インポート解決のための追加検索パス指定
+            extraPaths = {
+            },
+
+            -- default: Information [Error, Warning, Information, Trace]
+            -- logLevel = 'Warning',
+            logLevel = 'Trace',
+
+            -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
+            -- stubPath = '',
+
+            -- 型チェックの分析レベル default: off [off, basic, strict]
+            typeCheckingMode = 'off',
+            reportMissingImports = 'none',
+            reportMissingModuleSource = 'none',
+            reportUnusedImport = 'none',
+            reportUnusedVariable = 'none',
+            reportUnboundVariable = 'none',
+            reportUndefinedVariable = 'none',
+            reportGeneralTypeIssues = 'none',
+            reportMissingTypeArgument = 'none',
+            reportOptionalSubscript = 'none',
+            reportOptionalMemberAccess = 'none',
+
+            --
+            -- typeshedPaths = '',
+
+            -- default: false
+            useLibraryCodeForTypes = true,
+
+            pylintPath = {
+            },
+        },
+        good_names_rgxs = {'[a-z]{1,3}'},
+    },
+}
+
+local pylsp_setting = {
+    -- cmd = {
+    --     python_path,
+    --     '-m',
+    --     'pylsp',
+    -- },
+    -- root_dir = venv_path,
+    -- log_level = vim.log.levels.DEBUG,
+    -- settings = {
     pylsp = {
-        -- cmd = {
-        --     python_path,
-        --     '-m',
-        --     'pylsp',
-        -- },
-        -- root_dir = venv_path,
-        -- log_level = vim.log.levels.DEBUG,
-        -- settings = {
-        pylsp = {
-           configurationSources = {
-               'flake8'
-           },
-           plugins = {
-               flake8 = {
-                   enabled = true,
-                   overrides = {
-                       '--python-executable', python_path, true,
-                   },
-               },
-               pyls_isort = {
-                   enabled = true,
-               },
-               pylsp_mypy = {
-                   enabled = true,
-                   live_mode = false,
-                   dmypy = true,
-                   report_progress = true,
-                   strict = false,
-                   overrides = {
-                       '--cache-fine-grained',
-                       '--cache-dir', '/dev/null',
-                       '--python-executable', python_path, true,
-                       '--ignore-missing-imports',
-                   },
-                   config_sub_paths = {
-                     -- '/home/y_ohi/docker/scs2/django/project/',
-                   }
-               },
-               pycodestyle = {
-                   enabled = false,
-                   maxLineLength = 120,
-               },
-               pyflakes = {
-                   enabled = false,
-               },
-               autopep8 = {
-                   enabled = false,
-               },
-               yapf = {
-                   enabled = false,
-               },
-               pylsp_black = {
-                   enabled = false,
-               },
-               memestra = {
-                   enabled = false,
-               },
-               mccabe = {
-                   enabled = false
-               },
-               pylint = {
-                   enabled = false
-               },
-           },
-        },
+       configurationSources = {
+           'flake8'
+       },
+       plugins = {
+            flake8 = {
+                enabled = true,
+                -- executable = python_path,
+           --      overrides = {
+           --          '--python-executable', python_path, true,
+           --      },
+            },
+            pyls_isort = {
+                enabled = true,
+            },
+            pylsp_mypy = {
+                enabled = false,
+                live_mode = false,
+                dmypy = true,
+                report_progress = true,
+                skip_token_initialization = true,
+                strict = false,
+                overrides = {
+                    '--cache-fine-grained',
+                    '--cache-dir', '/dev/null',
+                    '--python-executable', python_path, true,
+                    '--ignore-missing-imports',
+                },
+                config_sub_paths = {
+                  -- '/home/y_ohi/docker/scs2/django/project/',
+                }
+            },
+            pycodestyle = {
+                enabled = false,
+                maxLineLength = 120,
+            },
+            pyflakes = {
+                enabled = false,
+            },
+            autopep8 = {
+                enabled = false,
+            },
+            yapf = {
+                enabled = false,
+            },
+            pylsp_black = {
+                enabled = false,
+            },
+            memestra = {
+                enabled = false,
+            },
+            mccabe = {
+                enabled = false
+            },
+            pylint = {
+                enabled = false
+            },
+       },
     },
+
+}
+
+local servers = {
+    -- basedpyright = basedpyright_setting,
+    -- pyright = pyright_setting,
+    pylsp = pylsp_setting,
     -- mypy = {},
     -- flake8 = {},
     -- isort = {},
@@ -366,6 +438,9 @@ mason_lspconfig.setup_handlers({
         if (server_name == 'pylsp') then
             opts.root_dir = util.root_pattern('.venv')
         end
+        if (server_name == 'basedpyright') then
+            opts.root_dir = util.root_pattern('.venv')
+        end
         opts.on_attach = on_attach
         opts.settings = servers[server_name]
         opts.filetypes = (servers[server_name] or {}).filetypes
@@ -424,9 +499,9 @@ vim.api.nvim_create_autocmd(
         callback = function(args)
             local bufnr = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            if client.supports_method("textDocument/inlayHint") then
-                vim.lsp.inlay_hint(bufnr, true)
-            end
+            -- if client.supports_method("textDocument/inlayHint") then
+            --     vim.lsp.inlay_hint(bufnr, true)
+            -- end
         end,
     }
 )
