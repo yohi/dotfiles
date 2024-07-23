@@ -25,13 +25,14 @@ on_ft = 'toml'
 [[plugins]]
 repo = 'github/copilot.vim'
 on_cmd = 'Copilot'
-hook_source = '''
-  let g:copilot_no_maps = v:true
-  "let g:copilot_node_command = '/snap/bin/node'
-  let g:copilot_hide_during_completion = 0
-  imap <silent><expr> <C-g> copilot#Accept()
-  imap <silent><expr> <C-n> copilot#Next()
-  imap <silent><expr> <C-p> copilot#Previous()
+on_event = 'InsertEnter'
+hook_add = '''
+  " let g:copilot_no_maps = v:true
+  " let g:copilot_node_command = '/snap/bin/node'
+  " let g:copilot_hide_during_completion = 0
+  " imap <silent><expr> <C-g> copilot#Accept()
+  " imap <silent><expr> <C-n> copilot#Next()
+  " imap <silent><expr> <C-p> copilot#Previous()
 
   " Enable copilot for text files
   " let g:copilot_filetypes = #{
