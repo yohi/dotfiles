@@ -79,6 +79,19 @@ repo = 'ryanoasis/vim-devicons'
 [[plugins]]
 repo = 'nvim-tree/nvim-web-devicons'
 
+# バッファライン
+[[plugins]]
+repo = 'akinsho/bufferline.nvim'
+rev = '*'
+depends = [
+    'nvim-tree/nvim-web-devicons',
+]
+lua_add = '''
+    vim.opt.termguicolors = true
+    require("bufferline").setup{}
+'''
+
+
 # ステータスライン
 [[plugins]]
 if = 0
@@ -203,6 +216,7 @@ repo = 'APZelos/blamer.nvim'
 hooks_file = '~/dotfiles/vim/dpp/hooks/rc/blamer.vim'
 
 [[plugins]]
+if = 0
 repo = 'gelguy/wilder.nvim'
 hooks_file = '~/dotfiles/vim/dpp/hooks/rc/wilder.vim'
 
