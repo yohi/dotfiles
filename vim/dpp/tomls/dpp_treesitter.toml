@@ -4,13 +4,14 @@
 [[plugins]]
 repo = 'nvim-treesitter/nvim-treesitter'
 hooks_file = '~/dotfiles/vim/dpp/hooks/lua/nvim-treesitter.lua'
+# rev = 'main'
 # lua_source = '''
 #     require('config.nvim-treesitter')
 # '''
 
 # カッコハイライト
 [[plugins]]
-repo = 'p00f/nvim-ts-rainbow'
+repo = 'hiphish/rainbow-delimiters.nvim'
 on_source = [
     'nvim-treesitter/nvim-treesitter',
 ]
