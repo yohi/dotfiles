@@ -26,6 +26,7 @@ local nvim_navic = require('nvim-navic')
 local barbecue = require('barbecue')
 
 neodev.setup({})
+-- require("ddc_source_lsp_setup").setup({})
 
 nvim_navic.setup({
     icons = {
@@ -534,3 +535,5 @@ vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = 
 local handle_lsp = function(opts)
     return opts
 end
+
+--   }}}
