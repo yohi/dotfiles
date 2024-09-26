@@ -14,11 +14,11 @@ depends = [
     'pum.vim',
     'context_filetype.vim'
 ]
-hooks_file = '~/dotfiles/vim/plugin-configs/rc/ddc.vim'
-# hooks_file = '~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim'
+hooks_file = '~/dotfiles/vim/dpp/hooks/rc/ddc.vim'
+# hooks_file = '~/dotfiles/vim/rc/dpp/hooks/vim/ddc.rc.vim'
 # hook_add = '''
 #     echom("ddc hook_add")
-#     " source ~/dotfiles/vim/rc/plugin-configs/vim/ddc.rc.vim
+#     " source ~/dotfiles/vim/rc/dpp/hooks/vim/ddc.rc.vim
 # '''
 # hook_source = '''
 #     echom("ddc hook_source")
@@ -75,15 +75,11 @@ repo = 'Shougo/ddc-source-lsp'
 on_source = 'ddc.vim'
 
 [[plugins]]
-repo = 'uga-rosa/ddc-nvim-lsp-setup'
+repo = 'uga-rosa/ddc-source-lsp-setup'
 on_source = [
     'ddc-source-lsp',
-#     'nvim-lspconfig',
+    'nvim-lspconfig',
 ]
-# lua_source = '''
-#     require('ddc_source_lsp_setup').setup()
-#     -- require("lspconfig").denols.setup()
-# '''
 
 [[plugins]]
 repo = 'Shougo/ddc-cmdline'
@@ -128,3 +124,15 @@ on_source = 'ddc.vim'
 #     " if you use with vim-lsp, disable vim-lsp's signature help feature
 #     let g:lsp_signature_help_enabled = 0
 # '''
+
+
+# [[plugins]]
+# repo = 'uga-rosa/ddc-source-lsp-setup'
+# on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'uga-rosa/ddc-source-lsp-setup'
+on_source = 'ddc-source-lsp'
+lua_source = '''
+require("ddc_source_lsp_setup").setup()
+'''

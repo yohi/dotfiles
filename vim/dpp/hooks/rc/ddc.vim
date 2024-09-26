@@ -91,9 +91,9 @@ call ddc#custom#patch_global('sourceOptions', #{
 """"    \ },
 """"    \ })
 """"
-
 call ddc#enable()
 lua require('notify')('ddc#enable!!')
+
 
 
 " vim-vsnip
