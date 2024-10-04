@@ -235,8 +235,8 @@ local pyright_setting = {
     },
     python = {
         pythonPath = python_path,
-        venvPath = venv_path(filepath),
-        venv = '.venv',
+        -- venvPath = venv_path(filepath),
+        -- venv = '.venv',
         analysis = {
             --
             -- inlayHints = {
@@ -535,5 +535,13 @@ vim.api.nvim_create_user_command("Formatting", "lua vim.lsp.buf.format {async = 
 local handle_lsp = function(opts)
     return opts
 end
+
+-- lspconfig.pyright.setup {
+--     before_init = function(params)
+--         params.processId = vim.NIL
+--     end,
+--     cmd = require('lspcontainers').command('pyright'),
+--     root_dir = require('lspconfig/util').root_pattern('.git', vim.fn.getwcd()),
+-- }
 
 --   }}}
