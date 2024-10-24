@@ -59,10 +59,10 @@ nvim_navic.setup({
     },
     lsp = {
         auto_attach = true,
-        -- preference = {
-        --     -- 'pyright',
-        --     'basedpyright',
-        -- },
+        preference = {
+            'pyright',
+            -- 'basedpyright',
+        },
     },
     highlight = false,
     separator = " > ",
@@ -159,15 +159,28 @@ print('venv_path')
 print(venv_path(filepath))
 
 local basedpyright_setting = {
+    -- include = {}
+    -- exclude = {}
+    -- strict = {}
+    -- extends = {}
+    -- defineConstant = {}
+    -- typeshedPaths = {}
+    -- stubPath = {}
+    -- venv_path = {}
+    -- venv = {}
+    -- verboserOutput = True
+    -- extraPaths = {}
+    -- pythonVersion = ''
+    --
+    python = {
+        pythonPath = python_path,
+        venvPath = venv_path(filepath),
+    },
     basedpyright = {
+        disableLanguageService = false,
+        disableOrganizeImports = false,
+        disableTaggedHints = false,
         analysis = {
-            --
-            -- inlayHints = {
-            --     functionReturnTypes = true,
-            --     variableTypes = true,
-            -- },
-
-            --
             autoImportCompletions = true,
 
             -- 事前定義された名前にもどついて検索パスを自動的に追加するか
@@ -175,6 +188,16 @@ local basedpyright_setting = {
 
             -- [openFilesOnly, workspace]
             diagnosticMode = "openFilesOnly",
+
+            -- default: Information [Error, Warning, Information, Trace]
+            -- logLevel = 'Warning',
+            logLevel = 'Trace',
+
+            inlayHints = {
+                variableTypes = true,
+                callArgumentNames = true,
+                functionReturnTypes = true,
+            },
 
             -- 診断のレベルを上書きする
             -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
@@ -186,19 +209,32 @@ local basedpyright_setting = {
                 reportUnknownArgumentType = "none",
             },
 
+            exclude = {
+            },
+
             -- インポート解決のための追加検索パス指定
             extraPaths = {
             },
 
-            -- default: Information [Error, Warning, Information, Trace]
-            -- logLevel = 'Warning',
-            logLevel = 'Trace',
+            ignore = {
+            },
+
+            include = {
+            },
 
             -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
-            -- stubPath = '',
+            stubPath = '',
 
             -- 型チェックの分析レベル default: off [off, basic, strict]
             typeCheckingMode = 'off',
+
+            --
+            -- typeshedPaths = '',
+
+            -- default: false
+            useLibraryCodeForTypes = true,
+
+
             reportMissingImports = 'none',
             reportMissingModuleSource = 'none',
             reportUnusedImport = 'none',
@@ -210,11 +246,7 @@ local basedpyright_setting = {
             reportOptionalSubscript = 'none',
             reportOptionalMemberAccess = 'none',
 
-            --
-            -- typeshedPaths = '',
 
-            -- default: false
-            useLibraryCodeForTypes = true,
 
             pylintPath = {
             },
@@ -373,8 +405,8 @@ local pylsp_setting = {
 
 local servers = {
     -- basedpyright = basedpyright_setting,
-    -- pyright = pyright_setting,
-    pylsp = pylsp_setting,
+    pyright = pyright_setting,
+    -- pylsp = pylsp_setting,
     -- mypy = {},
     -- flake8 = {},
     -- isort = {},
@@ -436,10 +468,10 @@ mason_lspconfig.setup_handlers({
         if (server_name == 'pyright') then
             opts.root_dir = util.root_pattern('.venv')
         end
-        if (server_name == 'pylsp') then
+        if (server_name == 'basedpyright') then
             opts.root_dir = util.root_pattern('.venv')
         end
-        if (server_name == 'basedpyright') then
+        if (server_name == 'pylsp') then
             opts.root_dir = util.root_pattern('.venv')
         end
         opts.on_attach = on_attach
