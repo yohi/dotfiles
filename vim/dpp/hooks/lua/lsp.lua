@@ -61,7 +61,7 @@ nvim_navic.setup({
         auto_attach = true,
         preference = {
             'pyright',
-            -- 'basedpyright',
+            'basedpyright',
         },
     },
     highlight = false,
@@ -202,11 +202,13 @@ local basedpyright_setting = {
             -- 診断のレベルを上書きする
             -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
             diagnosticSeverityOverrides = {
-                reportGeneralTypeIssues = "none",
-                reportMissingTypeArgument = "none",
-                reportUnknownMemberType = "none",
-                reportUnknownVariableType = "none",
-                reportUnknownArgumentType = "none",
+                -- reportGeneralTypeIssues = "none",
+                -- reportMissingTypeArgument = "none",
+                -- reportUnknownMemberType = "none",
+                -- reportUnknownVariableType = "none",
+                -- reportUnknownArgumentType = "none",
+                -- reportPrivateLocalImportUseage = 'none',
+
             },
 
             exclude = {
@@ -245,8 +247,10 @@ local basedpyright_setting = {
             reportMissingTypeArgument = 'none',
             reportOptionalSubscript = 'none',
             reportOptionalMemberAccess = 'none',
-
-
+            reportPrivateLocalImportUseage = 'none',
+            reportUnknownMemberType = "none",
+            reportUnknownVariableType = "none",
+            reportUnknownArgumentType = "none",
 
             pylintPath = {
             },
@@ -404,9 +408,9 @@ local pylsp_setting = {
 }
 
 local servers = {
-    -- basedpyright = basedpyright_setting,
-    pyright = pyright_setting,
-    -- pylsp = pylsp_setting,
+    basedpyright = basedpyright_setting,
+    -- pyright = pyright_setting,
+    pylsp = pylsp_setting,
     -- mypy = {},
     -- flake8 = {},
     -- isort = {},
@@ -427,7 +431,7 @@ local servers = {
 
 mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers),
-    automatic_installation = false,
+    automatic_installation = true,
 })
 
 local opts = {
@@ -464,6 +468,8 @@ end
 
 mason_lspconfig.setup_handlers({
     function(server_name)
+        print('server_name!!')
+        print(server_name)
         local opts = {}
         if (server_name == 'pyright') then
             opts.root_dir = util.root_pattern('.venv')
