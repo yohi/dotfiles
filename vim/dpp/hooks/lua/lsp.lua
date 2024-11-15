@@ -131,14 +131,14 @@ local config = {
 vim.diagnostic.config(config)
 
 local bufnr = vim.api.nvim_get_current_buf()
-print("bufnr")
-print(bufnr)
+-- print("bufnr")
+-- print(bufnr)
 local filepath = vim.api.nvim_buf_get_name(bufnr)
-print('filepath')
-print(filepath)
+-- print('filepath')
+-- print(filepath)
 local venv_path = util.root_pattern('.venv')
-print('venv_path')
-print(venv_path)
+-- print('venv_path')
+-- print(venv_path)
 local python_path = nil
 python_path = vim.g.python3_host_prog
 -- if (venv_path == nil) then
@@ -153,10 +153,10 @@ python_path = vim.g.python3_host_prog
 --         'python'
 --     )
 -- end
-print('python_path')
-print(python_path)
-print('venv_path')
-print(venv_path(filepath))
+-- print('python_path')
+-- print(python_path)
+-- print('venv_path')
+-- print(venv_path(filepath))
 
 local basedpyright_setting = {
     -- include = {}
@@ -197,18 +197,26 @@ local basedpyright_setting = {
                 variableTypes = true,
                 callArgumentNames = true,
                 functionReturnTypes = true,
+                genericTypes = true,
             },
 
             -- 診断のレベルを上書きする
             -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
             diagnosticSeverityOverrides = {
-                -- reportGeneralTypeIssues = "none",
-                -- reportMissingTypeArgument = "none",
-                -- reportUnknownMemberType = "none",
-                -- reportUnknownVariableType = "none",
-                -- reportUnknownArgumentType = "none",
-                -- reportPrivateLocalImportUseage = 'none',
-
+                reportMissingImports = 'none',
+                reportMissingModuleSource = 'none',
+                reportUnusedImport = 'none',
+                reportUnusedVariable = 'none',
+                reportUnboundVariable = 'none',
+                reportUndefinedVariable = 'none',
+                reportGeneralTypeIssues = 'none',
+                reportMissingTypeArgument = 'none',
+                reportOptionalSubscript = 'none',
+                reportOptionalMemberAccess = 'none',
+                reportPrivateLocalImportUseage = 'none',
+                reportUnknownMemberType = "none",
+                reportUnknownVariableType = "none",
+                reportUnknownArgumentType = "none",
             },
 
             exclude = {
@@ -236,21 +244,6 @@ local basedpyright_setting = {
             -- default: false
             useLibraryCodeForTypes = true,
 
-
-            reportMissingImports = 'none',
-            reportMissingModuleSource = 'none',
-            reportUnusedImport = 'none',
-            reportUnusedVariable = 'none',
-            reportUnboundVariable = 'none',
-            reportUndefinedVariable = 'none',
-            reportGeneralTypeIssues = 'none',
-            reportMissingTypeArgument = 'none',
-            reportOptionalSubscript = 'none',
-            reportOptionalMemberAccess = 'none',
-            reportPrivateLocalImportUseage = 'none',
-            reportUnknownMemberType = "none",
-            reportUnknownVariableType = "none",
-            reportUnknownArgumentType = "none",
 
             pylintPath = {
             },
@@ -468,8 +461,8 @@ end
 
 mason_lspconfig.setup_handlers({
     function(server_name)
-        print('server_name!!')
-        print(server_name)
+        -- print('server_name!!')
+        -- print(server_name)
         local opts = {}
         if (server_name == 'pyright') then
             opts.root_dir = util.root_pattern('.venv')
@@ -531,17 +524,16 @@ vim.api.nvim_create_autocmd({
 
 vim.api.nvim_create_autocmd(
     {
-    'LspAttach',
+        'LspAttach',
     },
     {
-        group = diagnostic_hover_augroup_name,
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(args)
-            local bufnr = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            -- if client.supports_method("textDocument/inlayHint") then
-            --     vim.lsp.inlay_hint(bufnr, true)
-            -- end
-        end,
+            if client ~= nil and client.supports_method('textDocument/inlayHint') then
+                vim.lsp.inlay_hint.enable()
+            end
+        end
     }
 )
 
