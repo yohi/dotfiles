@@ -81,8 +81,12 @@ vim.cmd('syntax on')
 
 -- TODO
 vim.cmd('colorscheme codedark')
-vim.cmd('highlight LspDiagnosticsSignError ctermbg=None cterm=underline ctermfg=Red')
-vim.cmd('highlight LspDiagnosticsSignWarn  ctermbg=None cterm=underline ctermfg=Yellow')
-vim.cmd('highlight LspDiagnosticsSignHint  ctermbg=None cterm=underline ctermfg=LightBlue')
-vim.cmd('highlight LspDiagnosticsSignInfo  ctermbg=None cterm=underline ctermfg=White')
-vim.cmd('highlight CocInlayHint ctermbg=18 ctermfg=112 guibg=#cceeee guifg=#004400 cterm=italic gui=italic')
+-- vim.cmd('highlight LspDiagnosticsSignError ctermbg=None cterm=underline ctermfg=Red')
+-- vim.cmd('highlight LspDiagnosticsSignWarn  ctermbg=None cterm=underline ctermfg=Yellow')
+-- vim.cmd('highlight LspDiagnosticsSignHint  ctermbg=None cterm=underline ctermfg=LightBlue')
+-- vim.cmd('highlight LspDiagnosticsSignInfo  ctermbg=None cterm=underline ctermfg=White')
+vim.api.nvim_set_hl(0, 'LspDiagnosticsSignError', { fg = 'Red', bg = nil, underline = true })
+vim.api.nvim_set_hl(0, 'LspDiagnosticsSignWarn', { fg = 'Yellow', bg = nil, underline = true  })
+vim.api.nvim_set_hl(0, 'LspDiagnosticsSignHint', { fg = 'LightBlue', bg = nil, underline = true })
+vim.api.nvim_set_hl(0, 'LspDiagnosticsSignInfo', { fg = 'White', bg = nil, underline = true  })
+
