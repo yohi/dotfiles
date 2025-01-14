@@ -59,10 +59,10 @@ nvim_navic.setup({
     },
     lsp = {
         auto_attach = true,
-        -- preference = {
-        --     -- 'pyright',
-        --     'basedpyright',
-        -- },
+        preference = {
+            'pyright',
+            'basedpyright',
+        },
     },
     highlight = false,
     separator = " > ",
@@ -131,14 +131,14 @@ local config = {
 vim.diagnostic.config(config)
 
 local bufnr = vim.api.nvim_get_current_buf()
-print("bufnr")
-print(bufnr)
+-- print("bufnr")
+-- print(bufnr)
 local filepath = vim.api.nvim_buf_get_name(bufnr)
-print('filepath')
-print(filepath)
+-- print('filepath')
+-- print(filepath)
 local venv_path = util.root_pattern('.venv')
-print('venv_path')
-print(venv_path)
+-- print('venv_path')
+-- print(venv_path)
 local python_path = nil
 python_path = vim.g.python3_host_prog
 -- if (venv_path == nil) then
@@ -153,21 +153,34 @@ python_path = vim.g.python3_host_prog
 --         'python'
 --     )
 -- end
-print('python_path')
-print(python_path)
-print('venv_path')
-print(venv_path(filepath))
+-- print('python_path')
+-- print(python_path)
+-- print('venv_path')
+-- print(venv_path(filepath))
 
 local basedpyright_setting = {
+    -- include = {}
+    -- exclude = {}
+    -- strict = {}
+    -- extends = {}
+    -- defineConstant = {}
+    -- typeshedPaths = {}
+    -- stubPath = {}
+    -- venv_path = {}
+    -- venv = {}
+    -- verboserOutput = True
+    -- extraPaths = {}
+    -- pythonVersion = ''
+    --
+    python = {
+        pythonPath = python_path,
+        venvPath = venv_path(filepath),
+    },
     basedpyright = {
+        disableLanguageService = false,
+        disableOrganizeImports = false,
+        disableTaggedHints = false,
         analysis = {
-            --
-            -- inlayHints = {
-            --     functionReturnTypes = true,
-            --     variableTypes = true,
-            -- },
-
-            --
             autoImportCompletions = true,
 
             -- 事前定義された名前にもどついて検索パスを自動的に追加するか
@@ -176,45 +189,61 @@ local basedpyright_setting = {
             -- [openFilesOnly, workspace]
             diagnosticMode = "openFilesOnly",
 
+            -- default: Information [Error, Warning, Information, Trace]
+            -- logLevel = 'Warning',
+            logLevel = 'Trace',
+
+            inlayHints = {
+                variableTypes = true,
+                callArgumentNames = true,
+                functionReturnTypes = true,
+                genericTypes = true,
+            },
+
             -- 診断のレベルを上書きする
             -- https://github.com/microsoft/pylance-release/blob/main/DIAGNOSTIC_SEVERITY_RULES.md
             diagnosticSeverityOverrides = {
-                reportGeneralTypeIssues = "none",
-                reportMissingTypeArgument = "none",
+                reportMissingImports = 'none',
+                reportMissingModuleSource = 'none',
+                reportUnusedImport = 'none',
+                reportUnusedVariable = 'none',
+                reportUnboundVariable = 'none',
+                reportUndefinedVariable = 'none',
+                reportGeneralTypeIssues = 'none',
+                reportMissingTypeArgument = 'none',
+                reportOptionalSubscript = 'none',
+                reportOptionalMemberAccess = 'none',
+                reportPrivateLocalImportUseage = 'none',
                 reportUnknownMemberType = "none",
                 reportUnknownVariableType = "none",
                 reportUnknownArgumentType = "none",
+            },
+
+            exclude = {
             },
 
             -- インポート解決のための追加検索パス指定
             extraPaths = {
             },
 
-            -- default: Information [Error, Warning, Information, Trace]
-            -- logLevel = 'Warning',
-            logLevel = 'Trace',
+            ignore = {
+            },
+
+            include = {
+            },
 
             -- カスタムタイプのstubファイルを含むディレクトリ指定 default: ./typings
-            -- stubPath = '',
+            stubPath = '',
 
             -- 型チェックの分析レベル default: off [off, basic, strict]
             typeCheckingMode = 'off',
-            reportMissingImports = 'none',
-            reportMissingModuleSource = 'none',
-            reportUnusedImport = 'none',
-            reportUnusedVariable = 'none',
-            reportUnboundVariable = 'none',
-            reportUndefinedVariable = 'none',
-            reportGeneralTypeIssues = 'none',
-            reportMissingTypeArgument = 'none',
-            reportOptionalSubscript = 'none',
-            reportOptionalMemberAccess = 'none',
 
             --
             -- typeshedPaths = '',
 
             -- default: false
             useLibraryCodeForTypes = true,
+
 
             pylintPath = {
             },
@@ -372,7 +401,7 @@ local pylsp_setting = {
 }
 
 local servers = {
-    -- basedpyright = basedpyright_setting,
+    basedpyright = basedpyright_setting,
     -- pyright = pyright_setting,
     pylsp = pylsp_setting,
     -- mypy = {},
@@ -395,7 +424,7 @@ local servers = {
 
 mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers),
-    automatic_installation = false,
+    automatic_installation = true,
 })
 
 local opts = {
@@ -432,14 +461,16 @@ end
 
 mason_lspconfig.setup_handlers({
     function(server_name)
+        -- print('server_name!!')
+        -- print(server_name)
         local opts = {}
         if (server_name == 'pyright') then
             opts.root_dir = util.root_pattern('.venv')
         end
-        if (server_name == 'pylsp') then
+        if (server_name == 'basedpyright') then
             opts.root_dir = util.root_pattern('.venv')
         end
-        if (server_name == 'basedpyright') then
+        if (server_name == 'pylsp') then
             opts.root_dir = util.root_pattern('.venv')
         end
         opts.on_attach = on_attach
@@ -493,17 +524,28 @@ vim.api.nvim_create_autocmd({
 
 vim.api.nvim_create_autocmd(
     {
-    'LspAttach',
+        'LspAttach',
     },
     {
-        group = diagnostic_hover_augroup_name,
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
         callback = function(args)
-            local bufnr = args.buf
             local client = vim.lsp.get_client_by_id(args.data.client_id)
-            -- if client.supports_method("textDocument/inlayHint") then
-            --     vim.lsp.inlay_hint(bufnr, true)
-            -- end
-        end,
+            if client ~= nil and client.supports_method('textDocument/inlayHint') then
+                vim.lsp.inlay_hint.enable(false)
+                vim.api.nvim_set_hl(0, "LspInlayHint", { fg = 112, bg = 'White', italic = true })
+            end
+        end
+    }
+)
+
+-- InlayHintの表示切り替え
+vim.api.nvim_create_user_command(
+    'ToggleInlayHint',
+    function(_)
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+    end,
+    {
+        nargs = 0,
     }
 )
 
