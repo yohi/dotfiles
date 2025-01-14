@@ -531,7 +531,7 @@ vim.api.nvim_create_autocmd(
         callback = function(args)
             local client = vim.lsp.get_client_by_id(args.data.client_id)
             if client ~= nil and client.supports_method('textDocument/inlayHint') then
-                vim.lsp.inlay_hint.enable()
+                vim.lsp.inlay_hint.enable(false)
                 vim.api.nvim_set_hl(0, "LspInlayHint", { fg = 112, bg = 'White', italic = true })
             end
         end
