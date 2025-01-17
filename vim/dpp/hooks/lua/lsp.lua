@@ -1,5 +1,17 @@
+-- lua_source {{{
+print('read lsp.lua !! lua_source')
+-- }}}
+
+-- lua_post_source {{{
+print('read lsp.lua !! lua_post_source')
+-- }}}
+--
+-- lua_post_update {{{
+print('read lsp.lua !! lua_post_update')
+-- }}}
+
 -- lua_add {{{
-print 'read lsp.lua !!'
+print('read lsp.lua !! lua_add!!')
 
 local function dump(o)
    if type(o) == 'table' then
@@ -14,9 +26,6 @@ local function dump(o)
    end
 end
 
--- require("ddc_source_lsp_setup").setup()
-
-
 local neodev = require('neodev')
 local util = require('lspconfig/util')
 local lspconfig = require('lspconfig')
@@ -25,8 +34,8 @@ local mason_lspconfig = require('mason-lspconfig')
 local nvim_navic = require('nvim-navic')
 local barbecue = require('barbecue')
 
+
 neodev.setup({})
--- require("ddc_source_lsp_setup").setup({})
 
 nvim_navic.setup({
     icons = {
@@ -351,7 +360,7 @@ local pylsp_setting = {
            --      },
             },
             pyls_isort = {
-                enabled = true,
+                enabled = false,
             },
             pylsp_mypy = {
                 enabled = false,
@@ -403,7 +412,7 @@ local pylsp_setting = {
 local servers = {
     basedpyright = basedpyright_setting,
     -- pyright = pyright_setting,
-    pylsp = pylsp_setting,
+    -- pylsp = pylsp_setting,
     -- mypy = {},
     -- flake8 = {},
     -- isort = {},
@@ -420,6 +429,7 @@ local servers = {
     -- phpcs = {},
     intelephense = {},
     -- sql_formatter = {},
+    -- ruff = {},
 }
 
 mason_lspconfig.setup({
@@ -459,6 +469,7 @@ local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 end
 
+-- require("ddc_source_lsp_setup").setup({})
 mason_lspconfig.setup_handlers({
     function(server_name)
         -- print('server_name!!')
@@ -537,6 +548,7 @@ vim.api.nvim_create_autocmd(
         end
     }
 )
+
 
 -- InlayHintの表示切り替え
 vim.api.nvim_create_user_command(

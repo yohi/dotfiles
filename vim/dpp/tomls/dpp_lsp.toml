@@ -1,7 +1,7 @@
 # LSP
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
-depenes = [
+depends = [
     'uga-rosa/ddc-source-lsp-setup',
 ]
 on_source = [
@@ -27,6 +27,12 @@ on_source = 'mason.nvim'
 # lua_source = '''
 #     require('config.null-ls')
 # '''
+
+[[plugins]]
+repo = 'mfussenegger/nvim-lint'
+depends = ['mason.nvim']
+# on_event = ['BufReadPre', 'BufNewFile']
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/nvim-lint.lua'
 
 [[plugins]]
 repo = 'nvimtools/none-ls.nvim'
