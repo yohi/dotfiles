@@ -520,11 +520,14 @@ vim.api.nvim_create_autocmd(
 
 vim.api.nvim_create_autocmd({
     "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+    "BufEnter",
     "BufWinEnter",
     "CursorHold",
     "InsertLeave",
     -- include this if you have set `show_modified` to `true`
     "BufModifiedSet",
+    "BufReadPre",
+    "BufNewFile",
 },
 {
     group = vim.api.nvim_create_augroup("barbecue.updater", {}),
