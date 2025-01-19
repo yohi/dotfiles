@@ -3,8 +3,6 @@
 
 -- lua_source {{{
 
-print("Loading nvim-lint.lua")
-
 -- local mason_lspconfig = require('mason-lspconfig')
 
 -- install linter via mason
@@ -26,11 +24,12 @@ vim.api.nvim_create_autocmd(
   {
     'LspAttach',
     "CursorHold",
-    "BufWinEnter",
+    -- "BufWinEnter",
     "InsertLeave",
-    "BufModifiedSet",
-    "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+    -- "BufModifiedSet",
+    -- "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
     "CursorHoldI",
+    'TextChanged',
   },
   {
     group = vim.api.nvim_create_augroup("NvimLintConfig", {}),
@@ -40,17 +39,5 @@ vim.api.nvim_create_autocmd(
     end,
   }
 )
--- vim.api.nvim_create_autocmd({ "BufWritePost" }, {
---   callback = function()
--- 
---     -- try_lint without arguments runs the linters defined in `linters_by_ft`
---     -- for the current filetype
---     require("lint").try_lint()
--- 
---     -- You can call `try_lint` with a linter name or a list of names to always
---     -- run specific linters, independent of the `linters_by_ft` configuration
---     require("lint").try_lint("cspell")
---   end,
--- })
--- 
+
 -- }}}

@@ -152,6 +152,7 @@ repo = 'SmiteshP/nvim-navic'
 on_source = [
     'nvim-lspconfig',
 ]
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/nvim-navic.lua'
 
 [[plugins]]
 repo = "utilyre/barbecue.nvim"
