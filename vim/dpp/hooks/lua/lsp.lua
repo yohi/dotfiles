@@ -364,7 +364,7 @@ local servers = {
     vimls = {},
     yamlls = {},
     -- phpcs = {},
-    intelephense = {},
+    -- intelephense = {},
     -- sql_formatter = {},
     -- ruff = {},
 }
