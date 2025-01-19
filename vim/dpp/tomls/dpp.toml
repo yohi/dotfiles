@@ -159,6 +159,7 @@ depends = [
     "nvim-navic",
     "nvim-web-devicons",
 ]
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/barbecue.lua'
 
 [[plugins]]
 repo = 'MunifTanjim/nui.nvim'

@@ -32,7 +32,6 @@ local lspconfig = require('lspconfig')
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
 local nvim_navic = require('nvim-navic')
-local barbecue = require('barbecue')
 
 
 neodev.setup({})
@@ -84,19 +83,6 @@ vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- triggers CursorHold event faster
 vim.opt.updatetime = 200
-
-barbecue.setup({
-    create_autocmd = false, -- prevent barbecue from updating itself automatically
-    separator = "  ",
-    icons_enabled = true,
-    icons = {
-        default = "",
-        symlink = "",
-        git = "",
-        folder = "",
-        ["folder-open"] = "",
-    },
-})
 
 -- 1. LSP Sever management
 mason.setup({
@@ -517,24 +503,6 @@ vim.api.nvim_create_autocmd(
         callback = on_cursor_hold,
     }
 )
-
-vim.api.nvim_create_autocmd({
-    "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
-    "BufEnter",
-    "BufWinEnter",
-    "CursorHold",
-    "InsertLeave",
-    -- include this if you have set `show_modified` to `true`
-    "BufModifiedSet",
-    "BufReadPre",
-    "BufNewFile",
-},
-{
-    group = vim.api.nvim_create_augroup("barbecue.updater", {}),
-    callback = function()
-        require("barbecue.ui").update()
-    end,
-})
 
 vim.api.nvim_create_autocmd(
     {
