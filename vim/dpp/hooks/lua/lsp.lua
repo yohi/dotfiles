@@ -26,14 +26,11 @@ local function dump(o)
    end
 end
 
-local neodev = require('neodev')
 local util = require('lspconfig/util')
 local lspconfig = require('lspconfig')
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
 
-
-neodev.setup({})
 
 -- triggers CursorHold event faster
 vim.opt.updatetime = 200

@@ -37,7 +37,7 @@ hooks_file = '~/dotfiles/vim/dpp/hooks/lua/nvim-lint.lua'
 [[plugins]]
 repo = 'nvimtools/none-ls.nvim'
 on_source = 'mason.nvim'
-hooks_fils = '~/dotfiles/vim/dpp/hooks/lua/none-ls.lua'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/none-ls.lua'
 
 # null-ls設定
 [[plugins]]
@@ -50,6 +50,8 @@ on_source = [
 [[plugins]]
 repo = 'folke/neodev.nvim'
 on_source = 'nvim-lspconfig'
+hooks_file = '~/dotfiles/vim/dpp/hooks/lua/neodev.lua'
+
 
 [[plugins]]
 repo = 'linux-cultist/venv-selector.nvim'
