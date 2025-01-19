@@ -1,5 +1,17 @@
+-- lua_source {{{
+print('read lsp.lua !! lua_source')
+-- }}}
+
+-- lua_post_source {{{
+print('read lsp.lua !! lua_post_source')
+-- }}}
+--
+-- lua_post_update {{{
+print('read lsp.lua !! lua_post_update')
+-- }}}
+
 -- lua_add {{{
-print 'read lsp.lua !!'
+print('read lsp.lua !! lua_add!!')
 
 local function dump(o)
    if type(o) == 'table' then
@@ -14,80 +26,14 @@ local function dump(o)
    end
 end
 
--- require("ddc_source_lsp_setup").setup()
-
-
-local neodev = require('neodev')
 local util = require('lspconfig/util')
 local lspconfig = require('lspconfig')
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
-local nvim_navic = require('nvim-navic')
-local barbecue = require('barbecue')
 
-neodev.setup({})
--- require("ddc_source_lsp_setup").setup({})
-
-nvim_navic.setup({
-    icons = {
-        File = ' ',
-        Module = ' ',
-        Namespace = ' ',
-        Package = ' ',
-        Class = ' ',
-        Method = ' ',
-        Property = ' ',
-        Field = ' ',
-        Constructor = ' ',
-        Enum = ' ',
-        Interface = ' ',
-        Function = ' ',
-        Variable = ' ',
-        Constant = ' ',
-        String = ' ',
-        Number = ' ',
-        Boolean = ' ',
-        Array = ' ',
-        Object = ' ',
-        Key = ' ',
-        Null = ' ',
-        EnumMember = ' ',
-        Struct = ' ',
-        Event = ' ',
-        Operator = ' ',
-        TypeParameter = ' ',
-    },
-    lsp = {
-        auto_attach = true,
-        preference = {
-            'pyright',
-            'basedpyright',
-        },
-    },
-    highlight = false,
-    separator = " > ",
-    depth_limit = 9,
-    depth_limit_indicator = "..",
-    safe_output = true,
-    click = false
-})
-vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 
 -- triggers CursorHold event faster
 vim.opt.updatetime = 200
-
-barbecue.setup({
-    create_autocmd = false, -- prevent barbecue from updating itself automatically
-    separator = "  ",
-    icons_enabled = true,
-    icons = {
-        default = "",
-        symlink = "",
-        git = "",
-        folder = "",
-        ["folder-open"] = "",
-    },
-})
 
 -- 1. LSP Sever management
 mason.setup({
@@ -351,7 +297,7 @@ local pylsp_setting = {
            --      },
             },
             pyls_isort = {
-                enabled = true,
+                enabled = false,
             },
             pylsp_mypy = {
                 enabled = false,
@@ -403,7 +349,7 @@ local pylsp_setting = {
 local servers = {
     basedpyright = basedpyright_setting,
     -- pyright = pyright_setting,
-    pylsp = pylsp_setting,
+    -- pylsp = pylsp_setting,
     -- mypy = {},
     -- flake8 = {},
     -- isort = {},
@@ -418,8 +364,9 @@ local servers = {
     vimls = {},
     yamlls = {},
     -- phpcs = {},
-    intelephense = {},
+    -- intelephense = {},
     -- sql_formatter = {},
+    -- ruff = {},
 }
 
 mason_lspconfig.setup({
@@ -459,6 +406,7 @@ local on_attach = function(_, bufnr)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'g[', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
 end
 
+-- require("ddc_source_lsp_setup").setup({})
 mason_lspconfig.setup_handlers({
     function(server_name)
         -- print('server_name!!')
@@ -507,21 +455,6 @@ vim.api.nvim_create_autocmd(
     }
 )
 
-vim.api.nvim_create_autocmd({
-    "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
-    "BufWinEnter",
-    "CursorHold",
-    "InsertLeave",
-    -- include this if you have set `show_modified` to `true`
-    "BufModifiedSet",
-},
-{
-    group = vim.api.nvim_create_augroup("barbecue.updater", {}),
-    callback = function()
-        require("barbecue.ui").update()
-    end,
-})
-
 vim.api.nvim_create_autocmd(
     {
         'LspAttach',
@@ -537,6 +470,7 @@ vim.api.nvim_create_autocmd(
         end
     }
 )
+
 
 -- InlayHintの表示切り替え
 vim.api.nvim_create_user_command(

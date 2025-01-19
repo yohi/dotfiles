@@ -1,193 +1,20 @@
 let max_length = v:echospace + ((&cmdheight - 1) * &columns)
 
-
 "highlight CursorIM guibg=Red
 "highlight CursorIM guibg=Red guifg=NONE
 set iminsert=0 imsearch=0
-"
-"set noimdisable
-
-"let $VIMRUNTIME="/usr/share/nvim/runtime"
-"set runtimepath+=/usr/share/nvim/runtime
-"set runtimepath+=${HOME}/.vim/rc/
-
-
-" function s:export_docker_environment()
-"     echom("export_docker_environment running...")
-"     try
-"         let s:docker_env_json = system('docker compose config --format json | jq ".services.app.environment"')
-"         let s:docker_env_dict = json_decode(s:docker_env_json)
-"         if type(s:docker_env_dict) == v:t_dict
-"             for k in keys(s:docker_env_dict)
-"                 call setenv(k, s:docker_env_dict[k])
-"             endfor
-"         endif
-"     catch
-"         echom("export docker enviroment Exception:" . v:exception)
-"     endtry
-"     echom('export_docker_environment done!')
-" endfunction
-" call timer_start(0, s:export_docker_environment())
-
-" call s:export_docker_environment()
-
-""""""""""""""""""" if filereadable(expand('compose.yaml'))
-"""""""""""""""""""     let s:volume_name = 'vim_' . strftime('%Y%m%d%H%M%S')
-"""""""""""""""""""     echom 'docker volume create ' . s:volume_name
-"""""""""""""""""""     call system('docker volume ' . s:volume_name)
-"""""""""""""""""""     let s:container_id = system('docker compose run -d -v ' . s:volume_name . ':/usr/local/lib/python3.10/site-packages app')
-"""""""""""""""""""     " let s:compose_ps = json_decode(system('docker compose ps app --format json'))
-"""""""""""""""""""     " let s:inspect = substitute(system(printf('docker inspect --type="container" %s', s:container_id)), '\n', '', 'g')
-"""""""""""""""""""     let s:inspect = system(printf('docker inspect --type="container" %s', s:container_id))
-"""""""""""""""""""     " echom s:inspect
-"""""""""""""""""""     echom system(json_encode(s:inspect) . " | jq '.[].Mounts[]'")
-"""""""""""""""""""     "echom printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name)
-"""""""""""""""""""     "echom system(printf('%s | jq ".[].Mounts[]. | select(.Name | contains(''%s''))"', s:inspect, s:volume_name))
-"""""""""""""""""""     "let s:name = substitute(system("echo $EDITOR"), '\n', '', 'g')
-"""""""""""""""""""     " echom system('docker inspect $(docker compose ps -q app) | jq')
-"""""""""""""""""""     " echom system(printf("'%s' | jq '.[].Mounts'", s:compose_ps))
-""""""""""""""""""" endif
-""""""""""""""""""
-""""""""""""""""""
-""""""""""""""""""
-""""""""""""""""""
-""""""""""""""""""
-""""""""""""""""""
-""""""""""""""""""
-""""""""""""""""""let s:venv_dir = getcwd() . '/.venv'
-""""""""""""""""""" echom s:venv_dir
-""""""""""""""""""if isdirectory(s:venv_dir)
-""""""""""""""""""    let $VIRTUAL_ENV = s:venv_dir
-""""""""""""""""""endif
-""""""""""""""""""
-""""""""""""""""""" function! installRequirements(venv_dir)
-"""""""""""""""""""     echom 'install requirements...'
-"""""""""""""""""""     call system('source ' . venv_dir . '/bin/activate && pip install -r ~/.vim/requirements.txt')
-""""""""""""""""""" endfunction
-""""""""""""""""""
-""""""""""""""""""let s:virtual_env = $VIRTUAL_ENV
-""""""""""""""""""if strlen(s:virtual_env) == 0
-""""""""""""""""""    " echom '$VIRTUAL_ENV not defined'
-""""""""""""""""""    let s:python3 = system('which python3')
-""""""""""""""""""    if strlen(s:python3) != 0
-""""""""""""""""""        let s:python3_dir = $HOME . '/.vim/python'
-""""""""""""""""""        if !isdirectory(s:python3_dir)
-""""""""""""""""""            " echom 'create venv...'
-""""""""""""""""""            call system('python3 -m venv ' . s:python3_dir)
-""""""""""""""""""        endif
-""""""""""""""""""        call jobstart('source ' . s:python3_dir . '/bin/activate && pip install pynvim neovim')
-""""""""""""""""""        let g:python3_host_prog = s:python3_dir . '/bin/python'
-""""""""""""""""""        let $PATH = s:python3_dir . '/bin:' . $PATH
-""""""""""""""""""        let $VIRTUAL_ENV = s:python3_dir
-""""""""""""""""""    endif
-""""""""""""""""""else
-""""""""""""""""""    " echom '$VIRTUAL_ENV defined'
-""""""""""""""""""    " echom 'install pip...'
-""""""""""""""""""    " echom 'source ' . s:virtual_env . '/bin/activate && pip install -r ~/.vim/requirements.txt'
-""""""""""""""""""    call jobstart('source ' . s:virtual_env . '/bin/activate && pip install pynvim neovim')
-""""""""""""""""""    let g:python3_host_prog = s:virtual_env . '/bin/python'
-""""""""""""""""""    let $PATH = s:virtual_env . '/bin:' . $PATH
-""""""""""""""""""endif
-""""""""""""""""""
-""""""""""""""""""let g:pythonpath = $PYTHONPATH
-""""""""""""""""""if strlen(g:pythonpath) == 0
-""""""""""""""""""    let $PYTHONPATH = getcwd()
-""""""""""""""""""endif
-""""""""""""""""""
-""""""""""""""""""runtime! rc/*.vim
-
-
 
 let g:loaded_python_provider = 0
 let g:loaded_ruby_provider = 0
 let g:loaded_perl_provider = 0
 
 let g:node_host_provider = system('echo -n $(which node)')
-" let g:python3_host_prog = system('which python3')
 let g:python3_host_prog = system('echo -n $(which python3)')
 
+" vim.loader
+lua vim.loader.enable()
 
-" function s:install_pip_package(package_name, bin=v:false) abort
-"     echom('install_pip_package ' . a:package_name . ' running...!')
-"     if a:bin && !filereadable('.venv/bin/' . a:package_name)
-"         echom('force reinstall ' . a:package_name)
-"         let s:pip_install = system(g:python3_host_prog .' -m pip install --force-reinstall ' . a:package_name)
-"         if v:shell_error
-"             echoerr a:package_name . ' force reinstall error'
-"         endif
-"     else
-"         let s:pip_show = system(g:python3_host_prog .' -m pip show ' . a:package_name)
-"         if v:shell_error
-"             echom('install ' . a:package_name)
-"             let s:pip_install = system(g:python3_host_prog .' -m pip install -U ' . a:package_name)
-"             if v:shell_error
-"                 echoerr  a:package_name . ' install error'
-"             endif
-"         endif
-"     endif
-"     echom('install_pip_package ' . a:package_name . ' done!')
-" endfunction
-
-" let s:virtual_env = getcwd() . '/.venv'
-" if isdirectory(s:virtual_env)
-"     let $VIRTUAL_ENV = s:virtual_env
-" else
-"     " virtual_envがない場合
-"     let s:python3 = system('which python3')
-"     let s:virtual_env = $HOME . '/.vim/vimvenv'
-"     if !isdirectory(s:virtual_env)
-"        "  echo('install vim virtualenv')
-"         call system('python3 -m venv ' . s:virtual_env)
-"     endif
-"     let $VIRTUAL_ENV = s:virtual_env
-" endif
-" 
-" let g:python3_host_prog = s:virtual_env . '/bin/python'
-" let $PATH = s:virtual_env . '/bin:' . $PATH
-" " call timer_start(0, s:install_pip_package('pynvim'))
-" " call timer_start(0, s:install_pip_package('mypy', v:true))
-" " call timer_start(0, s:install_pip_package('flake8', v:true))
-" 
-" let g:pythonpath = $PYTHONPATH
-" if strlen(g:pythonpath) == 0
-"     let $PYTHONPATH = getcwd()
-" endif
 
 runtime! rc/*.vim
 
 runtime! rc/*.lua
-
-" lua << EOF
-"     require('config.python')
-"     InstallPipPackage('pynvim')
-" EOF
-" 
-" " C++ のソースコードの編集するときは、タブキーをスペースを用いたインデント用に使用する
-" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'mypy', true)
-" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'flake8', true)
-" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'isort', true)
-" :autocmd FileType python ++once lua pcall(InstallPipPackage, 'djlint', true)
-
-" lua << EOF
-"     require('config.docker')
-" EOF
-
-
-" " Makefile を編集するときは、タブキーをタブ文字の入力に使用する
-" :autocmd FileType make  setlocal noexpandtab
-" 
-" " ~/.vimrc を保存したときにリロードする（source コマンドで変更を反映する）
-" :autocmd BufWritePost  ~/.vimrc  so ~/.vimrc
-" 
-" " 拡張子 .cpp のファイルを開いたバッファに入るとき、~/.vimrc_cpp を実行する
-" :autocmd BufEnter  *.cpp  so ~/.vimrc_cpp
-" 
-" " C 言語のソースコードを編集し始めるときに、カーソルを最初の関数に合わせる
-" :autocmd BufRead  *.c,*.h  1;/^{
-" 
-" " 新規に .java ファイルを作成する場合にテンプレートファイルを使用する（:e new.java や :tabnew new.java としたとき）
-" :autocmd BufNewFile  *.java  0r ~/vim/skeleton.java
-" 
-" " 新規に .hello ファイルを作成する場合に Hello というテキストを挿入する
-" :autocmd BufNewFile  *.hello  put='Hello'
-
