@@ -11,6 +11,9 @@ let g:loaded_perl_provider = 0
 let g:node_host_provider = system('echo -n $(which node)')
 let g:python3_host_prog = system('echo -n $(which python3)')
 
+" vim.loader
+lua vim.loader.enable()
+
 
 runtime! rc/*.vim
 

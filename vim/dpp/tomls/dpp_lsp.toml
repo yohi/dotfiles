@@ -1,4 +1,5 @@
 # LSP
+
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 depends = [
@@ -7,36 +8,35 @@ depends = [
 on_source = [
     'mason-lspconfig.nvim',
     'rrethy/vim-illuminate',
-    # 'read-or-create-venv.vim',
 ]
 hooks_file = '~/dotfiles/vim/dpp/hooks/lua/lsp.lua'
-# lua_add = '''
-#     require('config.lsp')
-# '''
 
 # LSP設定
+
 [[plugins]]
 repo = 'williamboman/mason-lspconfig.nvim'
-on_source = 'mason.nvim'
+on_source = [
+    'mason.nvim',
+]
 
 # フォーマッター・リンター
-# [[plugins]]
-# repo = 'jose-elias-alvarez/null-ls.nvim'
-# on_source = 'mason.nvim'
-# hooks_source = '~/dotfiles/vim/dpp/hooks/lua/null-ls.lua'
-# lua_source = '''
-#     require('config.null-ls')
-# '''
 
 [[plugins]]
 repo = 'mfussenegger/nvim-lint'
-depends = ['mason.nvim']
-# on_event = ['BufReadPre', 'BufNewFile']
+depends = [
+    'mason.nvim'
+]
+# on_event = [
+#     'BufReadPre',
+#     'BufNewFile'
+# ]
 hooks_file = '~/dotfiles/vim/dpp/hooks/lua/nvim-lint.lua'
 
 [[plugins]]
 repo = 'nvimtools/none-ls.nvim'
-on_source = 'mason.nvim'
+on_source = [
+    'mason.nvim',
+]
 hooks_file = '~/dotfiles/vim/dpp/hooks/lua/none-ls.lua'
 
 # null-ls設定
@@ -49,9 +49,10 @@ on_source = [
 
 [[plugins]]
 repo = 'folke/neodev.nvim'
-on_source = 'nvim-lspconfig'
+on_source = [
+    'nvim-lspconfig',
+]
 hooks_file = '~/dotfiles/vim/dpp/hooks/lua/neodev.lua'
-
 
 [[plugins]]
 repo = 'linux-cultist/venv-selector.nvim'
